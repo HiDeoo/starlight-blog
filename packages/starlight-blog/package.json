@@ -1,0 +1,31 @@
+{
+  "name": "starlight-blog",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "// TODO(HiDeoo)",
+  "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
+  "type": "module",
+  "scripts": {
+    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.6.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "// TODO(HiDeoo)"
+  ],
+  "homepage": "https://github.com/HiDeoo/starlight-blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiDeoo/starlight-blog.git"
+  },
+  "bugs": "https://github.com/HiDeoo/starlight-blog/issues"
+}
