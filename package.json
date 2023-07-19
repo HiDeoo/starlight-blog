@@ -1,15 +1,14 @@
 {
-  "name": "starlight-blog",
+  "name": "starlight-blog-monorepo",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "",
+  "description": "// TODO(HiDeoo)",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test implemented.\" && exit 1",
-    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit",
-    "prepare": "husky install",
-    "prepublishOnly": "pnpm build"
+    "lint": "pnpm -r lint",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@hideoo/eslint-config": "1.5.1",
@@ -25,11 +24,11 @@
     "node": ">=18"
   },
   "packageManager": "pnpm@8.6.9",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "sideEffects": false,
-  "keywords": [],
+  "keywords": [
+    "// TODO(HiDeoo)"
+  ],
   "homepage": "https://github.com/HiDeoo/starlight-blog",
   "repository": {
     "type": "git",
