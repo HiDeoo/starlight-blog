@@ -1,8 +1,10 @@
 import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
+import starlightBlog from 'starlight-blog'
 
 export default defineConfig({
   integrations: [
+    starlightBlog(),
     // FIXME(HiDeoo)
     starlight({
       title: 'My Docs',

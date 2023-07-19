@@ -5,11 +5,16 @@
   "description": "// TODO(HiDeoo)",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.5.0"
+    "@astrojs/starlight": ">=0.5.0",
+    "astro": ">=2.5.0"
   },
   "engines": {
     "node": ">=18"
