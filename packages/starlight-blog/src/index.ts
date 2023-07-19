@@ -19,15 +19,14 @@ export default function starlightBlogIntegration(): AstroIntegration {
   }
 }
 
-const starlightBlogComponentOverrides = {
+const starlightComponentOverrides = {
   Sidebar: 'BlogSidebar',
-  // TODO(HiDeoo)
-  // ThemeSelect: 'BlogSidebar',
+  SocialIcons: 'BlogSocialIcons',
 }
 
-const starlightBlogComponentOverridden = Object.keys(
-  starlightBlogComponentOverrides,
-) as (keyof typeof starlightBlogComponentOverrides)[]
+const overriddenStarlightComponents = Object.keys(
+  starlightComponentOverrides,
+) as (keyof typeof starlightComponentOverrides)[]
 
 function vitePluginStarlightBlog(): NonNullable<ViteUserConfig['plugins']>[number] {
   return {
@@ -38,11 +37,11 @@ function vitePluginStarlightBlog(): NonNullable<ViteUserConfig['plugins']>[numbe
         return
       }
 
-      for (const component of starlightBlogComponentOverridden) {
+      for (const component of overriddenStarlightComponents) {
         if (source.endsWith(`/${component}.astro`)) {
           if (importer?.includes('node_modules')) {
             return path.resolve(
-              `node_modules/starlight-blog/src/components/${starlightBlogComponentOverrides[component]}.astro`,
+              `node_modules/starlight-blog/src/components/${starlightComponentOverrides[component]}.astro`,
             )
           }
 

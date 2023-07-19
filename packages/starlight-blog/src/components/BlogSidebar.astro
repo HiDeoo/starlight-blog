@@ -1,6 +1,8 @@
 ---
-// import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
+import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
+
+// TODO(HiDeoo) /blog sidebar
+const isBlogPost = Astro.url.pathname.startsWith('/blog/')
 ---
 
-<div>BLOG SIDEBAR</div>
-<!-- <StarlightSidebar {...Astro.props} /> -->
+{isBlogPost ? <div>BLOG SIDEBAR</div> : <StarlightSidebar {...Astro.props} />}
