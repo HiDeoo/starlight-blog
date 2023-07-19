@@ -1,0 +1,44 @@
+{
+  "name": "starlight-blog",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "",
+  "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test implemented.\" && exit 1",
+    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit",
+    "prepare": "husky install",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "@hideoo/eslint-config": "1.5.1",
+    "@hideoo/prettier-config": "2.0.0",
+    "@hideoo/tsconfig": "2.0.1",
+    "eslint": "8.45.0",
+    "husky": "8.0.3",
+    "lint-staged": "13.2.3",
+    "prettier": "3.0.0",
+    "typescript": "5.1.6"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.6.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "keywords": [],
+  "homepage": "https://github.com/HiDeoo/starlight-blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiDeoo/starlight-blog.git"
+  },
+  "bugs": "https://github.com/HiDeoo/starlight-blog/issues",
+  "prettier": "@hideoo/prettier-config",
+  "lint-staged": {
+    "**/*": "prettier -w -u --cache",
+    "**/*.{js,jsx,ts,tsx,cjs,mjs}": "eslint --cache --max-warnings=0"
+  }
+}
