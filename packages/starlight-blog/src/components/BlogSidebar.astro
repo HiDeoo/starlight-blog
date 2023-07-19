@@ -1,8 +1,22 @@
 ---
 import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
 
+import { getBlogEntries } from '../libs/content'
+
 // TODO(HiDeoo) /blog sidebar
 const isBlogPost = Astro.url.pathname.startsWith('/blog/')
+
+const blogEntries = await getBlogEntries()
 ---
 
-{isBlogPost ? <div>BLOG SIDEBAR</div> : <StarlightSidebar {...Astro.props} />}
+{
+  isBlogPost ? (
+    <div>
+      {blogEntries.map((blogEntry) => (
+        <div>{blogEntry.data.title}</div>
+      ))}
+    </div>
+  ) : (
+    <StarlightSidebar {...Astro.props} />
+  )
+}
