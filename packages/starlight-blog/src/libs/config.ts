@@ -3,7 +3,7 @@ import { z } from 'astro/zod'
 const configSchema = z
   .object({
     // TODO(HiDeoo)
-    postCount: z.number().default(10),
+    postCount: z.number().min(1).default(10),
   })
   .default({})
 

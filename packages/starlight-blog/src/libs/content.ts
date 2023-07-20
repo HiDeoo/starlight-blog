@@ -1,5 +1,6 @@
 import type { z } from 'astro/zod'
 import { getCollection, type AstroCollectionEntry } from 'astro:content'
+import config from 'virtual:starlight-blog-config'
 
 import type { docsAndBlogSchema } from './schema'
 
@@ -8,21 +9,33 @@ export async function getBlogStaticPaths() {
 
   validateBlogEntries(entries)
 
-  // TODO(HiDeoo) FIO pages
-  // TODO(HiDeoo) pass down entries to each pages
+  const entryPages: StarlightBlogEntry[][] = []
+
+  for (const entry of entries) {
+    const lastPage = entryPages.at(-1)
+
+    if (!lastPage || lastPage.length === config.postCount) {
+      entryPages.push([entry])
+    } else {
+      lastPage.push(entry)
+    }
+  }
+
+  if (entryPages.length === 0) {
+    entryPages.push([])
+  }
+
   // TODO(HiDeoo) Handle no blog post
-  return [
-    {
+  return entryPages.map((entries, index) => {
+    return {
       params: {
-        page: undefined,
+        page: index === 0 ? undefined : index + 1,
       },
-    },
-    {
-      params: {
-        page: '1',
+      props: {
+        entries,
       },
-    },
-  ]
+    }
+  })
 }
 
 // TODO(HiDeoo) limit
