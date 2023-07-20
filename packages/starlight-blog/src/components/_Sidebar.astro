@@ -11,34 +11,27 @@ const blogEntries = isBlogPage ? await getRecentBlogEntries() : []
 
 {
   isBlogPage ? (
-    <>
-      <StarlightSidebar
-        sidebar={[
-          {
-            href: '/blog',
-            isCurrent: isBlogRoot,
-            label: 'All posts',
+    <StarlightSidebar
+      sidebar={[
+        {
+          href: '/blog',
+          isCurrent: isBlogRoot,
+          label: 'All posts',
+          type: 'link',
+        },
+        {
+          entries: blogEntries.map((blogEntry) => ({
+            href: `/${blogEntry.slug}`,
+            // TODO(HiDeoo)
+            isCurrent: false,
+            label: blogEntry.data.title,
             type: 'link',
-          },
-          {
-            entries: blogEntries.map((blogEntry) => ({
-              href: `/${blogEntry.slug}`,
-              // TODO(HiDeoo)
-              isCurrent: false,
-              label: blogEntry.data.title,
-              type: 'link',
-            })),
-            label: 'Recent posts',
-            type: 'group',
-          },
-        ]}
-      />
-      <div>
-        {blogEntries.map((blogEntry) => (
-          <div>{blogEntry.data.title}</div>
-        ))}
-      </div>
-    </>
+          })),
+          label: 'Recent posts',
+          type: 'group',
+        },
+      ]}
+    />
   ) : (
     <StarlightSidebar {...Astro.props} />
   )
