@@ -1,13 +1,14 @@
-import { getCollection } from 'astro:content'
+import type { z } from 'astro/zod'
+import { getCollection, type AstroCollectionEntry } from 'astro:content'
 
-import type { StarlightBlogEntry } from './schema'
+import type { docsAndBlogSchema } from './schema'
 
 export async function getBlogStaticPaths() {
-  // TODO(HiDeoo) order
-  await getBlogEntries()
+  const entries = await getBlogEntries()
 
-  // TODO(HiDeoo) validation
+  validateBlogEntries(entries)
 
+  // TODO(HiDeoo) FIO pages
   // TODO(HiDeoo) pass down entries to each pages
   // TODO(HiDeoo) Handle no blog post
   return [
@@ -24,7 +25,6 @@ export async function getBlogStaticPaths() {
   ]
 }
 
-// TODO(HiDeoo) order
 // TODO(HiDeoo) limit
 export async function getRecentBlogEntries() {
   return getBlogEntries()
@@ -32,7 +32,24 @@ export async function getRecentBlogEntries() {
 
 function getBlogEntries() {
   // TODO(HiDeoo) order
-  return getCollection<StarlightBlogEntry>('docs', ({ id }) => {
+  return getCollection<StarlightEntryData>('docs', ({ id }) => {
     return id.startsWith('blog/') && id !== 'blog/index.mdx'
   })
+}
+
+function validateBlogEntries(entries: StarlightEntry[]): asserts entries is StarlightBlogEntry[] {
+  for (const entry of entries) {
+    if (entry.data.date === undefined) {
+      throw new Error(`Missing date for blog entry '${entry.id}'.`)
+    }
+  }
+}
+
+type StarlightEntryData = z.infer<ReturnType<typeof docsAndBlogSchema>>
+type StarlightEntry = AstroCollectionEntry<StarlightEntryData>
+
+type StarlightBlogEntry = StarlightEntry & {
+  data: {
+    date: string
+  }
 }

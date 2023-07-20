@@ -1,5 +1,5 @@
 declare module 'astro:content' {
-  interface AstroCollectionEntry<TData> {
+  export interface AstroCollectionEntry<TData> {
     body: string
     collection: string
     data: TData
