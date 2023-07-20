@@ -60,3 +60,14 @@ test('should display navigation links', async ({ blogPage }) => {
   await expect(blogPage.prevLink).toBeVisible()
   await expect(blogPage.nextLink).not.toBeVisible()
 })
+
+test('should add a link to all posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const link = blogPage.page.getByRole('link', { name: 'All posts' })
+
+  await expect(link).toBeVisible()
+  expect(await link.getAttribute('href')).toBe('/blog')
+})
+
+// TODO(HiDeoo) Test recent posts

@@ -5,6 +5,8 @@ interface Props {
 }
 
 const { next, prev } = Astro.props
+
+// TODO(HiDeoo) responsive
 ---
 
 {
@@ -12,12 +14,12 @@ const { next, prev } = Astro.props
     <div class="pagination">
       {prev && (
         <a href={prev} rel="prev">
-          « Newer Posts
+          « Newer posts
         </a>
       )}
       {next && (
         <a href={next} rel="next">
-          Older Posts »
+          Older posts »
         </a>
       )}
     </div>
