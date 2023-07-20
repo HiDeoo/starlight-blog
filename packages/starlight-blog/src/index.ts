@@ -1,10 +1,10 @@
 import type { AstroIntegration, AstroUserConfig } from 'astro'
 
 import { type StarlightBlogConfig, validateConfig } from './libs/config'
-import { vitePluginStarlightBlog } from './libs/vite'
+import { vitePluginStarlightBlogComponents, vitePluginStarlightBlogConfig } from './libs/vite'
 
 export default function starlightBlogIntegration(userConfig?: StarlightBlogConfig): AstroIntegration {
-  validateConfig(userConfig)
+  const config: StarlightBlogConfig = validateConfig(userConfig)
 
   return {
     name: 'starlight-blog',
@@ -15,13 +15,13 @@ export default function starlightBlogIntegration(userConfig?: StarlightBlogConfi
           pattern: '/blog/[...page]',
         })
 
-        const config: AstroUserConfig = {
+        const astroConfig: AstroUserConfig = {
           vite: {
-            plugins: [vitePluginStarlightBlog()],
+            plugins: [vitePluginStarlightBlogComponents(), vitePluginStarlightBlogConfig(config)],
           },
         }
 
-        updateConfig(config)
+        updateConfig(astroConfig)
       },
     },
   }

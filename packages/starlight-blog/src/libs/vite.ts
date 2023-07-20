@@ -3,6 +3,8 @@ import { fileURLToPath } from 'node:url'
 
 import type { ViteUserConfig } from 'astro'
 
+import type { StarlightBlogConfig } from './config'
+
 const componentAliases = ['Page', 'Sidebar', 'SocialIcons'] as const
 
 const aliasIds = new Map<ComponentAlias, string>()
@@ -10,20 +12,20 @@ const aliasIds = new Map<ComponentAlias, string>()
 // Alias various starlight components to local ones.
 // The local components should be located in the `src/components` directory, use the same name as the aliased component,
 // and be prefixed with an underscore.
-export function vitePluginStarlightBlog(): VitePlugin {
+export function vitePluginStarlightBlogComponents(): VitePlugin {
   return {
     enforce: 'pre',
-    name: 'vite-plugin-starlight-blog',
-    async resolveId(source, importer, options) {
-      if (source.startsWith('/@fs')) {
+    name: 'vite-plugin-starlight-blog-components',
+    async resolveId(id, importer, options) {
+      if (id.startsWith('/@fs')) {
         return
       }
 
       for (const alias of componentAliases) {
-        if (source.endsWith(`/${alias}.astro`)) {
+        if (id.endsWith(`/${alias}.astro`)) {
           // If the component is imported by starlight, use the aliased component.
           if (!importer?.includes('starlight-blog/src/components')) {
-            const resolvedAlias = await this.resolve(source, importer, { ...options, skipSelf: true })
+            const resolvedAlias = await this.resolve(id, importer, { ...options, skipSelf: true })
 
             if (resolvedAlias) {
               aliasIds.set(alias, resolvedAlias.id)
@@ -38,6 +40,23 @@ export function vitePluginStarlightBlog(): VitePlugin {
       }
 
       return
+    },
+  }
+}
+
+// Expose the starlight-blog integration configuration.
+export function vitePluginStarlightBlogConfig(config: StarlightBlogConfig): VitePlugin {
+  const moduleId = 'virtual:starlight-blog-config'
+  const resolvedModuleId = `\0${moduleId}`
+  const moduleContent = `export default ${JSON.stringify(config)}`
+
+  return {
+    name: 'vite-plugin-starlight-blog-config',
+    load(id) {
+      return id === resolvedModuleId ? moduleContent : undefined
+    },
+    resolveId(id) {
+      return id === moduleId ? resolvedModuleId : undefined
     },
   }
 }

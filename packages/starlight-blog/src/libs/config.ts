@@ -7,7 +7,7 @@ const configSchema = z
   })
   .default({})
 
-export function validateConfig(userConfig: unknown) {
+export function validateConfig(userConfig: unknown): StarlightBlogConfig {
   const config = configSchema.safeParse(userConfig)
 
   if (!config.success) {

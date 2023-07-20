@@ -1,6 +1,7 @@
 ---
 import Page from './_Page.astro'
 import { getBlogStaticPaths } from '../libs/content'
+import config from 'virtual:starlight-blog-config'
 
 export function getStaticPaths() {
   return getBlogStaticPaths()
@@ -21,4 +22,5 @@ const entry = {
 
 <Page entry={entry} lang="en" entryMeta={{ lang: 'en' }}>
   <div>LANDING</div>
+  <div>{config.postCount}</div>
 </Page>
