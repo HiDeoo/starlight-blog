@@ -37,6 +37,8 @@ function getBlogEntries() {
   })
 }
 
+// The validation of required fields is done here instead of in the zod schema directly as we do not want to require
+// them for the docs.
 function validateBlogEntries(entries: StarlightEntry[]): asserts entries is StarlightBlogEntry[] {
   for (const entry of entries) {
     if (entry.data.date === undefined) {
