@@ -7,20 +7,25 @@ export function getStaticPaths() {
   return getBlogStaticPaths()
 }
 
-// TODO(HiDeoo) hide title ? CSS only in this page?
-// TODO(HiDeoo) hide toc
-
 // TODO(HiDeoo) review all this
 const entry = {
   data: {
     head: [],
     tableOfContents: false,
-    title: 'Landing',
+    title: config.title,
   },
 }
+
+// TODO(HiDeoo) review props below
 ---
 
-<Page entry={entry} lang="en" entryMeta={{ lang: 'en' }}>
+<Page lang="en" entry={entry} entryMeta={{ lang: 'en' }}>
   <div>LANDING</div>
   <div>{config.postCount}</div>
 </Page>
+
+<style>
+  :global(.content-panel:first-of-type) {
+    display: none;
+  }
+</style>

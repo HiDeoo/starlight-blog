@@ -4,6 +4,8 @@ const configSchema = z
   .object({
     // TODO(HiDeoo)
     postCount: z.number().min(1).default(10),
+    // TODO(HiDeoo)
+    title: z.string().default('Blog'),
   })
   .default({})
 

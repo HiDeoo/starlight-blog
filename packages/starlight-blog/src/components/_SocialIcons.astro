@@ -1,9 +1,10 @@
 ---
 import StarlightSocialIcons from '@astrojs/starlight/components/SocialIcons.astro'
+import config from 'virtual:starlight-blog-config'
 ---
 
 <StarlightSocialIcons {...Astro.props} />
-<a href="/blog" rel="me">Blog</a>
+<a href="/blog">{config.title}</a>
 <div class="divider"></div>
 
 <style>
