@@ -18,6 +18,32 @@ test('should not display the content panel containing the title', async ({ blogP
   await expect(blogPage.page.getByRole('heading', { level: 1 })).not.toBeVisible()
 })
 
+test('should create the blog post list pages', async ({ blogPage }) => {
+  let response = await blogPage.goto()
+
+  expect(response?.ok()).toBe(true)
+
+  response = await blogPage.goto(1)
+
+  expect(response?.ok()).toBe(false)
+
+  response = await blogPage.goto(2)
+
+  expect(response?.ok()).toBe(true)
+
+  response = await blogPage.goto(3)
+
+  expect(response?.ok()).toBe(true)
+
+  response = await blogPage.goto(4)
+
+  expect(response?.ok()).toBe(false)
+
+  response = await blogPage.goto(5)
+
+  expect(response?.ok()).toBe(false)
+})
+
 test('should display navigation links', async ({ blogPage }) => {
   await blogPage.goto()
 
