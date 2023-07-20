@@ -27,13 +27,18 @@ export async function getBlogStaticPaths() {
 
   // TODO(HiDeoo) Handle no blog post
   return entryPages.map((entries, index) => {
+    const prevPage = index === 0 ? undefined : entryPages.at(index - 1)
+    const nextPage = entryPages.at(index + 1)
+
     return {
       params: {
         page: index === 0 ? undefined : index + 1,
       },
       props: {
         entries,
-      },
+        nextHref: nextPage ? `/blog/${index + 2}` : undefined,
+        prevHref: prevPage ? (index === 1 ? '/blog' : `/blog/${index}`) : undefined,
+      } satisfies StarlightBlogStaticProps,
     }
   })
 }
@@ -67,4 +72,10 @@ type StarlightBlogEntry = StarlightEntry & {
   data: {
     date: string
   }
+}
+
+interface StarlightBlogStaticProps {
+  entries: StarlightBlogEntry[]
+  nextHref: string | undefined
+  prevHref: string | undefined
 }

@@ -3,7 +3,7 @@ import { z } from 'astro/zod'
 const configSchema = z
   .object({
     // TODO(HiDeoo)
-    postCount: z.number().min(1).default(10),
+    postCount: z.number().min(1).default(5),
     // TODO(HiDeoo)
     title: z.string().default('Blog'),
   })

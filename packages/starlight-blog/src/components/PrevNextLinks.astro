@@ -1,0 +1,54 @@
+---
+interface Props {
+  next: string | undefined
+  prev: string | undefined
+}
+
+const { next, prev } = Astro.props
+---
+
+{
+  prev || next ? (
+    <div class="pagination">
+      {prev && (
+        <a href={prev} rel="prev">
+          « Newer Posts
+        </a>
+      )}
+      {next && (
+        <a href={next} rel="next">
+          Older Posts »
+        </a>
+      )}
+    </div>
+  ) : null
+}
+
+<style>
+  .pagination {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  a {
+    border-radius: 0.5rem;
+    border: 1px solid var(--sl-color-gray-5);
+    box-shadow: var(--sl-shadow-md);
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-lg);
+    padding: 1rem;
+    text-decoration: none;
+  }
+
+  a:hover {
+    border-color: var(--sl-color-gray-2);
+  }
+
+  [rel='next'] {
+    justify-content: end;
+    grid-column: 2;
+    text-align: end;
+    flex-direction: row-reverse;
+  }
+</style>

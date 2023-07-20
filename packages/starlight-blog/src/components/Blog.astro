@@ -1,11 +1,17 @@
 ---
-import Page from './_Page.astro'
-import { getBlogStaticPaths } from '../libs/content'
+import type { InferGetStaticPropsType } from 'astro'
 import config from 'virtual:starlight-blog-config'
+
+import { getBlogStaticPaths } from '../libs/content'
+
+import Page from './_Page.astro'
+import PrevNextLinks from './PrevNextLinks.astro'
 
 export function getStaticPaths() {
   return getBlogStaticPaths()
 }
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 // TODO(HiDeoo) review all this
 const entry = {
@@ -16,12 +22,16 @@ const entry = {
   },
 }
 
+const { nextHref, prevHref } = Astro.props
+
 // TODO(HiDeoo) review props below
 ---
 
 <Page lang="en" entry={entry} entryMeta={{ lang: 'en' }}>
   <div>LANDING</div>
-  <div>{config.postCount}</div>
+  <footer class="not-content">
+    <PrevNextLinks next={nextHref} prev={prevHref} />
+  </footer>
 </Page>
 
 <style>
