@@ -7,7 +7,8 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./schema": "./src/libs/schema.ts"
   },
   "scripts": {
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit"
