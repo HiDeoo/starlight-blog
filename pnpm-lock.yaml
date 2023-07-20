@@ -42,8 +42,8 @@ importers:
   example:
     dependencies:
       '@astrojs/starlight':
-        specifier: 0.5.3
-        version: 0.5.3(astro@2.8.5)
+        specifier: 0.5.4
+        version: 0.5.4(astro@2.8.5)
       astro:
         specifier: 2.8.5
         version: 2.8.5(sharp@0.32.3)
@@ -170,6 +170,31 @@ packages:
 
   /@astrojs/starlight@0.5.3(astro@2.8.5):
     resolution: {integrity: sha512-Rj+i+Ic+wMABkrrbBevlkzsvXw1STLAynHRm5wPxNkw3J8P3ViPq52u6Vv+RulSBkxZ0/W2dGgjdhYC2CJ6dfw==}
+    peerDependencies:
+      astro: ^2.5.0
+    dependencies:
+      '@astrojs/mdx': 0.19.7(astro@2.8.5)
+      '@astrojs/sitemap': 1.4.0
+      '@pagefind/default-ui': 1.0.0-alpha.8
+      '@types/mdast': 3.0.12
+      astro: 2.8.5(sharp@0.32.3)
+      bcp-47: 2.1.0
+      execa: 7.1.1
+      hast-util-select: 5.0.5
+      hastscript: 7.2.0
+      pagefind: 1.0.0-alpha.8
+      rehype: 12.0.1
+      remark-directive: 2.0.1
+      unified: 10.1.2
+      unist-util-remove: 3.1.1
+      unist-util-visit: 4.1.2
+      vfile: 5.3.7
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@astrojs/starlight@0.5.4(astro@2.8.5):
+    resolution: {integrity: sha512-RtsgGLgMutlLZphf4xogcsX7NQRRb90EaZN5VTKf79KaZ3XPg4Ctq4LQonDWKUCwmyEL3wgz1xSzeBuEY8n+BA==}
     peerDependencies:
       astro: ^2.5.0
     dependencies:
