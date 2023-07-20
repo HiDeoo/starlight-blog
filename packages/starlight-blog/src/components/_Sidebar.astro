@@ -3,8 +3,7 @@ import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
 
 import { getBlogEntries } from '../libs/content'
 
-// TODO(HiDeoo) /blog sidebar
-const isBlogPost = Astro.url.pathname.startsWith('/blog/')
+const isBlogPost = Astro.url.pathname.startsWith('/blog')
 
 const blogEntries = await getBlogEntries()
 ---
