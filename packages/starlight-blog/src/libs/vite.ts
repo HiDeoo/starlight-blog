@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 
 import type { ViteUserConfig } from 'astro'
 
-const componentAliases = ['Sidebar', 'SocialIcons'] as const
+const componentAliases = ['Page', 'Sidebar', 'SocialIcons'] as const
 
 const aliasIds = new Map<ComponentAlias, string>()
 

@@ -1,11 +1,24 @@
 ---
-import { getBlogEntries } from '../libs/content'
+import Page from './_Page.astro'
+import { getBlogStaticPaths } from '../libs/content'
 
-const blogEntries = await getBlogEntries()
+export function getStaticPaths() {
+  return getBlogStaticPaths()
+}
 
-// TODO(HiDeoo) hide title ?
+// TODO(HiDeoo) hide title ? CSS only in this page?
+// TODO(HiDeoo) hide toc
+
+// TODO(HiDeoo) review all this
+const entry = {
+  data: {
+    head: [],
+    tableOfContents: false,
+    title: 'Landing',
+  },
+}
 ---
 
-<div>
-  {blogEntries.map((blogEntry) => <div>{blogEntry.data.title}</div>)}
-</div>
+<Page entry={entry} lang="en" entryMeta={{ lang: 'en' }}>
+  <div>LANDING</div>
+</Page>
