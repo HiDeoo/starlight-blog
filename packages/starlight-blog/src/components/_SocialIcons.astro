@@ -3,4 +3,18 @@ import StarlightSocialIcons from '@astrojs/starlight/components/SocialIcons.astr
 ---
 
 <StarlightSocialIcons {...Astro.props} />
-<div>BLOG LINK</div>
+<a href="/blog" rel="me">Blog</a>
+<div class="divider"></div>
+
+<style>
+  a {
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .divider {
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+    height: 2rem;
+  }
+</style>

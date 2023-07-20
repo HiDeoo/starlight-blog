@@ -12,7 +12,11 @@
     "./schema": "./src/libs/schema.ts"
   },
   "scripts": {
+    "test": "playwright test",
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.36.1"
   },
   "peerDependencies": {
     "@astrojs/starlight": ">=0.5.0",

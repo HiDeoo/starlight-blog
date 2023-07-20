@@ -6,7 +6,7 @@
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test implemented.\" && exit 1",
+    "test": "pnpm --stream -r test",
     "lint": "pnpm -r lint",
     "prepare": "husky install"
   },
