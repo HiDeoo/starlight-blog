@@ -8,6 +8,9 @@ const isBlog = isAnyBlogPage(Astro)
 const recentEntries = isBlog ? await getRecentBlogEntries() : []
 ---
 
+<div class="mobile-blog md:hidden">
+  <a href="/blog">Blog</a>
+</div>
 {
   isBlog ? (
     <StarlightSidebar
@@ -34,3 +37,18 @@ const recentEntries = isBlog ? await getRecentBlogEntries() : []
     <StarlightSidebar {...Astro.props} />
   )
 }
+
+<style>
+  .mobile-blog {
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    margin-inline: var(--sl-sidebar-pad-x);
+    padding-block: 1rem;
+  }
+
+  .mobile-blog a {
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-lg);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>
