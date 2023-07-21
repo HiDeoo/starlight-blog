@@ -1,0 +1,11 @@
+---
+import type { StarlightBlogEntry } from '../libs/content'
+
+interface Props {
+  entry: StarlightBlogEntry
+}
+
+const { entry } = Astro.props
+---
+
+<div>{entry.data.date}</div>

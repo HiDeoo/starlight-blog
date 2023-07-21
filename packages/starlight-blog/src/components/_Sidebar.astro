@@ -2,27 +2,26 @@
 import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
 
 import { getRecentBlogEntries } from '../libs/content'
+import { isAnyBlogPage, isBlogPostPage, isBlogRoot } from '../libs/route'
 
-const isBlogRoot = Astro.url.pathname.match(/^\/blog\/?$/)
-const isBlogPage = Astro.url.pathname.startsWith('/blog')
-
-const recentEntries = isBlogPage ? await getRecentBlogEntries() : []
+const isBlog = isAnyBlogPage(Astro)
+const recentEntries = isBlog ? await getRecentBlogEntries() : []
 ---
 
 {
-  isBlogPage ? (
+  isBlog ? (
     <StarlightSidebar
       sidebar={[
         {
           href: '/blog',
-          isCurrent: isBlogRoot,
+          isCurrent: isBlogRoot(Astro),
           label: 'All posts',
           type: 'link',
         },
         {
           entries: recentEntries.map((blogEntry) => ({
             href: `/${blogEntry.slug}`,
-            isCurrent: Astro.url.pathname.match(new RegExp(`^/${blogEntry.slug}/?$`)),
+            isCurrent: isBlogPostPage(Astro, blogEntry.slug),
             label: blogEntry.data.title,
             type: 'link',
           })),

@@ -9,7 +9,13 @@
         "extraFileExtensions": [".astro"]
       },
       "rules": {
-        "react/jsx-key": "off"
+        "react/jsx-key": "off",
+        "react/no-unknown-property": [
+          "error",
+          {
+            "ignore": ["class"]
+          }
+        ]
       }
     }
   ]

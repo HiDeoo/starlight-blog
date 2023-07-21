@@ -1,3 +1,7 @@
+declare module '@astrojs/starlight/components/MarkdownContent.astro' {
+  export default function MarkdownContent(props: Record<string, unknown>): unknown
+}
+
 declare module '@astrojs/starlight/layouts/Page.astro' {
   export default function Page(props: Record<string, unknown>): unknown
 }

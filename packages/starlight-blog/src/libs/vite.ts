@@ -5,7 +5,7 @@ import type { ViteUserConfig } from 'astro'
 
 import type { StarlightBlogConfig } from './config'
 
-const componentAliases = ['Page', 'Sidebar', 'SocialIcons'] as const
+const componentAliases = ['MarkdownContent', 'Page', 'Sidebar', 'SocialIcons'] as const
 
 const aliasIds = new Map<ComponentAlias, string>()
 
