@@ -77,7 +77,9 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
 
   await expect(details.getByRole('heading', { exact: true, level: 2, name: 'Recent posts' })).toBeVisible()
 
-  // TODO(HiDeoo) Test the order somewhere else
+  expect(await details.getByRole('link').count()).toBe(10)
+
+  // TODO(HiDeoo) Test the order somewhere else without relying on titles
   await expect(details.getByRole('link')).toHaveText([
     'Example Blog Post 13',
     'Example Blog Post 12',
@@ -89,8 +91,5 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
     'Example Blog Post 6',
     'Example Blog Post 5',
     'Example Blog Post 4',
-    'Example Blog Post 3',
-    'Example Blog Post 2',
-    'Example Blog Post 1',
   ])
 })

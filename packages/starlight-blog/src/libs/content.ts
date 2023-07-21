@@ -41,9 +41,10 @@ export async function getBlogStaticPaths() {
   })
 }
 
-// TODO(HiDeoo) limit
 export async function getRecentBlogEntries() {
-  return getBlogEntries()
+  const entries = await getBlogEntries()
+
+  return entries.slice(0, config.recentPostCount)
 }
 
 async function getBlogEntries() {

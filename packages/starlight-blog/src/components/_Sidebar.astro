@@ -6,7 +6,7 @@ import { getRecentBlogEntries } from '../libs/content'
 const isBlogRoot = Astro.url.pathname.match(/^\/blog\/?$/)
 const isBlogPage = Astro.url.pathname.startsWith('/blog')
 
-const blogEntries = isBlogPage ? await getRecentBlogEntries() : []
+const recentEntries = isBlogPage ? await getRecentBlogEntries() : []
 ---
 
 {
@@ -20,7 +20,7 @@ const blogEntries = isBlogPage ? await getRecentBlogEntries() : []
           type: 'link',
         },
         {
-          entries: blogEntries.map((blogEntry) => ({
+          entries: recentEntries.map((blogEntry) => ({
             href: `/${blogEntry.slug}`,
             // TODO(HiDeoo)
             isCurrent: false,
