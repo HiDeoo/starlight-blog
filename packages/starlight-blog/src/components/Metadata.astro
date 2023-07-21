@@ -8,4 +8,6 @@ interface Props {
 const { entry } = Astro.props
 ---
 
-<div>{entry.data.date}</div>
+<time datetime={entry.data.date.toISOString()}>
+  {entry.data.date.toLocaleDateString('en', { dateStyle: 'medium' })}
+</time>
