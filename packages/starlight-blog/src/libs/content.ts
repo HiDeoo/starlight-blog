@@ -84,7 +84,7 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEn
   }
 }
 
-async function getBlogEntries() {
+export async function getBlogEntries() {
   const entries = await getCollection<StarlightEntryData>('docs', ({ id }) => {
     return id.startsWith('blog/') && id !== 'blog/index.mdx'
   })

@@ -11,6 +11,11 @@ export default function starlightBlogIntegration(userConfig?: StarlightBlogConfi
     hooks: {
       'astro:config:setup': ({ injectRoute, updateConfig }) => {
         injectRoute({
+          entryPoint: 'starlight-blog/tags',
+          pattern: '/blog/tags/[tag]',
+        })
+
+        injectRoute({
           entryPoint: 'starlight-blog/blog',
           pattern: '/blog/[...page]',
         })

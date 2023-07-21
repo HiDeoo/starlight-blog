@@ -9,7 +9,8 @@
     "./package.json": "./package.json",
     ".": "./src/index.ts",
     "./blog": "./src/components/Blog.astro",
-    "./schema": "./src/libs/schema.ts"
+    "./schema": "./src/libs/schema.ts",
+    "./tags": "./src/components/Tags.astro"
   },
   "scripts": {
     "test": "playwright test",

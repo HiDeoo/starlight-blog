@@ -9,7 +9,7 @@ export function isBlogRoot({ url }: AstroGlobal) {
 }
 
 export function isAnyBlogPostPage({ url }: AstroGlobal) {
-  return url.pathname.match(/^\/blog\/(?!\d+\/?$).+$/)
+  return url.pathname.match(/^\/blog\/(?!(\d+\/?|tags\/.+)$).+$/)
 }
 
 export function isBlogPostPage({ url }: AstroGlobal, slug: string) {

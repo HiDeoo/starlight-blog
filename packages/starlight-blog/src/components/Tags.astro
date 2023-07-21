@@ -1,0 +1,29 @@
+---
+import type { InferGetStaticPropsType } from 'astro'
+import config from 'virtual:starlight-blog-config'
+
+import Page from './_Page.astro'
+import { getTagsStaticPaths } from '../libs/tags'
+
+export function getStaticPaths() {
+  return getTagsStaticPaths()
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
+
+// TODO(HiDeoo) review all this
+const entry = {
+  data: {
+    head: [],
+    tableOfContents: false,
+    // TODO(HiDeoo)
+    title: config.title,
+  },
+}
+
+// TODO(HiDeoo) review props below
+---
+
+<Page lang="en" entry={entry} entryMeta={{ lang: 'en' }}>
+  <div>TAGS</div>
+</Page>
