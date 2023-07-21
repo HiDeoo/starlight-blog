@@ -18,7 +18,7 @@ const tags = getEntryTags(entry)
       <ul>
         {tags.map((tag) => (
           <li>
-            <a href={`/blog/tags/${tag.slug}`}>{tag.name}</a>
+            <a href={`/blog/tags/${tag.slug}`}>{tag.label}</a>
           </li>
         ))}
       </ul>

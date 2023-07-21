@@ -2,41 +2,57 @@
 import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
 
 import { getRecentBlogEntries } from '../libs/content'
-import { isAnyBlogPage, isBlogPostPage, isBlogRoot } from '../libs/route'
+import { isAnyBlogPage, isBlogPostPage, isBlogRoot, isBlogTagsPage } from '../libs/route'
+import { getAllTags } from '../libs/tags'
 
 const isBlog = isAnyBlogPage(Astro)
 const recentEntries = isBlog ? await getRecentBlogEntries() : []
+
+const blogSidebar = isBlog
+  ? [
+      {
+        href: '/blog',
+        isCurrent: isBlogRoot(Astro),
+        label: 'All posts',
+        type: 'link',
+      },
+      {
+        entries: recentEntries.map((blogEntry) => ({
+          href: `/${blogEntry.slug}`,
+          isCurrent: isBlogPostPage(Astro, blogEntry.slug),
+          label: blogEntry.data.title,
+          type: 'link',
+        })),
+        label: 'Recent posts',
+        type: 'group',
+      },
+    ]
+  : []
+
+if (isBlog) {
+  const blogTags = await getAllTags()
+
+  if (blogTags.size > 0) {
+    // TODO(HiDeoo) Sort tags????
+    // TODO(HiDeoo) max tags count
+    blogSidebar.push({
+      entries: [...blogTags].map(([slug, { entries, label }]) => ({
+        href: `/blog/tags/${slug}`,
+        isCurrent: isBlogTagsPage(Astro, slug),
+        label: `${label} (${entries.length})`,
+        type: 'link',
+      })),
+      label: 'Tags',
+      type: 'group',
+    })
+  }
+}
 ---
 
 <div class="mobile-blog md:hidden">
   <a href="/blog">Blog</a>
 </div>
-{
-  isBlog ? (
-    <StarlightSidebar
-      sidebar={[
-        {
-          href: '/blog',
-          isCurrent: isBlogRoot(Astro),
-          label: 'All posts',
-          type: 'link',
-        },
-        {
-          entries: recentEntries.map((blogEntry) => ({
-            href: `/${blogEntry.slug}`,
-            isCurrent: isBlogPostPage(Astro, blogEntry.slug),
-            label: blogEntry.data.title,
-            type: 'link',
-          })),
-          label: 'Recent posts',
-          type: 'group',
-        },
-      ]}
-    />
-  ) : (
-    <StarlightSidebar {...Astro.props} />
-  )
-}
+{isBlog ? <StarlightSidebar sidebar={blogSidebar} /> : <StarlightSidebar {...Astro.props} />}
 
 <style>
   .mobile-blog {

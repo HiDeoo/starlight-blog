@@ -73,14 +73,15 @@ test('should add a link to all posts in the sidebar', async ({ blogPage }) => {
 test('should add links to recent posts in the sidebar', async ({ blogPage }) => {
   await blogPage.goto()
 
-  const details = blogPage.page.getByRole('group')
+  const groupName = 'Recent posts'
+  const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
 
-  await expect(details.getByRole('heading', { exact: true, level: 2, name: 'Recent posts' })).toBeVisible()
+  await expect(group.getByRole('heading', { exact: true, level: 2, name: groupName })).toBeVisible()
 
-  expect(await details.getByRole('link').count()).toBe(10)
+  expect(await group.getByRole('link').count()).toBe(10)
 
   // TODO(HiDeoo) Test the order somewhere else without relying on titles
-  await expect(details.getByRole('link')).toHaveText([
+  await expect(group.getByRole('link')).toHaveText([
     'Example Blog Post 13',
     'Example Blog Post 12',
     'Example Blog Post 11',
@@ -92,4 +93,17 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
     'Example Blog Post 5',
     'Example Blog Post 4',
   ])
+})
+
+test('should add links to tags in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const groupName = 'Tags'
+  const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
+
+  await expect(group.getByRole('heading', { exact: true, level: 2, name: groupName })).toBeVisible()
+
+  expect(await group.getByRole('link').count()).toBe(2)
+
+  await expect(group.getByRole('link')).toContainText(['Starlight', 'Amazing Content'])
 })
