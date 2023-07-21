@@ -13,9 +13,24 @@
         "react/no-unknown-property": [
           "error",
           {
-            "ignore": ["class"]
+            "ignore": ["class", "datetime"]
           }
         ]
+      }
+    },
+    {
+      "files": ["packages/starlight-blog/src/components/Metadata.astro"],
+      "rules": {
+        "jsx-a11y/aria-activedescendant-has-tabindex": "off",
+        "jsx-a11y/no-access-key": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "jsx-a11y/no-noninteractive-tabindex": "off",
+        "jsx-a11y/no-redundant-roles": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/role-supports-aria-props": "off",
+        "jsx-a11y/interactive-supports-focus": "off",
+        "jsx-a11y/autocomplete-valid": "off",
+        "jsx-a11y/click-events-have-key-events": "off"
       }
     }
   ]

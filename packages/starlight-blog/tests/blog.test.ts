@@ -93,5 +93,3 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
     'Example Blog Post 4',
   ])
 })
-
-// TODO(HiDeoo) test post date

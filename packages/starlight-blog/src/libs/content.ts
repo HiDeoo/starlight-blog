@@ -2,7 +2,7 @@ import type { z } from 'astro/zod'
 import { getCollection, getEntry, type AstroCollectionEntry } from 'astro:content'
 import config from 'virtual:starlight-blog-config'
 
-import type { docsAndBlogSchema } from './schema'
+import type { StarlightBlogAuthor, docsAndBlogSchema } from './schema'
 
 export async function getBlogStaticPaths() {
   const entries = await getBlogEntries()
@@ -59,6 +59,31 @@ export async function getBlogEntry(slug: string) {
   return entry
 }
 
+export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEntryMetadata {
+  const authors: StarlightBlogAuthor[] = []
+
+  if (!entry.data.authors) {
+    authors.push(...Object.values(config.authors))
+  } else if (typeof entry.data.authors === 'string') {
+    authors.push(getAuthorFromConfig(entry.data.authors))
+  } else if (Array.isArray(entry.data.authors)) {
+    for (const author of entry.data.authors) {
+      if (typeof author === 'string') {
+        authors.push(getAuthorFromConfig(author))
+      } else {
+        authors.push(author)
+      }
+    }
+  } else {
+    authors.push(entry.data.authors)
+  }
+
+  return {
+    authors,
+    date: entry.data.date.toLocaleDateString('en', { dateStyle: 'medium' }),
+  }
+}
+
 async function getBlogEntries() {
   const entries = await getCollection<StarlightEntryData>('docs', ({ id }) => {
     return id.startsWith('blog/') && id !== 'blog/index.mdx'
@@ -85,6 +110,16 @@ function validateBlogEntry(entry: StarlightEntry): asserts entry is StarlightBlo
   }
 }
 
+function getAuthorFromConfig(id: string): StarlightBlogAuthor {
+  const author = config.authors[id]
+
+  if (!author) {
+    throw new Error(`Author '${id}' not found in the blog configuration.`)
+  }
+
+  return author
+}
+
 type StarlightEntryData = z.infer<ReturnType<typeof docsAndBlogSchema>>
 type StarlightEntry = AstroCollectionEntry<StarlightEntryData>
 
@@ -92,6 +127,11 @@ export type StarlightBlogEntry = StarlightEntry & {
   data: {
     date: Date
   }
+}
+
+interface StarlightBlogEntryMetadata {
+  authors: StarlightBlogAuthor[]
+  date: string
 }
 
 interface StarlightBlogStaticProps {

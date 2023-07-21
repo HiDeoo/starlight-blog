@@ -1,7 +1,11 @@
 import { z } from 'astro/zod'
 
+import { blogAuthorSchema } from './schema'
+
 const configSchema = z
   .object({
+    // TODO(HiDeoo)
+    authors: z.record(blogAuthorSchema).default({}),
     // TODO(HiDeoo)
     postCount: z.number().min(1).default(5),
     // TODO(HiDeoo)

@@ -4,7 +4,11 @@ import starlightBlog from 'starlight-blog'
 
 export default defineConfig({
   integrations: [
-    starlightBlog(),
+    starlightBlog({
+      authors: {
+        hideoo: { name: 'HiDeoo', picture: '/hideoo.png', url: 'https://hideoo.dev' },
+      },
+    }),
     // FIXME(HiDeoo)
     starlight({
       title: 'My Docs',

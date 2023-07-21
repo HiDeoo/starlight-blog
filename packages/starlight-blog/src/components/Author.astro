@@ -1,0 +1,41 @@
+---
+import type { StarlightBlogAuthor } from '../libs/schema'
+
+interface Props {
+  author: StarlightBlogAuthor
+}
+
+const { author } = Astro.props
+
+const isLink = author.url !== undefined
+const Element = isLink ? 'a' : 'div'
+---
+
+<Element href={isLink ? author.url : undefined} class="author flex">
+  {author.picture ? <img alt={author.name} src={author.picture} /> : null}
+  {author.name}
+</Element>
+
+<style>
+  .author {
+    align-items: center;
+    font-weight: 600;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+
+  .author[href] {
+    color: var(--sl-color-text-accent);
+  }
+
+  .author[href]:hover {
+    color: var(--sl-color-white);
+  }
+
+  img {
+    border: 1px solid var(--sl-color-gray-2);
+    border-radius: 9999px;
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+</style>
