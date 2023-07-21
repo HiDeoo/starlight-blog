@@ -5,6 +5,9 @@ authors:
   name: Ghost
   picture: https://avatars.githubusercontent.com/u/10137?s=200
   url: https://github.com/ghost
+tags:
+  - Example
+  - Test
 ---
 
 // TODO(HiDeoo)

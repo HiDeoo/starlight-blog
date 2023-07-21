@@ -33,15 +33,21 @@ if (isBlog) {
   const blogTags = await getAllTags()
 
   if (blogTags.size > 0) {
-    // TODO(HiDeoo) Sort tags????
-    // TODO(HiDeoo) max tags count
     blogSidebar.push({
-      entries: [...blogTags].map(([slug, { entries, label }]) => ({
-        href: `/blog/tags/${slug}`,
-        isCurrent: isBlogTagsPage(Astro, slug),
-        label: `${label} (${entries.length})`,
-        type: 'link',
-      })),
+      entries: [...blogTags]
+        .sort(([, a], [, b]) => {
+          if (a.entries.length === b.entries.length) {
+            return a.label.localeCompare(b.label)
+          }
+
+          return b.entries.length - a.entries.length
+        })
+        .map(([slug, { entries, label }]) => ({
+          href: `/blog/tags/${slug}`,
+          isCurrent: isBlogTagsPage(Astro, slug),
+          label: `${label} (${entries.length})`,
+          type: 'link',
+        })),
       label: 'Tags',
       type: 'group',
     })

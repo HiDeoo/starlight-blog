@@ -103,7 +103,12 @@ test('should add links to tags in the sidebar', async ({ blogPage }) => {
 
   await expect(group.getByRole('heading', { exact: true, level: 2, name: groupName })).toBeVisible()
 
-  expect(await group.getByRole('link').count()).toBe(2)
+  expect(await group.getByRole('link').count()).toBe(6)
 
-  await expect(group.getByRole('link')).toContainText(['Starlight', 'Amazing Content'])
+  await expect(group.getByRole('link').nth(0)).toContainText('Starlight')
+  await expect(group.getByRole('link').nth(1)).toContainText('Example')
+  await expect(group.getByRole('link').nth(2)).toContainText('Amazing Content')
+  await expect(group.getByRole('link').nth(3)).toContainText('Ipsum')
+  await expect(group.getByRole('link').nth(4)).toContainText('Lorem')
+  await expect(group.getByRole('link').nth(5)).toContainText('Test')
 })

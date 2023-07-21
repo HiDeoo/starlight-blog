@@ -35,7 +35,7 @@ test('should use the referenced authors specified in the frontmatter', async ({ 
 })
 
 test('should not display tags in a post not having tags', async ({ postPage }) => {
-  await postPage.goto('post-1')
+  await postPage.goto('post-2')
 
   await expect(postPage.page.getByText('Tags: ', { exact: true })).not.toBeVisible()
 })

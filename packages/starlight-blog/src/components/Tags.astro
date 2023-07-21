@@ -2,8 +2,9 @@
 import type { InferGetStaticPropsType } from 'astro'
 import config from 'virtual:starlight-blog-config'
 
-import Page from './_Page.astro'
 import { getTagsStaticPaths } from '../libs/tags'
+
+import Page from './_Page.astro'
 
 export function getStaticPaths() {
   return getTagsStaticPaths()
@@ -20,6 +21,9 @@ const entry = {
     title: config.title,
   },
 }
+
+// TODO(HiDeoo)
+Astro.props
 
 // TODO(HiDeoo) review props below
 ---
