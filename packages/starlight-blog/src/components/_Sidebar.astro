@@ -22,8 +22,7 @@ const recentEntries = isBlogPage ? await getRecentBlogEntries() : []
         {
           entries: recentEntries.map((blogEntry) => ({
             href: `/${blogEntry.slug}`,
-            // TODO(HiDeoo)
-            isCurrent: false,
+            isCurrent: Astro.url.pathname.match(new RegExp(`^/${blogEntry.slug}/?$`)),
             label: blogEntry.data.title,
             type: 'link',
           })),
