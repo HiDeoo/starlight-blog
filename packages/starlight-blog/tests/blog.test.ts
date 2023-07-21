@@ -70,4 +70,27 @@ test('should add a link to all posts in the sidebar', async ({ blogPage }) => {
   expect(await link.getAttribute('href')).toBe('/blog')
 })
 
-// TODO(HiDeoo) Test recent posts
+test('should add links to recent posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const details = blogPage.page.getByRole('group')
+
+  await expect(details.getByRole('heading', { exact: true, level: 2, name: 'Recent posts' })).toBeVisible()
+
+  // TODO(HiDeoo) Test the order somewhere else
+  await expect(details.getByRole('link')).toHaveText([
+    'Example Blog Post 13',
+    'Example Blog Post 12',
+    'Example Blog Post 11',
+    'Example Blog Post 10',
+    'Example Blog Post 9',
+    'Example Blog Post 8',
+    'Example Blog Post 7',
+    'Example Blog Post 6',
+    'Example Blog Post 5',
+    'Example Blog Post 4',
+    'Example Blog Post 3',
+    'Example Blog Post 2',
+    'Example Blog Post 1',
+  ])
+})

@@ -7,8 +7,6 @@ import type { docsAndBlogSchema } from './schema'
 export async function getBlogStaticPaths() {
   const entries = await getBlogEntries()
 
-  validateBlogEntries(entries)
-
   const entryPages: StarlightBlogEntry[][] = []
 
   for (const entry of entries) {
@@ -48,10 +46,15 @@ export async function getRecentBlogEntries() {
   return getBlogEntries()
 }
 
-function getBlogEntries() {
-  // TODO(HiDeoo) order
-  return getCollection<StarlightEntryData>('docs', ({ id }) => {
+async function getBlogEntries() {
+  const entries = await getCollection<StarlightEntryData>('docs', ({ id }) => {
     return id.startsWith('blog/') && id !== 'blog/index.mdx'
+  })
+
+  validateBlogEntries(entries)
+
+  return entries.sort((a, b) => {
+    return b.data.date.getTime() - a.data.date.getTime()
   })
 }
 
@@ -70,7 +73,7 @@ type StarlightEntry = AstroCollectionEntry<StarlightEntryData>
 
 type StarlightBlogEntry = StarlightEntry & {
   data: {
-    date: string
+    date: Date
   }
 }
 
