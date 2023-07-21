@@ -1,0 +1,53 @@
+---
+import type { StarlightBlogEntry } from '../libs/content'
+import { getEntryTags } from '../libs/tags'
+
+interface Props {
+  entry: StarlightBlogEntry
+}
+
+const { entry } = Astro.props
+
+const tags = getEntryTags(entry)
+---
+
+{
+  tags.length > 0 ? (
+    <div>
+      <b>Tags: </b>
+      <ul>
+        {tags.map((tag) => (
+          <li>
+            <a href={`/blog/tags/${tag.slug}`}>{tag.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ) : null
+}
+
+<style>
+  ul {
+    display: inline;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    padding: 0;
+  }
+
+  a {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.3rem;
+    font-size: var(--sl-text-sm);
+    margin-inline: 0.2rem;
+    padding: 0.25rem 0.5rem 0.35rem;
+    text-decoration: none;
+  }
+
+  a:hover {
+    border-color: var(--sl-color-gray-2);
+  }
+</style>

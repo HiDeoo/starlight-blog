@@ -5,12 +5,16 @@ import { getBlogEntry } from '../libs/content'
 import { isAnyBlogPostPage } from '../libs/route'
 
 import Metadata from './Metadata.astro'
+import PostTags from './PostTags.astro'
 
 const isBlogPost = isAnyBlogPostPage(Astro)
 const post = isBlogPost ? await getBlogEntry(Astro.url.pathname) : undefined
+
+// TODO(HiDeoo) UI
 ---
 
 <StarlightMarkdownContent {...Astro.props}>
   {isBlogPost && post ? <Metadata entry={post} /> : null}
   <slot />
+  {isBlogPost && post ? <PostTags entry={post} /> : null}
 </StarlightMarkdownContent>

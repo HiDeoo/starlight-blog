@@ -15,6 +15,9 @@
     "test": "playwright test",
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit"
   },
+  "dependencies": {
+    "github-slugger": "2.0.0"
+  },
   "devDependencies": {
     "@playwright/test": "1.36.1"
   },

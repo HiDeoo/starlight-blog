@@ -16,6 +16,8 @@ export const blogEntrySchema = z.object({
   authors: z.union([z.string(), blogAuthorSchema, z.array(z.union([z.string(), blogAuthorSchema]))]).optional(),
   // TODO(HiDeoo) comment
   date: z.date(),
+  // TODO(HiDeoo) comment
+  tags: z.string().array().optional(),
 })
 
 export function docsAndBlogSchema(context: SchemaContext) {
