@@ -5,7 +5,7 @@ import { blogAuthorSchema } from './schema'
 const configSchema = z
   .object({
     /**
-     * A list of global authors.
+     * A list of global author(s).
      * Global authors are keyed by a unique identifier that can also be referenced in a blog post `authors` frontmatter
      * field.
      */

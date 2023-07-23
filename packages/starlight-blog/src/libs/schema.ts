@@ -18,7 +18,7 @@ export const blogAuthorSchema = z.object({
 
 export const blogEntrySchema = z.object({
   /**
-   * The authors of the blog post.
+   * The author(s) of the blog post.
    * If not provided, the authors will be inferred from the `authors` configuration option if defined.
    */
   authors: z.union([z.string(), blogAuthorSchema, z.array(z.union([z.string(), blogAuthorSchema]))]).optional(),
@@ -29,7 +29,7 @@ export const blogEntrySchema = z.object({
   date: z.date(),
   /**
    * The excerpt of the blog post used in the blog post list and tags pages.
-   * If not provided, the entire blog post content will be used.
+   * If not provided, the entire blog post content will be rendered.
    */
   excerpt: z.string().optional(),
   /**
