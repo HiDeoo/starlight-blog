@@ -4,13 +4,23 @@ import { blogAuthorSchema } from './schema'
 
 const configSchema = z
   .object({
-    // TODO(HiDeoo)
+    /**
+     * A list of global authors.
+     * Global authors are keyed by a unique identifier that can also be referenced in a blog post `authors` frontmatter
+     * field.
+     */
     authors: z.record(blogAuthorSchema).default({}),
-    // TODO(HiDeoo)
+    /**
+     * The number of blog posts to display per page in the blog post list.
+     */
     postCount: z.number().min(1).default(5),
-    // TODO(HiDeoo)
+    /**
+     * The number of recent blog posts to display in the sidebar.
+     */
     recentPostCount: z.number().min(1).default(10),
-    // TODO(HiDeoo)
+    /**
+     * The title of the blog.
+     */
     title: z.string().default('Blog'),
   })
   .default({})

@@ -2,22 +2,39 @@ import { docsSchema } from '@astrojs/starlight/schema'
 import { z } from 'astro/zod'
 
 export const blogAuthorSchema = z.object({
-  // TODO(HiDeoo)
+  /**
+   * The name of the author.
+   */
   name: z.string().min(1),
-  // TODO(HiDeoo)
+  /**
+   * The URL or path to the author's picture.
+   */
   picture: z.string().optional(),
-  // TODO(HiDeoo)
+  /**
+   * The URL to the author's website.
+   */
   url: z.string().url().optional(),
 })
 
 export const blogEntrySchema = z.object({
-  // TODO(HiDeoo) comment
+  /**
+   * The authors of the blog post.
+   * If not provided, the authors will be inferred from the `authors` configuration option if defined.
+   */
   authors: z.union([z.string(), blogAuthorSchema, z.array(z.union([z.string(), blogAuthorSchema]))]).optional(),
-  // TODO(HiDeoo) comment
+  /**
+   * The date of the blog post which must be a valid YAML timestamp.
+   * @see https://yaml.org/type/timestamp.html
+   */
   date: z.date(),
-  // TODO(HiDeoo) comment
+  /**
+   * The excerpt of the blog post used in the blog post list and tags pages.
+   * If not provided, the entire blog post content will be used.
+   */
   excerpt: z.string().optional(),
-  // TODO(HiDeoo) comment
+  /**
+   * A list of tags associated with the blog post.
+   */
   tags: z.string().array().optional(),
 })
 
