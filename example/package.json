@@ -2,7 +2,7 @@
   "name": "starlight-blog-example",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "// TODO(HiDeoo)",
+  "description": "Astro integration for Starlight to add a blog to your documentation.",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
   "scripts": {
@@ -26,7 +26,11 @@
   "private": true,
   "sideEffects": false,
   "keywords": [
-    "// TODO(HiDeoo)"
+    "starlight",
+    "blog",
+    "documentation",
+    "astro",
+    "astro-integration"
   ],
   "homepage": "https://github.com/HiDeoo/starlight-blog",
   "repository": {
