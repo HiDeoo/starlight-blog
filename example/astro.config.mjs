@@ -9,25 +9,18 @@ export default defineConfig({
         hideoo: { name: 'HiDeoo', picture: '/hideoo.png', url: 'https://hideoo.dev' },
       },
     }),
-    // FIXME(HiDeoo)
     starlight({
-      title: 'My Docs',
-      social: {
-        github: 'https://github.com/withastro/starlight',
+      editLink: {
+        baseUrl: 'https://github.com/HiDeoo/starlight-blog/edit/main/example/',
       },
       sidebar: [
-        {
-          label: 'Guides',
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: 'Example Guide', link: '/guides/example/' },
-          ],
-        },
-        {
-          label: 'Reference',
-          autogenerate: { directory: 'reference' },
-        },
+        { label: 'Getting Started', link: '/guides/getting-started/' },
+        { label: 'Authors', link: '/guides/authors/' },
       ],
+      social: {
+        github: 'https://github.com/HiDeoo/starlight-blog',
+      },
+      title: 'Starlight Blog',
     }),
   ],
   image: { service: { entrypoint: 'astro/assets/services/sharp' } },
