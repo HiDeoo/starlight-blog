@@ -1,4 +1,5 @@
 import type { AstroGlobal } from 'astro'
+import config from 'virtual:starlight-blog-config'
 
 export function isAnyBlogPage({ url }: AstroGlobal) {
   return url.pathname.match(/^\/blog(\/?$|\/.+\/?$)/)
@@ -18,4 +19,20 @@ export function isBlogPostPage({ url }: AstroGlobal, slug: string) {
 
 export function isBlogTagsPage({ url }: AstroGlobal, tag: string) {
   return url.pathname.match(new RegExp(`^/blog/tags/${tag}/?$`)) !== null
+}
+
+export function getPageProps(title: string) {
+  return {
+    entry: {
+      data: {
+        head: [],
+        tableOfContents: false,
+        title,
+      },
+    },
+    entryMeta: {
+      lang: config.locale,
+    },
+    lang: config.locale,
+  }
 }

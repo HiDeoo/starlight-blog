@@ -2,7 +2,7 @@
 import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
 
 import { getRecentBlogEntries } from '../libs/content'
-import { isAnyBlogPage, isBlogPostPage, isBlogRoot, isBlogTagsPage } from '../libs/route'
+import { isAnyBlogPage, isBlogPostPage, isBlogRoot, isBlogTagsPage } from '../libs/page'
 import { getAllTags } from '../libs/tags'
 
 const isBlog = isAnyBlogPage(Astro)

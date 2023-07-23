@@ -3,6 +3,7 @@ import type { InferGetStaticPropsType } from 'astro'
 import config from 'virtual:starlight-blog-config'
 
 import { getBlogStaticPaths } from '../libs/content'
+import { getPageProps } from '../libs/page'
 
 import Page from './_Page.astro'
 import Posts from './Posts.astro'
@@ -15,20 +16,9 @@ export function getStaticPaths() {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 const { entries, nextLink, prevLink } = Astro.props
-
-// TODO(HiDeoo) review all this
-const entry = {
-  data: {
-    head: [],
-    tableOfContents: false,
-    title: config.title,
-  },
-}
-
-// TODO(HiDeoo) review props below
 ---
 
-<Page lang={config.locale} entry={entry} entryMeta={{ lang: config.locale }}>
+<Page {...getPageProps(config.title)}>
   <Posts {entries} />
   <footer class="not-content">
     <PrevNextLinks next={nextLink} prev={prevLink} />
