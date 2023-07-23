@@ -1,0 +1,21 @@
+---
+import StarlightSocialIcons from '@astrojs/starlight/components/SocialIcons.astro'
+import config from 'virtual:starlight-blog-config'
+---
+
+<StarlightSocialIcons {...Astro.props} />
+<a href="/blog">{config.title}</a>
+<div class="divider"></div>
+
+<style>
+  a {
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .divider {
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+    height: 2rem;
+  }
+</style>

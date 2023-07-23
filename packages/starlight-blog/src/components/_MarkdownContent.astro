@@ -1,0 +1,30 @@
+---
+import StarlightMarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro'
+
+import { getBlogEntry, type StarlightBlogEntryPaginated } from '../libs/content'
+import { isAnyBlogPostPage } from '../libs/page'
+
+import Metadata from './Metadata.astro'
+import PostTags from './PostTags.astro'
+import PrevNextLinks from './PrevNextLinks.astro'
+
+const isBlogPost = isAnyBlogPostPage(Astro)
+let blogEntry: StarlightBlogEntryPaginated | undefined = undefined
+
+if (isBlogPost) {
+  blogEntry = await getBlogEntry(Astro.url.pathname)
+}
+---
+
+<StarlightMarkdownContent {...Astro.props}>
+  {isBlogPost && blogEntry ? <Metadata entry={blogEntry.entry} /> : null}
+  <slot />
+  {
+    isBlogPost && blogEntry ? (
+      <>
+        <PostTags entry={blogEntry.entry} />
+        <PrevNextLinks next={blogEntry.nextLink} prev={blogEntry.prevLink} />
+      </>
+    ) : null
+  }
+</StarlightMarkdownContent>

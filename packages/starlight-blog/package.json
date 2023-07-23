@@ -1,0 +1,53 @@
+{
+  "name": "starlight-blog",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Astro integration for Starlight to add a blog to your documentation.",
+  "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.ts",
+    "./blog": "./src/components/Blog.astro",
+    "./schema": "./src/libs/schema.ts",
+    "./tags": "./src/components/Tags.astro"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit"
+  },
+  "dependencies": {
+    "github-slugger": "2.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.36.1"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.5.0",
+    "astro": ">=2.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.6.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "starlight",
+    "blog",
+    "documentation",
+    "astro",
+    "astro-integration"
+  ],
+  "homepage": "https://github.com/HiDeoo/starlight-blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiDeoo/starlight-blog.git"
+  },
+  "bugs": "https://github.com/HiDeoo/starlight-blog/issues"
+}

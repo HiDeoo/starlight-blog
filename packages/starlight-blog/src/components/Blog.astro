@@ -1,0 +1,32 @@
+---
+import type { InferGetStaticPropsType } from 'astro'
+import config from 'virtual:starlight-blog-config'
+
+import { getBlogStaticPaths } from '../libs/content'
+import { getPageProps } from '../libs/page'
+
+import Page from './_Page.astro'
+import Posts from './Posts.astro'
+import PrevNextLinks from './PrevNextLinks.astro'
+
+export function getStaticPaths() {
+  return getBlogStaticPaths()
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
+
+const { entries, nextLink, prevLink } = Astro.props
+---
+
+<Page {...getPageProps(config.title)}>
+  <Posts {entries} />
+  <footer class="not-content">
+    <PrevNextLinks next={nextLink} prev={prevLink} />
+  </footer>
+</Page>
+
+<style>
+  :global(.content-panel:first-of-type) {
+    display: none;
+  }
+</style>

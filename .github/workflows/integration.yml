@@ -1,0 +1,60 @@
+name: Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  lint_test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 8.6.9
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: pnpm
+          node-version: 18
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Store Playwright Version
+        run: |
+          PLAYWRIGHT_VERSION=$(pnpm playwright --version | sed 's/Version //')
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+        working-directory: packages/starlight-blog
+
+      - name: Setup Playwright cache
+        id: cache-playwright
+        uses: actions/cache@v3
+        with:
+          key: playwright-${{ env.PLAYWRIGHT_VERSION }}
+          path: ~/.cache/ms-playwright
+
+      - name: Install Playwright browsers
+        run: pnpm playwright install --with-deps chromium
+        working-directory: packages/starlight-blog
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+
+      - name: Generates TypeScript types
+        run: pnpm astro sync
+        working-directory: example
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test

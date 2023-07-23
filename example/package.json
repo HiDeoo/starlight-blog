@@ -1,0 +1,41 @@
+{
+  "name": "starlight-blog-example",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Astro integration for Starlight to add a blog to your documentation.",
+  "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.5.4",
+    "astro": "2.8.5",
+    "sharp": "0.32.3",
+    "starlight-blog": "workspace:*"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.6.9",
+  "private": true,
+  "sideEffects": false,
+  "keywords": [
+    "starlight",
+    "blog",
+    "documentation",
+    "astro",
+    "astro-integration"
+  ],
+  "homepage": "https://github.com/HiDeoo/starlight-blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiDeoo/starlight-blog.git"
+  },
+  "bugs": "https://github.com/HiDeoo/starlight-blog/issues"
+}

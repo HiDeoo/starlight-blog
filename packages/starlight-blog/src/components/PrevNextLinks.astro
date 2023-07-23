@@ -1,0 +1,57 @@
+---
+import type { StarlightBlogLink } from '../libs/content'
+
+interface Props {
+  next: StarlightBlogLink | undefined
+  prev: StarlightBlogLink | undefined
+}
+
+const { next, prev } = Astro.props
+---
+
+{
+  prev || next ? (
+    <div class="pagination">
+      {prev && (
+        <a href={prev.href} rel="prev">
+          « {prev.label}
+        </a>
+      )}
+      {next && (
+        <a href={next.href} rel="next">
+          {next.label} »
+        </a>
+      )}
+    </div>
+  ) : null
+}
+
+<style>
+  .pagination {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  a {
+    border-radius: 0.5rem;
+    border: 1px solid var(--sl-color-gray-5);
+    box-shadow: var(--sl-shadow-md);
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-lg);
+    line-height: 1.4;
+    padding: 1rem;
+    text-decoration: none;
+  }
+
+  a:hover {
+    border-color: var(--sl-color-gray-2);
+  }
+
+  [rel='next'] {
+    justify-content: end;
+    grid-column: 2;
+    text-align: end;
+    flex-direction: row-reverse;
+  }
+</style>

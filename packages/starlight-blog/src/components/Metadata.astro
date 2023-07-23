@@ -1,0 +1,45 @@
+---
+import { getBlogEntryMetadata, type StarlightBlogEntry } from '../libs/content'
+
+import Author from './Author.astro'
+
+interface Props {
+  entry: StarlightBlogEntry
+}
+
+const { entry } = Astro.props
+const { authors, date } = getBlogEntryMetadata(entry)
+
+const hasAuthors = authors.length > 0
+---
+
+<div class="metadata flex not-content">
+  <time datetime={entry.data.date.toISOString()}>
+    {date}
+  </time>
+  {
+    hasAuthors ? (
+      <div class="authors flex">
+        {authors.map((author) => (
+          <Author {author} />
+        ))}
+      </div>
+    ) : null
+  }
+</div>
+
+<style>
+  .metadata {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  time {
+    font-size: var(--sl-text-sm);
+  }
+
+  .authors {
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+</style>

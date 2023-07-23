@@ -1,0 +1,48 @@
+{
+  "name": "starlight-blog-monorepo",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Astro integration for Starlight to add a blog to your documentation.",
+  "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
+  "type": "module",
+  "scripts": {
+    "test": "pnpm --stream -r test",
+    "lint": "pnpm -r lint",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@hideoo/eslint-config": "1.5.1",
+    "@hideoo/prettier-config": "2.0.0",
+    "@hideoo/tsconfig": "2.0.1",
+    "eslint": "8.45.0",
+    "eslint-plugin-astro": "0.27.2",
+    "husky": "8.0.3",
+    "lint-staged": "13.2.3",
+    "prettier": "3.0.0",
+    "prettier-plugin-astro": "0.11.0",
+    "typescript": "5.1.6"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.6.9",
+  "private": true,
+  "sideEffects": false,
+  "keywords": [
+    "starlight",
+    "blog",
+    "documentation",
+    "astro",
+    "astro-integration"
+  ],
+  "homepage": "https://github.com/HiDeoo/starlight-blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiDeoo/starlight-blog.git"
+  },
+  "bugs": "https://github.com/HiDeoo/starlight-blog/issues",
+  "lint-staged": {
+    "**/*": "prettier -w -u --cache",
+    "**/*.{js,jsx,ts,tsx,cjs,mjs}": "eslint --cache --max-warnings=0"
+  }
+}

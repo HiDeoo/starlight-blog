@@ -1,0 +1,76 @@
+---
+import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
+
+import { getRecentBlogEntries } from '../libs/content'
+import { isAnyBlogPage, isBlogPostPage, isBlogRoot, isBlogTagsPage } from '../libs/page'
+import { getAllTags } from '../libs/tags'
+
+const isBlog = isAnyBlogPage(Astro)
+const recentEntries = isBlog ? await getRecentBlogEntries() : []
+
+const blogSidebar = isBlog
+  ? [
+      {
+        href: '/blog',
+        isCurrent: isBlogRoot(Astro),
+        label: 'All posts',
+        type: 'link',
+      },
+      {
+        entries: recentEntries.map((blogEntry) => ({
+          href: `/${blogEntry.slug}`,
+          isCurrent: isBlogPostPage(Astro, blogEntry.slug),
+          label: blogEntry.data.title,
+          type: 'link',
+        })),
+        label: 'Recent posts',
+        type: 'group',
+      },
+    ]
+  : []
+
+if (isBlog) {
+  const blogTags = await getAllTags()
+
+  if (blogTags.size > 0) {
+    blogSidebar.push({
+      entries: [...blogTags]
+        .sort(([, a], [, b]) => {
+          if (a.entries.length === b.entries.length) {
+            return a.label.localeCompare(b.label)
+          }
+
+          return b.entries.length - a.entries.length
+        })
+        .map(([slug, { entries, label }]) => ({
+          href: `/blog/tags/${slug}`,
+          isCurrent: isBlogTagsPage(Astro, slug),
+          label: `${label} (${entries.length})`,
+          type: 'link',
+        })),
+      label: 'Tags',
+      type: 'group',
+    })
+  }
+}
+---
+
+<div class="mobile-blog md:hidden">
+  <a href="/blog">Blog</a>
+</div>
+{isBlog ? <StarlightSidebar sidebar={blogSidebar} /> : <StarlightSidebar {...Astro.props} />}
+
+<style>
+  .mobile-blog {
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    margin-inline: var(--sl-sidebar-pad-x);
+    padding-block: 1rem;
+  }
+
+  .mobile-blog a {
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-lg);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

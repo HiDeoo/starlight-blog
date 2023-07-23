@@ -1,0 +1,30 @@
+---
+import type { InferGetStaticPropsType } from 'astro'
+
+import { getPageProps } from '../libs/page'
+import { pluralize } from '../libs/string'
+import { getTagsStaticPaths } from '../libs/tags'
+
+import Page from './_Page.astro'
+import Posts from './Posts.astro'
+
+export function getStaticPaths() {
+  return getTagsStaticPaths()
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
+
+const { entries, label } = Astro.props
+---
+
+<Page {...getPageProps(label)}>
+  <div class="count">{pluralize(entries.length, 'post', 'posts')} with the tag &ldquo;{label}&rdquo;</div>
+  <Posts {entries} />
+</Page>
+
+<style>
+  .count {
+    font-size: var(--sl-text-xl);
+    font-weight: 600;
+  }
+</style>
