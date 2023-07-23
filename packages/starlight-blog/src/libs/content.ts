@@ -90,7 +90,7 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEn
 
   return {
     authors,
-    date: entry.data.date.toLocaleDateString('en', { dateStyle: 'medium' }),
+    date: entry.data.date.toLocaleDateString(config.locale, { dateStyle: 'medium' }),
   }
 }
 

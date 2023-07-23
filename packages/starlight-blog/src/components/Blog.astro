@@ -28,7 +28,7 @@ const entry = {
 // TODO(HiDeoo) review props below
 ---
 
-<Page lang="en" entry={entry} entryMeta={{ lang: 'en' }}>
+<Page lang={config.locale} entry={entry} entryMeta={{ lang: config.locale }}>
   <Posts {entries} />
   <footer class="not-content">
     <PrevNextLinks next={nextLink} prev={prevLink} />

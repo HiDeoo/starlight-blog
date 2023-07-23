@@ -48,7 +48,7 @@ export function vitePluginStarlightBlogComponents(): VitePlugin {
 export function vitePluginStarlightBlogConfig(config: StarlightBlogConfig): VitePlugin {
   const moduleId = 'virtual:starlight-blog-config'
   const resolvedModuleId = `\0${moduleId}`
-  const moduleContent = `export default ${JSON.stringify(config)}`
+  const moduleContent = `export default ${JSON.stringify({ ...config, locale: 'en' })}`
 
   return {
     name: 'vite-plugin-starlight-blog-config',
