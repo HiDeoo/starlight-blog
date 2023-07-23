@@ -25,6 +25,7 @@ export function getPageProps(title: string) {
   return {
     entry: {
       data: {
+        editUrl: false,
         head: [],
         tableOfContents: false,
         title,

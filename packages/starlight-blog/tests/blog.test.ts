@@ -134,3 +134,9 @@ test('should use sorted posts', async ({ blogPage }) => {
 
   expect(dates).toEqual(sortedDates)
 })
+
+test('should not display a link to edit this page', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  await expect(blogPage.page.getByText('Edit page')).not.toBeVisible()
+})

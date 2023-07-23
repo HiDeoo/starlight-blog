@@ -16,3 +16,9 @@ test('should display a preview of each posts with proper tag', async ({ tagsPage
     expect(await article.getByRole('listitem').filter({ hasText: tag }).count()).toBe(1)
   }
 })
+
+test('should not display a link to edit this page', async ({ tagsPage }) => {
+  await tagsPage.goto('starlight')
+
+  await expect(tagsPage.page.getByText('Edit page')).not.toBeVisible()
+})
