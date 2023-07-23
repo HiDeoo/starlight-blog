@@ -4,6 +4,9 @@ declare module 'astro:content' {
     collection: string
     data: TData
     id: string
+    render: () => Promise<{
+      Content: import('astro').MarkdownInstance<object>['Content']
+    }>
     slug: string
   }
 

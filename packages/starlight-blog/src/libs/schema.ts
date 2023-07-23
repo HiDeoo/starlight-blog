@@ -5,7 +5,6 @@ export const blogAuthorSchema = z.object({
   // TODO(HiDeoo)
   name: z.string().min(1),
   // TODO(HiDeoo)
-  // TODO(HiDeoo) local paths
   picture: z.string().optional(),
   // TODO(HiDeoo)
   url: z.string().url().optional(),
@@ -16,6 +15,8 @@ export const blogEntrySchema = z.object({
   authors: z.union([z.string(), blogAuthorSchema, z.array(z.union([z.string(), blogAuthorSchema]))]).optional(),
   // TODO(HiDeoo) comment
   date: z.date(),
+  // TODO(HiDeoo) comment
+  excerpt: z.string().optional(),
   // TODO(HiDeoo) comment
   tags: z.string().array().optional(),
 })

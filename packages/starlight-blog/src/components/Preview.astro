@@ -1,0 +1,45 @@
+---
+import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../libs/content'
+
+import MarkdownContent from './_MarkdownContent.astro'
+import Metadata from './Metadata.astro'
+import PostTags from './PostTags.astro'
+
+interface Props {
+  entry: StarlightBlogEntry
+}
+
+const { entry } = Astro.props
+
+const Excerpt = await getBlogEntryExcerpt(entry)
+---
+
+<article class="preview flex">
+  <header>
+    <h2>
+      <a href={`/${entry.slug}`}>{entry.data.title}</a>
+    </h2>
+    <Metadata entry={entry} />
+  </header>
+  <MarkdownContent>
+    {typeof Excerpt === 'string' ? Excerpt : <Excerpt />}
+  </MarkdownContent>
+  <footer>
+    <PostTags entry={entry} />
+  </footer>
+</article>
+
+<style>
+  .preview {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  h2 a {
+    text-decoration: none;
+  }
+</style>

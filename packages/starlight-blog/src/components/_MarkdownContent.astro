@@ -14,8 +14,6 @@ let blogEntry: StarlightBlogEntryPaginated | undefined = undefined
 if (isBlogPost) {
   blogEntry = await getBlogEntry(Astro.url.pathname)
 }
-
-// TODO(HiDeoo) UI
 ---
 
 <StarlightMarkdownContent {...Astro.props}>

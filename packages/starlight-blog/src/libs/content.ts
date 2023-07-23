@@ -106,6 +106,16 @@ export async function getBlogEntries() {
   })
 }
 
+export async function getBlogEntryExcerpt(entry: StarlightBlogEntry) {
+  if (entry.data.excerpt) {
+    return entry.data.excerpt
+  }
+
+  const { Content } = await entry.render()
+
+  return Content
+}
+
 // The validation of required fields is done here instead of in the zod schema directly as we do not want to require
 // them for the docs.
 function validateBlogEntries(entries: StarlightEntry[]): asserts entries is StarlightBlogEntry[] {

@@ -19,7 +19,10 @@
       }
     },
     {
-      "files": ["packages/starlight-blog/src/components/Metadata.astro"],
+      "files": [
+        "packages/starlight-blog/src/components/Blog.astro",
+        "packages/starlight-blog/src/components/Metadata.astro"
+      ],
       "rules": {
         "jsx-a11y/aria-activedescendant-has-tabindex": "off",
         "jsx-a11y/no-access-key": "off",

@@ -79,20 +79,6 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
   await expect(group.getByRole('heading', { exact: true, level: 2, name: groupName })).toBeVisible()
 
   expect(await group.getByRole('link').count()).toBe(10)
-
-  // TODO(HiDeoo) Test the order somewhere else without relying on titles
-  await expect(group.getByRole('link')).toHaveText([
-    'Example Blog Post 13',
-    'Example Blog Post 12',
-    'Example Blog Post 11',
-    'Example Blog Post 10',
-    'Example Blog Post 9',
-    'Example Blog Post 8',
-    'Example Blog Post 7',
-    'Example Blog Post 6',
-    'Example Blog Post 5',
-    'Example Blog Post 4',
-  ])
 })
 
 test('should add links to tags in the sidebar', async ({ blogPage }) => {
@@ -111,4 +97,38 @@ test('should add links to tags in the sidebar', async ({ blogPage }) => {
   await expect(group.getByRole('link').nth(3)).toContainText('Ipsum')
   await expect(group.getByRole('link').nth(4)).toContainText('Lorem')
   await expect(group.getByRole('link').nth(5)).toContainText('Test')
+})
+
+test('should display a preview of each posts', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const articles = blogPage.page.getByRole('article')
+
+  expect(await articles.count()).toBe(5)
+
+  const titles = articles.getByRole('heading', { level: 2 })
+
+  expect(await titles.count()).toBe(5)
+  expect(await titles.getByRole('link').count()).toBe(5)
+
+  await expect(articles.first().getByText('This is an example blog post excerpt.')).toBeVisible()
+})
+
+test('should use sorted posts', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const times = await blogPage.page.getByRole('article').locator('time').all()
+  const datetimes = await Promise.all(times.map((time) => time.getAttribute('datetime')))
+
+  const dates = datetimes.map((datetime) => {
+    if (!datetime) {
+      throw new Error('Missing datetime attribute.')
+    }
+
+    return new Date(datetime)
+  })
+
+  const sortedDates = [...dates].sort((a, b) => b.getTime() - a.getTime())
+
+  expect(dates).toEqual(sortedDates)
 })
