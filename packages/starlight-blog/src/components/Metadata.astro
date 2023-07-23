@@ -15,7 +15,7 @@ const hasAuthors = authors.length > 0
 // TODO(HiDeoo) UI
 ---
 
-<div class="not-content">
+<div class="metadata flex not-content">
   <time datetime={entry.data.date.toISOString()}>
     {date}
   </time>
@@ -31,6 +31,15 @@ const hasAuthors = authors.length > 0
 </div>
 
 <style>
+  .metadata {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  time {
+    font-size: var(--sl-text-sm);
+  }
+
   .authors {
     flex-wrap: wrap;
     gap: 0.75rem 1rem;
