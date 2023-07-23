@@ -22,14 +22,14 @@ export async function getAllTags(): Promise<StarlightBlogEntryTags> {
 export async function getTagsStaticPaths() {
   const entryTags = await getAllTags()
 
-  return [...entryTags.entries()].map(([slug, entries]) => {
+  return [...entryTags.entries()].map(([slug, { entries, label }]) => {
     return {
       params: {
         tag: slug,
       },
       props: {
-        // TODO(HiDeoo) pass down the tag name?
         entries,
+        label,
       },
     }
   })

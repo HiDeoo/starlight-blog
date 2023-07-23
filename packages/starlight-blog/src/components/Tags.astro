@@ -14,9 +14,7 @@ export function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
-const {
-  entries: { entries, label },
-} = Astro.props
+const { entries, label } = Astro.props
 
 // TODO(HiDeoo) review all this
 const entry = {
