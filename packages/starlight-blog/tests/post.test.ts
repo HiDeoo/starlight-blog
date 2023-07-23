@@ -1,7 +1,5 @@
 import { expect, test } from './test'
 
-// TODO(HiDeoo) test post date
-
 test('should fallback to the config author is none are provided in the frontmatter', async ({ postPage }) => {
   await postPage.goto('post-1')
 

@@ -5,7 +5,7 @@ import config from 'virtual:starlight-blog-config'
 import { getBlogStaticPaths } from '../libs/content'
 
 import Page from './_Page.astro'
-import Preview from './Preview.astro'
+import Posts from './Posts.astro'
 import PrevNextLinks from './PrevNextLinks.astro'
 
 export function getStaticPaths() {
@@ -13,6 +13,8 @@ export function getStaticPaths() {
 }
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
+
+const { entries, nextLink, prevLink } = Astro.props
 
 // TODO(HiDeoo) review all this
 const entry = {
@@ -23,13 +25,11 @@ const entry = {
   },
 }
 
-const { entries, nextLink, prevLink } = Astro.props
-
 // TODO(HiDeoo) review props below
 ---
 
 <Page lang="en" entry={entry} entryMeta={{ lang: 'en' }}>
-  <div class="posts flex">{entries.map((entry) => <Preview {entry} />)}</div>
+  <Posts {entries} />
   <footer class="not-content">
     <PrevNextLinks next={nextLink} prev={prevLink} />
   </footer>
@@ -38,10 +38,5 @@ const { entries, nextLink, prevLink } = Astro.props
 <style>
   :global(.content-panel:first-of-type) {
     display: none;
-  }
-
-  .posts {
-    flex-direction: column;
-    gap: 3rem;
   }
 </style>

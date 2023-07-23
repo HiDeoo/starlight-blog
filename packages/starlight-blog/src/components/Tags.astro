@@ -1,10 +1,11 @@
 ---
 import type { InferGetStaticPropsType } from 'astro'
-import config from 'virtual:starlight-blog-config'
 
+import { pluralize } from '../libs/string'
 import { getTagsStaticPaths } from '../libs/tags'
 
 import Page from './_Page.astro'
+import Posts from './Posts.astro'
 
 export function getStaticPaths() {
   return getTagsStaticPaths()
@@ -12,22 +13,30 @@ export function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
+const {
+  entries: { entries, label },
+} = Astro.props
+
 // TODO(HiDeoo) review all this
 const entry = {
   data: {
     head: [],
     tableOfContents: false,
-    // TODO(HiDeoo)
-    title: config.title,
+    title: label,
   },
 }
-
-// TODO(HiDeoo)
-Astro.props
 
 // TODO(HiDeoo) review props below
 ---
 
 <Page lang="en" entry={entry} entryMeta={{ lang: 'en' }}>
-  <div>TAGS</div>
+  <div class="count">{pluralize(entries.length, 'post', 'posts')} with the tag &ldquo;{label}&rdquo;</div>
+  <Posts {entries} />
 </Page>
+
+<style>
+  .count {
+    font-size: var(--sl-text-xl);
+    font-weight: 600;
+  }
+</style>
