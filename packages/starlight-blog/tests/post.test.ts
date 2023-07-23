@@ -54,3 +54,31 @@ test('should display tags in a post having tags', async ({ postPage }) => {
   await expect(amazingContentTag).toBeVisible()
   expect(await amazingContentTag.getAttribute('href')).toBe('/blog/tags/amazing-content')
 })
+
+test('should display navigation links', async ({ postPage }) => {
+  await postPage.goto('post-1')
+
+  await expect(postPage.prevLink).toBeVisible()
+  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/post-2')
+  await expect(postPage.nextLink).not.toBeVisible()
+
+  await postPage.goto('post-2')
+
+  await expect(postPage.prevLink).toBeVisible()
+  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/post-3')
+  await expect(postPage.nextLink).toBeVisible()
+  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/post-1')
+
+  await postPage.goto('post-12')
+
+  await expect(postPage.prevLink).toBeVisible()
+  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/post-13')
+  await expect(postPage.nextLink).toBeVisible()
+  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/post-11')
+
+  await postPage.goto('post-13')
+
+  await expect(postPage.prevLink).not.toBeVisible()
+  await expect(postPage.nextLink).toBeVisible()
+  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/post-12')
+})

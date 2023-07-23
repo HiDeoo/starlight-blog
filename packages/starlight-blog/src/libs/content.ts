@@ -1,5 +1,5 @@
 import type { z } from 'astro/zod'
-import { getCollection, getEntry, type AstroCollectionEntry } from 'astro:content'
+import { getCollection, type AstroCollectionEntry } from 'astro:content'
 import config from 'virtual:starlight-blog-config'
 
 import type { StarlightBlogAuthor, docsAndBlogSchema } from './schema'
@@ -34,8 +34,8 @@ export async function getBlogStaticPaths() {
       },
       props: {
         entries,
-        nextHref: nextPage ? `/blog/${index + 2}` : undefined,
-        prevHref: prevPage ? (index === 1 ? '/blog' : `/blog/${index}`) : undefined,
+        nextLink: nextPage ? { href: `/blog/${index + 2}`, label: 'Older posts' } : undefined,
+        prevLink: prevPage ? { href: index === 1 ? '/blog' : `/blog/${index}`, label: 'Newer posts' } : undefined,
       } satisfies StarlightBlogStaticProps,
     }
   })
@@ -47,8 +47,11 @@ export async function getRecentBlogEntries() {
   return entries.slice(0, config.recentPostCount)
 }
 
-export async function getBlogEntry(slug: string) {
-  const entry = await getEntry<StarlightEntryData>('docs', slug.replace(/^\//, '').replace(/\/$/, ''))
+export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPaginated> {
+  const entries = await getBlogEntries()
+
+  const entryIndex = entries.findIndex((entry) => entry.slug === slug.replace(/^\//, '').replace(/\/$/, ''))
+  const entry = entries[entryIndex]
 
   if (!entry) {
     throw new Error(`Blog post with slug '${slug}' not found.`)
@@ -56,7 +59,14 @@ export async function getBlogEntry(slug: string) {
 
   validateBlogEntry(entry)
 
-  return entry
+  const prevEntry = entries[entryIndex - 1]
+  const nextEntry = entries[entryIndex + 1]
+
+  return {
+    entry,
+    nextLink: nextEntry ? { href: `/${nextEntry.slug}`, label: nextEntry.data.title } : undefined,
+    prevLink: prevEntry ? { href: `/${prevEntry.slug}`, label: prevEntry.data.title } : undefined,
+  }
 }
 
 export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEntryMetadata {
@@ -129,6 +139,17 @@ export type StarlightBlogEntry = StarlightEntry & {
   }
 }
 
+export interface StarlightBlogLink {
+  href: string
+  label: string
+}
+
+export interface StarlightBlogEntryPaginated {
+  entry: StarlightBlogEntry
+  nextLink: StarlightBlogLink | undefined
+  prevLink: StarlightBlogLink | undefined
+}
+
 interface StarlightBlogEntryMetadata {
   authors: StarlightBlogAuthor[]
   date: string
@@ -136,6 +157,6 @@ interface StarlightBlogEntryMetadata {
 
 interface StarlightBlogStaticProps {
   entries: StarlightBlogEntry[]
-  nextHref: string | undefined
-  prevHref: string | undefined
+  nextLink: StarlightBlogLink | undefined
+  prevLink: StarlightBlogLink | undefined
 }

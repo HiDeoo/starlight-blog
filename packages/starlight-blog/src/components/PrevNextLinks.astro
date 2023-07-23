@@ -1,25 +1,25 @@
 ---
+import type { StarlightBlogLink } from '../libs/content'
+
 interface Props {
-  next: string | undefined
-  prev: string | undefined
+  next: StarlightBlogLink | undefined
+  prev: StarlightBlogLink | undefined
 }
 
 const { next, prev } = Astro.props
-
-// TODO(HiDeoo) responsive
 ---
 
 {
   prev || next ? (
     <div class="pagination">
       {prev && (
-        <a href={prev} rel="prev">
-          « Newer posts
+        <a href={prev.href} rel="prev">
+          « {prev.label}
         </a>
       )}
       {next && (
-        <a href={next} rel="next">
-          Older posts »
+        <a href={next.href} rel="next">
+          {next.label} »
         </a>
       )}
     </div>
@@ -39,6 +39,7 @@ const { next, prev } = Astro.props
     box-shadow: var(--sl-shadow-md);
     color: var(--sl-color-white);
     font-size: var(--sl-text-lg);
+    line-height: 1.4;
     padding: 1rem;
     text-decoration: none;
   }

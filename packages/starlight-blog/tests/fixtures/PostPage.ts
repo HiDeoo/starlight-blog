@@ -6,4 +6,12 @@ export class PostPage {
   goto(slug: string) {
     return this.page.goto(`/blog/${slug}`)
   }
+
+  get nextLink() {
+    return this.page.locator('css=[rel="next"]')
+  }
+
+  get prevLink() {
+    return this.page.locator('css=[rel="prev"]')
+  }
 }

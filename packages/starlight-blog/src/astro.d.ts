@@ -11,6 +11,4 @@ declare module 'astro:content' {
     collection: string,
     filter?: (entry: AstroCollectionEntry<TData>) => boolean,
   ): Promise<AstroCollectionEntry<TData>[]>
-
-  export function getEntry<TData>(collection: string, slug: string): Promise<AstroCollectionEntry<TData> | undefined>
 }

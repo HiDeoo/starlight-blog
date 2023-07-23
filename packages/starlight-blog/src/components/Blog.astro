@@ -22,7 +22,7 @@ const entry = {
   },
 }
 
-const { nextHref, prevHref } = Astro.props
+const { nextLink, prevLink } = Astro.props
 
 // TODO(HiDeoo) review props below
 ---
@@ -30,7 +30,7 @@ const { nextHref, prevHref } = Astro.props
 <Page lang="en" entry={entry} entryMeta={{ lang: 'en' }}>
   <div>LANDING</div>
   <footer class="not-content">
-    <PrevNextLinks next={nextHref} prev={prevHref} />
+    <PrevNextLinks next={nextLink} prev={prevLink} />
   </footer>
 </Page>
 
