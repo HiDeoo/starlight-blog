@@ -23,7 +23,6 @@ export async function getBlogStaticPaths() {
     entryPages.push([])
   }
 
-  // TODO(HiDeoo) Handle no blog post
   return entryPages.map((entries, index) => {
     const prevPage = index === 0 ? undefined : entryPages.at(index - 1)
     const nextPage = entryPages.at(index + 1)
