@@ -34,6 +34,9 @@
     "access": "public"
   },
   "sideEffects": false,
+  "files": [
+    "src"
+  ],
   "keywords": [
     "starlight",
     "blog",
