@@ -49,6 +49,10 @@ jobs:
         working-directory: packages/starlight-blog
         if: steps.cache-playwright.outputs.cache-hit != 'true'
 
+      - name: Generates TypeScript types
+        run: pnpm astro sync
+        working-directory: example
+
       - name: Lint
         run: pnpm lint
 
