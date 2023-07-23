@@ -89,14 +89,16 @@ test('should add links to tags in the sidebar', async ({ blogPage }) => {
 
   await expect(group.getByRole('heading', { exact: true, level: 2, name: groupName })).toBeVisible()
 
-  expect(await group.getByRole('link').count()).toBe(6)
+  expect(await group.getByRole('link').count()).toBe(8)
 
   await expect(group.getByRole('link').nth(0)).toContainText('Starlight')
   await expect(group.getByRole('link').nth(1)).toContainText('Example')
-  await expect(group.getByRole('link').nth(2)).toContainText('Amazing Content')
-  await expect(group.getByRole('link').nth(3)).toContainText('Ipsum')
-  await expect(group.getByRole('link').nth(4)).toContainText('Lorem')
-  await expect(group.getByRole('link').nth(5)).toContainText('Test')
+  await expect(group.getByRole('link').nth(2)).toContainText('Placeholder')
+  await expect(group.getByRole('link').nth(3)).toContainText('Amazing Content')
+  await expect(group.getByRole('link').nth(4)).toContainText('Demo')
+  await expect(group.getByRole('link').nth(5)).toContainText('Ipsum')
+  await expect(group.getByRole('link').nth(6)).toContainText('Lorem')
+  await expect(group.getByRole('link').nth(7)).toContainText('Test')
 })
 
 test('should display a preview of each posts', async ({ blogPage }) => {
@@ -111,7 +113,7 @@ test('should display a preview of each posts', async ({ blogPage }) => {
   expect(await titles.count()).toBe(5)
   expect(await titles.getByRole('link').count()).toBe(5)
 
-  await expect(articles.first().getByText('This is an example blog post excerpt.')).toBeVisible()
+  await expect(articles.first().getByText('Donec eget vestibulum leo.')).toBeVisible()
 })
 
 test('should use sorted posts', async ({ blogPage }) => {

@@ -2,7 +2,7 @@ import { expect, test } from './test'
 
 test('should display a preview of each posts with proper tag', async ({ tagsPage }) => {
   const tag = 'Starlight'
-  const count = 3
+  const count = 4
 
   await tagsPage.goto(tag.toLowerCase())
 

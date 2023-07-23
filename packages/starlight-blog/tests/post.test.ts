@@ -1,32 +1,32 @@
 import { expect, test } from './test'
 
 test('should fallback to the config author is none are provided in the frontmatter', async ({ postPage }) => {
-  await postPage.goto('post-1')
+  await postPage.goto('nitidum-fuit')
 
   await expect(postPage.page.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
 })
 
 test('should use the referenced author in the frontmatter', async ({ postPage }) => {
-  await postPage.goto('post-2')
+  await postPage.goto('funda-pro')
 
   await expect(postPage.page.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
 })
 
 test('should use the author specified in the frontmatter', async ({ postPage }) => {
-  await postPage.goto('post-3')
+  await postPage.goto('spectat-fingit')
 
   await expect(postPage.page.getByRole('link', { name: 'Ghost' })).toBeVisible()
 })
 
 test('should use the authors specified in the frontmatter', async ({ postPage }) => {
-  await postPage.goto('post-4')
+  await postPage.goto('haerent-huc-curae')
 
   await expect(postPage.page.getByRole('link', { name: 'Ghost' })).toBeVisible()
   await expect(postPage.page.getByRole('link', { name: 'Astro' })).toBeVisible()
 })
 
 test('should use the referenced authors specified in the frontmatter', async ({ postPage }) => {
-  await postPage.goto('post-5')
+  await postPage.goto('iove-ad-thyrsos-sororis')
 
   await expect(postPage.page.getByRole('link', { name: 'Ghost' })).toBeVisible()
   await expect(postPage.page.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
@@ -39,7 +39,7 @@ test('should not display tags in a post not having tags', async ({ postPage }) =
 })
 
 test('should display tags in a post having tags', async ({ postPage }) => {
-  await postPage.goto('post-6')
+  await postPage.goto('tollere-cepit-formidabilis-currere')
 
   await expect(postPage.page.getByText('Tags: ', { exact: true })).toBeVisible()
 
@@ -54,29 +54,29 @@ test('should display tags in a post having tags', async ({ postPage }) => {
 })
 
 test('should display navigation links', async ({ postPage }) => {
-  await postPage.goto('post-1')
+  await postPage.goto('nitidum-fuit')
 
   await expect(postPage.prevLink).toBeVisible()
-  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/post-2')
+  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/funda-pro')
   await expect(postPage.nextLink).not.toBeVisible()
 
-  await postPage.goto('post-2')
+  await postPage.goto('funda-pro')
 
   await expect(postPage.prevLink).toBeVisible()
-  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/post-3')
+  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/spectat-fingit')
   await expect(postPage.nextLink).toBeVisible()
-  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/post-1')
+  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/nitidum-fuit')
 
-  await postPage.goto('post-12')
+  await postPage.goto('vario-nunc-polo')
 
   await expect(postPage.prevLink).toBeVisible()
-  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/post-13')
+  expect(await postPage.prevLink.getAttribute('href')).toBe('/blog/sequantur-quaeritis-tandem')
   await expect(postPage.nextLink).toBeVisible()
-  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/post-11')
+  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/mihi-terrae-somnia')
 
-  await postPage.goto('post-13')
+  await postPage.goto('sequantur-quaeritis-tandem')
 
   await expect(postPage.prevLink).not.toBeVisible()
   await expect(postPage.nextLink).toBeVisible()
-  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/post-12')
+  expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/vario-nunc-polo')
 })
