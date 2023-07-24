@@ -20,10 +20,10 @@
     },
     {
       "files": [
-        "packages/starlight-blog/src/components/Blog.astro",
-        "packages/starlight-blog/src/components/Metadata.astro",
-        "packages/starlight-blog/src/components/Posts.astro",
-        "packages/starlight-blog/src/components/Tags.astro"
+        "packages/starlight-blog/Blog.astro",
+        "packages/starlight-blog/components/Metadata.astro",
+        "packages/starlight-blog/components/Posts.astro",
+        "packages/starlight-blog/Tags.astro"
       ],
       "rules": {
         "jsx-a11y/aria-activedescendant-has-tabindex": "off",

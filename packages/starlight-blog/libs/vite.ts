@@ -10,7 +10,7 @@ const componentAliases = ['MarkdownContent', 'Page', 'Sidebar', 'SocialIcons'] a
 const aliasIds = new Map<ComponentAlias, string>()
 
 // Alias various starlight components to local ones.
-// The local components should be located in the `src/components` directory, use the same name as the aliased component,
+// The local components should be located in the `components` directory, use the same name as the aliased component,
 // and be prefixed with an underscore.
 export function vitePluginStarlightBlogComponents(): VitePlugin {
   return {
@@ -24,7 +24,7 @@ export function vitePluginStarlightBlogComponents(): VitePlugin {
       for (const alias of componentAliases) {
         if (id.endsWith(`/${alias}.astro`)) {
           // If the component is imported by starlight, use the aliased component.
-          if (!importer?.includes('starlight-blog/src/components')) {
+          if (!importer?.includes('starlight-blog/components')) {
             const resolvedAlias = await this.resolve(id, importer, { ...options, skipSelf: true })
 
             if (resolvedAlias) {

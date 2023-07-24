@@ -2,7 +2,7 @@ import type { z } from 'astro/zod'
 import { getCollection, type AstroCollectionEntry } from 'astro:content'
 import config from 'virtual:starlight-blog-config'
 
-import type { StarlightBlogAuthor, docsAndBlogSchema } from './schema'
+import type { StarlightBlogAuthor, docsAndBlogSchema } from '../schema'
 
 export async function getBlogStaticPaths() {
   const entries = await getBlogEntries()

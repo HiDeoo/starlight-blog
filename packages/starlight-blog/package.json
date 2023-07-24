@@ -6,11 +6,11 @@
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
   "exports": {
-    "./package.json": "./package.json",
-    ".": "./src/index.ts",
-    "./blog": "./src/components/Blog.astro",
-    "./schema": "./src/libs/schema.ts",
-    "./tags": "./src/components/Tags.astro"
+    ".": "./index.ts",
+    "./blog": "./Blog.astro",
+    "./schema": "./schema.ts",
+    "./tags": "./Tags.astro",
+    "./package.json": "./package.json"
   },
   "scripts": {
     "test": "playwright test",
@@ -34,9 +34,6 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": [
-    "src"
-  ],
   "keywords": [
     "starlight",
     "blog",

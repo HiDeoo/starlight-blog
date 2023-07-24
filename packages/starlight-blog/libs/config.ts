@@ -1,6 +1,6 @@
 import { z } from 'astro/zod'
 
-import { blogAuthorSchema } from './schema'
+import { blogAuthorSchema } from '../schema'
 
 const configSchema = z
   .object({
