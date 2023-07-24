@@ -17,7 +17,7 @@ export function vitePluginStarlightBlogComponents(): VitePlugin {
     enforce: 'pre',
     name: 'vite-plugin-starlight-blog-components',
     async resolveId(id, importer, options) {
-      if (id.startsWith('/@fs')) {
+      if (id.startsWith('/@fs') || importer?.endsWith('.html')) {
         return
       }
 
