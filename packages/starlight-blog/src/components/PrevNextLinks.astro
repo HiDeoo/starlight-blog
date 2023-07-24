@@ -11,7 +11,7 @@ const { next, prev } = Astro.props
 
 {
   prev || next ? (
-    <div class="pagination">
+    <div class="pagination not-content">
       {prev && (
         <a href={prev.href} rel="prev">
           « {prev.label}
