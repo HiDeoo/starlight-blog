@@ -1,12 +1,11 @@
 ---
 import type { InferGetStaticPropsType } from 'astro'
 
+import Page from './components/_Page.astro'
+import Posts from './components/Posts.astro'
 import { getPageProps } from './libs/page'
 import { pluralize } from './libs/string'
 import { getTagsStaticPaths } from './libs/tags'
-
-import Page from './components/_Page.astro'
-import Posts from './components/Posts.astro'
 
 export function getStaticPaths() {
   return getTagsStaticPaths()
