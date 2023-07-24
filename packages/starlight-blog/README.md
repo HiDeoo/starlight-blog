@@ -39,7 +39,7 @@ Some features are still missing and will be added in the future like internation
 Install the Starlight Blog integration using your favorite package manager, e.g. with [pnpm](https://pnpm.io):
 
 ```shell
-pnpm add starlight-links-validator
+pnpm add starlight-blog
 ```
 
 Update your [Astro configuration](https://docs.astro.build/en/guides/configuring-astro/#supported-config-file-types) to include the Starlight Blog integration **_before_** the Starlight integration:
