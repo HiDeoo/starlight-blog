@@ -4,6 +4,10 @@ title: Getting Started
 
 import { Tabs, TabItem } from '@astrojs/starlight/components'
 
+:::caution[Warning]
+The Starlight Blog integration is still in early development and relies on fragile APIs to customize Starlight.
+:::
+
 Install the Starlight Blog integration using your favorite package manager:
 
 <Tabs>
@@ -69,6 +73,20 @@ export default defineConfig({
 })
 ```
 
+Update the Starlight Content Collections configuration in `src/content/config.ts` to use a new schema supporting blog posts:
+
+```ts
+import { docsSchema, i18nSchema } from '@astrojs/starlight/schema'
+import { defineCollection } from 'astro:content'
+import { docsAndBlogSchema } from 'starlight-blog/schema'
+
+export const collections = {
+  // Use the Starlight Blog integration schema.
+  docs: defineCollection({ schema: docsAndBlogSchema }),
+  i18n: defineCollection({ type: 'data', schema: i18nSchema() }),
+}
+```
+
 Create your first blog post by creating a `.md` or `.mdx` file in the `src/content/docs/blog/` directory:
 
 ```md
@@ -88,7 +106,7 @@ You can pass the following options to the Starlight Blog integration:
 
 | Name              | Description                                                                                 | Default |
 | ----------------- | ------------------------------------------------------------------------------------------- | :-----: |
-| `authors`         | A list of global authors. Check the [authors](/guides/authors/) page for more informations. |   {}    |
+| `authors`         | A list of global authors. Check the [authors](/guides/authors/) page for more informations. |  \{\}   |
 | `postCount`       | The number of blog posts to display per page in the blog post list.                         |    5    |
 | `recentPostCount` | The number of recent blog posts to display in the sidebar.                                  |   10    |
 | `title`           | The title of the blog.                                                                      | 'Blog'  |

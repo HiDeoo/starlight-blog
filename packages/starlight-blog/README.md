@@ -66,6 +66,20 @@ Update your [Astro configuration](https://docs.astro.build/en/guides/configuring
   })
 ```
 
+Update the Starlight Content Collections configuration in `src/content/config.ts` to use a new schema supporting blog posts:
+
+```diff
+  import { docsSchema, i18nSchema } from '@astrojs/starlight/schema'
+  import { defineCollection } from 'astro:content'
++ import { docsAndBlogSchema } from 'starlight-blog/schema'
+
+  export const collections = {
+-   docs: defineCollection({ schema: docsSchema() }),
++   docs: defineCollection({ schema: docsAndBlogSchema }),
+    i18n: defineCollection({ type: 'data', schema: i18nSchema() }),
+  }
+```
+
 Create your first blog post by creating a `.md` or `.mdx` file in the `src/content/docs/blog/` directory:
 
 ```md
