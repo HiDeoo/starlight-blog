@@ -7,6 +7,10 @@ export const blogAuthorSchema = z.object({
    */
   name: z.string().min(1),
   /**
+   * The title of the author.
+   */
+  title: z.string().optional(),
+  /**
    * The URL or path to the author's picture.
    */
   picture: z.string().optional(),
