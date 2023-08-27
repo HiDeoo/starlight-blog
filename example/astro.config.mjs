@@ -6,7 +6,7 @@ export default defineConfig({
   integrations: [
     starlightBlog({
       authors: {
-        hideoo: { name: 'HiDeoo', title: 'Starlight MVP', picture: '/hideoo.png', url: 'https://hideoo.dev' },
+        hideoo: { name: 'HiDeoo', title: 'Starlight Legend', picture: '/hideoo.png', url: 'https://hideoo.dev' },
       },
     }),
     starlight({
