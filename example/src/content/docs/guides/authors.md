@@ -9,6 +9,7 @@ Authors can be defined in a blog post using the `authors` frontmatter property a
 ```yaml
 authors:
   name: HiDeoo
+  title: Starlight Legend
   picture: https://avatars.githubusercontent.com/u/494699
   url: https://hideoo.dev
 ```
@@ -18,6 +19,7 @@ Multiple authors can be defined using an array:
 ```yaml
 authors:
   - name: HiDeoo
+    title: Starlight Legend
     picture: https://avatars.githubusercontent.com/u/494699
     url: https://hideoo.dev
   - name: Ghost
@@ -34,6 +36,7 @@ starlightBlog({
   authors: {
     hideoo: {
       name: 'HiDeoo',
+      title: 'Starlight Legend',
       picture: '/hideoo.png', // Images in the `public` directory are supported.
       url: 'https://hideoo.dev',
     },
