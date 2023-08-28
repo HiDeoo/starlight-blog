@@ -32,8 +32,14 @@ test('should use the referenced authors specified in the frontmatter', async ({ 
   await expect(postPage.page.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
 })
 
+test('should display author title', async ({ postPage }) => {
+  await postPage.goto('sequantur-quaeritis-tandem')
+
+  await expect(postPage.page.getByRole('link', { name: 'Starlight Aficionado' })).toBeVisible()
+})
+
 test('should not display tags in a post not having tags', async ({ postPage }) => {
-  await postPage.goto('post-2')
+  await postPage.goto('mihi-terrae-somnia')
 
   await expect(postPage.page.getByText('Tags: ', { exact: true })).not.toBeVisible()
 })
