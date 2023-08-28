@@ -34,6 +34,9 @@ const Element = isLink ? 'a' : 'div'
   .name {
     font-size: var(--sl-text-base);
     font-weight: 600;
+  }
+
+  .author[href] .name {
     color: var(--sl-color-text-accent);
   }
 
@@ -42,7 +45,7 @@ const Element = isLink ? 'a' : 'div'
     color: var(--sl-color-text);
   }
 
-  .author:hover .name {
+  .author[href]:hover .name {
     color: var(--sl-color-text);
   }
 
