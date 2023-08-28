@@ -5,8 +5,6 @@ excerpt: Aenean id blandit quam, hendrerit molestie est. Proin faucibus eros nib
 authors:
   - name: Ghost
     picture: https://avatars.githubusercontent.com/u/10137?s=200
-tags:
-  - Starlight
 ---
 
 ## Nostris sollerti dedit
