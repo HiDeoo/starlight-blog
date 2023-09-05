@@ -11,16 +11,15 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@hideoo/eslint-config": "1.5.1",
+    "@hideoo/eslint-config": "2.0.1",
     "@hideoo/prettier-config": "2.0.0",
     "@hideoo/tsconfig": "2.0.1",
-    "eslint": "8.45.0",
-    "eslint-plugin-astro": "0.27.2",
+    "eslint": "8.48.0",
     "husky": "8.0.3",
-    "lint-staged": "13.2.3",
-    "prettier": "3.0.0",
-    "prettier-plugin-astro": "0.11.0",
-    "typescript": "5.1.6"
+    "lint-staged": "14.0.1",
+    "prettier": "3.0.3",
+    "prettier-plugin-astro": "0.12.0",
+    "typescript": "5.2.2"
   },
   "engines": {
     "node": ">=18.14.1"
