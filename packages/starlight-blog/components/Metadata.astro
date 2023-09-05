@@ -13,13 +13,13 @@ const { authors, date } = getBlogEntryMetadata(entry)
 const hasAuthors = authors.length > 0
 ---
 
-<div class="metadata flex not-content">
+<div class="metadata not-content">
   <time datetime={entry.data.date.toISOString()}>
     {date}
   </time>
   {
     hasAuthors ? (
-      <div class="authors flex">
+      <div class="authors">
         {authors.map((author) => (
           <Author {author} />
         ))}
@@ -30,6 +30,7 @@ const hasAuthors = authors.length > 0
 
 <style>
   .metadata {
+    display: flex;
     flex-direction: column;
     gap: 0.75rem;
   }
@@ -39,6 +40,7 @@ const hasAuthors = authors.length > 0
   }
 
   .authors {
+    display: flex;
     flex-wrap: wrap;
     gap: 0.75rem 1rem;
   }
