@@ -9,14 +9,14 @@ export default defineConfig({
     },
   ],
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:4321',
   },
   webServer: [
     {
       command: 'pnpm run dev',
       cwd: '../../example',
       reuseExistingServer: !process.env['CI'],
-      url: 'http://localhost:3000',
+      url: 'http://localhost:4321',
     },
   ],
 })
