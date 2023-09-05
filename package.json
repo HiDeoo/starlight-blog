@@ -1,6 +1,6 @@
 {
   "name": "starlight-blog-monorepo",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "MIT",
   "description": "Astro integration for Starlight to add a blog to your documentation.",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
