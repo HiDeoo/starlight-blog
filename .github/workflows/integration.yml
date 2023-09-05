@@ -44,11 +44,6 @@ jobs:
           key: playwright-${{ env.PLAYWRIGHT_VERSION }}
           path: ~/.cache/ms-playwright
 
-      - name: Install Playwright browsers
-        run: pnpm playwright install --with-deps chromium
-        working-directory: packages/starlight-blog
-        if: steps.cache-playwright.outputs.cache-hit != 'true'
-
       - name: Generates TypeScript types
         run: pnpm astro sync
         working-directory: example

@@ -13,21 +13,23 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "test": "playwright test",
+    "test": "playwright install --with-deps chromium && playwright test",
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit"
   },
   "dependencies": {
     "github-slugger": "2.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.36.1"
+    "@astrojs/starlight": "0.9.0",
+    "@playwright/test": "1.36.1",
+    "astro": "3.0.8"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.5.0",
-    "astro": ">=2.5.0"
+    "@astrojs/starlight": ">=0.9.0",
+    "astro": ">=3.0.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.14.1"
   },
   "packageManager": "pnpm@8.6.9",
   "publishConfig": {
