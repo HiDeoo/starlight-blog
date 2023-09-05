@@ -1,5 +1,5 @@
 ---
-import type { StarlightBlogAuthor } from '../libs/schema'
+import type { StarlightBlogAuthor } from '../schema'
 
 interface Props {
   author: StarlightBlogAuthor
@@ -11,9 +11,9 @@ const isLink = author.url !== undefined
 const Element = isLink ? 'a' : 'div'
 ---
 
-<Element href={isLink ? author.url : undefined} class="author flex">
+<Element href={isLink ? author.url : undefined} class="author">
   {author.picture && <img alt={author.name} src={author.picture} />}
-  <div class="flex text">
+  <div class="text">
     <div class="name">{author.name}</div>
     {author.title && <div class="title">{author.title}</div>}
   </div>
@@ -22,12 +22,14 @@ const Element = isLink ? 'a' : 'div'
 <style>
   .author {
     align-items: center;
+    display: flex;
     gap: 0.5rem;
     line-height: var(--sl-line-height-headings);
     text-decoration: none;
   }
 
   .text {
+    display: flex;
     flex-direction: column;
   }
 
@@ -54,8 +56,5 @@ const Element = isLink ? 'a' : 'div'
     border-radius: 9999px;
     height: 2.5rem;
     width: 2.5rem;
-  }
-  .flex {
-    display: flex;
   }
 </style>

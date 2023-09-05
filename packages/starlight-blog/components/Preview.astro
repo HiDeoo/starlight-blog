@@ -14,7 +14,7 @@ const { entry } = Astro.props
 const Excerpt = await getBlogEntryExcerpt(entry)
 ---
 
-<article class="preview flex">
+<article class="preview">
   <header>
     <h2>
       <a href={`/${entry.slug}`}>{entry.data.title}</a>
@@ -31,6 +31,7 @@ const Excerpt = await getBlogEntryExcerpt(entry)
 
 <style>
   .preview {
+    display: flex;
     flex-direction: column;
     gap: 1.5rem;
   }
@@ -41,8 +42,5 @@ const Excerpt = await getBlogEntryExcerpt(entry)
 
   h2 a {
     text-decoration: none;
-  }
-  .flex {
-    display: flex;
   }
 </style>

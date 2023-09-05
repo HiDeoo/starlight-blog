@@ -10,16 +10,14 @@ interface Props {
 const { entries } = Astro.props
 ---
 
-<div class="posts flex">
+<div class="posts">
   {entries.map((entry) => <Preview {entry} />)}
 </div>
 
 <style>
   .posts {
+    display: flex;
     flex-direction: column;
     gap: 3rem;
-  }
-  .flex {
-    display: flex;
   }
 </style>
