@@ -16,7 +16,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>
 const { entries, label } = Astro.props
 ---
 
-<Page {...getPageProps(label)}>
+<Page {...getPageProps(label, 'tags')}>
   <div class="count">{pluralize(entries.length, 'post', 'posts')} with the tag &ldquo;{label}&rdquo;</div>
   <Posts {entries} />
 </Page>

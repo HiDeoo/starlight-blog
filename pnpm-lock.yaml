@@ -39,8 +39,8 @@ importers:
   example:
     dependencies:
       '@astrojs/starlight':
-        specifier: 0.9.0
-        version: 0.9.0(astro@3.0.8)
+        specifier: 0.9.1
+        version: 0.9.1(astro@3.0.8)
       astro:
         specifier: 3.0.8
         version: 3.0.8
@@ -58,8 +58,8 @@ importers:
         version: 2.0.0
     devDependencies:
       '@astrojs/starlight':
-        specifier: 0.9.0
-        version: 0.9.0(astro@3.0.8)
+        specifier: 0.9.1
+        version: 0.9.1(astro@3.0.8)
       '@playwright/test':
         specifier: 1.36.1
         version: 1.36.1
@@ -153,21 +153,21 @@ packages:
       sitemap: 7.1.1
       zod: 3.21.1
 
-  /@astrojs/starlight@0.9.0(astro@3.0.8):
-    resolution: {integrity: sha512-RK1QGfcU7bCxiOaGhVwJiA2NojswFq39v675IqS1/P97S0uHHQEtPHyiOd3vS2N/fAhwE78Vru9ykeB29BQlxw==}
+  /@astrojs/starlight@0.9.1(astro@3.0.8):
+    resolution: {integrity: sha512-sIybbPRICz1pfChT9MXq9m3SE18WayaSnWQ1tJqZso1rwZzGHAbKnGOfjZD7+snVNjD7AG74OK2NjgHm0O8s5w==}
     peerDependencies:
       astro: ^3.0.0
     dependencies:
       '@astrojs/mdx': 1.0.0(astro@3.0.8)
       '@astrojs/sitemap': 3.0.0
-      '@pagefind/default-ui': 1.0.0-alpha.8
+      '@pagefind/default-ui': 1.0.0-beta.2
       '@types/mdast': 3.0.12
       astro: 3.0.8
       bcp-47: 2.1.0
-      execa: 7.1.1
+      execa: 7.2.0
       hast-util-select: 5.0.5
       hastscript: 7.2.0
-      pagefind: 1.0.0-alpha.8
+      pagefind: 1.0.0-beta.2
       rehype: 12.0.1
       remark-directive: 2.0.1
       unified: 10.1.2
@@ -1011,39 +1011,39 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
-  /@pagefind/darwin-arm64@1.0.0-alpha.8:
-    resolution: {integrity: sha512-Jy8nvLJH1Y2rZov/E+MhXGX3G8VqhvwxW5tXnH9pXPQQAzrdeujgQdEU8TM8EDWjL7SjLavQPNft2jQrk/eXIw==}
+  /@pagefind/darwin-arm64@1.0.0-beta.2:
+    resolution: {integrity: sha512-r9aSd1PreWJeGwrdK92udvySHfJSSvKyV6T+4YONh9lGKS3K2+YbX8K584IotFKB/60XLkdzmFIFLoK3CjOZ7w==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     optional: true
 
-  /@pagefind/darwin-x64@1.0.0-alpha.8:
-    resolution: {integrity: sha512-+w/BPNdPx5tL8nbS35mY3X9GwZhBDpIh+J8yrkEBxEwxppkPdoqFpqHjF7sEb1IINAoySPcc5oqRkdT3MkKQ0Q==}
+  /@pagefind/darwin-x64@1.0.0-beta.2:
+    resolution: {integrity: sha512-1YjlJu75oScva4PPDH2Q/FWAzfvP15XAxCmfqsMl6dtwfaZ4oqZ0Vx2jQ5CAxX2/FeDzqGQg7xkdngLekGiQwA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     optional: true
 
-  /@pagefind/default-ui@1.0.0-alpha.8:
-    resolution: {integrity: sha512-8+DQUtSmplEQG8KDIWiUizLg5VhLIgZN2l+L6/vNXWqRBNRclwrfb+oQJ1oQCh4EpKAgF5Eg4hyQ+PW0K4x0hw==}
+  /@pagefind/default-ui@1.0.0-beta.2:
+    resolution: {integrity: sha512-x75qS7ywD8iG95CLyCTmfn07tMIfAhWTuu6mT56WGpl9Ci3Z4PTfqMRhzhRDTinHEAIKO3aAtQ5TrXuCCnXVoQ==}
 
-  /@pagefind/linux-arm64@1.0.0-alpha.8:
-    resolution: {integrity: sha512-HbvPDHxR/Nos0sPcDSgK6VXV43+I9QfUvW6Y7hjKmVCKE5VCwQUk/KEUZVEJ+Zv/5akfYw9SfAskqLaR8n0oAA==}
+  /@pagefind/linux-arm64@1.0.0-beta.2:
+    resolution: {integrity: sha512-vPBFjWsmI9CBsZctmXSGc2qT7O8OPv9iLoXlQcmUrXSirwY4kESmi2W/t2Cpq6Theatyb+D7zMd0KZc6u0bX3w==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@pagefind/linux-x64@1.0.0-alpha.8:
-    resolution: {integrity: sha512-c5CHKP6kJZ45zzCpA/i0LKnFzfKuvp5HnD4/O9gZGj57vl6cyMBvGyesD+LKOhV1jtcmjy1yUHuJRRa3kdRXAQ==}
+  /@pagefind/linux-x64@1.0.0-beta.2:
+    resolution: {integrity: sha512-jUyS6+OH8x8q8Sn4OPi1Br7DkTlUqeaiDBAqGmfcQARonD5lf/JpNidTSM+YYa/1cRgTijOyX1RbrwQE749LUg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@pagefind/windows-x64@1.0.0-alpha.8:
-    resolution: {integrity: sha512-bxbtzgQYCR60z/42VOtlP17ZTN2LUJtbgdzhYFAPDtcCbGuRWiZyaZ2B72m2zxbAGA8bWc5f2SlopuE/Qm3r2w==}
+  /@pagefind/windows-x64@1.0.0-beta.2:
+    resolution: {integrity: sha512-I7vrQQswID6+9MdjSwnugqY9xBrSaCDdVJ9YCQMobsv5PONzdVXRjDUwDR72MAli0y/KxDYWGzBpDfKMSsvz6g==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -2601,20 +2601,6 @@ packages:
       strip-final-newline: 2.0.0
     dev: true
 
-  /execa@7.1.1:
-    resolution: {integrity: sha512-wH0eMf/UXckdUYnO21+HDztteVv05rq2GXksxT4fCGeHkBhw1DROXh40wcjMcRqDOWE7iPJ4n3M7e2+YFP+76Q==}
-    engines: {node: ^14.18.0 || ^16.14.0 || >=18.0.0}
-    dependencies:
-      cross-spawn: 7.0.3
-      get-stream: 6.0.1
-      human-signals: 4.3.1
-      is-stream: 3.0.0
-      merge-stream: 2.0.0
-      npm-run-path: 5.1.0
-      onetime: 6.0.0
-      signal-exit: 3.0.7
-      strip-final-newline: 3.0.0
-
   /execa@7.2.0:
     resolution: {integrity: sha512-UduyVP7TLB5IcAQl+OzLyLcS/l32W/GLg+AhHJ+ow40FOk2U3SAllPwR44v4vmdFwIWqpdwxxpQbF1n5ta9seA==}
     engines: {node: ^14.18.0 || ^16.14.0 || >=18.0.0}
@@ -2628,7 +2614,6 @@ packages:
       onetime: 6.0.0
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
-    dev: true
 
   /execa@8.0.1:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
@@ -4438,14 +4423,15 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
 
-  /pagefind@1.0.0-alpha.8:
-    resolution: {integrity: sha512-d8uBugQ2+UxudF1oNi6qP7GD39ajN2njQOPvrc1kG4pTExw4pmgx7PKn092qjfqYQPDqDTfNnPUSJM5b7VhpTA==}
+  /pagefind@1.0.0-beta.2:
+    resolution: {integrity: sha512-YwtoH63JRdh4ZoEeo4aPEKXyUyNR8l/wgH9up4HVB0xaGEz4R0BgefHC2MAvkIAX1sq4TgITgInqunL0wQWumA==}
+    hasBin: true
     optionalDependencies:
-      '@pagefind/darwin-arm64': 1.0.0-alpha.8
-      '@pagefind/darwin-x64': 1.0.0-alpha.8
-      '@pagefind/linux-arm64': 1.0.0-alpha.8
-      '@pagefind/linux-x64': 1.0.0-alpha.8
-      '@pagefind/windows-x64': 1.0.0-alpha.8
+      '@pagefind/darwin-arm64': 1.0.0-beta.2
+      '@pagefind/darwin-x64': 1.0.0-beta.2
+      '@pagefind/linux-arm64': 1.0.0-beta.2
+      '@pagefind/linux-x64': 1.0.0-beta.2
+      '@pagefind/windows-x64': 1.0.0-beta.2
 
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
