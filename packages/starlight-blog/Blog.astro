@@ -17,7 +17,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>
 const { entries, nextLink, prevLink } = Astro.props
 ---
 
-<Page {...getPageProps(config.title)}>
+<Page {...getPageProps(config.title, 'blog')}>
   <Posts {entries} />
   <footer class="not-content">
     <PrevNextLinks next={nextLink} prev={prevLink} />

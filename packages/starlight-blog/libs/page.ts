@@ -21,7 +21,7 @@ export function isBlogTagsPage({ url }: AstroGlobal, tag: string) {
   return url.pathname.match(new RegExp(`^/blog/tags/${tag}/?$`)) !== null
 }
 
-export function getPageProps(title: string) {
+export function getPageProps(title: string, slug: string) {
   return {
     entry: {
       data: {
@@ -30,6 +30,7 @@ export function getPageProps(title: string) {
         tableOfContents: false,
         title,
       },
+      slug,
     },
     entryMeta: {
       lang: config.locale,
