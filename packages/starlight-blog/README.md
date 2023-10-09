@@ -28,10 +28,6 @@ An [Astro](https://astro.build) integration for [Starlight](https://starlight.as
 - Tags
 - Custom sidebar with recent posts and tags
 
-> **Warning**
->
-> The Starlight Blog integration is still in early development and relies on fragile APIs to customize Starlight.
-
 Some features are still missing and will be added in the future like internationalization, feeds, reading time, etc.
 
 ## Installation
@@ -42,7 +38,7 @@ Install the Starlight Blog integration using your favorite package manager, e.g.
 pnpm add starlight-blog
 ```
 
-Update your [Astro configuration](https://docs.astro.build/en/guides/configuring-astro/#supported-config-file-types) to include the Starlight Blog integration **_before_** the Starlight integration:
+Update your [Astro configuration](https://docs.astro.build/en/guides/configuring-astro/#supported-config-file-types) to include the Starlight Blog integration **_before_** the Starlight integration and configure the various [component overrides](https://starlight.astro.build/guides/overriding-components/) required by the integration:
 
 ```diff
   import starlight from '@astrojs/starlight'
@@ -54,6 +50,11 @@ Update your [Astro configuration](https://docs.astro.build/en/guides/configuring
     integrations: [
 +     starlightBlog(),
       starlight({
++       components: {
++         MarkdownContent: 'starlight-blog/overrides/MarkdownContent.astro',
++         Sidebar: 'starlight-blog/overrides/Sidebar.astro',
++         ThemeSelect: 'starlight-blog/overrides/ThemeSelect.astro',
++       },
         sidebar: [
           {
             label: 'Guides',
