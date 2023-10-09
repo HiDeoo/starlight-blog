@@ -1,0 +1,28 @@
+---
+import StarlightThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro'
+import type { Props } from '@astrojs/starlight/props'
+import config from 'virtual:starlight-blog-config'
+---
+
+<div>
+  <a href="/blog">{config.title}</a>
+</div>
+<StarlightThemeSelect {...Astro.props}>
+  <slot />
+</StarlightThemeSelect>
+
+<style>
+  div {
+    align-items: center;
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+    display: flex;
+    height: 2rem;
+    padding-inline-end: 1rem;
+  }
+
+  a {
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

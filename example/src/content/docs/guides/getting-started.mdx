@@ -4,10 +4,6 @@ title: Getting Started
 
 import { Tabs, TabItem } from '@astrojs/starlight/components'
 
-:::caution[Warning]
-The Starlight Blog integration is still in early development and relies on fragile APIs to customize Starlight.
-:::
-
 Install the Starlight Blog integration using your favorite package manager:
 
 <Tabs>
@@ -48,7 +44,7 @@ ni starlight-blog
   </TabItem>
 </Tabs>
 
-Update your [Astro configuration](https://docs.astro.build/en/guides/configuring-astro/#supported-config-file-types) to include the Starlight Blog integration **_before_** the Starlight integration:
+Update your [Astro configuration](https://docs.astro.build/en/guides/configuring-astro/#supported-config-file-types) to include the Starlight Blog integration **_before_** the Starlight integration and configure the various [component overrides](https://starlight.astro.build/guides/overriding-components/) required by the integration:
 
 ```ts
 import starlight from '@astrojs/starlight'
@@ -61,6 +57,12 @@ export default defineConfig({
     // Add the Starlight Blog integration.
     starlightBlog(),
     starlight({
+      // Configure the Starlight Blog component overrides.
+      components: {
+        MarkdownContent: 'starlight-blog/overrides/MarkdownContent.astro',
+        Sidebar: 'starlight-blog/overrides/Sidebar.astro',
+        ThemeSelect: 'starlight-blog/overrides/ThemeSelect.astro',
+      },
       sidebar: [
         {
           label: 'Guides',

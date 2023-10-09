@@ -30,6 +30,7 @@ export async function getTagsStaticPaths() {
       props: {
         entries,
         label,
+        tag: slug,
       },
     }
   })

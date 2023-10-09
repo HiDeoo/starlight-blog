@@ -1,17 +1,20 @@
 ---
+import type { Props as ComponentProps } from '@astrojs/starlight/props'
+
 import type { StarlightBlogEntry } from '../libs/content'
 
 import Preview from './Preview.astro'
 
 interface Props {
   entries: StarlightBlogEntry[]
+  pageProps: ComponentProps
 }
 
-const { entries } = Astro.props
+const { entries, pageProps } = Astro.props
 ---
 
 <div class="posts">
-  {entries.map((entry) => <Preview {entry} />)}
+  {entries.map((entry) => <Preview {entry} {pageProps} />)}
 </div>
 
 <style>
