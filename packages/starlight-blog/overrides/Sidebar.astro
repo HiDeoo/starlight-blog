@@ -64,4 +64,25 @@ if (isBlog) {
 }
 ---
 
+{
+  !isBlog && (
+    <div class="md:sl-hidden">
+      <a href="/blog">Blog</a>
+    </div>
+  )
+}
 <StarlightSidebar {...Astro.props} sidebar={isBlog ? blogSidebar : Astro.props.sidebar} />
+
+<style>
+  div {
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    padding-bottom: 1rem;
+  }
+
+  div a {
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-lg);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

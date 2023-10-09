@@ -13,11 +13,17 @@ import config from 'virtual:starlight-blog-config'
 
 <style>
   div {
-    align-items: center;
     border-inline-end: 1px solid var(--sl-color-gray-5);
-    display: flex;
+    display: none;
     height: 2rem;
     padding-inline-end: 1rem;
+  }
+
+  @media (min-width: 50rem) {
+    div {
+      align-items: center;
+      display: flex;
+    }
   }
 
   a {

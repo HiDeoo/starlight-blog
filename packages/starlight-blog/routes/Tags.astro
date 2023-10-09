@@ -1,7 +1,7 @@
 ---
-import StarlightPage from '@astrojs/starlight/components/Page.astro'
 import type { InferGetStaticPropsType } from 'astro'
 
+import Page from '../components/Page.astro'
 import Posts from '../components/Posts.astro'
 import { getPageProps } from '../libs/page'
 import { pluralize } from '../libs/string'
@@ -18,16 +18,12 @@ const { entries, label, tag } = Astro.props
 const pageProps = getPageProps(label, `blog/tags/${tag}`)
 ---
 
-<StarlightPage {...pageProps}>
+<Page {...pageProps}>
   <div class="count">{pluralize(entries.length, 'post', 'posts')} with the tag &ldquo;{label}&rdquo;</div>
   <Posts {entries} {pageProps} />
-</StarlightPage>
+</Page>
 
 <style>
-  :global(.right-sidebar-panel) {
-    display: none;
-  }
-
   .count {
     font-size: var(--sl-text-xl);
     font-weight: 600;

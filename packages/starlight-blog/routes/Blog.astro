@@ -1,8 +1,8 @@
 ---
-import StarlightPage from '@astrojs/starlight/components/Page.astro'
 import type { InferGetStaticPropsType } from 'astro'
 import config from 'virtual:starlight-blog-config'
 
+import Page from '../components/Page.astro'
 import Posts from '../components/Posts.astro'
 import PrevNextLinks from '../components/PrevNextLinks.astro'
 import { getBlogStaticPaths } from '../libs/content'
@@ -19,12 +19,12 @@ const { entries, nextLink, prevLink } = Astro.props
 const pageProps = getPageProps(config.title, 'blog')
 ---
 
-<StarlightPage {...pageProps}>
+<Page {...pageProps}>
   <Posts {entries} {pageProps} />
   <footer class="not-content">
     <PrevNextLinks next={nextLink} prev={prevLink} />
   </footer>
-</StarlightPage>
+</Page>
 
 <style>
   :global(.content-panel:first-of-type) {
@@ -33,9 +33,5 @@ const pageProps = getPageProps(config.title, 'blog')
 
   :global(.content-panel:nth-of-type(2)) {
     border-top: none;
-  }
-
-  :global(.right-sidebar-panel) {
-    display: none;
   }
 </style>
