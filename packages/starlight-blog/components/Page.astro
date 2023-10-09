@@ -1,0 +1,22 @@
+---
+import StarlightPage from '@astrojs/starlight/components/Page.astro'
+import type { Props } from '@astrojs/starlight/props'
+---
+
+<StarlightPage {...Astro.props}>
+  <slot />
+</StarlightPage>
+
+<style>
+  :global(.right-sidebar-panel) {
+    display: none;
+  }
+
+  :global(mobile-starlight-toc) {
+    display: none;
+  }
+
+  :global(.main-frame) {
+    padding-top: var(--sl-nav-height);
+  }
+</style>
