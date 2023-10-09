@@ -10,6 +10,11 @@ export default defineConfig({
       },
     }),
     starlight({
+      components: {
+        MarkdownContent: 'starlight-blog/overrides/MarkdownContent.astro',
+        Sidebar: 'starlight-blog/overrides/Sidebar.astro',
+        ThemeSelect: 'starlight-blog/overrides/ThemeSelect.astro',
+      },
       editLink: {
         baseUrl: 'https://github.com/HiDeoo/starlight-blog/edit/main/example/',
       },

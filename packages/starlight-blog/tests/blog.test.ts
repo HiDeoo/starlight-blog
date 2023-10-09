@@ -76,7 +76,7 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
   const groupName = 'Recent posts'
   const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
 
-  await expect(group.getByRole('heading', { exact: true, level: 2, name: groupName })).toBeVisible()
+  await expect(group.getByText(groupName, { exact: true })).toBeVisible()
 
   expect(await group.getByRole('link').count()).toBe(10)
 })
@@ -87,7 +87,7 @@ test('should add links to tags in the sidebar', async ({ blogPage }) => {
   const groupName = 'Tags'
   const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
 
-  await expect(group.getByRole('heading', { exact: true, level: 2, name: groupName })).toBeVisible()
+  await expect(group.getByText(groupName, { exact: true })).toBeVisible()
 
   expect(await group.getByRole('link').count()).toBe(8)
 

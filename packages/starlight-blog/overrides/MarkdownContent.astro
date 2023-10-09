@@ -1,14 +1,14 @@
 ---
 import StarlightMarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro'
+import type { Props } from '@astrojs/starlight/props'
 
+import Metadata from '../components/Metadata.astro'
+import PostTags from '../components/PostTags.astro'
+import PrevNextLinks from '../components/PrevNextLinks.astro'
 import { getBlogEntry, type StarlightBlogEntryPaginated } from '../libs/content'
 import { isAnyBlogPostPage } from '../libs/page'
 
-import Metadata from './Metadata.astro'
-import PostTags from './PostTags.astro'
-import PrevNextLinks from './PrevNextLinks.astro'
-
-const isBlogPost = isAnyBlogPostPage(Astro)
+const isBlogPost = isAnyBlogPostPage(Astro.props.slug)
 let blogEntry: StarlightBlogEntryPaginated | undefined = undefined
 
 if (isBlogPost) {
