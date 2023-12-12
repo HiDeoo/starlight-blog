@@ -39,8 +39,8 @@ importers:
   example:
     dependencies:
       '@astrojs/starlight':
-        specifier: ^0.11.0
-        version: 0.11.0(astro@4.0.4)
+        specifier: ^0.13.0
+        version: 0.13.1(astro@4.0.4)
       astro:
         specifier: ^4
         version: 4.0.4(typescript@5.2.2)
@@ -58,8 +58,8 @@ importers:
         version: 2.0.0
     devDependencies:
       '@astrojs/starlight':
-        specifier: ^0.11.0
-        version: 0.11.0(astro@4.0.4)
+        specifier: ^0.13.0
+        version: 0.13.1(astro@4.0.4)
       '@playwright/test':
         specifier: 1.36.1
         version: 1.36.1
@@ -146,9 +146,9 @@ packages:
     dependencies:
       '@astrojs/markdown-remark': 3.2.1(astro@4.0.4)
       '@mdx-js/mdx': 2.3.0
-      acorn: 8.10.0
+      acorn: 8.11.2
       astro: 4.0.4(typescript@5.2.2)
-      es-module-lexer: 1.3.1
+      es-module-lexer: 1.4.1
       estree-util-visit: 1.2.1
       github-slugger: 2.0.0
       gray-matter: 4.0.3
@@ -169,24 +169,25 @@ packages:
     dependencies:
       prismjs: 1.29.0
 
-  /@astrojs/sitemap@3.0.1:
-    resolution: {integrity: sha512-ErCthOQF0Yt6KkvaS+v/7CM6TxztOPHJjla4cbM3fBAFsDQbCS3tvoWSMqPJtmTFiy7veQ1eC5gH58FhPe85zg==}
+  /@astrojs/sitemap@3.0.3:
+    resolution: {integrity: sha512-+GRKp1yho9dpHBcMcU6JpbL41k0yYZghOkNsMRb8QIRflbGHvd787tdv9oIZ5NJj0SqAuOlqp2UpqLkJXuAe2A==}
     dependencies:
       sitemap: 7.1.1
-      zod: 3.21.1
+      zod: 3.22.4
 
-  /@astrojs/starlight@0.11.0(astro@4.0.4):
-    resolution: {integrity: sha512-ZnYB1AHetRujy25fSW4uvJTn2ry8nFspMCySWkeB1VT7QzTTgol9y19o1HTWVessViJhlavayHAjd42Pru1rww==}
+  /@astrojs/starlight@0.13.1(astro@4.0.4):
+    resolution: {integrity: sha512-cJ3WQcX3KAedH1uRApxp6usacCcRd76jsWT1V2j4rqWU817PBFrhF7xAsvm4aQaWPryqmsFOmBwSg+iOLsGNew==}
     peerDependencies:
       astro: ^3.2.0
     dependencies:
       '@astrojs/mdx': 1.1.1(astro@4.0.4)
-      '@astrojs/sitemap': 3.0.1
+      '@astrojs/sitemap': 3.0.3
       '@pagefind/default-ui': 1.0.3
       '@types/mdast': 3.0.13
       astro: 4.0.4(typescript@5.2.2)
+      astro-expressive-code: 0.29.4(astro@4.0.4)
       bcp-47: 2.1.0
-      execa: 7.2.0
+      execa: 8.0.1
       hast-util-select: 5.0.5
       hastscript: 7.2.0
       pagefind: 1.0.3
@@ -444,6 +445,10 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
+  /@ctrl/tinycolor@3.6.1:
+    resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
+    engines: {node: '>=10'}
+
   /@emnapi/runtime@0.44.0:
     resolution: {integrity: sha512-ZX/etZEZw8DR7zAB1eVQT40lNo0jeqpb6dCgOvctB6FIQ5PoXfMuNY8+ayQfu8tNQbAB8gQWSSJupR8NxeiZXw==}
     requiresBuild: true
@@ -664,6 +669,34 @@ packages:
     resolution: {integrity: sha512-ZSjtmelB7IJfWD2Fvb7+Z+ChTIKWq6kjda95fLcQKNS5aheVHn4IkfgRQE3sIIzTcSLwLcLZUD9UBt+V7+h+Pw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@expressive-code/core@0.29.4:
+    resolution: {integrity: sha512-XBdMPO4BBgPxE+txtNdjkDmLwGxJpU+QqLQ/WrHWPcj1lTXcoFQTUqFO4Eav+hv/Yn+lEjiv792RrcUe2o0anA==}
+    dependencies:
+      '@ctrl/tinycolor': 3.6.1
+      hast-util-to-html: 8.0.4
+      hastscript: 7.2.0
+      postcss: 8.4.32
+      postcss-nested: 6.0.1(postcss@8.4.32)
+
+  /@expressive-code/plugin-frames@0.29.4:
+    resolution: {integrity: sha512-GE3sB7JTqjhTz7LrCm+mL9x+bIdud76AVqJa/brJgqpYFcl5aJcHtyR0PSZQqTXHL3sBIj8w0wbh+ieVM43JnQ==}
+    dependencies:
+      '@expressive-code/core': 0.29.4
+      hastscript: 7.2.0
+
+  /@expressive-code/plugin-shiki@0.29.4:
+    resolution: {integrity: sha512-vOM2JFVEClg3EAWHVd+ma8y/EsINqzCrQP1PS9sZgn2KASE3C6JBkNRXzUXKGkjDn0dsWJVYYvIsH+4xNpygZA==}
+    dependencies:
+      '@expressive-code/core': 0.29.4
+      shiki: 0.14.4
+
+  /@expressive-code/plugin-text-markers@0.29.4:
+    resolution: {integrity: sha512-U8rouNRrLzAo11Ihoi4iqEH7FD+VEUb6Pe7xJxlFJ7HRhgaFIcuHyYyn6jA1WmGP5k9BFLhYBk53+oKvlmEkKw==}
+    dependencies:
+      '@expressive-code/core': 0.29.4
+      hastscript: 7.2.0
+      unist-util-visit-parents: 5.1.3
 
   /@hideoo/eslint-config-astro@2.0.1(eslint@8.48.0)(typescript@5.2.2):
     resolution: {integrity: sha512-FoGp882BXZ6omezj4qJc3tHGa8JR1zidIaMaPER94X3qFkepelHJioaiZwIHWudVKipRD6iVnZdB7tOEUpSEow==}
@@ -1451,10 +1484,19 @@ packages:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
       acorn: 8.10.0
+    dev: true
+
+  /acorn-jsx@5.3.2(acorn@8.11.2):
+    resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
+    peerDependencies:
+      acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      acorn: 8.11.2
 
   /acorn@8.10.0:
     resolution: {integrity: sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==}
     engines: {node: '>=0.4.0'}
+    dev: true
 
   /acorn@8.11.2:
     resolution: {integrity: sha512-nc0Axzp/0FILLEVsm4fNwLCwMttvhEI263QtVPQcbpfZZ3ts0hLsZGOpE6czNlid7CJ9MlyH8reXkpsf3YUY4w==}
@@ -1636,6 +1678,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /astro-expressive-code@0.29.4(astro@4.0.4):
+    resolution: {integrity: sha512-FoOp0gq+BOss92Tqm1tmUJwVsmCE9odEfura/an27l2tc6LU9Ki2NX3N6TWpvl95NLKQZeFpBl26ZB2yhjrt2Q==}
+    peerDependencies:
+      astro: ^3.0.0-beta || ^4.0.0-beta
+    dependencies:
+      astro: 4.0.4(typescript@5.2.2)
+      remark-expressive-code: 0.29.4
 
   /astro@4.0.4(typescript@5.2.2):
     resolution: {integrity: sha512-KhwoF5//kFusczKN46ZG185uk9BQt1OH5949wsrFKs0z7Oo/o31XyxKyqIW8ZSL0fWU4XYKSdYlAo1RaPF9TtA==}
@@ -2062,7 +2112,6 @@ packages:
   /cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
-    dev: true
 
   /damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -2317,9 +2366,6 @@ packages:
       iterator.prototype: 1.1.1
       safe-array-concat: 1.0.0
     dev: true
-
-  /es-module-lexer@1.3.1:
-    resolution: {integrity: sha512-JUFAyicQV9mXc3YRxPnDlrfBKpqt6hUYzz9/boprUJHs4e4KVr3XwOF70doO6gwXUor6EWZJAyWAfKki84t20Q==}
 
   /es-module-lexer@1.4.1:
     resolution: {integrity: sha512-cXLGjP0c4T3flZJKQSuziYoq7MlT+rnvfZjfp7h+I7K9BNX54kP9nyWvdbwjQ4u1iWbOL4u96fgeZLToQlZC7w==}
@@ -2774,6 +2820,7 @@ packages:
       onetime: 6.0.0
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
+    dev: true
 
   /execa@8.0.1:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
@@ -2794,6 +2841,14 @@ packages:
     engines: {node: '>=6'}
     requiresBuild: true
     optional: true
+
+  /expressive-code@0.29.4:
+    resolution: {integrity: sha512-MA0cdWkFsIPQ/DAiPgL49y1mZiOXOuxiBXlZ28SrtItNeoh3/NwUhZ21z5BwlaC7b6nkXfkI4E+HWguuIpEhSA==}
+    dependencies:
+      '@expressive-code/core': 0.29.4
+      '@expressive-code/plugin-frames': 0.29.4
+      '@expressive-code/plugin-shiki': 0.29.4
+      '@expressive-code/plugin-text-markers': 0.29.4
 
   /extend-shallow@2.0.1:
     resolution: {integrity: sha512-zCnTtlxNoAiDc3gqY2aYAWFx7XWWiasuF2K8Me5WbN8otHKTUKBwjPtNpRs/rbUZm7KxWAaNj7P1a/p52GbVug==}
@@ -2964,6 +3019,7 @@ packages:
   /get-stream@6.0.1:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
     engines: {node: '>=10'}
+    dev: true
 
   /get-stream@8.0.1:
     resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
@@ -3334,6 +3390,7 @@ packages:
   /human-signals@4.3.1:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
+    dev: true
 
   /human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
@@ -4458,8 +4515,8 @@ packages:
   /micromark-extension-mdxjs@1.0.1:
     resolution: {integrity: sha512-7YA7hF6i5eKOfFUzZ+0z6avRG52GpWR8DL+kN47y3f2KhxbBZMhmxe7auOeaTBrW2DenbbZTf1ea9tA2hDpC2Q==}
     dependencies:
-      acorn: 8.10.0
-      acorn-jsx: 5.3.2(acorn@8.10.0)
+      acorn: 8.11.2
+      acorn-jsx: 5.3.2(acorn@8.11.2)
       micromark-extension-mdx-expression: 1.0.8
       micromark-extension-mdx-jsx: 1.0.5
       micromark-extension-mdx-md: 1.0.1
@@ -5188,13 +5245,21 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /postcss-nested@6.0.1(postcss@8.4.32):
+    resolution: {integrity: sha512-mEp4xPMi5bSWiMbsgoPfcP74lsWLHkQbZc3sY+jWYd65CUwXrUaTp0fmNpa01ZcETKlIgUdFN/MpS2xZtqL9dQ==}
+    engines: {node: '>=12.0'}
+    peerDependencies:
+      postcss: ^8.2.14
+    dependencies:
+      postcss: 8.4.32
+      postcss-selector-parser: 6.0.13
+
   /postcss-selector-parser@6.0.13:
     resolution: {integrity: sha512-EaV1Gl4mUEV4ddhDnv/xtj7sxwrwxdetHdWUGnT4VJQf+4d05v6lHYZr8N573k5Z0BViss7BDhfWtKS3+sfAqQ==}
     engines: {node: '>=4'}
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
-    dev: true
 
   /postcss@8.4.29:
     resolution: {integrity: sha512-cbI+jaqIeu/VGqXEarWkRCCffhjgXc0qjBtXpqJhTBohMUjUQnbBr0xqX3vEKudc4iviTewcJo5ajcec5+wdJw==}
@@ -5464,6 +5529,13 @@ packages:
       unified: 10.1.2
     transitivePeerDependencies:
       - supports-color
+
+  /remark-expressive-code@0.29.4:
+    resolution: {integrity: sha512-7PX6TgPKFDfrixlBugCXYQGb6HWWGCyMcLBSpUZG8aiJvbFEaERYTMhj3WPKc2haAqliCcMjzGV4Kdbl+ci0yA==}
+    dependencies:
+      expressive-code: 0.29.4
+      hast-util-to-html: 8.0.4
+      unist-util-visit: 4.1.2
 
   /remark-gfm@3.0.1:
     resolution: {integrity: sha512-lEFDoi2PICJyNrACFOfDD3JlLkuSbOa5Wd8EPt06HUdptv8Gn0bxYTdbU/XXQ3swAPkEaGxxPN9cbnMHvVu1Ig==}
@@ -6631,9 +6703,6 @@ packages:
   /yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
-
-  /zod@3.21.1:
-    resolution: {integrity: sha512-+dTu2m6gmCbO9Ahm4ZBDapx2O6ZY9QSPXst2WXjcznPMwf2YNpn3RevLx4KkZp1OPW/ouFcoBtBzFz/LeY69oA==}
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
