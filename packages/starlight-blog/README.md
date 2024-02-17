@@ -2,8 +2,8 @@
   <h1>starlight-blog 📰</h1>
   <p>Starlight plugin to add a blog to your documentation.</p>
   <p>
-    <a href="https://i.imgur.com/5Q8Vlhn.png" title="Screenshot of starlight-blog">
-      <img alt="Screenshot of starlight-blog" src="https://i.imgur.com/5Q8Vlhn.png" width="520" />
+    <a href="https://i.imgur.com/pG51i2X.png" title="Screenshot of starlight-blog">
+      <img alt="Screenshot of starlight-blog" src="https://i.imgur.com/pG51i2X.png" width="520" />
     </a>
   </p>
 </div>
