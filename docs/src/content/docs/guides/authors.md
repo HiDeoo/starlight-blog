@@ -36,7 +36,7 @@ authors:
 
 ## Global authors
 
-Regular authors can also be defined globally in the Starlight Blog integration configuration:
+Regular authors can also be defined globally in the Starlight Blog plugin configuration:
 
 ```js
 // astro.config.mjs

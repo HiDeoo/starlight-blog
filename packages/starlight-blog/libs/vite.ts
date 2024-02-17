@@ -2,7 +2,7 @@ import type { ViteUserConfig } from 'astro'
 
 import type { StarlightBlogConfig } from './config'
 
-// Expose the starlight-blog integration configuration.
+// Expose the starlight-blog plugin configuration.
 export function vitePluginStarlightBlogConfig(config: StarlightBlogConfig): VitePlugin {
   const moduleId = 'virtual:starlight-blog-config'
   const resolvedModuleId = `\0${moduleId}`
