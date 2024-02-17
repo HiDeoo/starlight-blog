@@ -14,7 +14,7 @@ export default defineConfig({
   webServer: [
     {
       command: 'pnpm run dev',
-      cwd: '../../example',
+      cwd: '../../docs',
       reuseExistingServer: !process.env['CI'],
       url: 'http://localhost:4321',
     },
