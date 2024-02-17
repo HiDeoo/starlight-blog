@@ -1,22 +1,28 @@
 ---
-title: Getting Started
+title: Authors
+description: Learn how to define authors for your blog posts.
 ---
 
 ## Post authors
 
 Authors can be defined in a blog post using the `authors` frontmatter property and must at least have a `name` property:
 
-```yaml
+```md
+---
+// src/content/docs/blog/blog-post.md
 authors:
   name: HiDeoo
   title: Starlight Aficionado
   picture: https://avatars.githubusercontent.com/u/494699
   url: https://hideoo.dev
+---
 ```
 
 Multiple authors can be defined using an array:
 
-```yaml
+```md
+---
+// src/content/docs/blog/blog-post.md
 authors:
   - name: HiDeoo
     title: Starlight Aficionado
@@ -25,13 +31,15 @@ authors:
   - name: Ghost
     picture: https://avatars.githubusercontent.com/u/10137
     url: https://github.com/ghost
+---
 ```
 
 ## Global authors
 
-Regular authors can also be defined globally in the Starlight Blog integration configuration:
+Regular authors can also be defined globally in the Starlight Blog plugin configuration:
 
-```ts
+```js
+// astro.config.mjs
 starlightBlog({
   authors: {
     hideoo: {
@@ -48,10 +56,13 @@ When a blog post frontmatter does not define an author, the global authors from 
 
 A blog post frontmatter can also reference a global author using the key of the author in the configuration:
 
-```yaml
+```md
+---
+// src/content/docs/blog/blog-post.md
 authors:
   - hideoo # Will use the author defined in the configuration with the `hideoo` key.
   - name: Ghost
     picture: https://avatars.githubusercontent.com/u/10137
     url: https://github.com/ghost
+---
 ```

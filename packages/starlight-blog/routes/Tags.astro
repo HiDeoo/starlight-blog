@@ -7,20 +7,22 @@ import { getPageProps } from '../libs/page'
 import { pluralize } from '../libs/string'
 import { getTagsStaticPaths } from '../libs/tags'
 
+export const prerender = true
+
 export function getStaticPaths() {
   return getTagsStaticPaths()
 }
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
-const { entries, label, tag } = Astro.props
+const { entries, label } = Astro.props
 
-const pageProps = getPageProps(label, `blog/tags/${tag}`)
+const pageProps = getPageProps(label)
 ---
 
 <Page {...pageProps}>
   <div class="count">{pluralize(entries.length, 'post', 'posts')} with the tag &ldquo;{label}&rdquo;</div>
-  <Posts {entries} {pageProps} />
+  <Posts {entries} />
 </Page>
 
 <style>

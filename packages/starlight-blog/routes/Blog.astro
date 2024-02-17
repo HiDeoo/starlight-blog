@@ -8,6 +8,8 @@ import PrevNextLinks from '../components/PrevNextLinks.astro'
 import { getBlogStaticPaths } from '../libs/content'
 import { getPageProps } from '../libs/page'
 
+export const prerender = true
+
 export function getStaticPaths() {
   return getBlogStaticPaths()
 }
@@ -16,11 +18,11 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 const { entries, nextLink, prevLink } = Astro.props
 
-const pageProps = getPageProps(config.title, 'blog')
+const pageProps = getPageProps(config.title)
 ---
 
 <Page {...pageProps}>
-  <Posts {entries} {pageProps} />
+  <Posts {entries} />
   <footer class="not-content">
     <PrevNextLinks next={nextLink} prev={prevLink} />
   </footer>

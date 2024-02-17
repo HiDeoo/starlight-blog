@@ -1,8 +1,8 @@
 {
-  "name": "starlight-blog-example",
+  "name": "starlight-blog-docs",
   "version": "0.4.0",
   "license": "MIT",
-  "description": "Astro integration for Starlight to add a blog to your documentation.",
+  "description": "Starlight plugin to add a blog to your documentation.",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
   "scripts": {
@@ -14,8 +14,8 @@
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0"
   },
   "dependencies": {
-    "@astrojs/starlight": "0.11.0",
-    "astro": "3.2.3",
+    "@astrojs/starlight": "0.19.0",
+    "astro": "4.2.7",
     "sharp": "0.32.5",
     "starlight-blog": "workspace:*"
   },
@@ -27,10 +27,10 @@
   "sideEffects": false,
   "keywords": [
     "starlight",
+    "plugin",
     "blog",
     "documentation",
-    "astro",
-    "astro-integration"
+    "astro"
   ],
   "homepage": "https://github.com/HiDeoo/starlight-blog",
   "repository": {

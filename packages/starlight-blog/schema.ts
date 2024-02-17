@@ -1,4 +1,3 @@
-import { docsSchema } from '@astrojs/starlight/schema'
 import { z } from 'astro/zod'
 
 export const blogAuthorSchema = z.object({
@@ -42,10 +41,8 @@ export const blogEntrySchema = z.object({
   tags: z.string().array().optional(),
 })
 
-export function docsAndBlogSchema(context: SchemaContext) {
-  return docsSchema()(context).merge(blogEntrySchema.partial())
+export function blogSchema() {
+  return blogEntrySchema.partial()
 }
 
 export type StarlightBlogAuthor = z.infer<typeof blogAuthorSchema>
-
-type SchemaContext = Parameters<ReturnType<typeof docsSchema>>[0]

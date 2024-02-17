@@ -46,7 +46,7 @@ jobs:
 
       - name: Generates TypeScript types
         run: pnpm astro sync
-        working-directory: example
+        working-directory: docs
 
       - name: Lint
         run: pnpm lint
