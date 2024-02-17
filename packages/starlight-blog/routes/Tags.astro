@@ -7,6 +7,8 @@ import { getPageProps } from '../libs/page'
 import { pluralize } from '../libs/string'
 import { getTagsStaticPaths } from '../libs/tags'
 
+export const prerender = true
+
 export function getStaticPaths() {
   return getTagsStaticPaths()
 }
