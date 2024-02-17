@@ -1,6 +1,6 @@
 <div align="center">
   <h1>starlight-blog 📰</h1>
-  <p>Astro integration for Starlight to add a blog to your documentation.</p>
+  <p>Starlight plugin to add a blog to your documentation.</p>
 </div>
 
 <div align="center">
@@ -13,9 +13,9 @@
   <br />
 </div>
 
-## Example
+## Documentation
 
-Run the example locally using your favorite package manager, e.g. with [pnpm](https://pnpm.io):
+Run the documentation locally using your favorite package manager, e.g. with [pnpm](https://pnpm.io):
 
 ```shell
 pnpm run dev
