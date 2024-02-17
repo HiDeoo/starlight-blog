@@ -4,6 +4,8 @@ import type { AstroIntegrationLogger } from 'astro'
 import { type StarlightBlogConfig, validateConfig } from './libs/config'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 
+export type { StarlightBlogConfig }
+
 export default function starlightBlogPlugin(userConfig?: StarlightBlogConfig): StarlightPlugin {
   const config: StarlightBlogConfig = validateConfig(userConfig)
 
