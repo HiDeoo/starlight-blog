@@ -1,0 +1,112 @@
+---
+title: Getting Started
+description: Learn how to add a blog to your documentation site using the Starlight Blog plugin.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components'
+
+A [Starlight](https://starlight.astro.build) plugin to add a blog to your documentation site.
+
+Check out the [demo](/blog/) for a preview of the blog.
+
+## Prerequisites
+
+You will need to have a Starlight website set up.
+If you don't have one yet, you can follow the ["Getting Started"](https://starlight.astro.build/getting-started) guide in the Starlight docs to create one.
+
+## Install the plugin
+
+Starlight Blog is a Starlight [plugin](https://starlight.astro.build/reference/plugins/).
+Install it using your favorite package manager:
+
+<Tabs>
+<TabItem label="npm">
+
+```sh
+npm install starlight-blog
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add starlight-blog
+```
+
+</TabItem>
+<TabItem label="Yarn">
+
+```sh
+yarn add starlight-blog
+```
+
+</TabItem>
+<TabItem label="Bun">
+
+```sh
+bun add starlight-blog
+```
+
+</TabItem>
+<TabItem label="ni">
+
+```sh
+ni starlight-blog
+```
+
+</TabItem>
+</Tabs>
+
+## Configure the plugin
+
+The Starlight Blog plugin can be configured in your Starlight [configuration](https://starlight.astro.build/reference/configuration/#plugins) in the `astro.config.mjs` file.
+
+```diff lang="js"
+// astro.config.mjs
+import starlight from '@astrojs/starlight'
+import { defineConfig } from 'astro/config'
++import starlightBlog from 'starlight-blog'
+
+export default defineConfig({
+  integrations: [
+    starlight({
++      plugins: [starlightBlog()],
+      title: 'My Docs',
+    }),
+  ],
+})
+```
+
+The Starlight Blog plugin behavior can be tweaked using various [configuration options](/configuration).
+
+## Extend frontmatter schema
+
+Extend Starlight's frontmatter default schema to add support for customizing individual blog posts using their frontmatter in the `src/content/config.ts` file:
+
+```diff lang="ts" ins="{ extend: blogSchema() }"
+// src/content/config.ts
+import { defineCollection } from 'astro:content';
+import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
++import { blogSchema } from 'starlight-blog/schema'
+
+export const collections = {
+	docs: defineCollection({ schema: docsSchema({ extend: blogSchema() }) }),
+	i18n: defineCollection({ type: 'data', schema: i18nSchema() }),
+};
+```
+
+## Create your first blog post
+
+Create your first blog post by creating a `.md` or `.mdx` file in the `src/content/docs/blog/` directory:
+
+```md
+---
+// src/content/docs/blog/my-first-blog-post.md
+title: My first blog post
+date: 2023-07-24
+---
+
+## Hello
+
+Hello world!
+```

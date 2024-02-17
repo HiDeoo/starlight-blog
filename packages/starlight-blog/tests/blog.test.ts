@@ -3,7 +3,7 @@ import { expect, test } from './test'
 test('should add a blog link to all pages with the configured title', async ({ blogPage }) => {
   await blogPage.goto()
 
-  await expect(blogPage.page.getByRole('link', { exact: true, name: 'Blog' })).toBeVisible()
+  await expect(blogPage.page.getByRole('link', { exact: true, name: 'Demo Blog' })).toBeVisible()
 })
 
 test('should use the configured title for the page', async ({ blogPage }) => {

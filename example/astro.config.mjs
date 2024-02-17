@@ -5,11 +5,13 @@ import starlightBlog from 'starlight-blog'
 export default defineConfig({
   integrations: [
     starlight({
+      customCss: ['./src/styles/custom.css'],
       editLink: {
-        baseUrl: 'https://github.com/HiDeoo/starlight-blog/edit/main/example/',
+        baseUrl: 'https://github.com/HiDeoo/starlight-blog/edit/main/docs/',
       },
       plugins: [
         starlightBlog({
+          title: 'Demo Blog',
           authors: {
             hideoo: {
               name: 'HiDeoo',
@@ -21,8 +23,20 @@ export default defineConfig({
         }),
       ],
       sidebar: [
-        { label: 'Getting Started', link: '/guides/getting-started/' },
-        { label: 'Authors', link: '/guides/authors/' },
+        {
+          label: 'Start Here',
+          items: [
+            { label: 'Getting Started', link: '/getting-started/' },
+            { label: 'Configuration', link: '/configuration/' },
+          ],
+        },
+        {
+          label: 'Guides',
+          items: [
+            { label: 'Frontmatter', link: '/guides/frontmatter/' },
+            { label: 'Authors', link: '/guides/authors/' },
+          ],
+        },
       ],
       social: {
         github: 'https://github.com/HiDeoo/starlight-blog',

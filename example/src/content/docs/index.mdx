@@ -1,6 +1,6 @@
 ---
-title: Welcome to Starlight Blog
-description: Astro integration for Starlight to add a blog to your documentation.
+title: Starlight Blog
+description: Starlight plugin to add a blog to your documentation.
 head:
   - tag: title
     content: Starlight Blog
@@ -8,17 +8,17 @@ template: splash
 editUrl: false
 lastUpdated: false
 hero:
-  tagline: Astro integration for Starlight to add a blog to your documentation.
+  tagline: Starlight plugin to add a blog to your documentation.
   image:
-    file: ../../assets/houston.webp
+    html: '📰'
   actions:
-    - text: Check Example
-      link: /blog
-      icon: right-arrow
-      variant: primary
     - text: Getting Started
-      link: /guides/getting-started/
+      link: /getting-started/
       icon: rocket
+      variant: primary
+    - text: Demo
+      link: /blog
+      icon: external
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components'
@@ -26,10 +26,16 @@ import { Card, CardGrid } from '@astrojs/starlight/components'
 ## Next steps
 
 <CardGrid stagger>
-  <Card title="Configure the integration" icon="setting">
-    Edit your config in `astro.config.ts`.
+  <Card title="Install the plugin" icon="puzzle">
+    Check the [getting started guide](/getting-started/) for installation instructions.
+  </Card>
+  <Card title="Configure the plugin" icon="setting">
+    Edit your config in `astro.config.mjs`.
+  </Card>
+  <Card title="Write blog posts" icon="rocket">
+    Author blog posts like any other page in your documentation.
   </Card>
   <Card title="Read the docs" icon="open-book">
-    Learn more in [the Starlight Blog Docs](/guides/getting-started/).
+    Learn more in the [Starlight Blog Docs](/getting-started/).
   </Card>
 </CardGrid>
