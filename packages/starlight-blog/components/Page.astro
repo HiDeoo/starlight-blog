@@ -1,6 +1,5 @@
 ---
-import StarlightPage from '@astrojs/starlight/components/Page.astro'
-import type { Props } from '@astrojs/starlight/props'
+import StarlightPage, { type StarlightPageProps as Props } from '@astrojs/starlight/components/StarlightPage.astro'
 ---
 
 <StarlightPage {...Astro.props}>
@@ -8,11 +7,7 @@ import type { Props } from '@astrojs/starlight/props'
 </StarlightPage>
 
 <style>
-  :global(.right-sidebar-panel) {
-    display: none;
-  }
-
-  :global(mobile-starlight-toc) {
+  :global(:is(.right-sidebar-panel, mobile-starlight-toc)) {
     display: none;
   }
 

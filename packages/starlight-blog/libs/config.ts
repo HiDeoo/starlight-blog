@@ -1,3 +1,4 @@
+import { AstroError } from 'astro/errors'
 import { z } from 'astro/zod'
 
 import { blogAuthorSchema } from '../schema'
@@ -31,13 +32,16 @@ export function validateConfig(userConfig: unknown): StarlightBlogConfig {
   if (!config.success) {
     const errors = config.error.flatten()
 
-    throw new Error(`Invalid starlight-blog configuration:
+    throw new AstroError(
+      `Invalid starlight-blog configuration:
 
 ${errors.formErrors.map((formError) => ` - ${formError}`).join('\n')}
 ${Object.entries(errors.fieldErrors)
   .map(([fieldName, fieldErrors]) => ` - ${fieldName}: ${fieldErrors.join(' - ')}`)
   .join('\n')}
-  `)
+  `,
+      `See the error report above for more informations.\n\nIf you believe this is a bug, please file an issue at https://github.com/HiDeoo/starlight-blog/issues/new/choose`,
+    )
   }
 
   return config.data

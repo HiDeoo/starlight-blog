@@ -1,67 +1,33 @@
-import type { Props } from '@astrojs/starlight/props'
-import starlightConfig from 'virtual:starlight/user-config'
-
-export function isAnyBlogPage(slug: Props['slug']) {
+export function isAnyBlogPage(slug: string) {
   return slug.match(/^blog(\/?$|\/.+\/?$)/) !== null
 }
 
-export function isBlogRoot(slug: Props['slug']) {
+export function isBlogRoot(slug: string) {
   return slug === 'blog'
 }
 
-export function isAnyBlogPostPage(slug: Props['slug']) {
+export function isAnyBlogPostPage(slug: string) {
   return slug.match(/^blog\/(?!(\d+\/?|tags\/.+)$).+$/) !== null
 }
 
-export function isBlogPostPage(slug: Props['slug'], postSlug: Props['slug']) {
+export function isBlogPostPage(slug: string, postSlug: string) {
   return slug === postSlug
 }
 
-export function isBlogTagsPage(slug: Props['slug'], tag: string) {
+export function isBlogTagsPage(slug: string, tag: string) {
   return slug === `blog/tags/${tag}`
 }
 
-export function getPageProps(title: string, slug: string): Props {
-  const entryMeta = getEntryMeta()
-
+export function getPageProps(title: string): StarlightPageProps {
   return {
-    ...entryMeta,
-    editUrl: undefined,
-    entry: {
-      data: {
-        head: [],
-        pagefind: false,
-        title,
-      },
-      slug,
-    },
-    entryMeta,
-    hasSidebar: true,
-    headings: [],
-    id: slug,
-    lastUpdated: undefined,
-    pagination: {
-      next: undefined,
-      prev: undefined,
-    },
-    sidebar: [],
-    slug,
-    toc: {
-      items: [],
-      maxHeadingLevel: 0,
-      minHeadingLevel: 0,
+    frontmatter: {
+      title,
     },
   }
 }
 
-function getEntryMeta() {
-  const dir = starlightConfig.defaultLocale.dir
-  const lang = starlightConfig.defaultLocale.lang ?? 'en'
-  let locale = starlightConfig.defaultLocale.locale
-
-  if (locale === 'root') {
-    locale = undefined
+interface StarlightPageProps {
+  frontmatter: {
+    title: string
   }
-
-  return { dir, lang, locale }
 }

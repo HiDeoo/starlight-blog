@@ -3,7 +3,7 @@ import { getCollection, type AstroCollectionEntry } from 'astro:content'
 import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
 
-import type { StarlightBlogAuthor, docsAndBlogSchema } from '../schema'
+import type { StarlightBlogAuthor, blogSchema } from '../schema'
 
 export async function getBlogStaticPaths() {
   const entries = await getBlogEntries()
@@ -140,7 +140,7 @@ function getAuthorFromConfig(id: string): StarlightBlogAuthor {
   return author
 }
 
-type StarlightEntryData = z.infer<ReturnType<typeof docsAndBlogSchema>>
+type StarlightEntryData = z.infer<ReturnType<typeof blogSchema>> & { title: string }
 type StarlightEntry = AstroCollectionEntry<StarlightEntryData>
 
 export type StarlightBlogEntry = StarlightEntry & {
