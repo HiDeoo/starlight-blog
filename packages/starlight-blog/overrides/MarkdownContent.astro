@@ -12,7 +12,7 @@ const isBlogPost = isAnyBlogPostPage(Astro.props.slug)
 let blogEntry: StarlightBlogEntryPaginated | undefined = undefined
 
 if (isBlogPost) {
-  blogEntry = await getBlogEntry(Astro.url.pathname)
+  blogEntry = await getBlogEntry(Astro.props.slug)
 }
 ---
 

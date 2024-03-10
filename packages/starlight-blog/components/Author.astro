@@ -1,4 +1,5 @@
 ---
+import { getPathWithBase } from '../libs/page'
 import type { StarlightBlogAuthor } from '../schema'
 
 interface Props {
@@ -9,10 +10,16 @@ const { author } = Astro.props
 
 const isLink = author.url !== undefined
 const Element = isLink ? 'a' : 'div'
+
+const pictureSrc = author.picture
+  ? author.picture.startsWith('http')
+    ? author.picture
+    : getPathWithBase(author.picture)
+  : undefined
 ---
 
 <Element href={isLink ? author.url : undefined} class="author">
-  {author.picture && <img alt={author.name} src={author.picture} />}
+  {pictureSrc && <img alt={author.name} src={pictureSrc} />}
   <div class="text">
     <div class="name">{author.name}</div>
     {author.title && <div class="title">{author.title}</div>}
