@@ -1,5 +1,6 @@
 ---
 import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../libs/content'
+import { getPathWithBase } from '../libs/page'
 
 import Metadata from './Metadata.astro'
 import PostTags from './PostTags.astro'
@@ -16,7 +17,7 @@ const Excerpt = await getBlogEntryExcerpt(entry)
 <article class="preview">
   <header>
     <h2>
-      <a href={`/${entry.slug}`}>{entry.data.title}</a>
+      <a href={getPathWithBase(`/${entry.slug}`)}>{entry.data.title}</a>
     </h2>
     <Metadata entry={entry} />
   </header>

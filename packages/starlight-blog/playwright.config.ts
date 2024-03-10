@@ -8,6 +8,7 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+  testDir: 'tests/e2e',
   use: {
     baseURL: 'http://localhost:4321',
   },

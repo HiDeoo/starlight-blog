@@ -5,6 +5,8 @@ import config from 'virtual:starlight-blog-config'
 
 import type { StarlightBlogAuthor, blogSchema } from '../schema'
 
+import { getPathWithBase } from './page'
+
 export async function getBlogStaticPaths() {
   const entries = await getBlogEntries()
 
@@ -34,8 +36,10 @@ export async function getBlogStaticPaths() {
       },
       props: {
         entries,
-        nextLink: nextPage ? { href: `/blog/${index + 2}`, label: 'Older posts' } : undefined,
-        prevLink: prevPage ? { href: index === 1 ? '/blog' : `/blog/${index}`, label: 'Newer posts' } : undefined,
+        nextLink: nextPage ? { href: getPathWithBase(`/blog/${index + 2}`), label: 'Older posts' } : undefined,
+        prevLink: prevPage
+          ? { href: getPathWithBase(index === 1 ? '/blog' : `/blog/${index}`), label: 'Newer posts' }
+          : undefined,
       } satisfies StarlightBlogStaticProps,
     }
   })
@@ -64,8 +68,8 @@ export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPagi
 
   return {
     entry,
-    nextLink: nextEntry ? { href: `/${nextEntry.slug}`, label: nextEntry.data.title } : undefined,
-    prevLink: prevEntry ? { href: `/${prevEntry.slug}`, label: prevEntry.data.title } : undefined,
+    nextLink: nextEntry ? { href: getPathWithBase(`/${nextEntry.slug}`), label: nextEntry.data.title } : undefined,
+    prevLink: prevEntry ? { href: getPathWithBase(`/${prevEntry.slug}`), label: prevEntry.data.title } : undefined,
   }
 }
 
