@@ -140,3 +140,11 @@ test('should not display a link to edit this page', async ({ blogPage }) => {
 
   await expect(blogPage.page.getByText('Edit page')).not.toBeVisible()
 })
+
+test('should render markdown content in custom excerpt', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const articles = blogPage.page.getByRole('article')
+
+  await expect(articles.first().locator('strong').getByText('vestibulum')).toBeVisible()
+})

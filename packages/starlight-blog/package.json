@@ -22,6 +22,7 @@
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0"
   },
   "dependencies": {
+    "astro-remote": "0.3.2",
     "github-slugger": "2.0.0"
   },
   "devDependencies": {

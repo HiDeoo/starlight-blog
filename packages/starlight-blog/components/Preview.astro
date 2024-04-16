@@ -1,4 +1,6 @@
 ---
+import { Markdown } from 'astro-remote'
+
 import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../libs/content'
 import { getPathWithBase } from '../libs/page'
 
@@ -22,7 +24,7 @@ const Excerpt = await getBlogEntryExcerpt(entry)
     <Metadata entry={entry} />
   </header>
   <div class="sl-markdown-content">
-    {typeof Excerpt === 'string' ? Excerpt : <Excerpt />}
+    {typeof Excerpt === 'string' ? <Markdown content={Excerpt} /> : <Excerpt />}
   </div>
   <footer>
     <PostTags entry={entry} />
