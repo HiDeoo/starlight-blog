@@ -1,13 +1,13 @@
 import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroIntegrationLogger } from 'astro'
 
-import { type StarlightBlogConfig, validateConfig } from './libs/config'
+import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig } from './libs/config'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 
-export type { StarlightBlogConfig }
+export type { StarlightBlogConfig, StarlightBlogUserConfig }
 
-export default function starlightBlogPlugin(userConfig?: StarlightBlogConfig): StarlightPlugin {
-  const config: StarlightBlogConfig = validateConfig(userConfig)
+export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig): StarlightPlugin {
+  const config = validateConfig(userConfig)
 
   return {
     name: 'starlight-blog-plugin',

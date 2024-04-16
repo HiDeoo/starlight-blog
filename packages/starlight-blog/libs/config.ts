@@ -47,4 +47,5 @@ ${Object.entries(errors.fieldErrors)
   return config.data
 }
 
-export type StarlightBlogConfig = z.infer<typeof configSchema>
+export type StarlightBlogUserConfig = z.input<typeof configSchema>
+export type StarlightBlogConfig = z.output<typeof configSchema>
