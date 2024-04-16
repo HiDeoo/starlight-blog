@@ -12,7 +12,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
   return {
     name: 'starlight-blog-plugin',
     hooks: {
-      setup({ addIntegration, config: starlightConfig, logger, updateConfig: updateStarlightConfig }) {
+      setup({ addIntegration, astroConfig, config: starlightConfig, logger, updateConfig: updateStarlightConfig }) {
         updateStarlightConfig({
           components: {
             ...starlightConfig.components,
@@ -40,7 +40,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
 
               updateConfig({
                 vite: {
-                  plugins: [vitePluginStarlightBlogConfig(config)],
+                  plugins: [vitePluginStarlightBlogConfig(config, astroConfig)],
                 },
               })
             },

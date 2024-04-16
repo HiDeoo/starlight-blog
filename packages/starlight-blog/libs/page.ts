@@ -1,9 +1,25 @@
+import type { AstroConfig } from 'astro'
+import context from 'virtual:starlight-blog-context'
+
+const trailingSlashTransformers: Record<AstroConfig['trailingSlash'], (path: string) => string> = {
+  always: ensureTrailingSlash,
+  ignore: (href) => href,
+  never: stripTrailingSlash,
+}
+
 const base = stripTrailingSlash(import.meta.env.BASE_URL)
 
-export function getPathWithBase(path: string) {
+export function getPathWithBase(path: string, ignoreTrailingSlash = false) {
   path = stripLeadingSlash(path)
+  path = path ? `${base}/${path}` : `${base}/`
 
-  return path ? `${base}/${path}` : `${base}/`
+  if (ignoreTrailingSlash) {
+    return path
+  }
+
+  const trailingSlashTransformer = trailingSlashTransformers[context.trailingSlash]
+
+  return trailingSlashTransformer(path)
 }
 
 export function isAnyBlogPage(slug: string) {
@@ -48,6 +64,14 @@ function stripTrailingSlash(path: string) {
   }
 
   return path.slice(0, -1)
+}
+
+function ensureTrailingSlash(path: string): string {
+  if (path.endsWith('/')) {
+    return path
+  }
+
+  return `${path}/`
 }
 
 interface StarlightPageProps {

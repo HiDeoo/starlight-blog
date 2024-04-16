@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { getPathWithBase } from '../../libs/page'
+import { getPathWithBase } from '../../../libs/page'
 
 describe('getPathWithBase', () => {
   describe('with no base', () => {
-    test('returns the path without prefixing it with the base', () => {
+    test('returns the path with no base', () => {
       expect(getPathWithBase('/blog')).toBe('/blog')
     })
 
@@ -23,9 +23,19 @@ describe('getPathWithBase', () => {
       vi.unstubAllEnvs()
     })
 
-    test('returns the path without prefixing it with the base', async () => {
-      const { getPathWithBase } = await import('../../libs/page')
+    test('returns the path prefixed with the base', async () => {
+      const { getPathWithBase } = await import('../../../libs/page')
       expect(getPathWithBase('/blog')).toBe('/base/blog')
+    })
+  })
+
+  describe('trailingSlash', () => {
+    test('does not strip trailing slashes', () => {
+      expect(getPathWithBase('/blog/')).toBe('/blog/')
+    })
+
+    test('does not ensure trailing slashes', () => {
+      expect(getPathWithBase('/blog')).toBe('/blog')
     })
   })
 })

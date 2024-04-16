@@ -1,6 +1,7 @@
 .eslintcache
 .prettierignore
 playwright.config.ts
+src
 tests
 tsconfig.json
 tsconfig.tsbuildinfo
