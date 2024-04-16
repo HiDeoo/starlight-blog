@@ -58,7 +58,9 @@ function overrideStarlightComponent(
 ) {
   if (components?.[component]) {
     logger.warn(`It looks like you already have a \`${component}\` component override in your Starlight configuration.`)
-    logger.warn(`To use \`starlight-blog\`, remove the override for the \`${component}\` component.\n`)
+    logger.warn(
+      `To use \`starlight-blog\`, either remove your override or update it to render the content from \`starlight-blog/overrides/${component}.astro\`.`,
+    )
 
     return {}
   }
