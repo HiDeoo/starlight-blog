@@ -1,9 +1,17 @@
 ---
 import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
 import type { Props } from '@astrojs/starlight/props'
+import config from 'virtual:starlight-blog-config'
 
 import { getRecentBlogEntries } from '../libs/content'
-import { getPathWithBase, isAnyBlogPage, isBlogPostPage, isBlogRoot, isBlogTagsPage } from '../libs/page'
+import {
+  getBlogPathWithBase,
+  getPathWithBase,
+  isAnyBlogPage,
+  isBlogPostPage,
+  isBlogRoot,
+  isBlogTagsPage,
+} from '../libs/page'
 import { getAllTags } from '../libs/tags'
 
 const isBlog = isAnyBlogPage(Astro.props.slug)
@@ -14,7 +22,7 @@ const blogSidebar: Props['sidebar'] = isBlog
       {
         attrs: {},
         badge: undefined,
-        href: getPathWithBase('/blog'),
+        href: getBlogPathWithBase('/'),
         isCurrent: isBlogRoot(Astro.props.slug),
         label: 'All posts',
         type: 'link',
@@ -54,7 +62,7 @@ if (isBlog) {
         .map(([slug, { entries, label }]) => ({
           attrs: {},
           badge: undefined,
-          href: getPathWithBase(`/blog/tags/${slug}`),
+          href: getBlogPathWithBase(`/tags/${slug}`),
           isCurrent: isBlogTagsPage(Astro.props.slug, slug),
           label: `${label} (${entries.length})`,
           type: 'link',
@@ -69,7 +77,7 @@ if (isBlog) {
 {
   !isBlog && (
     <div class="md:sl-hidden">
-      <a href={getPathWithBase('/blog')}>Blog</a>
+      <a href={getBlogPathWithBase('/')}>{config.title}</a>
     </div>
   )
 }

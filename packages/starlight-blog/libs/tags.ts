@@ -1,4 +1,5 @@
 import { slug } from 'github-slugger'
+import config from 'virtual:starlight-blog-config'
 
 import { getBlogEntries, type StarlightBlogEntry } from './content'
 
@@ -25,6 +26,7 @@ export async function getTagsStaticPaths() {
   return [...entryTags.entries()].map(([slug, { entries, label }]) => {
     return {
       params: {
+        prefix: config.prefix,
         tag: slug,
       },
       props: {

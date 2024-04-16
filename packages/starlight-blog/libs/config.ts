@@ -3,6 +3,8 @@ import { z } from 'astro/zod'
 
 import { blogAuthorSchema } from '../schema'
 
+import { stripLeadingSlash, stripTrailingSlash } from './path'
+
 const configSchema = z
   .object({
     /**
@@ -12,6 +14,15 @@ const configSchema = z
      * field.
      */
     authors: z.record(blogAuthorSchema).default({}),
+    /**
+     * The base prefix for all blog routes.
+     *
+     * @default 'blog'
+     */
+    prefix: z
+      .string()
+      .default('blog')
+      .transform((value) => stripTrailingSlash(stripLeadingSlash(value))),
     /**
      * The order of the previous and next links in the blog.
      *

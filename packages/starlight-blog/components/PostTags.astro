@@ -1,6 +1,6 @@
 ---
 import type { StarlightBlogEntry } from '../libs/content'
-import { getPathWithBase } from '../libs/page'
+import { getBlogPathWithBase } from '../libs/page'
 import { getEntryTags } from '../libs/tags'
 
 interface Props {
@@ -19,7 +19,7 @@ const tags = getEntryTags(entry)
       <ul>
         {tags.map((tag) => (
           <li>
-            <a href={getPathWithBase(`/blog/tags/${tag.slug}`)}>{tag.label}</a>
+            <a href={getBlogPathWithBase(`/tags/${tag.slug}`)}>{tag.label}</a>
           </li>
         ))}
       </ul>

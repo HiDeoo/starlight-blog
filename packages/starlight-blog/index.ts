@@ -28,13 +28,13 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
             'astro:config:setup': ({ injectRoute, updateConfig }) => {
               injectRoute({
                 entrypoint: 'starlight-blog/routes/Tags.astro',
-                pattern: '/blog/tags/[tag]',
+                pattern: '/[prefix]/tags/[tag]',
                 prerender: true,
               })
 
               injectRoute({
                 entrypoint: 'starlight-blog/routes/Blog.astro',
-                pattern: '/blog/[...page]',
+                pattern: '/[prefix]/[...page]',
                 prerender: true,
               })
 

@@ -1,5 +1,8 @@
 import type { AstroConfig } from 'astro'
+import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
+
+import { ensureTrailingSlash, stripLeadingSlash, stripTrailingSlash } from './path'
 
 const trailingSlashTransformers: Record<AstroConfig['trailingSlash'], (path: string) => string> = {
   always: ensureTrailingSlash,
@@ -8,6 +11,12 @@ const trailingSlashTransformers: Record<AstroConfig['trailingSlash'], (path: str
 }
 
 const base = stripTrailingSlash(import.meta.env.BASE_URL)
+
+export function getBlogPathWithBase(path: string) {
+  path = stripLeadingSlash(path)
+
+  return getPathWithBase(path ? `/${config.prefix}/${path}` : `/${config.prefix}`)
+}
 
 export function getPathWithBase(path: string, ignoreTrailingSlash = false) {
   path = stripLeadingSlash(path)
@@ -23,15 +32,15 @@ export function getPathWithBase(path: string, ignoreTrailingSlash = false) {
 }
 
 export function isAnyBlogPage(slug: string) {
-  return slug.match(/^blog(\/?$|\/.+\/?$)/) !== null
+  return slug.match(new RegExp(`^${config.prefix}(/?$|/.+/?$)`)) !== null
 }
 
 export function isBlogRoot(slug: string) {
-  return slug === 'blog'
+  return slug === config.prefix
 }
 
 export function isAnyBlogPostPage(slug: string) {
-  return slug.match(/^blog\/(?!(\d+\/?|tags\/.+)$).+$/) !== null
+  return slug.match(new RegExp(`^${config.prefix}/(?!(\\d+/?|tags/.+)$).+$`)) !== null
 }
 
 export function isBlogPostPage(slug: string, postSlug: string) {
@@ -39,7 +48,7 @@ export function isBlogPostPage(slug: string, postSlug: string) {
 }
 
 export function isBlogTagsPage(slug: string, tag: string) {
-  return slug === `blog/tags/${tag}`
+  return slug === `${config.prefix}/tags/${tag}`
 }
 
 export function getPageProps(title: string): StarlightPageProps {
@@ -48,30 +57,6 @@ export function getPageProps(title: string): StarlightPageProps {
       title,
     },
   }
-}
-
-function stripLeadingSlash(path: string) {
-  if (!path.startsWith('/')) {
-    return path
-  }
-
-  return path.slice(1)
-}
-
-function stripTrailingSlash(path: string) {
-  if (!path.endsWith('/')) {
-    return path
-  }
-
-  return path.slice(0, -1)
-}
-
-function ensureTrailingSlash(path: string): string {
-  if (path.endsWith('/')) {
-    return path
-  }
-
-  return `${path}/`
 }
 
 interface StarlightPageProps {
