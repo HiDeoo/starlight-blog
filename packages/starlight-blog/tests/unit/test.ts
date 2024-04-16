@@ -11,6 +11,17 @@ export function defineVitestConfig(userConfig: StarlightBlogUserConfig, context?
       vitePluginStarlightBlogConfig(config, {
         trailingSlash: context?.trailingSlash ?? 'ignore',
       }),
+      {
+        name: 'virtual-modules',
+        load(id) {
+          return id === 'virtual:starlight-blog-test'
+            ? `export default ${JSON.stringify({ defaultLocale: { lang: 'en' } })}`
+            : undefined
+        },
+        resolveId(id) {
+          return id === 'virtual:starlight/user-config' ? 'virtual:starlight-blog-test' : undefined
+        },
+      },
     ],
   })
 }

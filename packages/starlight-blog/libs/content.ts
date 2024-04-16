@@ -28,7 +28,12 @@ export async function getBlogStaticPaths() {
 
   return entryPages.map((entries, index) => {
     const prevPage = index === 0 ? undefined : entryPages.at(index - 1)
+    const prevLink = prevPage
+      ? { href: getPathWithBase(index === 1 ? '/blog' : `/blog/${index}`), label: 'Newer posts' }
+      : undefined
+
     const nextPage = entryPages.at(index + 1)
+    const nextLink = nextPage ? { href: getPathWithBase(`/blog/${index + 2}`), label: 'Older posts' } : undefined
 
     return {
       params: {
@@ -36,10 +41,8 @@ export async function getBlogStaticPaths() {
       },
       props: {
         entries,
-        nextLink: nextPage ? { href: getPathWithBase(`/blog/${index + 2}`), label: 'Older posts' } : undefined,
-        prevLink: prevPage
-          ? { href: getPathWithBase(index === 1 ? '/blog' : `/blog/${index}`), label: 'Newer posts' }
-          : undefined,
+        nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
+        prevLink: config.prevNextLinksOrder === 'reverse-chronological' ? prevLink : nextLink,
       } satisfies StarlightBlogStaticProps,
     }
   })
@@ -64,12 +67,15 @@ export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPagi
   validateBlogEntry(entry)
 
   const prevEntry = entries[entryIndex - 1]
+  const prevLink = prevEntry ? { href: getPathWithBase(`/${prevEntry.slug}`), label: prevEntry.data.title } : undefined
+
   const nextEntry = entries[entryIndex + 1]
+  const nextLink = nextEntry ? { href: getPathWithBase(`/${nextEntry.slug}`), label: nextEntry.data.title } : undefined
 
   return {
     entry,
-    nextLink: nextEntry ? { href: getPathWithBase(`/${nextEntry.slug}`), label: nextEntry.data.title } : undefined,
-    prevLink: prevEntry ? { href: getPathWithBase(`/${prevEntry.slug}`), label: prevEntry.data.title } : undefined,
+    nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
+    prevLink: config.prevNextLinksOrder === 'reverse-chronological' ? prevLink : nextLink,
   }
 }
 
