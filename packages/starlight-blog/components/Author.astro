@@ -14,7 +14,7 @@ const Element = isLink ? 'a' : 'div'
 const pictureSrc = author.picture
   ? author.picture.startsWith('http')
     ? author.picture
-    : getPathWithBase(author.picture)
+    : getPathWithBase(author.picture, true)
   : undefined
 ---
 

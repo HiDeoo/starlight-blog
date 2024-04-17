@@ -1,18 +1,18 @@
 import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroIntegrationLogger } from 'astro'
 
-import { type StarlightBlogConfig, validateConfig } from './libs/config'
+import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig } from './libs/config'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 
-export type { StarlightBlogConfig }
+export type { StarlightBlogConfig, StarlightBlogUserConfig }
 
-export default function starlightBlogPlugin(userConfig?: StarlightBlogConfig): StarlightPlugin {
-  const config: StarlightBlogConfig = validateConfig(userConfig)
+export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig): StarlightPlugin {
+  const config = validateConfig(userConfig)
 
   return {
     name: 'starlight-blog-plugin',
     hooks: {
-      setup({ addIntegration, config: starlightConfig, logger, updateConfig: updateStarlightConfig }) {
+      setup({ addIntegration, astroConfig, config: starlightConfig, logger, updateConfig: updateStarlightConfig }) {
         updateStarlightConfig({
           components: {
             ...starlightConfig.components,
@@ -28,19 +28,19 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogConfig): S
             'astro:config:setup': ({ injectRoute, updateConfig }) => {
               injectRoute({
                 entrypoint: 'starlight-blog/routes/Tags.astro',
-                pattern: '/blog/tags/[tag]',
+                pattern: '/[prefix]/tags/[tag]',
                 prerender: true,
               })
 
               injectRoute({
                 entrypoint: 'starlight-blog/routes/Blog.astro',
-                pattern: '/blog/[...page]',
+                pattern: '/[prefix]/[...page]',
                 prerender: true,
               })
 
               updateConfig({
                 vite: {
-                  plugins: [vitePluginStarlightBlogConfig(config)],
+                  plugins: [vitePluginStarlightBlogConfig(config, astroConfig)],
                 },
               })
             },
@@ -58,7 +58,9 @@ function overrideStarlightComponent(
 ) {
   if (components?.[component]) {
     logger.warn(`It looks like you already have a \`${component}\` component override in your Starlight configuration.`)
-    logger.warn(`To use \`starlight-blog\`, remove the override for the \`${component}\` component.\n`)
+    logger.warn(
+      `To use \`starlight-blog\`, either remove your override or update it to render the content from \`starlight-blog/overrides/${component}.astro\`.`,
+    )
 
     return {}
   }

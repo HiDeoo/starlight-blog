@@ -3,14 +3,35 @@ import { z } from 'astro/zod'
 
 import { blogAuthorSchema } from '../schema'
 
+import { stripLeadingSlash, stripTrailingSlash } from './path'
+
 const configSchema = z
   .object({
     /**
      * A list of global author(s).
+     *
      * Global authors are keyed by a unique identifier that can also be referenced in a blog post `authors` frontmatter
      * field.
      */
     authors: z.record(blogAuthorSchema).default({}),
+    /**
+     * The base prefix for all blog routes.
+     *
+     * @default 'blog'
+     */
+    prefix: z
+      .string()
+      .default('blog')
+      .transform((value) => stripTrailingSlash(stripLeadingSlash(value))),
+    /**
+     * The order of the previous and next links in the blog.
+     *
+     * By default, next links will point to the next blog post towards the past (`reverse-chronological`).
+     * Setting this option to `chronological` will make next links point to the next blog post towards the future.
+     */
+    prevNextLinksOrder: z
+      .union([z.literal('chronological'), z.literal('reverse-chronological')])
+      .default('reverse-chronological'),
     /**
      * The number of blog posts to display per page in the blog post list.
      */
@@ -47,4 +68,5 @@ ${Object.entries(errors.fieldErrors)
   return config.data
 }
 
-export type StarlightBlogConfig = z.infer<typeof configSchema>
+export type StarlightBlogUserConfig = z.input<typeof configSchema>
+export type StarlightBlogConfig = z.output<typeof configSchema>

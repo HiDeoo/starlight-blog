@@ -57,6 +57,26 @@ The number of recent blog posts to display in the blog sidebar.
 A list of global authors for all blog posts or regular authors that can be referenced in individual blog posts.
 Check the ["Authors" guide](/guides/authors) section for more informations.
 
+### `prevNextLinksOrder`
+
+**Type:** `'chronological' | 'reverse-chronological'`  
+**Default:** `'reverse-chronological'`
+
+The order of the previous and next links in the blog.
+
+By default, next links will point to the next blog post towards the past (`'reverse-chronological'`).
+Setting this option to `'chronological'` will make next links point to the next blog post towards the future.
+
+### `prefix`
+
+**Type:** `string`  
+**Default:** `'blog'`
+
+The base prefix for all blog routes.
+
+By default, the blog will be available at `/blog` and blog posts at `/blog/example-post`.
+Setting this option to `'news'` will make the blog available at `/news` and blog posts at `/news/example-post`.
+
 ## Author configuration
 
 Global authors for all blog posts or regular authors that can be referenced in individual blog posts can be defined using the [`authors`](#authors) configuration option.

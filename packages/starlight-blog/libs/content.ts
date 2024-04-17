@@ -5,7 +5,7 @@ import config from 'virtual:starlight-blog-config'
 
 import type { StarlightBlogAuthor, blogSchema } from '../schema'
 
-import { getPathWithBase } from './page'
+import { getBlogPathWithBase, getPathWithBase } from './page'
 
 export async function getBlogStaticPaths() {
   const entries = await getBlogEntries()
@@ -28,18 +28,22 @@ export async function getBlogStaticPaths() {
 
   return entryPages.map((entries, index) => {
     const prevPage = index === 0 ? undefined : entryPages.at(index - 1)
+    const prevLink = prevPage
+      ? { href: getBlogPathWithBase(index === 1 ? '/' : `/${index}`), label: 'Newer posts' }
+      : undefined
+
     const nextPage = entryPages.at(index + 1)
+    const nextLink = nextPage ? { href: getBlogPathWithBase(`/${index + 2}`), label: 'Older posts' } : undefined
 
     return {
       params: {
         page: index === 0 ? undefined : index + 1,
+        prefix: config.prefix,
       },
       props: {
         entries,
-        nextLink: nextPage ? { href: getPathWithBase(`/blog/${index + 2}`), label: 'Older posts' } : undefined,
-        prevLink: prevPage
-          ? { href: getPathWithBase(index === 1 ? '/blog' : `/blog/${index}`), label: 'Newer posts' }
-          : undefined,
+        nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
+        prevLink: config.prevNextLinksOrder === 'reverse-chronological' ? prevLink : nextLink,
       } satisfies StarlightBlogStaticProps,
     }
   })
@@ -64,12 +68,15 @@ export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPagi
   validateBlogEntry(entry)
 
   const prevEntry = entries[entryIndex - 1]
+  const prevLink = prevEntry ? { href: getPathWithBase(`/${prevEntry.slug}`), label: prevEntry.data.title } : undefined
+
   const nextEntry = entries[entryIndex + 1]
+  const nextLink = nextEntry ? { href: getPathWithBase(`/${nextEntry.slug}`), label: nextEntry.data.title } : undefined
 
   return {
     entry,
-    nextLink: nextEntry ? { href: getPathWithBase(`/${nextEntry.slug}`), label: nextEntry.data.title } : undefined,
-    prevLink: prevEntry ? { href: getPathWithBase(`/${prevEntry.slug}`), label: prevEntry.data.title } : undefined,
+    nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
+    prevLink: config.prevNextLinksOrder === 'reverse-chronological' ? prevLink : nextLink,
   }
 }
 
@@ -100,7 +107,7 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEn
 
 export async function getBlogEntries() {
   const entries = await getCollection<StarlightEntryData>('docs', ({ id }) => {
-    return id.startsWith('blog/') && id !== 'blog/index.mdx'
+    return id.startsWith(`${config.prefix}/`) && id !== `${config.prefix}/index.mdx`
   })
 
   validateBlogEntries(entries)

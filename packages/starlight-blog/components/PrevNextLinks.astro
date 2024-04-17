@@ -1,4 +1,6 @@
 ---
+import { LinkCard, CardGrid } from '@astrojs/starlight/components'
+
 import type { StarlightBlogLink } from '../libs/content'
 
 interface Props {
@@ -11,47 +13,49 @@ const { next, prev } = Astro.props
 
 {
   prev || next ? (
-    <div class="pagination not-content">
-      {prev && (
-        <a href={prev.href} rel="prev">
-          « {prev.label}
-        </a>
-      )}
-      {next && (
-        <a href={next.href} rel="next">
-          {next.label} »
-        </a>
-      )}
+    <div class="pagination">
+      <CardGrid>
+        {prev && <LinkCard href={prev.href} rel="prev" title={prev.label} />}
+        {next && <LinkCard href={next.href} rel="next" title={next.label} />}
+      </CardGrid>
     </div>
   ) : null
 }
 
 <style>
   .pagination {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr;
+    container-type: inline-size;
   }
 
-  a {
-    border-radius: 0.5rem;
-    border: 1px solid var(--sl-color-gray-5);
-    box-shadow: var(--sl-shadow-md);
-    color: var(--sl-color-white);
-    font-size: var(--sl-text-lg);
-    line-height: 1.4;
-    padding: 1rem;
-    text-decoration: none;
+  .pagination :global(.card-grid) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 
-  a:hover {
-    border-color: var(--sl-color-gray-2);
+  .pagination :global(.sl-link-card:has([rel='prev'])) {
+    grid-template-columns: auto 1fr;
   }
 
-  [rel='next'] {
-    justify-content: end;
-    grid-column: 2;
+  .pagination :global(.sl-link-card:has([rel='prev']) span) {
+    order: 2;
+  }
+
+  .pagination :global(.sl-link-card:has([rel='prev']) svg) {
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+  }
+
+  .pagination :global(.sl-link-card:has([rel='next']) span) {
     text-align: end;
-    flex-direction: row-reverse;
+  }
+
+  @container (min-width: 30rem) {
+    .pagination :global(.card-grid) {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
+
+    .pagination :global(.sl-link-card:has([rel='next'])) {
+      grid-column: 2;
+    }
   }
 </style>

@@ -1,7 +1,7 @@
 ---
 title: Sequantur quaeritis tandem
 date: 2021-01-13
-excerpt: Donec eget vestibulum leo. Curabitur vel pretium nulla, in bibendum neque. In molestie lorem massa, eu bibendum eros gravida nec. Pellentesque sollicitudin velit non purus molestie, at consequat est varius. Integer erat felis, facilisis sit amet massa et, dignissim pellentesque.
+excerpt: Donec eget **vestibulum** leo. Curabitur vel pretium nulla, in bibendum neque. In molestie lorem massa, eu bibendum eros gravida nec. Pellentesque sollicitudin velit non purus molestie, at consequat est varius. Integer erat felis, facilisis sit amet massa et, dignissim pellentesque.
 tags:
   - Starlight
   - Demo
