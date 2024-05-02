@@ -5,9 +5,10 @@ import Author from './Author.astro'
 
 interface Props {
   entry: StarlightBlogEntry
+  showBadges?: boolean
 }
 
-const { entry } = Astro.props
+const { entry, showBadges = true } = Astro.props
 const { authors, date } = getBlogEntryMetadata(entry)
 
 const hasAuthors = authors.length > 0
@@ -26,6 +27,13 @@ const hasAuthors = authors.length > 0
       </div>
     ) : null
   }
+  {
+    showBadges && entry.data?.draft && (
+      <div class="badges">
+        <span class="draft">Draft</span>
+      </div>
+    )
+  }
 </div>
 
 <style>
@@ -43,5 +51,20 @@ const hasAuthors = authors.length > 0
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem 1rem;
+  }
+
+  .badges {
+    margin-top: 0.25rem;
+  }
+
+  .draft {
+    background-color: var(--sl-color-orange-low);
+    border: 1px solid var(--sl-color-orange);
+    border-radius: 0.3rem;
+    color: var(--sl-color-orange-high);
+    font-size: var(--sl-text-body-sm);
+    line-height: var(--sl-line-height-headings);
+    margin-inline: 0.2rem;
+    padding: 0.25rem 0.5rem 0.35rem;
   }
 </style>
