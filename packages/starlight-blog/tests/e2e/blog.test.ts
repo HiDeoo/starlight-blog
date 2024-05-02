@@ -81,6 +81,14 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
   expect(await group.getByRole('link').count()).toBe(10)
 })
 
+test('should not add recent draft blog posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const group = blogPage.page.getByRole('group').filter({ hasText: 'Recent posts' })
+
+  await expect(group.getByRole('link', { exact: true, name: 'Succedere velut consumptis ferat' })).not.toBeVisible()
+})
+
 test('should add links to tags in the sidebar', async ({ blogPage }) => {
   await blogPage.goto()
 
@@ -89,16 +97,37 @@ test('should add links to tags in the sidebar', async ({ blogPage }) => {
 
   await expect(group.getByText(groupName, { exact: true })).toBeVisible()
 
-  expect(await group.getByRole('link').count()).toBe(8)
+  const links = group.getByRole('link')
 
-  await expect(group.getByRole('link').nth(0)).toContainText('Starlight')
-  await expect(group.getByRole('link').nth(1)).toContainText('Example')
-  await expect(group.getByRole('link').nth(2)).toContainText('Placeholder')
-  await expect(group.getByRole('link').nth(3)).toContainText('Amazing Content')
-  await expect(group.getByRole('link').nth(4)).toContainText('Demo')
-  await expect(group.getByRole('link').nth(5)).toContainText('Ipsum')
-  await expect(group.getByRole('link').nth(6)).toContainText('Lorem')
-  await expect(group.getByRole('link').nth(7)).toContainText('Test')
+  expect(await links.count()).toBe(8)
+
+  await expect(links.nth(0)).toContainText('Starlight')
+  await expect(links.nth(1)).toContainText('Example')
+  await expect(links.nth(2)).toContainText('Placeholder')
+  await expect(links.nth(3)).toContainText('Amazing Content')
+  await expect(links.nth(4)).toContainText('Demo')
+  await expect(links.nth(5)).toContainText('Ipsum')
+  await expect(links.nth(6)).toContainText('Lorem')
+  await expect(links.nth(7)).toContainText('Test')
+})
+
+test('should not add links to tags from draft blog posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  await expect(
+    blogPage.page.getByRole('group').filter({ hasText: 'Tags' }).getByRole('link', { exact: true, name: 'WIP (1)' }),
+  ).not.toBeVisible()
+})
+
+test('should not count tags from draft blog posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  await expect(
+    blogPage.page
+      .getByRole('group')
+      .filter({ hasText: 'Tags' })
+      .getByRole('link', { exact: true, name: 'Placeholder (2)' }),
+  ).toBeVisible()
 })
 
 test('should display a preview of each posts', async ({ blogPage }) => {
@@ -147,4 +176,18 @@ test('should render markdown content in custom excerpt', async ({ blogPage }) =>
   const articles = blogPage.page.getByRole('article')
 
   await expect(articles.first().locator('strong').getByText('vestibulum')).toBeVisible()
+})
+
+test('should not list draft blog posts in production', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  await expect(
+    blogPage.page.getByRole('article').getByRole('link', { exact: true, name: 'Succedere velut consumptis ferat' }),
+  ).not.toBeVisible()
+
+  await blogPage.goto(2)
+
+  await expect(
+    blogPage.page.getByRole('article').getByRole('link', { exact: true, name: 'Pertimuit munere' }),
+  ).not.toBeVisible()
 })

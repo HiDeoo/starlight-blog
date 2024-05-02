@@ -81,3 +81,17 @@ authors:
   - Bob
 ---
 ```
+
+### `draft`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+Set whether this blog post should be considered a draft and not be included in [production builds](https://docs.astro.build/en/reference/cli-reference/#astro-build).
+Set to `true` to mark a blog post as a draft and make it only visible during development.
+
+```md
+---
+draft: true
+---
+```

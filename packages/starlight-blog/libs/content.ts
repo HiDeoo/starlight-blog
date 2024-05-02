@@ -106,8 +106,12 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEn
 }
 
 export async function getBlogEntries() {
-  const entries = await getCollection<StarlightEntryData>('docs', ({ id }) => {
-    return id.startsWith(`${config.prefix}/`) && id !== `${config.prefix}/index.mdx`
+  const entries = await getCollection<StarlightEntryData>('docs', ({ id, data }) => {
+    return (
+      id.startsWith(`${config.prefix}/`) &&
+      id !== `${config.prefix}/index.mdx` &&
+      (import.meta.env.MODE !== 'production' || data.draft === false)
+    )
   })
 
   validateBlogEntries(entries)
@@ -151,7 +155,7 @@ function getAuthorFromConfig(id: string): StarlightBlogAuthor {
   return author
 }
 
-type StarlightEntryData = z.infer<ReturnType<typeof blogSchema>> & { title: string }
+type StarlightEntryData = z.infer<ReturnType<typeof blogSchema>> & { draft?: boolean; title: string }
 type StarlightEntry = AstroCollectionEntry<StarlightEntryData>
 
 export type StarlightBlogEntry = StarlightEntry & {
