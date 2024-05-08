@@ -13,7 +13,7 @@ const { next, prev } = Astro.props
 
 {
   prev || next ? (
-    <div class="pagination">
+    <div class="pagination" data-pagefind-ignore>
       <CardGrid>
         {prev && <LinkCard href={prev.href} rel="prev" title={prev.label} />}
         {next && <LinkCard href={next.href} rel="next" title={next.label} />}

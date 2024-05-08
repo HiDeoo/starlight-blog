@@ -1,3 +1,4 @@
+import type { StarlightPageProps } from '@astrojs/starlight/props'
 import type { AstroConfig } from 'astro'
 import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
@@ -54,13 +55,8 @@ export function isBlogTagsPage(slug: string, tag: string) {
 export function getPageProps(title: string): StarlightPageProps {
   return {
     frontmatter: {
+      pagefind: false,
       title,
     },
-  }
-}
-
-interface StarlightPageProps {
-  frontmatter: {
-    title: string
   }
 }
