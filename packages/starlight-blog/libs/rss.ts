@@ -14,20 +14,24 @@ export async function getRSSOptions(site: URL | undefined) {
   const entries = await getBlogEntries()
   entries.splice(20)
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
+  const feedSite = site!
+
   const options: RSSOptions = {
     title: getRSSTitle(),
     description: context.description ?? '',
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
-    site: site!,
+    site: feedSite,
     items: await Promise.all(
       entries.map(async (entry) => {
+        const link = getPathWithBase(`/${entry.slug}`)
+
         return {
           title: entry.data.title,
-          link: getPathWithBase(`/${entry.slug}`),
+          link,
           pubDate: entry.data.date,
           categories: entry.data.tags,
           description: await getRSSDescription(entry),
-          content: await getRSSContent(entry),
+          content: await getRSSContent(entry, new URL(link, feedSite)),
         }
       }),
     ),
@@ -59,6 +63,6 @@ function getRSSDescription(entry: StarlightBlogEntry): Promise<string> | undefin
   return stripMarkdown(entry.data.excerpt)
 }
 
-function getRSSContent(entry: StarlightBlogEntry): Promise<string> {
-  return renderMarkdownToHTML(entry.body)
+function getRSSContent(entry: StarlightBlogEntry, link: URL): Promise<string> {
+  return renderMarkdownToHTML(entry.body, link)
 }
