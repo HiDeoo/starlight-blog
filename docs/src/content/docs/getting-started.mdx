@@ -12,7 +12,7 @@ A [Starlight](https://starlight.astro.build) plugin to add a blog to your docume
 - Global and per-post authors
 - Tags
 - Custom sidebar with recent posts and tags
-- RSS (requires the Astro [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) option to be set)
+- RSS
 
 Check out the [demo](/blog/) for a preview of the blog.
 
@@ -117,25 +117,3 @@ date: 2023-07-24
 
 Hello world!
 ```
-
-## Configure your RSS feed
-
-Set the Astro [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) configuration option and add [Starlight's `social`](https://starlight.astro.build/guides/customization/#social-links) RSS configuration option using your website's full URL. Your RSS feed will be located at `/blog/rss.xml`
-
-```js title="astro.config.mjs"
-
-import { defineConfig } from 'astro/config'
-
-export default defineConfig({
-  site: 'https://www.example.com'
-  starlight({
-    social: {
-      rss: 'https://www.example.com/blog/rss.xml',
-    },
-  }),
-})
-```
-
-This will create a `.xml` file for feed readers and add the standard RSS icon to your website's header.
-
-Learn more about RSS feeds in Astro, including how to [enable RSS feed auto-discovery](https://docs.astro.build/en/guides/rss/#enabling-rss-feed-auto-discovery) in the official Astro documentation.

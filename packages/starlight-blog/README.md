@@ -31,7 +31,7 @@ A [Starlight](https://starlight.astro.build) plugin to add a blog to your docume
 - Global and per-post authors
 - Tags
 - Custom sidebar with recent posts and tags
-- RSS (requires the Astro [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) option to be set)
+- RSS
 
 Check out the [demo](https://starlight-blog-docs.vercel.app//blog/) for a preview of the blog.
 
