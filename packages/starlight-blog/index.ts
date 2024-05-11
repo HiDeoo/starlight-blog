@@ -2,6 +2,8 @@ import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/ty
 import type { AstroIntegrationLogger } from 'astro'
 
 import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig } from './libs/config'
+import { getDefaultLocale } from './libs/i18n'
+import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 
 export type { StarlightBlogConfig, StarlightBlogUserConfig }
@@ -20,6 +22,24 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
             ...overrideStarlightComponent(starlightConfig.components, logger, 'Sidebar'),
             ...overrideStarlightComponent(starlightConfig.components, logger, 'ThemeSelect'),
           },
+          head: [
+            ...(starlightConfig.head ?? []),
+            ...(astroConfig.site
+              ? [
+                  {
+                    tag: 'link' as const,
+                    attrs: {
+                      href: `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(
+                        astroConfig.base,
+                      )}/${stripLeadingSlash(stripTrailingSlash(config.prefix))}/rss.xml`,
+                      rel: 'alternate',
+                      title: config.title,
+                      type: 'application/rss+xml',
+                    },
+                  },
+                ]
+              : []),
+          ],
         })
 
         addIntegration({
@@ -38,9 +58,26 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                 prerender: true,
               })
 
+              if (astroConfig.site) {
+                injectRoute({
+                  entrypoint: 'starlight-blog/routes/rss',
+                  pattern: '/[prefix]/rss.xml',
+                  prerender: true,
+                })
+              }
+
               updateConfig({
                 vite: {
-                  plugins: [vitePluginStarlightBlogConfig(config, astroConfig)],
+                  plugins: [
+                    vitePluginStarlightBlogConfig(config, {
+                      defaultLocale: getDefaultLocale(starlightConfig as StarlightUserConfig),
+                      description: starlightConfig.description,
+                      site: astroConfig.site,
+                      title: starlightConfig.title,
+                      titleDelimiter: starlightConfig.titleDelimiter,
+                      trailingSlash: astroConfig.trailingSlash,
+                    }),
+                  ],
                 },
               })
             },

@@ -13,10 +13,10 @@ const trailingSlashTransformers: Record<AstroConfig['trailingSlash'], (path: str
 
 const base = stripTrailingSlash(import.meta.env.BASE_URL)
 
-export function getBlogPathWithBase(path: string) {
+export function getBlogPathWithBase(path: string, ignoreTrailingSlash = false) {
   path = stripLeadingSlash(path)
 
-  return getPathWithBase(path ? `/${config.prefix}/${path}` : `/${config.prefix}`)
+  return getPathWithBase(path ? `/${config.prefix}/${path}` : `/${config.prefix}`, ignoreTrailingSlash)
 }
 
 export function getPathWithBase(path: string, ignoreTrailingSlash = false) {

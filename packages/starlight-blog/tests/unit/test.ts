@@ -3,12 +3,17 @@ import { getViteConfig } from 'astro/config'
 import { validateConfig, type StarlightBlogUserConfig } from '../../libs/config'
 import { vitePluginStarlightBlogConfig, type StarlightBlogContext } from '../../libs/vite'
 
-export function defineVitestConfig(userConfig: StarlightBlogUserConfig, context?: StarlightBlogContext) {
+export function defineVitestConfig(userConfig: StarlightBlogUserConfig, context?: Partial<StarlightBlogContext>) {
   const config = validateConfig(userConfig)
 
   return getViteConfig({
     plugins: [
       vitePluginStarlightBlogConfig(config, {
+        defaultLocale: context?.defaultLocale ?? 'en',
+        description: context?.description,
+        site: context?.site,
+        title: context?.title ?? 'Starlight Blog Test',
+        titleDelimiter: context?.titleDelimiter,
         trailingSlash: context?.trailingSlash ?? 'ignore',
       }),
       {

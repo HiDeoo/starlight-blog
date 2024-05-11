@@ -191,3 +191,12 @@ test('should not list draft blog posts in production', async ({ blogPage }) => {
     blogPage.page.getByRole('article').getByRole('link', { exact: true, name: 'Pertimuit munere' }),
   ).not.toBeVisible()
 })
+
+test('should add a link to the RSS feed in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const link = blogPage.page.getByRole('link', { name: 'RSS' })
+
+  await expect(link).toBeVisible()
+  expect(await link.getAttribute('href')).toBe('/blog/rss.xml')
+})

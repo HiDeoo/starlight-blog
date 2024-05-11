@@ -44,4 +44,5 @@ export default defineConfig({
       title: 'Starlight Blog',
     }),
   ],
+  site: 'https://starlight-blog-docs.vercel.app',
 })
