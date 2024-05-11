@@ -35,6 +35,7 @@ export default defineConfig({
           items: [
             { label: 'Frontmatter', link: '/guides/frontmatter/' },
             { label: 'Authors', link: '/guides/authors/' },
+            { label: 'RSS', link: '/guides/rss/' },
           ],
         },
       ],
