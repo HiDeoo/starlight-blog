@@ -1,3 +1,4 @@
+import type { StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroConfig, ViteUserConfig } from 'astro'
 
 import type { StarlightBlogConfig } from './config'
@@ -9,9 +10,7 @@ export function vitePluginStarlightBlogConfig(
 ): VitePlugin {
   const modules = {
     'virtual:starlight-blog-config': `export default ${JSON.stringify(starlightBlogConfig)}`,
-    'virtual:starlight-blog-context': `export default ${JSON.stringify({
-      trailingSlash: context.trailingSlash,
-    })}`,
+    'virtual:starlight-blog-context': `export default ${JSON.stringify(context)}`,
   }
 
   const moduleResolutionMap = Object.fromEntries(
@@ -35,6 +34,11 @@ function resolveVirtualModuleId<TModuleId extends string>(id: TModuleId): `\0${T
 }
 
 export interface StarlightBlogContext {
+  defaultLocale: string
+  description: StarlightUserConfig['description']
+  site: AstroConfig['site']
+  title: StarlightUserConfig['title']
+  titleDelimiter: StarlightUserConfig['titleDelimiter']
   trailingSlash: AstroConfig['trailingSlash']
 }
 

@@ -2,6 +2,7 @@
 import StarlightSidebar from '@astrojs/starlight/components/Sidebar.astro'
 import type { Props } from '@astrojs/starlight/props'
 import config from 'virtual:starlight-blog-config'
+import context from 'virtual:starlight-blog-context'
 
 import { getRecentBlogEntries } from '../libs/content'
 import {
@@ -69,6 +70,17 @@ if (isBlog) {
         })),
       label: 'Tags',
       type: 'group',
+    })
+  }
+
+  if (context.site) {
+    blogSidebar.push({
+      attrs: {},
+      badge: undefined,
+      href: getBlogPathWithBase('/rss.xml'),
+      isCurrent: false,
+      label: 'RSS',
+      type: 'link',
     })
   }
 }

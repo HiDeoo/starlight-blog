@@ -20,7 +20,7 @@ function mockBlogPost(id: string, entry: StarlightBlogEntryData): StarlightBlogE
     id: `blog/${id}`,
     slug: `blog/${slug(id.replace(/\.[^.]+$/, '').replace(/\/index$/, ''))}`,
     collection: 'docs',
-    data: blogEntrySchema.parse(entry) as StarlightBlogEntryData,
+    data: blogEntrySchema.passthrough().parse(entry) as StarlightBlogEntryData,
     body: '',
     render: (() => {
       // We do not care about the render function in the unit tests.
