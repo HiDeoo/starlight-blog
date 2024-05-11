@@ -15,6 +15,12 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
     name: 'starlight-blog-plugin',
     hooks: {
       setup({ addIntegration, astroConfig, config: starlightConfig, logger, updateConfig: updateStarlightConfig }) {
+        const rssLink = astroConfig.site
+          ? `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
+              stripTrailingSlash(config.prefix),
+            )}/rss.xml`
+          : undefined
+
         updateStarlightConfig({
           components: {
             ...starlightConfig.components,
@@ -29,9 +35,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                   {
                     tag: 'link' as const,
                     attrs: {
-                      href: `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(
-                        astroConfig.base,
-                      )}/${stripLeadingSlash(stripTrailingSlash(config.prefix))}/rss.xml`,
+                      href: rssLink,
                       rel: 'alternate',
                       title: config.title,
                       type: 'application/rss+xml',
@@ -40,6 +44,14 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                 ]
               : []),
           ],
+          social: {
+            ...starlightConfig.social,
+            ...(astroConfig.site && rssLink && !starlightConfig.social?.rss
+              ? {
+                  rss: rssLink,
+                }
+              : {}),
+          },
         })
 
         addIntegration({
