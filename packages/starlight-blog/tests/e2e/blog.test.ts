@@ -195,7 +195,7 @@ test('should not list draft blog posts in production', async ({ blogPage }) => {
 test('should add a link to the RSS feed in the sidebar', async ({ blogPage }) => {
   await blogPage.goto()
 
-  const link = blogPage.page.getByRole('link', { name: 'RSS' })
+  const link = blogPage.page.getByLabel('Main').getByRole('link', { name: 'RSS' })
 
   await expect(link).toBeVisible()
   expect(await link.getAttribute('href')).toBe('/blog/rss.xml')
