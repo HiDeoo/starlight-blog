@@ -19,6 +19,10 @@ Tu pontus claro, Neptune hac: ac ubi rogata. Classemque _erigitur_, tabe _aemula
 - Antistite omnia desine habet nequeunt neque
 - Pretium illa nos dolosas si illi longis
 
+![Coffee beans](../../../assets/example-coffee.jpg)
+
+> Photo by [Mike Kenneally](https://unsplash.com/@asthetik?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/coffee-bean-lot-TD4DBagg2wE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
+
 ## Stetit dominari revertebar pascat latrantibus Paris Hippotadaeque
 
 _Laevum_ me meditata cumque, ambae cogit? Orbi supremaque, timetur. Dei Iovem vult _sub_! Nec non callidus silentum corpore noxque: solebat inde.
