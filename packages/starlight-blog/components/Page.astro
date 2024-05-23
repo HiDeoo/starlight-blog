@@ -7,11 +7,11 @@ import StarlightPage, { type StarlightPageProps as Props } from '@astrojs/starli
 </StarlightPage>
 
 <style>
-  :global(:is(.right-sidebar-panel, mobile-starlight-toc)) {
+  :global([data-has-toc] :is(.right-sidebar-panel, mobile-starlight-toc)) {
     display: none;
   }
 
-  :global(.main-frame) {
+  :global([data-has-toc] .main-frame) {
     padding-top: var(--sl-nav-height);
   }
 </style>
