@@ -1,4 +1,6 @@
 ---
+import { Badge } from '@astrojs/starlight/components'
+
 import { getBlogEntryMetadata, type StarlightBlogEntry } from '../libs/content'
 
 import Author from './Author.astro'
@@ -30,7 +32,7 @@ const hasAuthors = authors.length > 0
   {
     showBadges && entry.data?.draft && (
       <div class="badges">
-        <span class="draft">Draft</span>
+        <Badge size="medium" text="Draft" variant="caution" />
       </div>
     )
   }
@@ -55,16 +57,5 @@ const hasAuthors = authors.length > 0
 
   .badges {
     margin-top: 0.25rem;
-  }
-
-  .draft {
-    background-color: var(--sl-color-orange-low);
-    border: 1px solid var(--sl-color-orange);
-    border-radius: 0.3rem;
-    color: var(--sl-color-orange-high);
-    font-size: var(--sl-text-body-sm);
-    line-height: var(--sl-line-height-headings);
-    margin-inline: 0.2rem;
-    padding: 0.25rem 0.5rem 0.35rem;
   }
 </style>
