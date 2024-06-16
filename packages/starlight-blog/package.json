@@ -31,14 +31,14 @@
     "ultrahtml": "1.5.3"
   },
   "devDependencies": {
-    "@astrojs/starlight": "0.22.1",
+    "@astrojs/starlight": "0.24.2",
     "@playwright/test": "1.36.1",
-    "astro": "4.2.7",
+    "astro": "4.10.2",
     "vitest": "1.3.1"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.22.1",
-    "astro": ">=4.2.7"
+    "@astrojs/starlight": ">=0.24.0",
+    "astro": ">=4.8.6"
   },
   "engines": {
     "node": ">=18.14.1"
