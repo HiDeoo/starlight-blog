@@ -14,7 +14,7 @@
     "@hideoo/eslint-config": "3.0.0",
     "@hideoo/prettier-config": "2.0.0",
     "@hideoo/tsconfig": "2.0.1",
-    "astro": "4.2.7",
+    "astro": "4.10.2",
     "eslint": "8.56.0",
     "husky": "8.0.3",
     "lint-staged": "14.0.1",
