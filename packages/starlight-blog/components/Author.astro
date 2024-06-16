@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets'
+
 import { getPathWithBase } from '../libs/page'
 import type { StarlightBlogAuthor } from '../schema'
 
@@ -19,7 +21,7 @@ const pictureSrc = author.picture
 ---
 
 <Element href={isLink ? author.url : undefined} class="author">
-  {pictureSrc && <img alt={author.name} src={pictureSrc} />}
+  {pictureSrc && <Image alt={author.name} loading="eager" src={pictureSrc} height={40} width={40} />}
   <div class="text">
     <div class="name">{author.name}</div>
     {author.title && <div class="title">{author.title}</div>}
