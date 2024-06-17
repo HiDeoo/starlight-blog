@@ -8,6 +8,9 @@ authors:
     picture: https://avatars.githubusercontent.com/u/10137?s=200
     url: https://github.com/ghost
   - hideoo
+cover:
+  alt: A cover
+  image: ../../../assets/cover.png
 ---
 
 ### Canes plura palmas eodem huc scelerate spectat
