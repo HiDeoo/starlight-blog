@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets'
+
+import type { StarlightBlogEntry } from '../libs/content'
+
+interface Props {
+  cover: NonNullable<StarlightBlogEntry['data']['cover']>
+}
+
+const { cover } = Astro.props
+
+const darkImage = 'dark' in cover ? cover.dark : cover.image
+const lightImage = 'light' in cover ? cover.light : undefined
+---
+
+<figure>
+  <Image alt={cover.alt} class:list={{ 'light:sl-hidden': Boolean(lightImage) }} loading="eager" src={darkImage} />
+  {lightImage && <Image alt={cover.alt} class="dark:sl-hidden" loading="eager" src={lightImage} />}
+</figure>
+
+<style>
+  figure {
+    margin-bottom: 1.5rem;
+  }
+</style>

@@ -1,4 +1,4 @@
-import type { z } from 'astro/zod'
+import { z } from 'astro/zod'
 import { slug } from 'github-slugger'
 import { vi } from 'vitest'
 
@@ -20,7 +20,26 @@ function mockBlogPost(id: string, entry: StarlightBlogEntryData): StarlightBlogE
     id: `blog/${id}`,
     slug: `blog/${slug(id.replace(/\.[^.]+$/, '').replace(/\/index$/, ''))}`,
     collection: 'docs',
-    data: blogEntrySchema.passthrough().parse(entry) as StarlightBlogEntryData,
+    data: blogEntrySchema({
+      image: () =>
+        z.object({
+          src: z.string(),
+          width: z.number(),
+          height: z.number(),
+          format: z.union([
+            z.literal('png'),
+            z.literal('jpg'),
+            z.literal('jpeg'),
+            z.literal('tiff'),
+            z.literal('webp'),
+            z.literal('gif'),
+            z.literal('svg'),
+            z.literal('avif'),
+          ]),
+        }),
+    })
+      .passthrough()
+      .parse(entry) as StarlightBlogEntryData,
     body: '',
     render: (() => {
       // We do not care about the render function in the unit tests.
@@ -28,4 +47,4 @@ function mockBlogPost(id: string, entry: StarlightBlogEntryData): StarlightBlogE
   }
 }
 
-type StarlightBlogEntryData = z.input<typeof blogEntrySchema> & { title: string }
+type StarlightBlogEntryData = z.input<ReturnType<typeof blogEntrySchema>> & { title: string }

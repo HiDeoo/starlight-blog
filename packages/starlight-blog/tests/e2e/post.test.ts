@@ -86,3 +86,17 @@ test('should display navigation links', async ({ postPage }) => {
   await expect(postPage.nextLink).toBeVisible()
   expect(await postPage.nextLink.getAttribute('href')).toBe('/blog/vario-nunc-polo')
 })
+
+test('should include a cover image', async ({ postPage }) => {
+  await postPage.goto('vario-nunc-polo')
+
+  await expect(postPage.page.getByRole('img', { name: 'A cover' })).toBeVisible()
+})
+
+test('should include cover images for dark and light mode', async ({ postPage }) => {
+  await postPage.goto('ipsum-nunc-aliquet')
+
+  await expect(postPage.page.getByRole('img', { name: 'Different covers in dark and light mode' })).toBeVisible()
+
+  expect(await postPage.page.locator('figure img').count()).toBe(2)
+})

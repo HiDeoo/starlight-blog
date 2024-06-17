@@ -95,3 +95,48 @@ Set to `true` to mark a blog post as a draft and make it only visible during dev
 draft: true
 ---
 ```
+
+### `cover`
+
+**Type:** [`CoverConfig`](#coverconfig)
+
+Add a cover image to the top of the blog post.
+
+```md
+---
+cover:
+  alt: A beautiful cover image
+  image: ../../../assets/cover.png
+---
+```
+
+You can display different versions of the cover image in dark and light modes.
+
+```md
+---
+cover:
+  alt: Beautiful cover images
+  dark: ../../../assets/cover-dark.png
+  light: ../../../assets/cover-light.png
+---
+```
+
+#### `CoverConfig`
+
+```ts
+type CoverConfig =
+  | {
+      // Alternative text describing the cover image for assistive technologies.
+      alt: string
+      // Relative path to an image file in your project.
+      image: string
+    }
+  | {
+      // Alternative text describing the cover image for assistive technologies.
+      alt: string
+      // Relative path to an image file in your project to use in dark mode.
+      dark: string
+      // Relative path to an image file in your project to use in light mode.
+      light: string
+    }
+```

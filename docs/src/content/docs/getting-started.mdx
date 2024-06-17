@@ -11,6 +11,7 @@ A [Starlight](https://starlight.astro.build) plugin to add a blog to your docume
 - Post list with pagination
 - Global and per-post authors
 - Tags
+- Cover images
 - Custom sidebar with recent posts and tags
 - RSS
 
@@ -90,15 +91,18 @@ The Starlight Blog plugin behavior can be tweaked using various [configuration o
 
 Extend Starlight's frontmatter default schema to add support for customizing individual blog posts using their frontmatter in the `src/content/config.ts` file:
 
-```diff lang="ts" ins="{ extend: blogSchema() }"
+```diff lang="ts"
 // src/content/config.ts
 import { defineCollection } from 'astro:content';
-import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
+import { docsSchema } from '@astrojs/starlight/schema';
 +import { blogSchema } from 'starlight-blog/schema'
 
 export const collections = {
-	docs: defineCollection({ schema: docsSchema({ extend: blogSchema() }) }),
-	i18n: defineCollection({ type: 'data', schema: i18nSchema() }),
+	docs: defineCollection({
+    schema: docsSchema({
++      extend: (context) => blogSchema(context)
+    })
+  }),
 };
 ```
 

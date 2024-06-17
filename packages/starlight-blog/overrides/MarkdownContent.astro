@@ -2,6 +2,7 @@
 import StarlightMarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro'
 import type { Props } from '@astrojs/starlight/props'
 
+import Cover from '../components/Cover.astro'
 import Metadata from '../components/Metadata.astro'
 import PostTags from '../components/PostTags.astro'
 import PrevNextLinks from '../components/PrevNextLinks.astro'
@@ -17,7 +18,14 @@ if (isBlogPost) {
 ---
 
 <StarlightMarkdownContent {...Astro.props}>
-  {isBlogPost && blogEntry ? <Metadata entry={blogEntry.entry} showBadges={false} /> : null}
+  {
+    isBlogPost && blogEntry ? (
+      <>
+        {blogEntry.entry.data.cover && <Cover cover={blogEntry.entry.data.cover} />}
+        <Metadata entry={blogEntry.entry} showBadges={false} />
+      </>
+    ) : null
+  }
   <slot />
   {
     isBlogPost && blogEntry ? (
