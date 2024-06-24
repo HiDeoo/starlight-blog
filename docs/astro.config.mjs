@@ -45,6 +45,7 @@ export default defineConfig({
             { label: 'Plugins and Tools', link: '/resources/starlight/' },
           ],
         },
+        { label: 'Demo', link: '/blog/' },
       ],
       social: {
         github: 'https://github.com/HiDeoo/starlight-blog',
