@@ -38,6 +38,10 @@ export default defineConfig({
             { label: 'RSS', link: '/guides/rss/' },
           ],
         },
+        {
+          label: 'Resources',
+          items: [{ label: 'Plugins and Tools', link: '/resources/starlight/' }],
+        },
       ],
       social: {
         github: 'https://github.com/HiDeoo/starlight-blog',
