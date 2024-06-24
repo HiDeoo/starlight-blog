@@ -45,8 +45,8 @@ importers:
         specifier: 0.24.4
         version: 0.24.4(astro@4.10.2)
       '@hideoo/starlight-plugins-docs-components':
-        specifier: ^0.1.1
-        version: 0.1.1(@astrojs/starlight@0.24.4)(astro@4.10.2)
+        specifier: ^0.2.2
+        version: 0.2.2(@astrojs/starlight@0.24.4)(astro@4.10.2)
       astro:
         specifier: 4.10.2
         version: 4.10.2(typescript@5.2.2)
@@ -764,15 +764,15 @@ packages:
     resolution: {integrity: sha512-qylbgiR1n1eQXfpy97+b6pbtE5tf4uxPIqCSE0mp9fw/Npc4CiUxJlMoiUYw169GXTaZzqH/lFVm2sbO2Id2Ug==}
     dev: true
 
-  /@hideoo/starlight-plugins-docs-components@0.1.1(@astrojs/starlight@0.24.4)(astro@4.10.2):
-    resolution: {integrity: sha512-stO58NltRDv7NEqaDiljT8WTP9VjvGB6zlUCUGMipQq7QLDN/28b9DMwG4Jnx7vymsMUTelHR1yCh0QwIiBvKA==}
+  /@hideoo/starlight-plugins-docs-components@0.2.2(@astrojs/starlight@0.24.4)(astro@4.10.2):
+    resolution: {integrity: sha512-SJUoeDvdMLgETbYn2GPXI4IDy7l2kWcfA458M4a4a6kAtTAIdguRTDgqNjPAuCyV9s74VDdKLPh3KCUvUTfBGg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@astrojs/starlight': '>=0.24.0'
     dependencies:
       '@astrojs/starlight': 0.24.4(astro@4.10.2)
       starlight-package-managers: 0.6.0(@astrojs/starlight@0.24.4)(astro@4.10.2)
-      starlight-showcases: 0.1.0(@astrojs/starlight@0.24.4)(astro@4.10.2)
+      starlight-showcases: 0.1.2(@astrojs/starlight@0.24.4)(astro@4.10.2)
     transitivePeerDependencies:
       - astro
     dev: false
@@ -5810,8 +5810,8 @@ packages:
       astro: 4.10.2(typescript@5.2.2)
     dev: false
 
-  /starlight-showcases@0.1.0(@astrojs/starlight@0.24.4)(astro@4.10.2):
-    resolution: {integrity: sha512-2udyLWBKvY9N5MY9tHzvCtaO4BtiesyU9aMequ7zjpgRH/fU6RZW0gzKI8mWSJZPLibRSUW6EKYn1rotOv3A/w==}
+  /starlight-showcases@0.1.2(@astrojs/starlight@0.24.4)(astro@4.10.2):
+    resolution: {integrity: sha512-yj3RjcdWLIWdehTjne9Ethd3ff95vMbuVx/87lU4yilTQewQxjnAyOf1KSnGUgTMQT5WTqhDw8LciPBJox+b8Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@astrojs/starlight': '>=0.23.0'

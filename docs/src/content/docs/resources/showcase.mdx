@@ -1,0 +1,52 @@
+---
+title: Showcase
+description: Discover Starlight project using the Starlight Blog plugin.
+---
+
+import { ShowcaseIntro, Showcase } from '@hideoo/starlight-plugins-docs-components'
+
+<ShowcaseIntro
+  cta="Have you built a blog using Starlight Blog?"
+  href="https://github.com/HiDeoo/starlight-blog/edit/main/docs/src/content/docs/resources/showcase.mdx"
+/>
+
+## Sites
+
+Starlight Plugin is already being used in production. These are some of the sites around the web:
+
+<Showcase
+  entries={[
+    {
+      thumbnail: import('../../../assets/showcase/rainsberger.ca.png'),
+      href: 'https://www.rainsberger.ca/blog/',
+      title: 'Sarah Rainsberger',
+    },
+    {
+      thumbnail: import('../../../assets/showcase/docs.opensaas.sh.png'),
+      href: 'https://docs.opensaas.sh/blog/',
+      title: 'OpenSaaS.sh',
+    },
+    {
+      thumbnail: import('../../../assets/showcase/shinylib.net.png'),
+      href: 'https://shinylib.net/blog/',
+      title: 'Shiny.NET',
+    },
+    {
+      thumbnail: import('../../../assets/showcase/eggactyl.cloud.png'),
+      href: 'https://www.eggactyl.cloud/releases/',
+      title: 'Eggactyl',
+    },
+    {
+      thumbnail: import('../../../assets/showcase/truecharts.org.png'),
+      href: 'https://truecharts.org/news/',
+      title: 'TrueCharts',
+    },
+    {
+      thumbnail: import('../../../assets/showcase/dmno.dev.png'),
+      href: 'https://dmno.dev/blog/',
+      title: 'DMNO',
+    },
+  ]}
+/>
+
+See all the [public project repos using Starlight on GitHub](https://github.com/hideoo/starlight-blog/network/dependents).
