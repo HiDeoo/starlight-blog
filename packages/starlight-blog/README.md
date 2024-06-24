@@ -20,7 +20,7 @@
 
 ## Getting Started
 
-Want to get started immediately? Check out the [getting started guide](https://starlight-blog-docs.vercel.app/getting-started/).
+Want to get started immediately? Check out the [getting started guide](https://starlight-blog-docs.vercel.app/getting-started/) or check out the [demo](https://starlight-blog-docs.vercel.app//blog/) to see the plugin in action.
 
 ## Features
 
@@ -33,8 +33,6 @@ A [Starlight](https://starlight.astro.build) plugin to add a blog to your docume
 - Cover images
 - Custom sidebar with recent posts and tags
 - RSS
-
-Check out the [demo](https://starlight-blog-docs.vercel.app//blog/) for a preview of the blog.
 
 ## License
 
