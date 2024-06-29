@@ -200,3 +200,10 @@ test('should add a link to the RSS feed in the sidebar', async ({ blogPage }) =>
   await expect(link).toBeVisible()
   expect(await link.getAttribute('href')).toBe('/blog/rss.xml')
 })
+
+test('should not include Starlight pagination links', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  await expect(blogPage.page.locator('.pagination-links a[rel="prev"]')).not.toBeVisible()
+  await expect(blogPage.page.locator('.pagination-links a[rel="next"]')).not.toBeVisible()
+})
