@@ -41,3 +41,10 @@ test('should not generate pages for tags with only draft blog posts', async ({ t
 
   expect(response?.ok()).toBe(false)
 })
+
+test('should not include Starlight pagination links', async ({ tagsPage }) => {
+  await tagsPage.goto('starlight')
+
+  await expect(tagsPage.page.locator('.pagination-links a[rel="prev"]')).not.toBeVisible()
+  await expect(tagsPage.page.locator('.pagination-links a[rel="next"]')).not.toBeVisible()
+})

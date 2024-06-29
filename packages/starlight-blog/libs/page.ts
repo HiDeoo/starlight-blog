@@ -57,6 +57,8 @@ export function getPageProps(title: string): StarlightPageProps {
     frontmatter: {
       pagefind: false,
       title,
+      prev: false,
+      next: false,
     },
   }
 }
