@@ -102,6 +102,7 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEn
   return {
     authors,
     date: entry.data.date.toLocaleDateString(starlightConfig.defaultLocale.lang, { dateStyle: 'medium' }),
+    updateDate: entry.data.updateDate?.toLocaleDateString(starlightConfig.defaultLocale.lang, { dateStyle: 'medium' }),
   }
 }
 
@@ -178,6 +179,7 @@ export interface StarlightBlogEntryPaginated {
 interface StarlightBlogEntryMetadata {
   authors: StarlightBlogAuthor[]
   date: string
+  updateDate: string | undefined
 }
 
 interface StarlightBlogStaticProps {

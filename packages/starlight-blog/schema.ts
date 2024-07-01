@@ -33,6 +33,10 @@ export const blogEntrySchema = ({ image }: SchemaContext) =>
      */
     date: z.date(),
     /**
+     * The last update date of the blog post which must be a valid YAML timestamp.
+     */
+    updateDate: z.date().optional(),
+    /**
      * The excerpt of the blog post used in the blog post list and tags pages.
      * If not provided, the entire blog post content will be rendered.
      */
