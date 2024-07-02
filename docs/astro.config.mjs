@@ -53,5 +53,8 @@ export default defineConfig({
       title: 'Starlight Blog',
     }),
   ],
+  image: {
+    domains: ['avatars.githubusercontent.com'],
+  },
   site: 'https://starlight-blog-docs.vercel.app',
 })
