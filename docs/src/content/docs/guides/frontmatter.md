@@ -46,7 +46,8 @@ date: 2024-03-11
 
 **Type:** `Date`
 
-The last update date of the blog post which must be a valid [YAML timestamp](https://yaml.org/type/timestamp.html). Displayed only if different from the `date`.
+The last update date of the blog post which must be a valid [YAML timestamp](https://yaml.org/type/timestamp.html).
+Displayed only if different from the [`date`](#date-required).
 
 ```md
 ---
