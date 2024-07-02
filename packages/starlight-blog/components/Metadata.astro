@@ -14,13 +14,24 @@ const { entry, showBadges = true } = Astro.props
 const { authors, date, updateDate } = getBlogEntryMetadata(entry)
 
 const hasAuthors = authors.length > 0
-const hasUpdateDate = updateDate !== undefined
+const showUpdateDate =
+  updateDate !== undefined && entry.data.updateDate?.toISOString() !== entry.data.date.toISOString()
 ---
 
 <div class="metadata not-content">
-  <time datetime={entry.data.date.toISOString()}>
-    {date}
-  </time>
+  <div class="dates">
+    <time datetime={entry.data.date.toISOString()}>
+      {date}
+    </time>
+    {
+      showUpdateDate ? (
+        <span class="update-date">
+          - Last update:
+          <time datetime={entry.data.updateDate?.toISOString()}>{updateDate}</time>
+        </span>
+      ) : null
+    }
+  </div>
   {
     hasAuthors ? (
       <div class="authors">
@@ -28,13 +39,6 @@ const hasUpdateDate = updateDate !== undefined
           <Author {author} />
         ))}
       </div>
-    ) : null
-  }
-  {
-    hasUpdateDate && entry.data.updateDate?.toISOString() !== entry.data.date.toISOString() ? (
-      <time class="update-date" datetime={entry.data.updateDate?.toISOString()}>
-        Last update: {updateDate}
-      </time>
     ) : null
   }
   {
@@ -53,12 +57,12 @@ const hasUpdateDate = updateDate !== undefined
     gap: 0.75rem;
   }
 
-  time {
+  .dates {
     font-size: var(--sl-text-sm);
   }
 
-  time.update-date {
-    font-size: var(--sl-text-xs);
+  .update-date {
+    color: var(--sl-color-gray-3);
   }
 
   .authors {
