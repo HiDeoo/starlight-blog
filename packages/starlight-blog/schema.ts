@@ -34,6 +34,7 @@ export const blogEntrySchema = ({ image }: SchemaContext) =>
     date: z.date(),
     /**
      * The last update date of the blog post which must be a valid YAML timestamp.
+     * @see https://yaml.org/type/timestamp.html
      */
     updateDate: z.date().optional(),
     /**
