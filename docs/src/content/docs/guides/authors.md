@@ -13,7 +13,7 @@ Authors can be defined in a blog post using the `authors` frontmatter property a
 authors:
   name: HiDeoo
   title: Starlight Aficionado
-  picture: https://avatars.githubusercontent.com/u/494699
+  picture: https://avatars.githubusercontent.com/u/494699?s=200
   url: https://hideoo.dev
 ---
 ```
@@ -26,10 +26,10 @@ Multiple authors can be defined using an array:
 authors:
   - name: HiDeoo
     title: Starlight Aficionado
-    picture: https://avatars.githubusercontent.com/u/494699
+    picture: https://avatars.githubusercontent.com/u/494699?s=200
     url: https://hideoo.dev
   - name: Ghost
-    picture: https://avatars.githubusercontent.com/u/10137
+    picture: https://avatars.githubusercontent.com/u/10137?s=200
     url: https://github.com/ghost
 ---
 ```
@@ -62,7 +62,7 @@ A blog post frontmatter can also reference a global author using the key of the 
 authors:
   - hideoo # Will use the author defined in the configuration with the `hideoo` key.
   - name: Ghost
-    picture: https://avatars.githubusercontent.com/u/10137
+    picture: https://avatars.githubusercontent.com/u/10137?s=200
     url: https://github.com/ghost
 ---
 ```

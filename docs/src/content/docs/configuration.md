@@ -122,3 +122,4 @@ A URL to link the author's name to.
 **Type:** `string`
 
 A URL or path to an image in the `public/` directory to display as the author's picture.
+When using remote images, check out the [“Authorizing remote images”](https://docs.astro.build/en/guides/images/#authorizing-remote-images) guide to enable image optimization.
