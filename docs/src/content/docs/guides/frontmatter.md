@@ -42,16 +42,17 @@ date: 2024-03-11
 ---
 ```
 
-### `updateDate`
+### `lastUpdated`
 
-**Type:** `Date`
+**Type:** `Date | boolean`
 
-The last update date of the blog post which must be a valid [YAML timestamp](https://yaml.org/type/timestamp.html).
-Displayed only if different from the [`date`](#date-required).
+If a date is specified in a blog post for this [Starlight frontmatter field](https://starlight.astro.build/reference/frontmatter/#lastupdated), such date will also be displayed next to the blog post date.
+
+Displayed only if different from the [`date`](#date-required) frontmatter field and must be a valid [YAML timestamp](https://yaml.org/type/timestamp.html).
 
 ```md
 ---
-updateDate: 2024-07-01
+lastUpdated: 2024-07-01
 ---
 ```
 
