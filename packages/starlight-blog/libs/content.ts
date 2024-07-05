@@ -102,7 +102,12 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEn
   return {
     authors,
     date: entry.data.date.toLocaleDateString(starlightConfig.defaultLocale.lang, { dateStyle: 'medium' }),
-    updateDate: entry.data.updateDate?.toLocaleDateString(starlightConfig.defaultLocale.lang, { dateStyle: 'medium' }),
+    lastUpdated:
+      typeof entry.data.lastUpdated === 'boolean'
+        ? undefined
+        : entry.data.lastUpdated?.toLocaleDateString(starlightConfig.defaultLocale.lang, {
+            dateStyle: 'medium',
+          }),
   }
 }
 
@@ -162,6 +167,7 @@ type StarlightEntry = AstroCollectionEntry<StarlightEntryData>
 export type StarlightBlogEntry = StarlightEntry & {
   data: {
     date: Date
+    lastUpdated?: Date | boolean
   }
 }
 
@@ -179,7 +185,7 @@ export interface StarlightBlogEntryPaginated {
 interface StarlightBlogEntryMetadata {
   authors: StarlightBlogAuthor[]
   date: string
-  updateDate: string | undefined
+  lastUpdated: string | undefined
 }
 
 interface StarlightBlogStaticProps {

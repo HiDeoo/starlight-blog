@@ -11,11 +11,9 @@ interface Props {
 }
 
 const { entry, showBadges = true } = Astro.props
-const { authors, date, updateDate } = getBlogEntryMetadata(entry)
+const { authors, date, lastUpdated } = getBlogEntryMetadata(entry)
 
 const hasAuthors = authors.length > 0
-const showUpdateDate =
-  updateDate !== undefined && entry.data.updateDate?.toISOString() !== entry.data.date.toISOString()
 ---
 
 <div class="metadata not-content">
@@ -24,10 +22,12 @@ const showUpdateDate =
       {date}
     </time>
     {
-      showUpdateDate ? (
+      lastUpdated !== undefined &&
+      typeof entry.data.lastUpdated !== 'boolean' &&
+      entry.data.lastUpdated?.toISOString() !== entry.data.date.toISOString() ? (
         <span class="update-date">
           - Last update:
-          <time datetime={entry.data.updateDate?.toISOString()}>{updateDate}</time>
+          <time datetime={entry.data.lastUpdated?.toISOString()}>{lastUpdated}</time>
         </span>
       ) : null
     }
