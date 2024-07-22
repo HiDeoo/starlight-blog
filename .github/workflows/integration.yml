@@ -31,19 +31,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Store Playwright Version
-        run: |
-          PLAYWRIGHT_VERSION=$(pnpm playwright --version | sed 's/Version //')
-          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
-        working-directory: packages/starlight-blog
-
-      - name: Setup Playwright cache
-        id: cache-playwright
-        uses: actions/cache@v3
-        with:
-          key: playwright-${{ env.PLAYWRIGHT_VERSION }}
-          path: ~/.cache/ms-playwright
-
       - name: Generates TypeScript types
         run: pnpm astro sync
         working-directory: docs
