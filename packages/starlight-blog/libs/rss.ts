@@ -46,7 +46,7 @@ export async function getRSSOptions(site: URL | undefined) {
 }
 
 function getRSSTitle() {
-  let title = (typeof context.title === 'string' ? context.title : context.title[context.defaultLocale]) ?? ''
+  let title = typeof context.title === 'string' ? context.title : context.title[context.defaultLocale] ?? ''
 
   if (title.length > 0) {
     title += ` ${context.titleDelimiter ?? '|'} `
