@@ -6,6 +6,7 @@ excerpt: Donec eget **vestibulum** leo. Curabitur vel pretium nulla, in bibendum
 tags:
   - Starlight
   - Demo
+readingTime: 3
 ---
 
 ## Et recingunt etiam

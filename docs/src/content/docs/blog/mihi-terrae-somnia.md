@@ -2,6 +2,7 @@
 title: Mihi terrae somnia
 date: 2020-11-11
 excerpt: Quisque imperdiet at lorem a fermentum. Aliquam ut porta lorem. Morbi faucibus mauris enim, a venenatis ligula hendrerit nec. Quisque elementum est ut urna vulputate ornare. Praesent eget sapien ut libero euismod ornare. Pellentesque ultricies dolor id semper porttitor. Sed vehicula nulla lectus, ut finibus dui lobortis sit amet. Nunc nec vehicula ligula. Phasellus a lacus lorem. Phasellus non ex ultrices, consectetur metus eget, lacinia magna. Cras porta lacus ligula.
+readingTime: 4
 ---
 
 ## Quodque manus
