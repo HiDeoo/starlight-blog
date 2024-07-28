@@ -26,7 +26,7 @@ const hasAuthors = authors.length > 0
       typeof entry.data.lastUpdated !== 'boolean' &&
       entry.data.lastUpdated?.toISOString() !== entry.data.date.toISOString() ? (
         <span class="update-date">
-          - Last update:
+          <span style="margin-inline: 0.25rem;">•</span> Last update:
           <time datetime={entry.data.lastUpdated?.toISOString()}>{lastUpdated}</time>
         </span>
       ) : null
