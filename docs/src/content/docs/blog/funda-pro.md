@@ -3,6 +3,7 @@ title: Funda pro
 date: 2020-02-02
 excerpt: Aliquam erat volutpat. Sed non iaculis sem. Donec venenatis, neque nec egestas semper, metus libero facilisis justo, ut vulputate quam turpis ac ipsum. Cras ex lectus, accumsan vel lorem maximus, varius ornare sapien. Donec feugiat laoreet arcu, rhoncus blandit nisl varius non. Suspendisse congue lobortis lectus quis mattis. Suspendisse et.
 authors: hideoo
+readingTime: 2
 ---
 
 ## Temptata sata tamen

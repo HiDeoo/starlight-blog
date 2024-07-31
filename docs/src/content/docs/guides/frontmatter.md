@@ -154,3 +154,19 @@ type CoverConfig =
       light: string
     }
 ```
+
+### `readingTime`
+
+**Type:** `number`
+
+Give the reader an idea on how long it will take them to read the whole blog post. This frontmatter is a number which represents the **minutes** for reading the post.
+
+```md
+---
+readingTime: 3
+---
+```
+
+:::note
+The `readingTime` is measured in minutes!
+:::

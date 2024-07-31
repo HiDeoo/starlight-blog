@@ -186,6 +186,7 @@ interface StarlightBlogEntryMetadata {
   authors: StarlightBlogAuthor[]
   date: string
   lastUpdated: string | undefined
+  readingTime: number
 }
 
 interface StarlightBlogStaticProps {

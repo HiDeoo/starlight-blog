@@ -72,6 +72,11 @@ export const blogEntrySchema = ({ image }: SchemaContext) =>
         }),
       ])
       .optional(),
+
+    /**
+     * The reading time of the blog post in minutes.
+     */
+    readingTime: z.number().optional(),
   })
 
 export function blogSchema(context: SchemaContext) {

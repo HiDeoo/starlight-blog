@@ -18,6 +18,13 @@ const hasAuthors = authors.length > 0
 
 <div class="metadata not-content">
   <div class="dates">
+    {
+      entry.data.readingTime && (
+        <span class="reading-time">
+          {entry.data.readingTime} min read <span style="margin-inline: 0.25rem;">•</span>
+        </span>
+      )
+    }
     <time datetime={entry.data.date.toISOString()}>
       {date}
     </time>
