@@ -89,6 +89,25 @@ test('should not add recent draft blog posts in the sidebar', async ({ blogPage 
   await expect(group.getByRole('link', { exact: true, name: 'Succedere velut consumptis ferat' })).not.toBeVisible()
 })
 
+test('should add links to featured posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const groupName = 'Featured posts'
+  const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
+
+  await expect(group.getByText(groupName, { exact: true })).toBeVisible()
+
+  expect(await group.getByRole('link').count()).toBe(1)
+})
+
+test('should not add links to featured posts in the sidebar recent posts group', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const group = blogPage.page.getByRole('group').filter({ hasText: 'Recent posts' })
+
+  expect(await group.textContent()).not.toContain('Vario nunc polo')
+})
+
 test('should add links to tags in the sidebar', async ({ blogPage }) => {
   await blogPage.goto()
 
