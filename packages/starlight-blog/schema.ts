@@ -72,6 +72,11 @@ export const blogEntrySchema = ({ image }: SchemaContext) =>
         }),
       ])
       .optional(),
+    /**
+     * Defines whether the blog post is featured or not.
+     * Featured blog posts are displayed in a dedicated sidebar group above recent blog posts.
+     */
+    featured: z.boolean().optional(),
   })
 
 export function blogSchema(context: SchemaContext) {

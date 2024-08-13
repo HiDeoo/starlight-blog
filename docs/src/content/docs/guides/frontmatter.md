@@ -96,6 +96,23 @@ authors:
 ---
 ```
 
+### `featured`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+Set whether this blog post should be considered featured.
+Featured blog posts are listed at the top of the sidebar in a dedicated "Featured posts" group.
+
+The featured group is displayed only if at least one blog post is marked as featured.
+If a blog post is featured and also recent, it will be displayed only in the featured group.
+
+```md
+---
+featured: true
+---
+```
+
 ### `draft`
 
 **Type:** `boolean`  

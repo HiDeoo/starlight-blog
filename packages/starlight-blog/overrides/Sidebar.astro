@@ -4,19 +4,12 @@ import type { Props } from '@astrojs/starlight/props'
 import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
 
-import { getRecentBlogEntries } from '../libs/content'
-import {
-  getBlogPathWithBase,
-  getPathWithBase,
-  isAnyBlogPage,
-  isBlogPostPage,
-  isBlogRoot,
-  isBlogTagsPage,
-} from '../libs/page'
+import { getSidebarBlogEntries } from '../libs/content'
+import { getBlogPathWithBase, getSidebarProps, isAnyBlogPage, isBlogRoot, isBlogTagsPage } from '../libs/page'
 import { getAllTags } from '../libs/tags'
 
 const isBlog = isAnyBlogPage(Astro.props.slug)
-const recentEntries = isBlog ? await getRecentBlogEntries() : []
+const { featured, recent } = isBlog ? await getSidebarBlogEntries() : { featured: [], recent: [] }
 
 const blogSidebar: Props['sidebar'] = isBlog
   ? [
@@ -28,24 +21,28 @@ const blogSidebar: Props['sidebar'] = isBlog
         label: 'All posts',
         type: 'link',
       },
-      {
-        badge: undefined,
-        collapsed: false,
-        entries: recentEntries.map((blogEntry) => ({
-          attrs: {},
-          badge: undefined,
-          href: getPathWithBase(`/${blogEntry.slug}`),
-          isCurrent: isBlogPostPage(Astro.props.slug, blogEntry.slug),
-          label: blogEntry.data.title,
-          type: 'link',
-        })),
-        label: 'Recent posts',
-        type: 'group',
-      },
     ]
   : []
 
 if (isBlog) {
+  if (featured.length > 0) {
+    blogSidebar.push({
+      badge: undefined,
+      collapsed: false,
+      entries: getSidebarProps(Astro.props.slug, featured),
+      label: 'Featured posts',
+      type: 'group',
+    })
+  }
+
+  blogSidebar.push({
+    badge: undefined,
+    collapsed: false,
+    entries: getSidebarProps(Astro.props.slug, recent),
+    label: 'Recent posts',
+    type: 'group',
+  })
+
   const blogTags = await getAllTags()
 
   if (blogTags.size > 0) {
