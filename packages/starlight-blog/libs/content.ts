@@ -49,10 +49,21 @@ export async function getBlogStaticPaths() {
   })
 }
 
-export async function getRecentBlogEntries() {
+export async function getSidebarBlogEntries() {
   const entries = await getBlogEntries()
 
-  return entries.slice(0, config.recentPostCount)
+  const featured: StarlightBlogEntry[] = []
+  const recent: StarlightBlogEntry[] = []
+
+  for (const entry of entries) {
+    if (entry.data.featured) {
+      featured.push(entry)
+    } else {
+      recent.push(entry)
+    }
+  }
+
+  return { featured, recent: recent.slice(0, config.recentPostCount) }
 }
 
 export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPaginated> {

@@ -42,9 +42,10 @@ const hasAuthors = authors.length > 0
     ) : null
   }
   {
-    showBadges && entry.data?.draft && (
+    showBadges && (entry.data?.draft || entry.data.featured) && (
       <div class="badges">
-        <Badge size="medium" text="Draft" variant="caution" />
+        {entry.data.draft && <Badge size="medium" text="Draft" variant="caution" />}
+        {entry.data.featured && <Badge size="medium" text="Featured" variant="note" />}
       </div>
     )
   }
@@ -72,6 +73,8 @@ const hasAuthors = authors.length > 0
   }
 
   .badges {
-    margin-top: 0.25rem;
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
   }
 </style>

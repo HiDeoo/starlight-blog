@@ -1,8 +1,9 @@
-import type { StarlightPageProps } from '@astrojs/starlight/props'
+import type { Props, StarlightPageProps } from '@astrojs/starlight/props'
 import type { AstroConfig } from 'astro'
 import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
 
+import type { StarlightBlogEntry } from './content'
 import { ensureTrailingSlash, stripLeadingSlash, stripTrailingSlash } from './path'
 
 const trailingSlashTransformers: Record<AstroConfig['trailingSlash'], (path: string) => string> = {
@@ -61,4 +62,15 @@ export function getPageProps(title: string): StarlightPageProps {
       next: false,
     },
   }
+}
+
+export function getSidebarProps(slug: string, entries: StarlightBlogEntry[]): Props['sidebar'] {
+  return entries.map((entry) => ({
+    attrs: {},
+    badge: undefined,
+    href: getPathWithBase(`/${entry.slug}`),
+    isCurrent: isBlogPostPage(slug, entry.slug),
+    label: entry.data.title,
+    type: 'link',
+  }))
 }

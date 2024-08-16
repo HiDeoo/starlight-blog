@@ -12,6 +12,7 @@ authors:
 cover:
   alt: A cover
   image: ../../../assets/cover.png
+featured: true
 ---
 
 ### Canes plura palmas eodem huc scelerate spectat
