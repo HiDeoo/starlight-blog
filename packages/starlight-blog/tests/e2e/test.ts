@@ -1,5 +1,6 @@
 import { test as base } from '@playwright/test'
 
+import { AuthorsPage } from './fixtures/AuthorsPage'
 import { BlogPage } from './fixtures/BlogPage'
 import { PostPage } from './fixtures/PostPage'
 import { TagsPage } from './fixtures/TagsPage'
@@ -7,6 +8,11 @@ import { TagsPage } from './fixtures/TagsPage'
 export { expect } from '@playwright/test'
 
 export const test = base.extend<Fixtures>({
+  authorsPage: async ({ page }, use) => {
+    const authorsPage = new AuthorsPage(page)
+
+    await use(authorsPage)
+  },
   blogPage: async ({ page }, use) => {
     const blogPage = new BlogPage(page)
 
@@ -25,6 +31,7 @@ export const test = base.extend<Fixtures>({
 })
 
 interface Fixtures {
+  authorsPage: AuthorsPage
   blogPage: BlogPage
   postPage: PostPage
   tagsPage: TagsPage

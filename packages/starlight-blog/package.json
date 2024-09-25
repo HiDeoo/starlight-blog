@@ -10,6 +10,7 @@
     "./overrides/MarkdownContent.astro": "./overrides/MarkdownContent.astro",
     "./overrides/Sidebar.astro": "./overrides/Sidebar.astro",
     "./overrides/ThemeSelect.astro": "./overrides/ThemeSelect.astro",
+    "./routes/Authors.astro": "./routes/Authors.astro",
     "./routes/Blog.astro": "./routes/Blog.astro",
     "./routes/Tags.astro": "./routes/Tags.astro",
     "./routes/rss": "./routes/rss.xml.ts",

@@ -15,7 +15,7 @@ test('should use the configured title for the page', async ({ blogPage }) => {
 test('should not display the content panel containing the title', async ({ blogPage }) => {
   await blogPage.goto()
 
-  await expect(blogPage.page.getByRole('heading', { level: 1 })).not.toBeVisible()
+  await expect(blogPage.content.getByRole('heading', { level: 1 })).not.toBeVisible()
 })
 
 test('should create the blog post list pages', async ({ blogPage }) => {
@@ -64,7 +64,7 @@ test('should display navigation links', async ({ blogPage }) => {
 test('should add a link to all posts in the sidebar', async ({ blogPage }) => {
   await blogPage.goto()
 
-  const link = blogPage.page.getByRole('link', { name: 'All posts' })
+  const link = blogPage.sidebar.getByRole('link', { name: 'All posts' })
 
   await expect(link).toBeVisible()
   expect(await link.getAttribute('href')).toBe('/blog')
@@ -74,7 +74,7 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
   await blogPage.goto()
 
   const groupName = 'Recent posts'
-  const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
+  const group = blogPage.sidebar.getByRole('group').filter({ hasText: groupName })
 
   await expect(group.getByText(groupName, { exact: true })).toBeVisible()
 
@@ -84,7 +84,7 @@ test('should add links to recent posts in the sidebar', async ({ blogPage }) => 
 test('should not add recent draft blog posts in the sidebar', async ({ blogPage }) => {
   await blogPage.goto()
 
-  const group = blogPage.page.getByRole('group').filter({ hasText: 'Recent posts' })
+  const group = blogPage.sidebar.getByRole('group').filter({ hasText: 'Recent posts' })
 
   await expect(group.getByRole('link', { exact: true, name: 'Succedere velut consumptis ferat' })).not.toBeVisible()
 })
@@ -93,7 +93,7 @@ test('should add links to featured posts in the sidebar', async ({ blogPage }) =
   await blogPage.goto()
 
   const groupName = 'Featured posts'
-  const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
+  const group = blogPage.sidebar.getByRole('group').filter({ hasText: groupName })
 
   await expect(group.getByText(groupName, { exact: true })).toBeVisible()
 
@@ -103,7 +103,7 @@ test('should add links to featured posts in the sidebar', async ({ blogPage }) =
 test('should not add links to featured posts in the sidebar recent posts group', async ({ blogPage }) => {
   await blogPage.goto()
 
-  const group = blogPage.page.getByRole('group').filter({ hasText: 'Recent posts' })
+  const group = blogPage.sidebar.getByRole('group').filter({ hasText: 'Recent posts' })
 
   expect(await group.textContent()).not.toContain('Vario nunc polo')
 })
@@ -112,7 +112,7 @@ test('should add links to tags in the sidebar', async ({ blogPage }) => {
   await blogPage.goto()
 
   const groupName = 'Tags'
-  const group = blogPage.page.getByRole('group').filter({ hasText: groupName })
+  const group = blogPage.sidebar.getByRole('group').filter({ hasText: groupName })
 
   await expect(group.getByText(groupName, { exact: true })).toBeVisible()
 
@@ -134,7 +134,7 @@ test('should not add links to tags from draft blog posts in the sidebar', async 
   await blogPage.goto()
 
   await expect(
-    blogPage.page.getByRole('group').filter({ hasText: 'Tags' }).getByRole('link', { exact: true, name: 'WIP (1)' }),
+    blogPage.sidebar.getByRole('group').filter({ hasText: 'Tags' }).getByRole('link', { exact: true, name: 'WIP (1)' }),
   ).not.toBeVisible()
 })
 
@@ -142,10 +142,49 @@ test('should not count tags from draft blog posts in the sidebar', async ({ blog
   await blogPage.goto()
 
   await expect(
-    blogPage.page
+    blogPage.sidebar
       .getByRole('group')
       .filter({ hasText: 'Tags' })
       .getByRole('link', { exact: true, name: 'Placeholder (2)' }),
+  ).toBeVisible()
+})
+
+test('should add links to authors in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const groupName = 'Authors'
+  const group = blogPage.sidebar.getByRole('group').filter({ hasText: groupName })
+
+  await expect(group.getByText(groupName, { exact: true })).toBeVisible()
+
+  const links = group.getByRole('link')
+
+  expect(await links.count()).toBe(3)
+
+  await expect(links.nth(0)).toContainText('HiDeoo')
+  await expect(links.nth(1)).toContainText('Ghost')
+  await expect(links.nth(2)).toContainText('Astro')
+})
+
+test('should not add links to authors from draft blog posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  await expect(
+    blogPage.sidebar
+      .getByRole('group')
+      .filter({ hasText: 'Authors' })
+      .getByRole('link', { exact: true, name: 'Unknown (1)' }),
+  ).not.toBeVisible()
+})
+
+test('should not count authors from draft blog posts in the sidebar', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  await expect(
+    blogPage.sidebar
+      .getByRole('group')
+      .filter({ hasText: 'Authors' })
+      .getByRole('link', { exact: true, name: 'HiDeoo (10)' }),
   ).toBeVisible()
 })
 

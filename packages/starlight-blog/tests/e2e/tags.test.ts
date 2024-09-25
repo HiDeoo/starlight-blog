@@ -6,9 +6,9 @@ test('should display a preview of each posts with proper tag', async ({ tagsPage
 
   await tagsPage.goto(tag.toLowerCase())
 
-  await expect(tagsPage.page.getByText(`${count} posts with the tag “${tag}”`, { exact: true })).toBeVisible()
+  await expect(tagsPage.content.getByText(`${count} posts with the tag “${tag}”`, { exact: true })).toBeVisible()
 
-  const articles = tagsPage.page.getByRole('article')
+  const articles = tagsPage.content.getByRole('article')
 
   expect(await articles.count()).toBe(count)
 
@@ -23,9 +23,9 @@ test('should not include draft blog posts', async ({ tagsPage }) => {
 
   await tagsPage.goto(tag.toLowerCase())
 
-  await expect(tagsPage.page.getByText(`${count} posts with the tag “${tag}”`, { exact: true })).toBeVisible()
+  await expect(tagsPage.content.getByText(`${count} posts with the tag “${tag}”`, { exact: true })).toBeVisible()
 
-  const articles = tagsPage.page.getByRole('article')
+  const articles = tagsPage.content.getByRole('article')
 
   expect(await articles.count()).toBe(count)
 })
@@ -33,7 +33,7 @@ test('should not include draft blog posts', async ({ tagsPage }) => {
 test('should not display a link to edit this page', async ({ tagsPage }) => {
   await tagsPage.goto('starlight')
 
-  await expect(tagsPage.page.getByText('Edit page')).not.toBeVisible()
+  await expect(tagsPage.content.getByText('Edit page')).not.toBeVisible()
 })
 
 test('should not generate pages for tags with only draft blog posts', async ({ tagsPage }) => {
@@ -45,6 +45,6 @@ test('should not generate pages for tags with only draft blog posts', async ({ t
 test('should not include Starlight pagination links', async ({ tagsPage }) => {
   await tagsPage.goto('starlight')
 
-  await expect(tagsPage.page.locator('.pagination-links a[rel="prev"]')).not.toBeVisible()
-  await expect(tagsPage.page.locator('.pagination-links a[rel="next"]')).not.toBeVisible()
+  await expect(tagsPage.content.locator('.pagination-links a[rel="prev"]')).not.toBeVisible()
+  await expect(tagsPage.content.locator('.pagination-links a[rel="next"]')).not.toBeVisible()
 })

@@ -4,24 +4,24 @@ import type { InferGetStaticPropsType } from 'astro'
 import Page from '../components/Page.astro'
 import PostCount from '../components/PostCount.astro'
 import Posts from '../components/Posts.astro'
+import { getAuthorsStaticPaths } from '../libs/authors'
 import { getPageProps } from '../libs/page'
 import { pluralize } from '../libs/string'
-import { getTagsStaticPaths } from '../libs/tags'
 
 export const prerender = true
 
 export function getStaticPaths() {
-  return getTagsStaticPaths()
+  return getAuthorsStaticPaths()
 }
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
-const { entries, label } = Astro.props
+const { author, entries } = Astro.props
 
-const pageProps = getPageProps(label)
+const pageProps = getPageProps(author.name)
 ---
 
 <Page {...pageProps}>
-  <PostCount>{pluralize(entries.length, 'post', 'posts')} with the tag &ldquo;{label}&rdquo;</PostCount>
+  <PostCount>{pluralize(entries.length, 'post', 'posts')} by {author.name}</PostCount>
   <Posts {entries} />
 </Page>
