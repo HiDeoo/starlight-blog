@@ -4,8 +4,16 @@ import type { Props } from '@astrojs/starlight/props'
 import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
 
+import { getAllAuthors } from '../libs/authors'
 import { getSidebarBlogEntries } from '../libs/content'
-import { getBlogPathWithBase, getSidebarProps, isAnyBlogPage, isBlogRoot, isBlogTagsPage } from '../libs/page'
+import {
+  getBlogPathWithBase,
+  getSidebarProps,
+  isAnyBlogPage,
+  isBlogAuthorsPage,
+  isBlogRoot,
+  isBlogTagsPage,
+} from '../libs/page'
 import { getAllTags } from '../libs/tags'
 
 const isBlog = isAnyBlogPage(Astro.props.slug)
@@ -66,6 +74,33 @@ if (isBlog) {
           type: 'link',
         })),
       label: 'Tags',
+      type: 'group',
+    })
+  }
+
+  const blogAuthors = await getAllAuthors()
+
+  if (blogAuthors.size > 1) {
+    blogSidebar.push({
+      badge: undefined,
+      collapsed: false,
+      entries: [...blogAuthors]
+        .sort(([, a], [, b]) => {
+          if (a.entries.length === b.entries.length) {
+            return a.author.name.localeCompare(b.author.name)
+          }
+
+          return b.entries.length - a.entries.length
+        })
+        .map(([, { author, entries }]) => ({
+          attrs: {},
+          badge: undefined,
+          href: getBlogPathWithBase(`/authors/${author.slug}`),
+          isCurrent: isBlogAuthorsPage(Astro.props.slug, author.slug),
+          label: `${author.name} (${entries.length})`,
+          type: 'link',
+        })),
+      label: 'Authors',
       type: 'group',
     })
   }

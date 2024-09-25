@@ -3,54 +3,54 @@ import { expect, test } from './test'
 test('should fallback to the config author is none are provided in the frontmatter', async ({ postPage }) => {
   await postPage.goto('nitidum-fuit')
 
-  await expect(postPage.page.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
 })
 
 test('should use the referenced author in the frontmatter', async ({ postPage }) => {
   await postPage.goto('funda-pro')
 
-  await expect(postPage.page.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
 })
 
 test('should use the author specified in the frontmatter', async ({ postPage }) => {
   await postPage.goto('spectat-fingit')
 
-  await expect(postPage.page.getByRole('link', { name: 'Ghost' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'Ghost' })).toBeVisible()
 })
 
 test('should use the authors specified in the frontmatter', async ({ postPage }) => {
   await postPage.goto('haerent-huc-curae')
 
-  await expect(postPage.page.getByRole('link', { name: 'Ghost' })).toBeVisible()
-  await expect(postPage.page.getByRole('link', { name: 'Astro' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'Ghost' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'Astro' })).toBeVisible()
 })
 
 test('should use the referenced authors specified in the frontmatter', async ({ postPage }) => {
   await postPage.goto('iove-ad-thyrsos-sororis')
 
-  await expect(postPage.page.getByRole('link', { name: 'Ghost' })).toBeVisible()
-  await expect(postPage.page.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'Ghost' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'HiDeoo' })).toBeVisible()
 })
 
 test('should display author title', async ({ postPage }) => {
   await postPage.goto('sequantur-quaeritis-tandem')
 
-  await expect(postPage.page.getByRole('link', { name: 'Starlight Aficionado' })).toBeVisible()
+  await expect(postPage.content.getByRole('link', { name: 'Starlight Aficionado' })).toBeVisible()
 })
 
 test('should not display tags in a post not having tags', async ({ postPage }) => {
   await postPage.goto('mihi-terrae-somnia')
 
-  await expect(postPage.page.getByText('Tags: ', { exact: true })).not.toBeVisible()
+  await expect(postPage.content.getByText('Tags: ', { exact: true })).not.toBeVisible()
 })
 
 test('should display tags in a post having tags', async ({ postPage }) => {
   await postPage.goto('tollere-cepit-formidabilis-currere')
 
-  await expect(postPage.page.getByText('Tags: ', { exact: true })).toBeVisible()
+  await expect(postPage.content.getByText('Tags: ', { exact: true })).toBeVisible()
 
-  const starlightTag = postPage.page.getByRole('link', { exact: true, name: 'Starlight' })
-  const amazingContentTag = postPage.page.getByRole('link', { exact: true, name: 'Amazing Content' })
+  const starlightTag = postPage.content.getByRole('link', { exact: true, name: 'Starlight' })
+  const amazingContentTag = postPage.content.getByRole('link', { exact: true, name: 'Amazing Content' })
 
   await expect(starlightTag).toBeVisible()
   expect(await starlightTag.getAttribute('href')).toBe('/blog/tags/starlight')
@@ -90,13 +90,13 @@ test('should display navigation links', async ({ postPage }) => {
 test('should include a cover image', async ({ postPage }) => {
   await postPage.goto('vario-nunc-polo')
 
-  await expect(postPage.page.getByRole('img', { name: 'A cover' })).toBeVisible()
+  await expect(postPage.content.getByRole('img', { name: 'A cover' })).toBeVisible()
 })
 
 test('should include cover images for dark and light mode', async ({ postPage }) => {
   await postPage.goto('ipsum-nunc-aliquet')
 
-  await expect(postPage.page.getByRole('img', { name: 'Different covers in dark and light mode' })).toBeVisible()
+  await expect(postPage.content.getByRole('img', { name: 'Different covers in dark and light mode' })).toBeVisible()
 
-  expect(await postPage.page.locator('figure img').count()).toBe(2)
+  expect(await postPage.content.locator('figure img').count()).toBe(2)
 })

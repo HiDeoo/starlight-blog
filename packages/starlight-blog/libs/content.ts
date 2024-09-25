@@ -3,8 +3,9 @@ import { getCollection, type AstroCollectionEntry } from 'astro:content'
 import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
 
-import type { StarlightBlogAuthor, blogSchema } from '../schema'
+import type { blogSchema, StarlightBlogAuthor } from '../schema'
 
+import { getEntryAuthors } from './authors'
 import { getBlogPathWithBase, getPathWithBase } from './page'
 
 export async function getBlogStaticPaths() {
@@ -92,26 +93,8 @@ export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPagi
 }
 
 export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEntryMetadata {
-  const authors: StarlightBlogAuthor[] = []
-
-  if (!entry.data.authors) {
-    authors.push(...Object.values(config.authors))
-  } else if (typeof entry.data.authors === 'string') {
-    authors.push(getAuthorFromConfig(entry.data.authors))
-  } else if (Array.isArray(entry.data.authors)) {
-    for (const author of entry.data.authors) {
-      if (typeof author === 'string') {
-        authors.push(getAuthorFromConfig(author))
-      } else {
-        authors.push(author)
-      }
-    }
-  } else {
-    authors.push(entry.data.authors)
-  }
-
   return {
-    authors,
+    authors: getEntryAuthors(entry),
     date: entry.data.date.toLocaleDateString(starlightConfig.defaultLocale.lang, { dateStyle: 'medium' }),
     lastUpdated:
       typeof entry.data.lastUpdated === 'boolean'
@@ -160,16 +143,6 @@ function validateBlogEntry(entry: StarlightEntry): asserts entry is StarlightBlo
   if (entry.data.date === undefined) {
     throw new Error(`Missing date for blog entry '${entry.id}'.`)
   }
-}
-
-function getAuthorFromConfig(id: string): StarlightBlogAuthor {
-  const author = config.authors[id]
-
-  if (!author) {
-    throw new Error(`Author '${id}' not found in the blog configuration.`)
-  }
-
-  return author
 }
 
 type StarlightEntryData = z.infer<ReturnType<typeof blogSchema>> & { draft?: boolean; title: string }

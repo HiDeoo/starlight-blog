@@ -42,13 +42,9 @@ export function getEntryTags(entry: StarlightBlogEntry): StarlightBlogEntryTag[]
   return (entry.data.tags ?? []).map((tag) => {
     return {
       label: tag,
-      slug: slugifyTag(tag),
+      slug: slug(tag),
     }
   })
-}
-
-function slugifyTag(label: StarlightBlogEntryTag['label']) {
-  return slug(label)
 }
 
 type StarlightBlogEntryTagSlug = string

@@ -42,7 +42,7 @@ export function isBlogRoot(slug: string) {
 }
 
 export function isAnyBlogPostPage(slug: string) {
-  return slug.match(new RegExp(`^${config.prefix}/(?!(\\d+/?|tags/.+)$).+$`)) !== null
+  return slug.match(new RegExp(`^${config.prefix}/(?!(\\d+/?|tags/.+|authors/.+)$).+$`)) !== null
 }
 
 export function isBlogPostPage(slug: string, postSlug: string) {
@@ -51,6 +51,10 @@ export function isBlogPostPage(slug: string, postSlug: string) {
 
 export function isBlogTagsPage(slug: string, tag: string) {
   return slug === `${config.prefix}/tags/${tag}`
+}
+
+export function isBlogAuthorsPage(slug: string, author: string) {
+  return slug === `${config.prefix}/authors/${author}`
 }
 
 export function getPageProps(title: string): StarlightPageProps {

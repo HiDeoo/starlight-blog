@@ -6,7 +6,7 @@ excerpt: Donec aliquam, nunc sed consectetur porta, nibh odio convallis dolor, u
 tags:
   - WIP
 authors:
-  - hideoo
+  name: Unknown
 ---
 
 ## Rudibusque positos tegitur qua pugnat Lucifer habitatis

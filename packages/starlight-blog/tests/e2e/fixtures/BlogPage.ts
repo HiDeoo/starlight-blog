@@ -1,7 +1,11 @@
 import type { Page } from '@playwright/test'
 
-export class BlogPage {
-  constructor(public readonly page: Page) {}
+import { BasePage } from './BasePage'
+
+export class BlogPage extends BasePage {
+  constructor(public override readonly page: Page) {
+    super(page)
+  }
 
   goto(index?: number) {
     return this.page.goto(`/blog${index ? `/${index}` : ''}`)

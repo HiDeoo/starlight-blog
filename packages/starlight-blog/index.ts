@@ -65,6 +65,12 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
               })
 
               injectRoute({
+                entrypoint: 'starlight-blog/routes/Authors.astro',
+                pattern: '/[prefix]/authors/[author]',
+                prerender: true,
+              })
+
+              injectRoute({
                 entrypoint: 'starlight-blog/routes/Blog.astro',
                 pattern: '/[prefix]/[...page]',
                 prerender: true,
