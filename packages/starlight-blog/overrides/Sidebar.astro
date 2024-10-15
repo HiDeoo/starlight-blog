@@ -28,7 +28,7 @@ const blogSidebar: Props['sidebar'] = isBlog
         badge: undefined,
         href: getRelativeBlogUrl('/', locale),
         isCurrent: isBlogRoot(slug),
-        label: 'All posts',
+        label: Astro.locals.t('starlightBlog.sidebar.all'),
         type: 'link',
       },
     ]
@@ -40,7 +40,7 @@ if (isBlog) {
       badge: undefined,
       collapsed: false,
       entries: getSidebarProps(slug, featured, locale),
-      label: 'Featured posts',
+      label: Astro.locals.t('starlightBlog.sidebar.featured'),
       type: 'group',
     })
   }
@@ -49,7 +49,7 @@ if (isBlog) {
     badge: undefined,
     collapsed: false,
     entries: getSidebarProps(slug, recent, locale),
-    label: 'Recent posts',
+    label: Astro.locals.t('starlightBlog.sidebar.recent'),
     type: 'group',
   })
 
@@ -75,7 +75,7 @@ if (isBlog) {
           label: `${label} (${entries.length})`,
           type: 'link',
         })),
-      label: 'Tags',
+      label: Astro.locals.t('starlightBlog.sidebar.tags'),
       type: 'group',
     })
   }
@@ -102,7 +102,7 @@ if (isBlog) {
           label: `${author.name} (${entries.length})`,
           type: 'link',
         })),
-      label: 'Authors',
+      label: Astro.locals.t('starlightBlog.sidebar.authors'),
       type: 'group',
     })
   }
@@ -113,7 +113,7 @@ if (isBlog) {
       badge: undefined,
       href: getRelativeBlogUrl('/rss.xml', locale, true),
       isCurrent: false,
-      label: 'RSS',
+      label: Astro.locals.t('starlightBlog.sidebar.rss'),
       type: 'link',
     })
   }

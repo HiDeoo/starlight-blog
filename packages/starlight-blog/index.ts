@@ -4,6 +4,7 @@ import type { AstroIntegrationLogger } from 'astro'
 import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig } from './libs/config'
 import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
+import { Translations } from './translations'
 
 export type { StarlightBlogConfig, StarlightBlogUserConfig }
 
@@ -13,7 +14,16 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
   return {
     name: 'starlight-blog-plugin',
     hooks: {
-      setup({ addIntegration, astroConfig, config: starlightConfig, logger, updateConfig: updateStarlightConfig }) {
+      setup({
+        addIntegration,
+        astroConfig,
+        config: starlightConfig,
+        injectTranslations,
+        logger,
+        updateConfig: updateStarlightConfig,
+      }) {
+        injectTranslations(Translations)
+
         const rssLink = astroConfig.site
           ? `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
               stripTrailingSlash(config.prefix),

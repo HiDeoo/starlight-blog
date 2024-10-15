@@ -5,7 +5,6 @@ import Page from '../components/Page.astro'
 import PostCount from '../components/PostCount.astro'
 import Posts from '../components/Posts.astro'
 import { getPageProps } from '../libs/page'
-import { pluralize } from '../libs/string'
 import { getTagsStaticPaths } from '../libs/tags'
 
 export const prerender = true
@@ -22,6 +21,6 @@ const pageProps = getPageProps(label)
 ---
 
 <Page {...pageProps}>
-  <PostCount>{pluralize(entries.length, 'post', 'posts')} with the tag &ldquo;{label}&rdquo;</PostCount>
+  <PostCount>{Astro.locals.t('starlightBlog.tags.count', { count: entries.length, tag: label })}</PostCount>
   <Posts {entries} {locale} />
 </Page>

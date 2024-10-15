@@ -6,7 +6,6 @@ import PostCount from '../components/PostCount.astro'
 import Posts from '../components/Posts.astro'
 import { getAuthorsStaticPaths } from '../libs/authors'
 import { getPageProps } from '../libs/page'
-import { pluralize } from '../libs/string'
 
 export const prerender = true
 
@@ -22,6 +21,6 @@ const pageProps = getPageProps(author.name)
 ---
 
 <Page {...pageProps}>
-  <PostCount>{pluralize(entries.length, 'post', 'posts')} by {author.name}</PostCount>
+  <PostCount>{Astro.locals.t('starlightBlog.authors.count', { count: entries.length, author: author.name })}</PostCount>
   <Posts {entries} {locale} />
 </Page>

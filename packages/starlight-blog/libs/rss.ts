@@ -25,7 +25,7 @@ export function getRSSStaticPaths() {
   return paths satisfies GetStaticPathsResult
 }
 
-export async function getRSSOptions(site: URL | undefined, locale: Locale) {
+export async function getRSSOptions(site: URL | undefined, locale: Locale, imageFallbackLabel: string) {
   const entries = await getBlogEntries(locale)
   entries.splice(20)
 
@@ -46,7 +46,7 @@ export async function getRSSOptions(site: URL | undefined, locale: Locale) {
           pubDate: entry.data.date,
           categories: entry.data.tags,
           description: await getRSSDescription(entry),
-          content: await getRSSContent(entry, new URL(link, feedSite)),
+          content: await getRSSContent(entry, new URL(link, feedSite), imageFallbackLabel),
         }
       }),
     ),
@@ -98,6 +98,6 @@ function getRSSDescription(entry: StarlightBlogEntry): Promise<string> | undefin
   return stripMarkdown(entry.data.excerpt)
 }
 
-function getRSSContent(entry: StarlightBlogEntry, link: URL): Promise<string> {
-  return renderMarkdownToHTML(entry.body, link)
+function getRSSContent(entry: StarlightBlogEntry, link: URL, imageFallbackLabel: string): Promise<string> {
+  return renderMarkdownToHTML(entry.body, link, imageFallbackLabel)
 }

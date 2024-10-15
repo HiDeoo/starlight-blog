@@ -8,6 +8,8 @@ export function getStaticPaths() {
   return getRSSStaticPaths()
 }
 
-export const GET: APIRoute = async ({ params, site }) => {
-  return rss(await getRSSOptions(site, getLocaleFromPath(params['prefix'] ?? '')))
+export const GET: APIRoute = async ({ locals, params, site }) => {
+  return rss(
+    await getRSSOptions(site, getLocaleFromPath(params['prefix'] ?? ''), locals.t('starlightBlog.rss.imageFallback')),
+  )
 }

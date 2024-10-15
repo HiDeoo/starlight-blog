@@ -151,12 +151,10 @@ function getBlogStaticPath(
   locale: Locale,
 ) {
   const prevPage = index === 0 ? undefined : pages.at(index - 1)
-  const prevLink = prevPage
-    ? { href: getRelativeBlogUrl(index === 1 ? '/' : `/${index}`, locale), label: 'Newer posts' }
-    : undefined
+  const prevLink = prevPage ? { href: getRelativeBlogUrl(index === 1 ? '/' : `/${index}`, locale) } : undefined
 
   const nextPage = pages.at(index + 1)
-  const nextLink = nextPage ? { href: getRelativeBlogUrl(`/${index + 2}`, locale), label: 'Older posts' } : undefined
+  const nextLink = nextPage ? { href: getRelativeBlogUrl(`/${index + 2}`, locale) } : undefined
 
   return {
     params: {
@@ -218,7 +216,7 @@ export type StarlightBlogEntry = StarlightEntry & {
 
 export interface StarlightBlogLink {
   href: string
-  label: string
+  label?: string
 }
 
 export interface StarlightBlogEntryPaginated {

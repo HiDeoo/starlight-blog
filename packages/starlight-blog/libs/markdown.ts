@@ -14,7 +14,7 @@ export async function stripMarkdown(markdown: string) {
   return await markedText.parse(markdown)
 }
 
-export async function renderMarkdownToHTML(markdown: string, link: URL) {
+export async function renderMarkdownToHTML(markdown: string, link: URL, imageFallbackLabel: string) {
   const content = await markedMd.parse(markdown)
 
   return transform(content, [
@@ -24,7 +24,7 @@ export async function renderMarkdownToHTML(markdown: string, link: URL) {
       img: (props) =>
         html`<a href="${link}">
             <div><img src="${imagePlaceholder}" alt="${props['alt']}" /></div>
-            <blockquote><em>Original image available in the blog post.</em></blockquote>
+            <blockquote><em>${imageFallbackLabel}</em></blockquote>
           </a>
           <br />`,
     }),
