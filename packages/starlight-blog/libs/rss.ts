@@ -1,29 +1,43 @@
 import type { RSSOptions } from '@astrojs/rss'
+import type { GetStaticPathsResult } from 'astro'
+import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
 
 import { getBlogEntries, type StarlightBlogEntry } from './content'
+import { DefaultLocale, getLangFromLocale, type Locale } from './i18n'
 import { renderMarkdownToHTML, stripMarkdown } from './markdown'
-import { getPathWithBase } from './page'
+import { getPathWithLocale, getRelativeUrl } from './page'
 
 export function getRSSStaticPaths() {
-  return [{ params: { prefix: config.prefix } }]
+  const paths = []
+
+  if (starlightConfig.isMultilingual) {
+    for (const localeKey of Object.keys(starlightConfig.locales)) {
+      const locale = localeKey === 'root' ? undefined : localeKey
+      paths.push(getRSSStaticPath(locale))
+    }
+  } else {
+    paths.push(getRSSStaticPath(DefaultLocale))
+  }
+
+  return paths satisfies GetStaticPathsResult
 }
 
-export async function getRSSOptions(site: URL | undefined) {
-  const entries = await getBlogEntries()
+export async function getRSSOptions(site: URL | undefined, locale: Locale) {
+  const entries = await getBlogEntries(locale)
   entries.splice(20)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
   const feedSite = site!
 
   const options: RSSOptions = {
-    title: getRSSTitle(),
+    title: getRSSTitle(locale),
     description: context.description ?? '',
     site: feedSite,
     items: await Promise.all(
       entries.map(async (entry) => {
-        const link = getPathWithBase(`/${entry.slug}`)
+        const link = getRelativeUrl(`/${getPathWithLocale(entry.slug, locale)}`)
 
         return {
           title: entry.data.title,
@@ -35,7 +49,7 @@ export async function getRSSOptions(site: URL | undefined) {
         }
       }),
     ),
-    customData: `<language>${context.defaultLocale}</language>`,
+    customData: `<language>${getLangFromLocale(locale)}</language>`,
   }
 
   if (context.trailingSlash !== 'ignore') {
@@ -45,8 +59,28 @@ export async function getRSSOptions(site: URL | undefined) {
   return options
 }
 
-function getRSSTitle() {
-  let title = typeof context.title === 'string' ? context.title : context.title[context.defaultLocale] ?? ''
+function getRSSStaticPath(locale: Locale) {
+  return {
+    params: {
+      prefix: getPathWithLocale(config.prefix, locale),
+    },
+  }
+}
+
+function getRSSTitle(locale: Locale): string {
+  let title: string
+
+  if (typeof context.title === 'string') {
+    title = context.title
+  } else {
+    const lang = getLangFromLocale(locale)
+    if (starlightConfig.title[lang]) {
+      title = starlightConfig.title[lang]
+    } else {
+      const defaultLang = starlightConfig.defaultLocale.lang ?? starlightConfig.defaultLocale.locale
+      title = defaultLang ? starlightConfig.title[defaultLang] ?? '' : ''
+    }
+  }
 
   if (title.length > 0) {
     title += ` ${context.titleDelimiter ?? '|'} `

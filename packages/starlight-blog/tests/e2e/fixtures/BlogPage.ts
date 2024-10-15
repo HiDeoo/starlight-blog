@@ -7,8 +7,8 @@ export class BlogPage extends BasePage {
     super(page)
   }
 
-  goto(index?: number) {
-    return this.page.goto(`/blog${index ? `/${index}` : ''}`)
+  goto(index?: number, locale?: string) {
+    return this.page.goto(`/${locale ? `${locale}/` : ''}blog${index ? `/${index}` : ''}`)
   }
 
   get nextLink() {

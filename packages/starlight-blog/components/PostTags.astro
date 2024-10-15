@@ -1,13 +1,15 @@
 ---
 import type { StarlightBlogEntry } from '../libs/content'
-import { getBlogPathWithBase } from '../libs/page'
+import type { Locale } from '../libs/i18n'
+import { getRelativeBlogUrl } from '../libs/page'
 import { getEntryTags } from '../libs/tags'
 
 interface Props {
   entry: StarlightBlogEntry
+  locale: Locale
 }
 
-const { entry } = Astro.props
+const { entry, locale } = Astro.props
 
 const tags = getEntryTags(entry)
 ---
@@ -19,7 +21,7 @@ const tags = getEntryTags(entry)
       <ul>
         {tags.map((tag) => (
           <li>
-            <a href={getBlogPathWithBase(`/tags/${tag.slug}`)}>{tag.label}</a>
+            <a href={getRelativeBlogUrl(`/tags/${tag.slug}`, locale)}>{tag.label}</a>
           </li>
         ))}
       </ul>

@@ -16,13 +16,13 @@ export function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
-const { entries, nextLink, prevLink } = Astro.props
+const { entries, locale, nextLink, prevLink } = Astro.props
 
 const pageProps = getPageProps(config.title)
 ---
 
 <Page {...pageProps}>
-  <Posts {entries} />
+  <Posts {entries} {locale} />
   <footer class="not-content">
     <PrevNextLinks next={nextLink} prev={prevLink} />
   </footer>

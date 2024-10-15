@@ -7,8 +7,8 @@ export class PostPage extends BasePage {
     super(page)
   }
 
-  goto(slug: string) {
-    return this.page.goto(`/blog/${slug}`)
+  goto(slug: string, locale?: string) {
+    return this.page.goto(`/${locale ? `${locale}/` : ''}blog/${slug}`)
   }
 
   get nextLink() {

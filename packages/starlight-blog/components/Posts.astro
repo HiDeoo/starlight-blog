@@ -1,17 +1,19 @@
 ---
 import type { StarlightBlogEntry } from '../libs/content'
+import type { Locale } from '../libs/i18n'
 
 import Preview from './Preview.astro'
 
 interface Props {
   entries: StarlightBlogEntry[]
+  locale: Locale
 }
 
-const { entries } = Astro.props
+const { entries, locale } = Astro.props
 ---
 
 <div class="posts">
-  {entries.map((entry) => <Preview {entry} />)}
+  {entries.map((entry) => <Preview {entry} {locale} />)}
 </div>
 
 <style>

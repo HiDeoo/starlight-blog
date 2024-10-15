@@ -9,7 +9,6 @@ export function defineVitestConfig(userConfig: StarlightBlogUserConfig, context?
   return getViteConfig({
     plugins: [
       vitePluginStarlightBlogConfig(config, {
-        defaultLocale: context?.defaultLocale ?? 'en',
         description: context?.description,
         site: context?.site,
         title: context?.title ?? 'Starlight Blog Test',

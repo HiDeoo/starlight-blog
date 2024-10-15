@@ -5,6 +5,10 @@ import starlightBlog from 'starlight-blog'
 export default defineConfig({
   integrations: [
     starlight({
+      locales: {
+        root: { label: 'English', lang: 'en' },
+        fr: { label: 'Français', lang: 'fr' },
+      },
       customCss: ['./src/styles/custom.css'],
       editLink: {
         baseUrl: 'https://github.com/HiDeoo/starlight-blog/edit/main/docs/',

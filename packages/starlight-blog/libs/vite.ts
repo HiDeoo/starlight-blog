@@ -34,7 +34,6 @@ function resolveVirtualModuleId<TModuleId extends string>(id: TModuleId): `\0${T
 }
 
 export interface StarlightBlogContext {
-  defaultLocale: string
   description: StarlightUserConfig['description']
   site: AstroConfig['site']
   title: StarlightUserConfig['title']

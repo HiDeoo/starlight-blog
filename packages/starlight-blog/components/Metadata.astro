@@ -2,16 +2,18 @@
 import { Badge } from '@astrojs/starlight/components'
 
 import { getBlogEntryMetadata, type StarlightBlogEntry } from '../libs/content'
+import type { Locale } from '../libs/i18n'
 
 import Author from './Author.astro'
 
 interface Props {
   entry: StarlightBlogEntry
+  locale: Locale
   showBadges?: boolean
 }
 
-const { entry, showBadges = true } = Astro.props
-const { authors, date, lastUpdated } = getBlogEntryMetadata(entry)
+const { entry, locale, showBadges = true } = Astro.props
+const { authors, date, lastUpdated } = getBlogEntryMetadata(entry, locale)
 
 const hasAuthors = authors.length > 0
 ---

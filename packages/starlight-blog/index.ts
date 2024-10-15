@@ -2,7 +2,6 @@ import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/ty
 import type { AstroIntegrationLogger } from 'astro'
 
 import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig } from './libs/config'
-import { getDefaultLocale } from './libs/i18n'
 import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 
@@ -60,26 +59,26 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
             'astro:config:setup': ({ injectRoute, updateConfig }) => {
               injectRoute({
                 entrypoint: 'starlight-blog/routes/Tags.astro',
-                pattern: '/[prefix]/tags/[tag]',
+                pattern: '/[...prefix]/tags/[tag]',
                 prerender: true,
               })
 
               injectRoute({
                 entrypoint: 'starlight-blog/routes/Authors.astro',
-                pattern: '/[prefix]/authors/[author]',
+                pattern: '/[...prefix]/authors/[author]',
                 prerender: true,
               })
 
               injectRoute({
                 entrypoint: 'starlight-blog/routes/Blog.astro',
-                pattern: '/[prefix]/[...page]',
+                pattern: '/[...prefix]/[...page]',
                 prerender: true,
               })
 
               if (astroConfig.site) {
                 injectRoute({
                   entrypoint: 'starlight-blog/routes/rss',
-                  pattern: '/[prefix]/rss.xml',
+                  pattern: '/[...prefix]/rss.xml',
                   prerender: true,
                 })
               }
@@ -88,7 +87,6 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                 vite: {
                   plugins: [
                     vitePluginStarlightBlogConfig(config, {
-                      defaultLocale: getDefaultLocale(starlightConfig as StarlightUserConfig),
                       description: starlightConfig.description,
                       site: astroConfig.site,
                       title: starlightConfig.title,

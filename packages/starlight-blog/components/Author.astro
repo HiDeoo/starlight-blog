@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 
-import { getPathWithBase } from '../libs/page'
+import { getRelativeUrl } from '../libs/page'
 import type { StarlightBlogAuthor } from '../schema'
 
 interface Props {
@@ -16,7 +16,7 @@ const Element = isLink ? 'a' : 'div'
 const pictureSrc = author.picture
   ? author.picture.startsWith('http')
     ? author.picture
-    : getPathWithBase(author.picture, true)
+    : getRelativeUrl(author.picture, true)
   : undefined
 ---
 

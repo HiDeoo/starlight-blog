@@ -16,12 +16,12 @@ export function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
-const { author, entries } = Astro.props
+const { author, entries, locale } = Astro.props
 
 const pageProps = getPageProps(author.name)
 ---
 
 <Page {...pageProps}>
   <PostCount>{pluralize(entries.length, 'post', 'posts')} by {author.name}</PostCount>
-  <Posts {entries} />
+  <Posts {entries} {locale} />
 </Page>
