@@ -1,12 +1,12 @@
 ---
 import type { InferGetStaticPropsType } from 'astro'
-import config from 'virtual:starlight-blog-config'
 
 import Page from '../components/Page.astro'
 import Posts from '../components/Posts.astro'
 import PrevNextLinks from '../components/PrevNextLinks.astro'
 import { getBlogStaticPaths } from '../libs/content'
 import { getPageProps } from '../libs/page'
+import { getBlogTitle } from '../libs/title'
 
 export const prerender = true
 
@@ -18,7 +18,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 const { entries, locale, nextLink, prevLink } = Astro.props
 
-const pageProps = getPageProps(config.title)
+const pageProps = getPageProps(getBlogTitle(locale))
 ---
 
 <Page {...pageProps}>

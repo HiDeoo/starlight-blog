@@ -298,7 +298,7 @@ test.describe('i18n', () => {
   test('should use a localized link for the header blog link', async ({ blogPage }) => {
     await blogPage.goto(undefined, 'fr')
 
-    await expect(blogPage.page.getByRole('link', { exact: true, name: 'Demo Blog' })).toHaveAttribute(
+    await expect(blogPage.page.getByRole('link', { exact: true, name: 'Blog Démo' })).toHaveAttribute(
       'href',
       '/fr/blog',
     )

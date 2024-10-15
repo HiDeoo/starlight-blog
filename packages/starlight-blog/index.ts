@@ -36,7 +36,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                     attrs: {
                       href: rssLink,
                       rel: 'alternate',
-                      title: config.title,
+                      title: typeof config.title === 'string' ? config.title : 'Blog',
                       type: 'application/rss+xml',
                     },
                   },

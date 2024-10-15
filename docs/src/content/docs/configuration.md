@@ -31,10 +31,22 @@ The Starlight Blog plugin accepts the following configuration options:
 
 ### `title`
 
-**Type:** `string`  
+**Type:** `string | Record<string, string>`  
 **Default:** `'Blog'`
 
 The title of the blog.
+
+The value can be a string, or for multilingual sites, an object with values for each different locale.
+When using the object form, the keys must be BCP-47 tags (e.g. `en`, `fr`, or `zh-CN`):
+
+```js {3-4}
+starlightBlog({
+  title: {
+    en: 'My Blog',
+    fr: 'Mon Blog',
+  },
+})
+```
 
 ### `postCount`
 
@@ -83,8 +95,7 @@ Global authors for all blog posts or regular authors that can be referenced in i
 When a blog post frontmatter does not define an author, the global authors from the configuration will be used instead.
 Check the ["Authors" guide](/guides/authors) for more informations.
 
-```js {4-9}
-// astro.config.mjs
+```js {3-8}
 starlightBlog({
   authors: {
     alice: {

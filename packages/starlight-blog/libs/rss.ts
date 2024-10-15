@@ -8,6 +8,7 @@ import { getBlogEntries, type StarlightBlogEntry } from './content'
 import { DefaultLocale, getLangFromLocale, type Locale } from './i18n'
 import { renderMarkdownToHTML, stripMarkdown } from './markdown'
 import { getPathWithLocale, getRelativeUrl } from './page'
+import { getBlogTitle } from './title'
 
 export function getRSSStaticPaths() {
   const paths = []
@@ -86,7 +87,7 @@ function getRSSTitle(locale: Locale): string {
     title += ` ${context.titleDelimiter ?? '|'} `
   }
 
-  title += config.title
+  title += getBlogTitle(locale)
 
   return title
 }

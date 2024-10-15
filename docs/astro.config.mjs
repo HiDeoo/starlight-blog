@@ -15,7 +15,10 @@ export default defineConfig({
       },
       plugins: [
         starlightBlog({
-          title: 'Demo Blog',
+          title: {
+            en: 'Demo Blog',
+            fr: 'Blog Démo',
+          },
           authors: {
             hideoo: {
               name: 'HiDeoo',
