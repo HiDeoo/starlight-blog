@@ -32,25 +32,15 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Start Here',
-          items: [
-            { label: 'Getting Started', link: '/getting-started/' },
-            { label: 'Configuration', link: '/configuration/' },
-          ],
+          items: ['getting-started', 'configuration'],
         },
         {
           label: 'Guides',
-          items: [
-            { label: 'Frontmatter', link: '/guides/frontmatter/' },
-            { label: 'Authors', link: '/guides/authors/' },
-            { label: 'RSS', link: '/guides/rss/' },
-          ],
+          items: ['guides/frontmatter', 'guides/authors', 'guides/i18n', 'guides/rss'],
         },
         {
           label: 'Resources',
-          items: [
-            { label: 'Showcase', link: '/resources/showcase/' },
-            { label: 'Plugins and Tools', link: '/resources/starlight/' },
-          ],
+          items: ['resources/showcase', { label: 'Plugins and Tools', slug: 'resources/starlight' }],
         },
         { label: 'Demo', link: '/blog/' },
       ],

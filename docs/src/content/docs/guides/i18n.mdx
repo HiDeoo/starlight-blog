@@ -1,0 +1,91 @@
+---
+title: Internationalization (i18n)
+description: Learn how to configure your blog to support multiple languages.
+---
+
+Starlight Blog relies on Starlight's built-in support for [internationalization](https://starlight.astro.build/guides/i18n/) to provide multilingual support for your blog with features like routing or fallback content.
+
+See the [Starlight internationalization documentation](https://starlight.astro.build/guides/i18n/) for more information on how to configure i18n in your Starlight website.
+
+## Configure i18n
+
+import { FileTree, Steps } from '@astrojs/starlight/components'
+
+<Steps>
+
+1. Configure internationalization in your Starlight project by following the Starlight [“Configure i18n”](https://starlight.astro.build/guides/i18n/#configure-i18n) guide.
+
+2. Create a directory for each language in `src/content/docs/` based on your Starlight i18n configuration with a `blog/` directory inside each language directory.
+
+   For example, the following directory structure is created for English, French, and Chinese languages with no root locale:
+
+   <FileTree>
+
+   - src/
+     - content/
+       - docs/
+         - en/
+           - blog/
+         - fr/
+           - blog/
+         - zh-cn/
+           - blog/
+
+   </FileTree>
+
+3. You can now add content files in the `blog/` directories of your language directories.
+   Use the same file name to associate blog posts across languages.
+
+</Steps>
+
+## Fallback content
+
+Similar to Starlight, Starlight Blog expects you to create equivalent blog posts in all your languages.
+For example, if you have an `en/blog/hello.md` file, create an `hello.md` for each other language you support.
+This allows Starlight and the Starlight Blog plugin to provide automatic fallback content for blog posts that have not yet been translated.
+
+Read more about fallback content in the Starlight [“Internationalization”](https://starlight.astro.build/guides/i18n/#fallback-content) guide.
+
+## Translate the blog title
+
+By default, the Starlight Blog plugin uses the same blog title for all languages.
+To provide a different title for different languages, you can pass an object to the [`title`](/configuration/#title) option in the plugin configuration:
+
+```diff lang=js
+// astro.config.mjs
+import starlight from '@astrojs/starlight'
+import { defineConfig } from 'astro/config'
+import starlightBlog from 'starlight-blog'
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      plugins: [
+        starlightBlog({
+-          title: 'My Blog',
++          title: {
++            en: 'My Blog',
++            fr: 'Mon Blog',
++          },
+        }),
+      ],
+      title: 'My Docs',
+    }),
+  ],
+})
+```
+
+## Translate the blog UI
+
+The Starlight Blog plugin allows you to translate the default UI strings used in the blog so that your blog can be fully localized and readers can enjoy a seamless experience in their preferred language.
+
+import LanguagesList from '../../../components/LanguagesList.astro'
+import TranslationsList from '../../../components/TranslationsList.astro'
+
+<LanguagesList startsSentence /> translated UI strings are provided out of the box.
+
+To provide translations for additional languages you support — or override the default ones — check the [“Translate Starlight’s UI”](https://starlight.astro.build/guides/i18n/#translate-starlights-ui) guide in the Starlight documentation.
+
+These are the English defaults of the existing strings Starlight Blog ships with:
+
+<TranslationsList />
