@@ -37,4 +37,23 @@ export const Translations = {
     'starlightBlog.tags.count_one': "{{count}} article avec l'étiquette « {{tag}} »",
     'starlightBlog.tags.count_other': "{{count}} articles avec l'étiquette « {{tag}} »",
   },
+  it: {
+    'starlightBlog.authors.count_one': '{{count}} articolo di {{author}}',
+    'starlightBlog.authors.count_other': '{{count}} articoli di {{author}}',
+    'starlightBlog.pagination.prev': 'Articoli più recenti',
+    'starlightBlog.pagination.next': 'Articoli meno recenti',
+    'starlightBlog.post.lastUpdate': ' - Ultimo aggiornamento: {{date}}',
+    'starlightBlog.post.draft': 'Bozza',
+    'starlightBlog.post.featured': 'In evidenza',
+    'starlightBlog.post.tags': 'Tag:',
+    'starlightBlog.rss.imageFallback': "Immagine originale disponibile nell'articolo del blog.",
+    'starlightBlog.sidebar.all': 'Tutti gli articoli',
+    'starlightBlog.sidebar.featured': 'Articoli in evidenza',
+    'starlightBlog.sidebar.recent': 'Articoli recenti',
+    'starlightBlog.sidebar.tags': 'Tag',
+    'starlightBlog.sidebar.authors': 'Autori',
+    'starlightBlog.sidebar.rss': 'RSS',
+    'starlightBlog.tags.count_one': '{{count}} articolo con il tag “{{tag}}”',
+    'starlightBlog.tags.count_other': '{{count}} articoli con il tag “{{tag}}”'
+  },
 }
