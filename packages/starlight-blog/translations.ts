@@ -53,7 +53,7 @@ export const Translations = {
     'starlightBlog.sidebar.tags': 'Stichwörter',
     'starlightBlog.sidebar.authors': 'Autoren',
     'starlightBlog.sidebar.rss': 'RSS',
-    'starlightBlog.tags.count_one': "{{count}} Beitrag mit dem Stichwort “{{tag}}”",
-    'starlightBlog.tags.count_other': "{{count}} Beiträge mit dem Stichwort “{{tag}}”",
+    'starlightBlog.tags.count_one': "{{count}} Beitrag mit dem Stichwort „{{tag}}“",
+    'starlightBlog.tags.count_other': "{{count}} Beiträge mit dem Stichwort „{{tag}}“",
   },
 }
