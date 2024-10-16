@@ -40,8 +40,8 @@ export const Translations = {
   de: {
     'starlightBlog.authors.count_one': '{{count}} Beitrag von {{author}}',
     'starlightBlog.authors.count_other': '{{count}} Beiträge von {{author}}',
-    'starlightBlog.pagination.prev': 'Vorheriger Beitrag',
-    'starlightBlog.pagination.next': 'Nächster Beitrag',
+    'starlightBlog.pagination.prev': 'Neuere Beiträge',
+    'starlightBlog.pagination.next': 'Ältere Beiträge',
     'starlightBlog.post.lastUpdate': ' - Zuletzt aktualisiert: {{date}}',
     'starlightBlog.post.draft': 'Entwurf',
     'starlightBlog.post.featured': 'Hervorgehoben',
