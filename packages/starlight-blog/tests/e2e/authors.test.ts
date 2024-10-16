@@ -52,7 +52,7 @@ test.describe('i18n', () => {
 
     await authorsPage.goto(author.toLowerCase(), 'fr')
 
-    await expect(authorsPage.content.getByText(`${count} post by ${author}`, { exact: true })).toBeVisible()
+    await expect(authorsPage.content.getByText(`${count} article par ${author}`, { exact: true })).toBeVisible()
 
     const articles = authorsPage.content.getByRole('article')
 

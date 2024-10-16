@@ -333,7 +333,7 @@ test.describe('i18n', () => {
   test('should add a localized link to all posts in the sidebar', async ({ blogPage }) => {
     await blogPage.goto(undefined, 'fr')
 
-    await expect(blogPage.sidebar.getByRole('link', { name: 'All posts' })).toHaveAttribute('href', '/fr/blog')
+    await expect(blogPage.sidebar.getByRole('link', { name: 'Tous les articles' })).toHaveAttribute('href', '/fr/blog')
   })
 
   test('should add localized links to recent posts in the sidebar', async ({ blogPage }) => {
@@ -352,7 +352,7 @@ test.describe('i18n', () => {
     await expect(
       blogPage.sidebar
         .getByRole('group')
-        .filter({ hasText: 'Recent posts' })
+        .filter({ hasText: 'Articles récents' })
         .getByRole('link', { name: 'Achivi amans (fr)' }),
     ).toBeVisible()
   })
@@ -371,7 +371,7 @@ test.describe('i18n', () => {
     await blogPage.goto(undefined, 'fr')
 
     await expect(
-      blogPage.sidebar.getByRole('group').filter({ hasText: 'Tags' }).getByRole('link', { name: 'Ébauche (1)' }),
+      blogPage.sidebar.getByRole('group').filter({ hasText: 'Étiquettes' }).getByRole('link', { name: 'Ébauche (1)' }),
     ).toBeVisible()
   })
 

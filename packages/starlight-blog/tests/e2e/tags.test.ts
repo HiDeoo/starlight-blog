@@ -56,7 +56,9 @@ test.describe('i18n', () => {
 
     await tagsPage.goto(tag.toLowerCase(), 'fr')
 
-    await expect(tagsPage.content.getByText(`${count} post with the tag “${tag}”`, { exact: true })).toBeVisible()
+    await expect(
+      tagsPage.content.getByText(`${count} article avec l'étiquette « ${tag} »`, { exact: true }),
+    ).toBeVisible()
 
     const articles = tagsPage.content.getByRole('article')
 
