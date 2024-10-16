@@ -44,3 +44,18 @@ test('should not include Starlight pagination links', async ({ authorsPage }) =>
   await expect(authorsPage.content.locator('.pagination-links a[rel="prev"]')).not.toBeVisible()
   await expect(authorsPage.content.locator('.pagination-links a[rel="next"]')).not.toBeVisible()
 })
+
+test.describe('i18n', () => {
+  test('should display a localized preview of each posts from a specific author', async ({ authorsPage }) => {
+    const author = 'Fantôme'
+    const count = 1
+
+    await authorsPage.goto(author.toLowerCase(), 'fr')
+
+    await expect(authorsPage.content.getByText(`${count} article par ${author}`, { exact: true })).toBeVisible()
+
+    const articles = authorsPage.content.getByRole('article')
+
+    expect(await articles.count()).toBe(count)
+  })
+})

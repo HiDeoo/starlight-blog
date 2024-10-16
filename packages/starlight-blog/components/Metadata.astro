@@ -2,16 +2,18 @@
 import { Badge } from '@astrojs/starlight/components'
 
 import { getBlogEntryMetadata, type StarlightBlogEntry } from '../libs/content'
+import type { Locale } from '../libs/i18n'
 
 import Author from './Author.astro'
 
 interface Props {
   entry: StarlightBlogEntry
+  locale: Locale
   showBadges?: boolean
 }
 
-const { entry, showBadges = true } = Astro.props
-const { authors, date, lastUpdated } = getBlogEntryMetadata(entry)
+const { entry, locale, showBadges = true } = Astro.props
+const { authors, date, lastUpdated } = getBlogEntryMetadata(entry, locale)
 
 const hasAuthors = authors.length > 0
 ---
@@ -25,10 +27,13 @@ const hasAuthors = authors.length > 0
       lastUpdated !== undefined &&
       typeof entry.data.lastUpdated !== 'boolean' &&
       entry.data.lastUpdated?.toISOString() !== entry.data.date.toISOString() ? (
-        <span class="update-date">
-          - Last update:
-          <time datetime={entry.data.lastUpdated?.toISOString()}>{lastUpdated}</time>
-        </span>
+        <span
+          class="update-date"
+          set:html={Astro.locals.t('starlightBlog.post.lastUpdate', {
+            date: `<time datetime="${entry.data.lastUpdated?.toISOString()}">${lastUpdated}</time>`,
+            interpolation: { escapeValue: false },
+          })}
+        />
       ) : null
     }
   </div>
@@ -44,8 +49,12 @@ const hasAuthors = authors.length > 0
   {
     showBadges && (entry.data?.draft || entry.data.featured) && (
       <div class="badges">
-        {entry.data.draft && <Badge size="medium" text="Draft" variant="caution" />}
-        {entry.data.featured && <Badge size="medium" text="Featured" variant="note" />}
+        {entry.data.draft && (
+          <Badge size="medium" text={Astro.locals.t('starlightBlog.post.draft')} variant="caution" />
+        )}
+        {entry.data.featured && (
+          <Badge size="medium" text={Astro.locals.t('starlightBlog.post.featured')} variant="note" />
+        )}
       </div>
     )
   }

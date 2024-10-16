@@ -1,10 +1,14 @@
+import type { GetStaticPathsResult } from 'astro'
 import { slug } from 'github-slugger'
+import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
 
 import { getBlogEntries, type StarlightBlogEntry } from './content'
+import { DefaultLocale, type Locale } from './i18n'
+import { getPathWithLocale } from './page'
 
-export async function getAllTags(): Promise<StarlightBlogEntryTags> {
-  const entries = await getBlogEntries()
+export async function getAllTags(locale: Locale): Promise<StarlightBlogEntryTags> {
+  const entries = await getBlogEntries(locale)
   const entryTags: StarlightBlogEntryTags = new Map()
 
   for (const entry of entries) {
@@ -21,21 +25,27 @@ export async function getAllTags(): Promise<StarlightBlogEntryTags> {
 }
 
 export async function getTagsStaticPaths() {
-  const entryTags = await getAllTags()
+  const paths = []
 
-  return [...entryTags.entries()].map(([slug, { entries, label }]) => {
-    return {
-      params: {
-        prefix: config.prefix,
-        tag: slug,
-      },
-      props: {
-        entries,
-        label,
-        tag: slug,
-      },
+  if (starlightConfig.isMultilingual) {
+    for (const localeKey of Object.keys(starlightConfig.locales)) {
+      const locale = localeKey === 'root' ? undefined : localeKey
+
+      const entryTags = await getAllTags(locale)
+
+      for (const [slug, { entries, label }] of entryTags.entries()) {
+        paths.push(getTagsStaticPath(entries, slug, label, locale))
+      }
     }
-  })
+  } else {
+    const entryTags = await getAllTags(DefaultLocale)
+
+    for (const [slug, { entries, label }] of entryTags.entries()) {
+      paths.push(getTagsStaticPath(entries, slug, label, DefaultLocale))
+    }
+  }
+
+  return paths satisfies GetStaticPathsResult
 }
 
 export function getEntryTags(entry: StarlightBlogEntry): StarlightBlogEntryTag[] {
@@ -45,6 +55,21 @@ export function getEntryTags(entry: StarlightBlogEntry): StarlightBlogEntryTag[]
       slug: slug(tag),
     }
   })
+}
+
+function getTagsStaticPath(entries: StarlightBlogEntry[], slug: string, label: string, locale: Locale) {
+  return {
+    params: {
+      prefix: getPathWithLocale(config.prefix, locale),
+      tag: slug,
+    },
+    props: {
+      entries,
+      label,
+      locale,
+      tag: slug,
+    },
+  }
 }
 
 type StarlightBlogEntryTagSlug = string

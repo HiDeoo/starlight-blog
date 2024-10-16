@@ -48,3 +48,24 @@ test('should not include Starlight pagination links', async ({ tagsPage }) => {
   await expect(tagsPage.content.locator('.pagination-links a[rel="prev"]')).not.toBeVisible()
   await expect(tagsPage.content.locator('.pagination-links a[rel="next"]')).not.toBeVisible()
 })
+
+test.describe('i18n', () => {
+  test('should display a localized preview of each posts with proper tag', async ({ tagsPage }) => {
+    const tag = 'Ébauche'
+    const count = 1
+
+    await tagsPage.goto(tag.toLowerCase(), 'fr')
+
+    await expect(
+      tagsPage.content.getByText(`${count} article avec l'étiquette « ${tag} »`, { exact: true }),
+    ).toBeVisible()
+
+    const articles = tagsPage.content.getByRole('article')
+
+    expect(await articles.count()).toBe(count)
+
+    for (const article of await articles.all()) {
+      expect(await article.getByRole('listitem').filter({ hasText: tag }).count()).toBe(1)
+    }
+  })
+})

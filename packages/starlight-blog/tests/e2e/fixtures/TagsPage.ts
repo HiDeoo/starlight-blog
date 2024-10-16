@@ -7,7 +7,7 @@ export class TagsPage extends BasePage {
     super(page)
   }
 
-  goto(tag: string) {
-    return this.page.goto(`/blog/tags/${tag}`)
+  goto(tag: string, locale?: string) {
+    return this.page.goto(`/${locale ? `${locale}/` : ''}blog/tags/${tag}`)
   }
 }

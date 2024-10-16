@@ -1,0 +1,7 @@
+---
+import { Code } from '@astrojs/starlight/components'
+
+import { Translations } from '../../../packages/starlight-blog/translations'
+---
+
+<Code code={JSON.stringify(Translations.en, null, 2)} lang="json" />

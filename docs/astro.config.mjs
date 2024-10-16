@@ -5,13 +5,20 @@ import starlightBlog from 'starlight-blog'
 export default defineConfig({
   integrations: [
     starlight({
+      locales: {
+        root: { label: 'English', lang: 'en' },
+        fr: { label: 'Français', lang: 'fr' },
+      },
       customCss: ['./src/styles/custom.css'],
       editLink: {
         baseUrl: 'https://github.com/HiDeoo/starlight-blog/edit/main/docs/',
       },
       plugins: [
         starlightBlog({
-          title: 'Demo Blog',
+          title: {
+            en: 'Demo Blog',
+            fr: 'Blog Démo',
+          },
           authors: {
             hideoo: {
               name: 'HiDeoo',
@@ -25,25 +32,15 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Start Here',
-          items: [
-            { label: 'Getting Started', link: '/getting-started/' },
-            { label: 'Configuration', link: '/configuration/' },
-          ],
+          items: ['getting-started', 'configuration'],
         },
         {
           label: 'Guides',
-          items: [
-            { label: 'Frontmatter', link: '/guides/frontmatter/' },
-            { label: 'Authors', link: '/guides/authors/' },
-            { label: 'RSS', link: '/guides/rss/' },
-          ],
+          items: ['guides/frontmatter', 'guides/authors', 'guides/i18n', 'guides/rss'],
         },
         {
           label: 'Resources',
-          items: [
-            { label: 'Showcase', link: '/resources/showcase/' },
-            { label: 'Plugins and Tools', link: '/resources/starlight/' },
-          ],
+          items: ['resources/showcase', { label: 'Plugins and Tools', slug: 'resources/starlight' }],
         },
         { label: 'Demo', link: '/blog/' },
       ],

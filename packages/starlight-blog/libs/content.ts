@@ -1,57 +1,44 @@
+import type { GetStaticPathsResult } from 'astro'
 import type { z } from 'astro/zod'
-import { getCollection, type AstroCollectionEntry } from 'astro:content'
+import { getCollection, getEntry, type AstroCollectionEntry } from 'astro:content'
 import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
 
 import type { blogSchema, StarlightBlogAuthor } from '../schema'
 
 import { getEntryAuthors } from './authors'
-import { getBlogPathWithBase, getPathWithBase } from './page'
+import { DefaultLocale, getLangFromLocale, type Locale } from './i18n'
+import { getRelativeUrl, getRelativeBlogUrl, getPathWithLocale } from './page'
+import { stripLeadingSlash, stripTrailingSlash } from './path'
 
 export async function getBlogStaticPaths() {
-  const entries = await getBlogEntries()
+  const paths = []
 
-  const entryPages: StarlightBlogEntry[][] = []
+  if (starlightConfig.isMultilingual) {
+    for (const localeKey of Object.keys(starlightConfig.locales)) {
+      const locale = localeKey === 'root' ? undefined : localeKey
 
-  for (const entry of entries) {
-    const lastPage = entryPages.at(-1)
+      const entries = await getBlogEntries(locale)
+      const pages = getPaginatedBlogEntries(entries)
 
-    if (!lastPage || lastPage.length === config.postCount) {
-      entryPages.push([entry])
-    } else {
-      lastPage.push(entry)
+      for (const [index, entries] of pages.entries()) {
+        paths.push(getBlogStaticPath(pages, entries, index, locale))
+      }
+    }
+  } else {
+    const entries = await getBlogEntries(DefaultLocale)
+    const pages = getPaginatedBlogEntries(entries)
+
+    for (const [index, entries] of pages.entries()) {
+      paths.push(getBlogStaticPath(pages, entries, index, DefaultLocale))
     }
   }
 
-  if (entryPages.length === 0) {
-    entryPages.push([])
-  }
-
-  return entryPages.map((entries, index) => {
-    const prevPage = index === 0 ? undefined : entryPages.at(index - 1)
-    const prevLink = prevPage
-      ? { href: getBlogPathWithBase(index === 1 ? '/' : `/${index}`), label: 'Newer posts' }
-      : undefined
-
-    const nextPage = entryPages.at(index + 1)
-    const nextLink = nextPage ? { href: getBlogPathWithBase(`/${index + 2}`), label: 'Older posts' } : undefined
-
-    return {
-      params: {
-        page: index === 0 ? undefined : index + 1,
-        prefix: config.prefix,
-      },
-      props: {
-        entries,
-        nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
-        prevLink: config.prevNextLinksOrder === 'reverse-chronological' ? prevLink : nextLink,
-      } satisfies StarlightBlogStaticProps,
-    }
-  })
+  return paths satisfies GetStaticPathsResult
 }
 
-export async function getSidebarBlogEntries() {
-  const entries = await getBlogEntries()
+export async function getSidebarBlogEntries(locale: Locale) {
+  const entries = await getBlogEntries(locale)
 
   const featured: StarlightBlogEntry[] = []
   const recent: StarlightBlogEntry[] = []
@@ -67,10 +54,14 @@ export async function getSidebarBlogEntries() {
   return { featured, recent: recent.slice(0, config.recentPostCount) }
 }
 
-export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPaginated> {
-  const entries = await getBlogEntries()
+export async function getBlogEntry(slug: string, locale: Locale): Promise<StarlightBlogEntryPaginated> {
+  const entries = await getBlogEntries(locale)
 
-  const entryIndex = entries.findIndex((entry) => entry.slug === slug.replace(/^\//, '').replace(/\/$/, ''))
+  const entryIndex = entries.findIndex((entry) => {
+    if (entry.slug === stripLeadingSlash(stripTrailingSlash(slug))) return true
+    if (locale) return entry.slug === stripLeadingSlash(stripTrailingSlash(getPathWithLocale(slug, undefined)))
+    return false
+  })
   const entry = entries[entryIndex]
 
   if (!entry) {
@@ -80,10 +71,14 @@ export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPagi
   validateBlogEntry(entry)
 
   const prevEntry = entries[entryIndex - 1]
-  const prevLink = prevEntry ? { href: getPathWithBase(`/${prevEntry.slug}`), label: prevEntry.data.title } : undefined
+  const prevLink = prevEntry
+    ? { href: getRelativeUrl(`/${getPathWithLocale(prevEntry.slug, locale)}`), label: prevEntry.data.title }
+    : undefined
 
   const nextEntry = entries[entryIndex + 1]
-  const nextLink = nextEntry ? { href: getPathWithBase(`/${nextEntry.slug}`), label: nextEntry.data.title } : undefined
+  const nextLink = nextEntry
+    ? { href: getRelativeUrl(`/${getPathWithLocale(nextEntry.slug, locale)}`), label: nextEntry.data.title }
+    : undefined
 
   return {
     entry,
@@ -92,31 +87,49 @@ export async function getBlogEntry(slug: string): Promise<StarlightBlogEntryPagi
   }
 }
 
-export function getBlogEntryMetadata(entry: StarlightBlogEntry): StarlightBlogEntryMetadata {
+export function getBlogEntryMetadata(entry: StarlightBlogEntry, locale: Locale): StarlightBlogEntryMetadata {
   return {
     authors: getEntryAuthors(entry),
-    date: entry.data.date.toLocaleDateString(starlightConfig.defaultLocale.lang, { dateStyle: 'medium' }),
+    date: entry.data.date.toLocaleDateString(getLangFromLocale(locale), { dateStyle: 'medium' }),
     lastUpdated:
       typeof entry.data.lastUpdated === 'boolean'
         ? undefined
-        : entry.data.lastUpdated?.toLocaleDateString(starlightConfig.defaultLocale.lang, {
+        : entry.data.lastUpdated?.toLocaleDateString(getLangFromLocale(locale), {
             dateStyle: 'medium',
           }),
   }
 }
 
-export async function getBlogEntries() {
-  const entries = await getCollection<StarlightEntryData>('docs', ({ id, data }) => {
-    return (
-      id.startsWith(`${config.prefix}/`) &&
-      id !== `${config.prefix}/index.mdx` &&
-      (import.meta.env.MODE !== 'production' || data.draft === false)
-    )
-  })
+export async function getBlogEntries(locale: Locale) {
+  const docEntries = await getCollection<StarlightEntryData>('docs')
+  const blogEntries: AstroCollectionEntry<StarlightEntryData>[] = []
 
-  validateBlogEntries(entries)
+  for (const entry of docEntries) {
+    if (import.meta.env.MODE === 'production' && entry.data.draft === true) continue
 
-  return entries.sort((a, b) => {
+    const isDefaultLocaleEntry =
+      entry.id.startsWith(`${getPathWithLocale(config.prefix, DefaultLocale)}/`) &&
+      entry.id !== `${getPathWithLocale(config.prefix, DefaultLocale)}/index.mdx`
+
+    if (isDefaultLocaleEntry) {
+      if (locale === DefaultLocale) {
+        blogEntries.push(entry)
+        continue
+      }
+
+      try {
+        const localizedEntry = await getEntry<StarlightEntryData>('docs', getPathWithLocale(entry.slug, locale))
+        if (localizedEntry.data.draft === true) throw new Error('Draft localized entry.')
+        blogEntries.push(localizedEntry)
+      } catch {
+        blogEntries.push(entry)
+      }
+    }
+  }
+
+  validateBlogEntries(blogEntries)
+
+  return blogEntries.sort((a, b) => {
     return b.data.date.getTime() - a.data.date.getTime()
   })
 }
@@ -129,6 +142,52 @@ export async function getBlogEntryExcerpt(entry: StarlightBlogEntry) {
   const { Content } = await entry.render()
 
   return Content
+}
+
+function getBlogStaticPath(
+  pages: StarlightBlogEntry[][],
+  entries: StarlightBlogEntry[],
+  index: number,
+  locale: Locale,
+) {
+  const prevPage = index === 0 ? undefined : pages.at(index - 1)
+  const prevLink = prevPage ? { href: getRelativeBlogUrl(index === 1 ? '/' : `/${index}`, locale) } : undefined
+
+  const nextPage = pages.at(index + 1)
+  const nextLink = nextPage ? { href: getRelativeBlogUrl(`/${index + 2}`, locale) } : undefined
+
+  return {
+    params: {
+      page: index === 0 ? undefined : index + 1,
+      prefix: getPathWithLocale(config.prefix, locale),
+    },
+    props: {
+      entries,
+      locale,
+      nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
+      prevLink: config.prevNextLinksOrder === 'reverse-chronological' ? prevLink : nextLink,
+    } satisfies StarlightBlogStaticProps,
+  }
+}
+
+function getPaginatedBlogEntries(entries: StarlightBlogEntry[]): StarlightBlogEntry[][] {
+  const pages: StarlightBlogEntry[][] = []
+
+  for (const entry of entries) {
+    const lastPage = pages.at(-1)
+
+    if (!lastPage || lastPage.length === config.postCount) {
+      pages.push([entry])
+    } else {
+      lastPage.push(entry)
+    }
+  }
+
+  if (pages.length === 0) {
+    pages.push([])
+  }
+
+  return pages
 }
 
 // The validation of required fields is done here instead of in the zod schema directly as we do not want to require
@@ -157,7 +216,7 @@ export type StarlightBlogEntry = StarlightEntry & {
 
 export interface StarlightBlogLink {
   href: string
-  label: string
+  label?: string
 }
 
 export interface StarlightBlogEntryPaginated {
@@ -174,6 +233,7 @@ interface StarlightBlogEntryMetadata {
 
 interface StarlightBlogStaticProps {
   entries: StarlightBlogEntry[]
+  locale: Locale
   nextLink: StarlightBlogLink | undefined
   prevLink: StarlightBlogLink | undefined
 }

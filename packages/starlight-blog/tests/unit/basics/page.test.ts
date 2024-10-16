@@ -1,29 +1,32 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { getBlogPathWithBase, getPathWithBase } from '../../../libs/page'
+import { getRelativeBlogUrl, getRelativeUrl } from '../../../libs/page'
 
-describe('getBlogPathWithBase', () => {
+describe('getRelativeBlogUrl', () => {
   test('returns the blog root path', () => {
-    expect(getBlogPathWithBase('/')).toBe('/blog')
+    expect(getRelativeBlogUrl('/', undefined)).toBe('/blog')
+    expect(getRelativeBlogUrl('/', 'fr')).toBe('/fr/blog')
   })
 
   test('returns a blog post path', () => {
-    expect(getBlogPathWithBase('/post-1')).toBe('/blog/post-1')
+    expect(getRelativeBlogUrl('/post-1', undefined)).toBe('/blog/post-1')
+    expect(getRelativeBlogUrl('/post-1', 'fr')).toBe('/fr/blog/post-1')
   })
 
   test('returns the RSS feed path', () => {
-    expect(getBlogPathWithBase('/rss.xml', true)).toBe('/blog/rss.xml')
+    expect(getRelativeBlogUrl('/rss.xml', undefined, true)).toBe('/blog/rss.xml')
+    expect(getRelativeBlogUrl('/rss.xml', 'fr', true)).toBe('/fr/blog/rss.xml')
   })
 })
 
-describe('getPathWithBase', () => {
+describe('getRelativeUrl', () => {
   describe('with no base', () => {
     test('returns the path with no base', () => {
-      expect(getPathWithBase('/blog')).toBe('/blog')
+      expect(getRelativeUrl('/blog')).toBe('/blog')
     })
 
     test('prefixes the path with a leading slash if needed', () => {
-      expect(getPathWithBase('blog')).toBe('/blog')
+      expect(getRelativeUrl('blog')).toBe('/blog')
     })
   })
 
@@ -38,18 +41,18 @@ describe('getPathWithBase', () => {
     })
 
     test('returns the path prefixed with the base', async () => {
-      const { getPathWithBase } = await import('../../../libs/page')
-      expect(getPathWithBase('/blog')).toBe('/base/blog')
+      const { getRelativeUrl } = await import('../../../libs/page')
+      expect(getRelativeUrl('/blog')).toBe('/base/blog')
     })
   })
 
   describe('trailingSlash', () => {
     test('does not strip trailing slashes', () => {
-      expect(getPathWithBase('/blog/')).toBe('/blog/')
+      expect(getRelativeUrl('/blog/')).toBe('/blog/')
     })
 
     test('does not ensure trailing slashes', () => {
-      expect(getPathWithBase('/blog')).toBe('/blog')
+      expect(getRelativeUrl('/blog')).toBe('/blog')
     })
   })
 })

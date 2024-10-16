@@ -1,13 +1,15 @@
 ---
 import StarlightThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro'
 import type { Props } from '@astrojs/starlight/props'
-import config from 'virtual:starlight-blog-config'
 
-import { getBlogPathWithBase } from '../libs/page'
+import { getRelativeBlogUrl } from '../libs/page'
+import { getBlogTitle } from '../libs/title'
+
+const { locale } = Astro.props
 ---
 
 <div>
-  <a href={getBlogPathWithBase('/')}>{config.title}</a>
+  <a href={getRelativeBlogUrl('/', locale)}>{getBlogTitle(locale)}</a>
 </div>
 <StarlightThemeSelect {...Astro.props}>
   <slot />

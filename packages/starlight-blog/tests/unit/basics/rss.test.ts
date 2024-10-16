@@ -33,7 +33,7 @@ vi.mock('astro:content', async () => {
 
 describe('getRSSOptions', () => {
   test('includes only the last 20 blog posts', async () => {
-    const { items } = await getRSSOptions(new URL('http://example.com'))
+    const { items } = await getRSSOptions(new URL('http://example.com'), undefined)
 
     expect(items).toHaveLength(20)
     expect(getItemAtIndex(items, 0)?.title).toBe('Post 21')
@@ -43,12 +43,12 @@ describe('getRSSOptions', () => {
   test('includes top-level metadata', async () => {
     const url = new URL('http://example.com')
 
-    const options = await getRSSOptions(url)
+    const options = await getRSSOptions(url, undefined)
 
     expect(options.title).toBe('Starlight Blog Basics | Blog')
     expect(options.description).toMatchInlineSnapshot(`"Basic tests for the Starlight Blog plugin."`)
     expect(options.site).toBe(url)
-    expect(options.customData).toMatchInlineSnapshot(`"<language>fr</language>"`)
+    expect(options.customData).toMatchInlineSnapshot(`"<language>en</language>"`)
   })
 })
 

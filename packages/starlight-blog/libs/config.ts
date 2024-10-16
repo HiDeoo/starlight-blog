@@ -42,8 +42,11 @@ const configSchema = z
     recentPostCount: z.number().min(1).default(10),
     /**
      * The title of the blog.
+     *
+     * The value can be a string, or for multilingual sites, an object with values for each different locale.
+     * When using the object form, the keys must be BCP-47 tags (e.g. `en`, `ar`, or `zh-CN`).
      */
-    title: z.string().default('Blog'),
+    title: z.union([z.string(), z.record(z.string())]).default('Blog'),
   })
   .default({})
 

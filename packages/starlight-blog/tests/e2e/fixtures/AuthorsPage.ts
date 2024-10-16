@@ -7,7 +7,7 @@ export class AuthorsPage extends BasePage {
     super(page)
   }
 
-  goto(author: string) {
-    return this.page.goto(`/blog/authors/${author}`)
+  goto(author: string, locale?: string) {
+    return this.page.goto(`/${locale ? `${locale}/` : ''}blog/authors/${author}`)
   }
 }
