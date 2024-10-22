@@ -54,6 +54,6 @@ export const Translations = {
     'starlightBlog.sidebar.authors': 'Autori',
     'starlightBlog.sidebar.rss': 'RSS',
     'starlightBlog.tags.count_one': '{{count}} articolo con il tag “{{tag}}”',
-    'starlightBlog.tags.count_other': '{{count}} articoli con il tag “{{tag}}”'
+    'starlightBlog.tags.count_other': '{{count}} articoli con il tag “{{tag}}”',
   },
 }
