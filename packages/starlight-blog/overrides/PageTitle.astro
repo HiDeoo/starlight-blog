@@ -4,7 +4,7 @@ import type { Props } from '@astrojs/starlight/props'
 
 import { getBlogEntry, type StarlightBlogEntryPaginated } from '../libs/content'
 import { isAnyBlogPostPage } from '../libs/page'
-import { getReadingTime, type ReadingTimeResult } from '../libs/readingTime'
+import { formatReadingTime, getReadingTime, type ReadingTimeResult } from '../libs/readingTime'
 
 const { locale, slug, entry } = Astro.props
 
@@ -23,7 +23,7 @@ if (isBlogPost) {
 {
   isBlogPost && readingTime.showReadingTime && (
     <p>
-      <Icon name="seti:clock" /> {readingTime.readingTime} min
+      <Icon name="seti:clock" /> {formatReadingTime(readingTime.readingTime)}
     </p>
   )
 }
