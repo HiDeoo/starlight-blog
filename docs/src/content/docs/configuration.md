@@ -62,6 +62,14 @@ The number of blog posts to display per page in the blog post list.
 
 The number of recent blog posts to display in the blog sidebar.
 
+### `showReadingTime`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+Whether to show a automatically calculated reading time for each blog post.
+The automatically calculated reading time can be overridden by setting the [`readingTime` frontmatter](/guides/frontmatter#readingtime).
+
 ### `authors`
 
 **Type:** [`StarlightBlogAuthorsConfig`](#author-configuration)

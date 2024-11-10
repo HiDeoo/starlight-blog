@@ -171,3 +171,18 @@ type CoverConfig =
       light: string
     }
 ```
+
+### `readingTime`
+
+**Type:** `number`
+
+Manually set a reading time for the blog post which is shown below the title and on all lists of blogs.
+
+If the [`showReadingTime` configuration](/configuration#showreadingtime) is set to `true` this number gets calculated automatically and can be overridden by setting this value.  
+If it is set `false` only blog posts with this frontmatter field will show a reading time.
+
+```md
+---
+readingTime: 10
+---
+```
