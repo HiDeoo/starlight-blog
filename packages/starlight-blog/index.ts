@@ -36,9 +36,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
             ...overrideStarlightComponent(starlightConfig.components, logger, 'MarkdownContent'),
             ...overrideStarlightComponent(starlightConfig.components, logger, 'Sidebar'),
             ...overrideStarlightComponent(starlightConfig.components, logger, 'ThemeSelect'),
-            ...(config.showReadingTime
-              ? overrideStarlightComponent(starlightConfig.components, logger, 'PageTitle')
-              : {}),
+            ...overrideStarlightComponent(starlightConfig.components, logger, 'PageTitle'),
           },
           head: [
             ...(starlightConfig.head ?? []),
