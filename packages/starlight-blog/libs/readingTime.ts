@@ -21,5 +21,9 @@ export function getReadingTime(userConfig: StarlightBlogEntry, markdownContent: 
 }
 
 export function formatReadingTime(readingTime: number): string {
-  return readingTime < 60 ? `${readingTime} min` : `${Math.round(readingTime / 60)}h ${readingTime % 60}min`
+  return readingTime < 60
+    ? `${readingTime} min`
+    : readingTime % 60 === 0
+    ? `${readingTime / 60} h`
+    : `${readingTime / 60}h ${readingTime % 60}min`
 }
