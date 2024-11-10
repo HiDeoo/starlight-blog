@@ -1,8 +1,9 @@
 ---
-import { Badge } from '@astrojs/starlight/components'
+import { Badge, Icon } from '@astrojs/starlight/components'
 
 import { getBlogEntryMetadata, type StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
+import { getReadingTime } from '../libs/readingTime'
 
 import Author from './Author.astro'
 
@@ -10,12 +11,15 @@ interface Props {
   entry: StarlightBlogEntry
   locale: Locale
   showBadges?: boolean
+  showReadingTime?: boolean
 }
 
-const { entry, locale, showBadges = true } = Astro.props
+const { entry, locale, showBadges = true, showReadingTime = true } = Astro.props
 const { authors, date, lastUpdated } = getBlogEntryMetadata(entry, locale)
 
 const hasAuthors = authors.length > 0
+
+const readingTime = getReadingTime(entry, entry.body.toString())
 ---
 
 <div class="metadata not-content">
@@ -35,6 +39,15 @@ const hasAuthors = authors.length > 0
           })}
         />
       ) : null
+    }
+    {
+      showReadingTime && readingTime.showReadingTime && (
+        <span class="reading-time">
+          &nbsp;-&nbsp;
+          <Icon name="seti:clock" />
+          {readingTime.readingTime} min
+        </span>
+      )
     }
   </div>
   {
@@ -73,6 +86,15 @@ const hasAuthors = authors.length > 0
 
   .update-date {
     color: var(--sl-color-gray-3);
+  }
+
+  .reading-time {
+    color: var(--sl-color-gray-3);
+  }
+
+  .reading-time svg {
+    transform: translateY(2px);
+    margin-right: 4px;
   }
 
   .authors {

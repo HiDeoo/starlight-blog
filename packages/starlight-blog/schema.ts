@@ -77,6 +77,11 @@ export const blogEntrySchema = ({ image }: SchemaContext) =>
      * Featured blog posts are displayed in a dedicated sidebar group above recent blog posts.
      */
     featured: z.boolean().optional(),
+    /**
+     * The time it takes to read the blog post in minutes.
+     * If not provided, the reading time will be inferred from the blog post content.
+     */
+    readingTime: z.number().optional(),
   })
 
 export function blogSchema(context: SchemaContext) {

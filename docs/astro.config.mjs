@@ -27,6 +27,7 @@ export default defineConfig({
               url: 'https://hideoo.dev',
             },
           },
+          showReadingTime: true,
         }),
       ],
       sidebar: [

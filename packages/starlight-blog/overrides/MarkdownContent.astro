@@ -24,7 +24,7 @@ if (isBlogPost) {
     isBlogPost && blogEntry ? (
       <>
         {blogEntry.entry.data.cover && <Cover cover={blogEntry.entry.data.cover} />}
-        <Metadata entry={blogEntry.entry} {locale} showBadges={false} />
+        <Metadata entry={blogEntry.entry} {locale} showBadges={false} showReadingTime={false} />
       </>
     ) : null
   }

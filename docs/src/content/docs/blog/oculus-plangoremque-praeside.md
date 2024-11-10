@@ -5,6 +5,7 @@ excerpt: Etiam sit amet purus sit amet eros bibendum sagittis. Aliquam viverra e
 tags:
   - Lorem
   - Ipsum
+readingTime: 69
 ---
 
 ## Pretioque semper malo

@@ -47,6 +47,12 @@ const configSchema = z
      * When using the object form, the keys must be BCP-47 tags (e.g. `en`, `ar`, or `zh-CN`).
      */
     title: z.union([z.string(), z.record(z.string())]).default('Blog'),
+    /**
+     * Whether to show the reading time in the blog post list and on the blog post page.
+     *
+     * @default false
+     */
+    showReadingTime: z.boolean().default(false),
   })
   .default({})
 
