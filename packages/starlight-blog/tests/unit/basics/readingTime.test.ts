@@ -38,17 +38,17 @@ describe('getReadingTime', () => {
 
 describe('formatReadingTime', () => {
   test('get minutes', () => {
-    expect(formatReadingTime(0).toBe("0 min")
-    expect(formatReadingTime(1).toBe("1 min")
+    expect(formatReadingTime(0)).toBe("0 min")
+    expect(formatReadingTime(1)).toBe("1 min")
   })
 
   test('get hours', () => {
-    expect(formatReadingTime(60).toBe("1 h")
-    expect(formatReadingTime(120).toBe("2 h")
+    expect(formatReadingTime(60)).toBe("1 h")
+    expect(formatReadingTime(120)).toBe("2 h")
   })
 
   test('get minutes and hours', () => {
-    expect(formatReadingTime(61).toBe("1h 1min")
-    expect(formatReadingTime(231).toBe("3h 51min")
+    expect(formatReadingTime(61)).toBe("1h 1min")
+    expect(formatReadingTime(231)).toBe("3h 51min")
   })
 })
