@@ -67,7 +67,7 @@ The number of recent blog posts to display in the blog sidebar.
 **Type:** `boolean`  
 **Default:** `false`
 
-Whether to show a automatically calculated reading time for each blog post.
+Whether to show an automatically calculated reading time for each blog post.
 The automatically calculated reading time can be overridden by setting the [`readingTime` frontmatter](/guides/frontmatter#readingtime).
 
 ### `authors`
