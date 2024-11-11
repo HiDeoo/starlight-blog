@@ -15,17 +15,12 @@ describe('calculateReadingTime', () => {
 })
 
 describe('getReadingTime', () => {
-  test('don't show reading time', () => {
+  test('do not show reading time', () => {
     expect(getReadingTime()).toBe(1)
     expect(getReadingTime()).toBe(1)
   })
 
-  test('show reading time, overridden by frontmatter', () => {
-    expect(getReadingTime()).toBe(1)
-    expect(getReadingTime()).toBe(1)
-  })
-
-  test('show reading time, calculated automatically', () => {
+  test('show reading time, set by frontmatter', () => {
     expect(getReadingTime()).toBe(1)
     expect(getReadingTime()).toBe(1)
   })
