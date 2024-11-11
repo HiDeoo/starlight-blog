@@ -25,5 +25,5 @@ export function formatReadingTime(readingTime: number): string {
     ? `${readingTime} min`
     : readingTime % 60 === 0
     ? `${readingTime / 60} h`
-    : `${readingTime / 60}h ${readingTime % 60}min`
+    : `${Math.floor(readingTime / 60)}h ${readingTime % 60}min`
 }
