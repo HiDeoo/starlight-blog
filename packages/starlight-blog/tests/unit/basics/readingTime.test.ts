@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { mockBlogPost } from '../utils'
 import { calculateReadingTime, getReadingTime, formatReadingTime } from '../../../libs/readingTime'
+import { mockBlogPost } from '../utils'
 
 describe('calculateReadingTime', () => {
   test('devide without remainder', () => {
