@@ -13,6 +13,10 @@ describe('calculateReadingTime', () => {
     expect(calculateReadingTime(`apple `.repeat(201).trim())).toBe(2)
     expect(calculateReadingTime(`apple `.repeat(450).trim())).toBe(3)
   })
+
+  test('devide with empty content', () => {
+    expect(calculateReadingTime('')).toBe(0)
+  })
 })
 
 describe('getReadingTime', () => {
