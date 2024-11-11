@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { mockBlogPost } from '../../utils'
+import { mockBlogPost } from '../utils'
 import { calculateReadingTime, getReadingTime, formatReadingTime } from '../../../libs/readingTime'
 
 describe('calculateReadingTime', () => {
@@ -16,17 +16,18 @@ describe('calculateReadingTime', () => {
 })
 
 describe('getReadingTime', () => {
-  const blog1 = mockBlogPost({
-    'blog1', { title: "Blog 1", date: }
-  })
+  const postWithoutTime = mockBlogPost(
+    ['post-1.md', { title: 'Home Page', date: new Date('2023-08-24') }]
+  )
+  const postWithTime = mockBlogPost(
+    ['post-2.md', { title: 'Home Page', date: new Date('2023-08-25'), readingTime: 12 }]
+  )
 
   test('do not show reading time', () => {
-    expect(getReadingTime()).toBe(1)
-    expect(getReadingTime()).toBe(1)
+    expect(getReadingTime(postWithoutTime)).toBe({ showReadingTime: false })
   })
 
   test('show reading time, set by frontmatter', () => {
-    expect(getReadingTime()).toBe(1)
-    expect(getReadingTime()).toBe(1)
+    expect(getReadingTime(postWithTime)).toBe({ showReadingTime: true, readingTime: 12 })
   })
 })
