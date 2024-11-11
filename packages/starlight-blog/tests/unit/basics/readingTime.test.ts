@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
+import { mockBlogPost } from '../../utils'
 import { calculateReadingTime, getReadingTime, formatReadingTime } from '../../../libs/readingTime'
 
 describe('calculateReadingTime', () => {
@@ -15,6 +16,10 @@ describe('calculateReadingTime', () => {
 })
 
 describe('getReadingTime', () => {
+  const blog1 = mockBlogPost({
+    'blog1', { title: "Blog 1", date: }
+  })
+
   test('do not show reading time', () => {
     expect(getReadingTime()).toBe(1)
     expect(getReadingTime()).toBe(1)
