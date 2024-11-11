@@ -17,10 +17,10 @@ describe('calculateReadingTime', () => {
 
 describe('getReadingTime', () => {
   const postWithoutTime = mockBlogPost(
-    ['post-1.md', { title: 'Home Page', date: new Date('2023-08-24') }]
+    'post-1.md', { title: 'Home Page', date: new Date('2023-08-24') }
   )
   const postWithTime = mockBlogPost(
-    ['post-2.md', { title: 'Home Page', date: new Date('2023-08-25'), readingTime: 12 }]
+    'post-2.md', { title: 'Home Page', date: new Date('2023-08-25'), readingTime: 12 }
   )
 
   test('do not show reading time', () => {
