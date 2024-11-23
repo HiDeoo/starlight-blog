@@ -3,6 +3,10 @@ import { describe, expect, test, vi } from 'vitest'
 
 import { getRSSOptions } from '../../../libs/rss'
 
+vi.mock('astro/container', () => ({
+  experimental_AstroContainer: { create: () => ({ renderToString: () => Promise.resolve('') }) },
+}))
+
 vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
 
@@ -31,9 +35,11 @@ vi.mock('astro:content', async () => {
   ])
 })
 
+const t = ((key: string) => key) as App.Locals['t']
+
 describe('getRSSOptions', () => {
   test('includes only the last 20 blog posts', async () => {
-    const { items } = await getRSSOptions(new URL('http://example.com'), undefined)
+    const { items } = await getRSSOptions(new URL('http://example.com'), undefined, t)
 
     expect(items).toHaveLength(20)
     expect(getItemAtIndex(items, 0)?.title).toBe('Post 21')
@@ -43,7 +49,7 @@ describe('getRSSOptions', () => {
   test('includes top-level metadata', async () => {
     const url = new URL('http://example.com')
 
-    const options = await getRSSOptions(url, undefined)
+    const options = await getRSSOptions(url, undefined, t)
 
     expect(options.title).toBe('Starlight Blog Basics | Blog')
     expect(options.description).toMatchInlineSnapshot(`"Basic tests for the Starlight Blog plugin."`)
