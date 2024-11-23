@@ -43,7 +43,10 @@ function mockBlogPost(id: string, entry: StarlightBlogEntryData): StarlightBlogE
     body: '',
     render: (() => {
       // We do not care about the render function in the unit tests.
-    }) as StarlightBlogEntry['render'],
+      return {
+        Content: () => undefined,
+      }
+    }) as unknown as StarlightBlogEntry['render'],
   }
 }
 

@@ -24,6 +24,7 @@
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0"
   },
   "dependencies": {
+    "@astrojs/mdx": "3.1.9",
     "@astrojs/rss": "4.0.5",
     "astro-remote": "0.3.2",
     "github-slugger": "2.0.0",
