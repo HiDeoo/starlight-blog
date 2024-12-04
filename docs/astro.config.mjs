@@ -5,6 +5,7 @@ import starlightBlog from 'starlight-blog'
 export default defineConfig({
   integrations: [
     starlight({
+      description: 'Starlight plugin to add a blog to your documentation.',
       locales: {
         root: { label: 'English', lang: 'en' },
         fr: { label: 'Français', lang: 'fr' },
