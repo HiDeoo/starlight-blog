@@ -6,7 +6,7 @@ import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 import { Translations } from './translations'
 
-export type { StarlightBlogConfig, StarlightBlogUserConfig }
+  export type { StarlightBlogConfig, StarlightBlogUserConfig }
 
 export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig): StarlightPlugin {
   const config = validateConfig(userConfig)
