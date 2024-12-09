@@ -1,4 +1,4 @@
-name: integration
+name: autofix.ci
 
 on:
   push:
@@ -9,13 +9,16 @@ on:
       - main
   workflow_call:
 
+permissions:
+  contents: read
+
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}
 
 jobs:
-  lint_test:
-    name: Lint & Test
+  autofix:
+    name: Format code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,16 +34,15 @@ jobs:
         with:
           cache: pnpm
           node-version: 18
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Generates TypeScript types
-        run: pnpm astro sync
-        working-directory: docs
+      - name: Format code
+        run: pnpm format
 
-      - name: Lint
-        run: pnpm lint
-
-      - name: Test
-        run: pnpm test
+      - name: Run autofix
+        uses: autofix-ci/action@ff86a557419858bb967097bfc916833f5647fa8c
+        with:
+          fail-fast: false

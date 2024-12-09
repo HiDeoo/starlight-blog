@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0"
+    "lint": "eslint . --cache --max-warnings=0",
+    "format": "prettier -w --cache --ignore-unknown ."
   },
   "dependencies": {
     "@astrojs/starlight": "0.28.3",
