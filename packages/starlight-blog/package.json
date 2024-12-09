@@ -21,7 +21,8 @@
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest",
     "test:e2e": "playwright install --with-deps chromium && playwright test",
-    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0"
+    "lint": "eslint . --cache --max-warnings=0",
+    "format": "prettier -w --cache --ignore-unknown ."
   },
   "dependencies": {
     "@astrojs/mdx": "3.1.9",
