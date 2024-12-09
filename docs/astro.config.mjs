@@ -46,6 +46,7 @@ export default defineConfig({
         { label: 'Demo', link: '/blog/' },
       ],
       social: {
+        blueSky: 'https://bsky.app/profile/hideoo.dev',
         github: 'https://github.com/HiDeoo/starlight-blog',
       },
       title: 'Starlight Blog',
