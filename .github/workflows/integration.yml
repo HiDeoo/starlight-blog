@@ -9,6 +9,10 @@ on:
       - main
   workflow_call:
 
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}
+
 jobs:
   lint_test:
     name: Lint & Test
