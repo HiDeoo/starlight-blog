@@ -15,7 +15,7 @@ export async function mockBlogPosts(posts: Parameters<typeof mockBlogPost>[]) {
   }
 }
 
-function mockBlogPost(id: string, entry: StarlightBlogEntryData): StarlightBlogEntry {
+export function mockBlogPost(id: string, entry: StarlightBlogEntryData): StarlightBlogEntry {
   return {
     id: `blog/${id}`,
     slug: `blog/${slug(id.replace(/\.[^.]+$/, '').replace(/\/index$/, ''))}`,
