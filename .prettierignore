@@ -1,4 +1,5 @@
 .astro
+.changeset
 .github/blocks
 .next
 .vercel

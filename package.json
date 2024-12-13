@@ -8,9 +8,12 @@
   "scripts": {
     "test": "pnpm --stream -r test",
     "lint": "pnpm -r lint",
-    "format": "pnpm -r format"
+    "format": "pnpm -r format",
+    "version": "pnpm changeset version && pnpm i --no-frozen-lockfile"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "0.5.0",
+    "@changesets/cli": "2.27.10",
     "@hideoo/eslint-config": "3.0.0",
     "@hideoo/prettier-config": "2.0.0",
     "@hideoo/tsconfig": "2.0.1",
