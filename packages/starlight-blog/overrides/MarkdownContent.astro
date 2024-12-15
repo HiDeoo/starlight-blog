@@ -9,13 +9,13 @@ import PrevNextLinks from '../components/PrevNextLinks.astro'
 import { getBlogEntry, type StarlightBlogEntryPaginated } from '../libs/content'
 import { isAnyBlogPostPage } from '../libs/page'
 
-const { locale, slug } = Astro.props
+const { id, locale } = Astro.props
 
-const isBlogPost = isAnyBlogPostPage(slug)
+const isBlogPost = isAnyBlogPostPage(id)
 let blogEntry: StarlightBlogEntryPaginated | undefined = undefined
 
 if (isBlogPost) {
-  blogEntry = await getBlogEntry(slug, locale)
+  blogEntry = await getBlogEntry(id, locale)
 }
 ---
 

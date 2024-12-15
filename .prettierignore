@@ -11,3 +11,4 @@ dist
 dist-ssr
 out
 pnpm-lock.yaml
+test-results

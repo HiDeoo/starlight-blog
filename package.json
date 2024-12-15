@@ -7,24 +7,25 @@
   "type": "module",
   "scripts": {
     "test": "pnpm --stream -r test",
-    "lint": "pnpm -r lint",
-    "format": "pnpm -r format",
+    "lint": "astro check --noSync && pnpm -r lint",
+    "format": "prettier -w --cache --ignore-unknown .",
     "version": "pnpm changeset version && pnpm i --no-frozen-lockfile"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.5.0",
-    "@changesets/cli": "2.27.10",
-    "@hideoo/eslint-config": "3.0.0",
-    "@hideoo/prettier-config": "2.0.0",
-    "@hideoo/tsconfig": "2.0.1",
-    "astro": "4.16.4",
-    "eslint": "8.56.0",
-    "prettier": "3.0.3",
-    "prettier-plugin-astro": "0.12.0",
-    "typescript": "5.2.2"
+    "@astrojs/check": "^0.9.4",
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.10",
+    "@hideoo/eslint-config": "^4.0.0",
+    "@hideoo/prettier-config": "^2.0.0",
+    "@hideoo/tsconfig": "^2.0.1",
+    "astro": "^5.0.5",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.7.2"
   },
   "engines": {
-    "node": ">=18.14.1"
+    "node": ">=18.17.1"
   },
   "packageManager": "pnpm@8.6.9",
   "private": true,

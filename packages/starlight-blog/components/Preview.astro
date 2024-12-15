@@ -21,7 +21,7 @@ const Excerpt = await getBlogEntryExcerpt(entry)
 <article class="preview">
   <header>
     <h2>
-      <a href={getRelativeUrl(`/${getPathWithLocale(entry.slug, locale)}`)}>{entry.data.title}</a>
+      <a href={getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`)}>{entry.data.title}</a>
     </h2>
     <Metadata entry={entry} {locale} />
   </header>

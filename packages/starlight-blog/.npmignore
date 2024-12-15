@@ -1,7 +1,8 @@
 .eslintcache
-.prettierignore
+eslint.config.mjs
 playwright.config.ts
 src
+test-results
 tests
-tsconfig.json
-tsconfig.tsbuildinfo
+vitest.config.ts
+vitest.workspace.ts

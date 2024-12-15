@@ -6,11 +6,16 @@ import { vitePluginStarlightBlogConfig, type StarlightBlogContext } from '../../
 export function defineVitestConfig(userConfig: StarlightBlogUserConfig, context?: Partial<StarlightBlogContext>) {
   const config = validateConfig(userConfig)
 
+  const rootDir = new URL('./', import.meta.url)
+  const srcDir = new URL('src/', rootDir)
+
   return getViteConfig({
     plugins: [
       vitePluginStarlightBlogConfig(config, {
         description: context?.description,
+        rootDir: rootDir.pathname,
         site: context?.site,
+        srcDir: srcDir.pathname,
         title: context?.title ?? 'Starlight Blog Test',
         titleDelimiter: context?.titleDelimiter,
         trailingSlash: context?.trailingSlash ?? 'ignore',

@@ -1,10 +1,10 @@
 import type { GetStaticPathsResult } from 'astro'
-import type { z } from 'astro/zod'
-import { getCollection, getEntry, type AstroCollectionEntry } from 'astro:content'
+import { type CollectionEntry, getCollection, getEntry, render } from 'astro:content'
 import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
+import context from 'virtual:starlight-blog-context'
 
-import type { blogSchema, StarlightBlogAuthor } from '../schema'
+import type { StarlightBlogAuthor } from '../schema'
 
 import { getEntryAuthors } from './authors'
 import { DefaultLocale, getLangFromLocale, type Locale } from './i18n'
@@ -58,8 +58,8 @@ export async function getBlogEntry(slug: string, locale: Locale): Promise<Starli
   const entries = await getBlogEntries(locale)
 
   const entryIndex = entries.findIndex((entry) => {
-    if (entry.slug === stripLeadingSlash(stripTrailingSlash(slug))) return true
-    if (locale) return entry.slug === stripLeadingSlash(stripTrailingSlash(getPathWithLocale(slug, undefined)))
+    if (entry.id === stripLeadingSlash(stripTrailingSlash(slug))) return true
+    if (locale) return entry.id === stripLeadingSlash(stripTrailingSlash(getPathWithLocale(slug, undefined)))
     return false
   })
   const entry = entries[entryIndex]
@@ -72,12 +72,12 @@ export async function getBlogEntry(slug: string, locale: Locale): Promise<Starli
 
   const prevEntry = entries[entryIndex - 1]
   const prevLink = prevEntry
-    ? { href: getRelativeUrl(`/${getPathWithLocale(prevEntry.slug, locale)}`), label: prevEntry.data.title }
+    ? { href: getRelativeUrl(`/${getPathWithLocale(prevEntry.id, locale)}`), label: prevEntry.data.title }
     : undefined
 
   const nextEntry = entries[entryIndex + 1]
   const nextLink = nextEntry
-    ? { href: getRelativeUrl(`/${getPathWithLocale(nextEntry.slug, locale)}`), label: nextEntry.data.title }
+    ? { href: getRelativeUrl(`/${getPathWithLocale(nextEntry.id, locale)}`), label: nextEntry.data.title }
     : undefined
 
   return {
@@ -101,15 +101,19 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry, locale: Locale):
 }
 
 export async function getBlogEntries(locale: Locale) {
-  const docEntries = await getCollection<StarlightEntryData>('docs')
-  const blogEntries: AstroCollectionEntry<StarlightEntryData>[] = []
+  const docEntries = await getCollection('docs')
+  const blogEntries: StarlightEntry[] = []
+
+  const contentRelativePath = `${context.srcDir.replace(context.rootDir, '')}content/docs/`
 
   for (const entry of docEntries) {
     if (import.meta.env.MODE === 'production' && entry.data.draft === true) continue
 
+    const fileRelativePath = entry.filePath?.replace(contentRelativePath, '')
+
     const isDefaultLocaleEntry =
-      entry.id.startsWith(`${getPathWithLocale(config.prefix, DefaultLocale)}/`) &&
-      entry.id !== `${getPathWithLocale(config.prefix, DefaultLocale)}/index.mdx`
+      fileRelativePath?.startsWith(`${getPathWithLocale(config.prefix, DefaultLocale)}/`) &&
+      fileRelativePath !== `${getPathWithLocale(config.prefix, DefaultLocale)}/index.mdx`
 
     if (isDefaultLocaleEntry) {
       if (locale === DefaultLocale) {
@@ -117,13 +121,22 @@ export async function getBlogEntries(locale: Locale) {
         continue
       }
 
+      // Briefly override `console.warn()` to silence logging when a localized entry is not found.
+      const warn = console.warn
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      console.warn = () => {}
+
       try {
-        const localizedEntry = await getEntry<StarlightEntryData>('docs', getPathWithLocale(entry.slug, locale))
+        const localizedEntry = await getEntry('docs', getPathWithLocale(entry.id, locale))
+        if (!localizedEntry) throw new Error('Unavailable localized entry.')
         if (localizedEntry.data.draft === true) throw new Error('Draft localized entry.')
         blogEntries.push(localizedEntry)
       } catch {
         blogEntries.push(entry)
       }
+
+      // Restore the original `console.warn()` implementation.
+      console.warn = warn
     }
   }
 
@@ -139,7 +152,7 @@ export async function getBlogEntryExcerpt(entry: StarlightBlogEntry) {
     return entry.data.excerpt
   }
 
-  const { Content } = await entry.render()
+  const { Content } = await render(entry)
 
   return Content
 }
@@ -204,13 +217,11 @@ function validateBlogEntry(entry: StarlightEntry): asserts entry is StarlightBlo
   }
 }
 
-type StarlightEntryData = z.infer<ReturnType<typeof blogSchema>> & { draft?: boolean; title: string }
-type StarlightEntry = AstroCollectionEntry<StarlightEntryData>
+type StarlightEntry = CollectionEntry<'docs'>
 
 export type StarlightBlogEntry = StarlightEntry & {
   data: {
     date: Date
-    lastUpdated?: Date | boolean
   }
 }
 

@@ -1,8 +1,9 @@
-import { getContainerRenderer as getMDXRenderer } from '@astrojs/mdx'
+// import { getContainerRenderer as getMDXRenderer } from '@astrojs/mdx'
 import type { RSSOptions } from '@astrojs/rss'
 import type { GetStaticPathsResult } from 'astro'
-import { experimental_AstroContainer as AstroContainer } from 'astro/container'
-import { loadRenderers } from 'astro:container'
+import type { experimental_AstroContainer as AstroContainer } from 'astro/container'
+// import { loadRenderers } from 'astro:container'
+import { render } from 'astro:content'
 import { DOCTYPE_NODE, ELEMENT_NODE, TEXT_NODE, transform, walk, type Node } from 'ultrahtml'
 import sanitize from 'ultrahtml/transformers/sanitize'
 import starlightConfig from 'virtual:starlight/user-config'
@@ -31,15 +32,16 @@ export function getRSSStaticPaths() {
   return paths satisfies GetStaticPathsResult
 }
 
-export async function getRSSOptions(site: URL | undefined, locale: Locale, t: App.Locals['t']) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getRSSOptions(site: URL | undefined, locale: Locale, _t: App.Locals['t']) {
   const entries = await getBlogEntries(locale)
   entries.splice(20)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
   const feedSite = site!
 
-  const renderers = await loadRenderers([getMDXRenderer()])
-  const container = await AstroContainer.create({ renderers })
+  // const renderers = await loadRenderers([getMDXRenderer()])
+  // const container = await AstroContainer.create({ renderers })
 
   const options: RSSOptions = {
     title: getRSSTitle(locale),
@@ -47,7 +49,7 @@ export async function getRSSOptions(site: URL | undefined, locale: Locale, t: Ap
     site: feedSite,
     items: await Promise.all(
       entries.map(async (entry) => {
-        const link = getRelativeUrl(`/${getPathWithLocale(entry.slug, locale)}`)
+        const link = getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`)
 
         return {
           title: entry.data.title,
@@ -55,7 +57,7 @@ export async function getRSSOptions(site: URL | undefined, locale: Locale, t: Ap
           pubDate: entry.data.date,
           categories: entry.data.tags,
           description: await getRSSDescription(entry),
-          content: await getRSSContent(entry, feedSite, container, t),
+          // content: await getRSSContent(entry, feedSite, container, t),
         }
       }),
     ),
@@ -88,7 +90,7 @@ function getRSSTitle(locale: Locale): string {
       title = starlightConfig.title[lang]
     } else {
       const defaultLang = starlightConfig.defaultLocale.lang ?? starlightConfig.defaultLocale.locale
-      title = defaultLang ? starlightConfig.title[defaultLang] ?? '' : ''
+      title = defaultLang ? (starlightConfig.title[defaultLang] ?? '') : ''
     }
   }
 
@@ -107,13 +109,15 @@ function getRSSDescription(entry: StarlightBlogEntry): Promise<string> | undefin
   return stripMarkdown(entry.data.excerpt)
 }
 
+// @ts-expect-error - Currently not used due to an Astro bug.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getRSSContent(
   entry: StarlightBlogEntry,
   baseURL: URL,
   container: AstroContainer,
   t: App.Locals['t'],
 ): Promise<string> {
-  const { Content } = await entry.render()
+  const { Content } = await render(entry)
   const html = await container.renderToString(Content, { locals: { t } })
 
   const content = await transform(html, [
