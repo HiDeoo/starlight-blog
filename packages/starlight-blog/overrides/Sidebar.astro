@@ -16,9 +16,9 @@ import {
 import { getAllTags } from '../libs/tags'
 import { getBlogTitle } from '../libs/title'
 
-const { locale, slug } = Astro.props
+const { id, locale } = Astro.props
 
-const isBlog = isAnyBlogPage(slug)
+const isBlog = isAnyBlogPage(id)
 const { featured, recent } = isBlog ? await getSidebarBlogEntries(locale) : { featured: [], recent: [] }
 
 const blogSidebar: Props['sidebar'] = isBlog
@@ -27,7 +27,7 @@ const blogSidebar: Props['sidebar'] = isBlog
         attrs: {},
         badge: undefined,
         href: getRelativeBlogUrl('/', locale),
-        isCurrent: isBlogRoot(slug),
+        isCurrent: isBlogRoot(id),
         label: Astro.locals.t('starlightBlog.sidebar.all'),
         type: 'link',
       },
@@ -39,7 +39,7 @@ if (isBlog) {
     blogSidebar.push({
       badge: undefined,
       collapsed: false,
-      entries: getSidebarProps(slug, featured, locale),
+      entries: getSidebarProps(id, featured, locale),
       label: Astro.locals.t('starlightBlog.sidebar.featured'),
       type: 'group',
     })
@@ -48,7 +48,7 @@ if (isBlog) {
   blogSidebar.push({
     badge: undefined,
     collapsed: false,
-    entries: getSidebarProps(slug, recent, locale),
+    entries: getSidebarProps(id, recent, locale),
     label: Astro.locals.t('starlightBlog.sidebar.recent'),
     type: 'group',
   })
@@ -71,7 +71,7 @@ if (isBlog) {
           attrs: {},
           badge: undefined,
           href: getRelativeBlogUrl(`/tags/${tagSlug}`, locale),
-          isCurrent: isBlogTagsPage(slug, tagSlug),
+          isCurrent: isBlogTagsPage(id, tagSlug),
           label: `${label} (${entries.length})`,
           type: 'link',
         })),
@@ -98,7 +98,7 @@ if (isBlog) {
           attrs: {},
           badge: undefined,
           href: getRelativeBlogUrl(`/authors/${author.slug}`, locale),
-          isCurrent: isBlogAuthorsPage(slug, author.slug),
+          isCurrent: isBlogAuthorsPage(id, author.slug),
           label: `${author.name} (${entries.length})`,
           type: 'link',
         })),

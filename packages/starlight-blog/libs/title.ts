@@ -13,7 +13,7 @@ export function getBlogTitle(locale: Locale): string {
     title = config.title[lang]
   } else {
     const defaultLang = starlightConfig.defaultLocale.lang ?? starlightConfig.defaultLocale.locale
-    title = defaultLang ? config.title[defaultLang] ?? '' : ''
+    title = defaultLang ? (config.title[defaultLang] ?? '') : ''
   }
 
   if (title.length === 0) {
