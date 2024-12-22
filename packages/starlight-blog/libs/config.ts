@@ -35,11 +35,11 @@ const configSchema = z
     /**
      * The number of blog posts to display per page in the blog post list.
      */
-    postCount: z.number().min(1).default(5),
+    postCount: z.number().min(1).default(5).transform(infinityToMax),
     /**
      * The number of recent blog posts to display in the sidebar.
      */
-    recentPostCount: z.number().min(1).default(10),
+    recentPostCount: z.number().min(1).default(10).transform(infinityToMax),
     /**
      * The title of the blog.
      *
@@ -69,6 +69,10 @@ ${Object.entries(errors.fieldErrors)
   }
 
   return config.data
+}
+
+function infinityToMax(value: number): number {
+  return value === Infinity ? Number.MAX_SAFE_INTEGER : value
 }
 
 export type StarlightBlogUserConfig = z.input<typeof configSchema>
