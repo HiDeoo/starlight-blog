@@ -90,9 +90,9 @@ export function blogSchema(context: SchemaContext) {
   if (!context) {
     throw new AstroError(
       'Missing blog schema validation context.',
-      `You may need to update your content collections configuration in the \`src/content/config.ts\` file and pass the context to the \`blogSchema\` function:
+      `You may need to update your content collections configuration in the \`src/content.config.ts\` file and pass the context to the \`blogSchema\` function:
 
-\`docs: defineCollection({ schema: docsSchema({ extend: (context) => blogSchema(context) }) })\`
+\`docs: defineCollection({ loader: docsLoader(), schema: docsSchema({ extend: (context) => blogSchema(context) }) })\`
 
 If you believe this is a bug, please file an issue at https://github.com/HiDeoo/starlight-blog/issues/new/choose`,
     )

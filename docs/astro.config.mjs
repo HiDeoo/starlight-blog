@@ -5,6 +5,7 @@ import starlightBlog from 'starlight-blog'
 export default defineConfig({
   integrations: [
     starlight({
+      description: 'Starlight plugin to add a blog to your documentation.',
       locales: {
         root: { label: 'English', lang: 'en' },
         fr: { label: 'Français', lang: 'fr' },
@@ -46,6 +47,7 @@ export default defineConfig({
         { label: 'Demo', link: '/blog/' },
       ],
       social: {
+        blueSky: 'https://bsky.app/profile/hideoo.dev',
         github: 'https://github.com/HiDeoo/starlight-blog',
       },
       title: 'Starlight Blog',

@@ -15,10 +15,9 @@ export async function mockBlogPosts(posts: Parameters<typeof mockBlogPost>[]) {
   }
 }
 
-export function mockBlogPost(id: string, entry: StarlightBlogEntryData): StarlightBlogEntry {
+export function mockBlogPost(docsFilePath: string, entry: StarlightBlogEntryData): StarlightBlogEntry {
   return {
-    id: `blog/${id}`,
-    slug: `blog/${slug(id.replace(/\.[^.]+$/, '').replace(/\/index$/, ''))}`,
+    id: `blog/${slug(docsFilePath.replace(/\.[^.]+$/, '').replace(/\/index$/, ''))}`,
     collection: 'docs',
     data: blogEntrySchema({
       image: () =>
@@ -39,11 +38,9 @@ export function mockBlogPost(id: string, entry: StarlightBlogEntryData): Starlig
         }),
     })
       .passthrough()
-      .parse(entry) as StarlightBlogEntryData,
+      .parse(entry) as StarlightBlogEntry['data'],
+    filePath: `src/content/docs/blog/${docsFilePath}`,
     body: '',
-    render: (() => {
-      // We do not care about the render function in the unit tests.
-    }) as StarlightBlogEntry['render'],
   }
 }
 

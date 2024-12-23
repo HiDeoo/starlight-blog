@@ -50,7 +50,7 @@ export function getPathWithLocale(path: string, locale: Locale): string {
 }
 
 export function isAnyBlogPage(slug: string) {
-  return slug.match(new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}(/?$|/.+/?$)`)) !== null
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}(/?$|/.+/?$)`).exec(slug) !== null
 }
 
 export function isBlogRoot(slug: string) {
@@ -59,9 +59,9 @@ export function isBlogRoot(slug: string) {
 
 export function isAnyBlogPostPage(slug: string) {
   return (
-    slug.match(
-      new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/(?!(\\d+/?|tags/.+|authors/.+)$).+$`),
-    ) !== null
+    new RegExp(
+      `^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/(?!(\\d+/?|tags/.+|authors/.+)$).+$`,
+    ).exec(slug) !== null
   )
 }
 
@@ -90,7 +90,7 @@ export function getPageProps(title: string): StarlightPageProps {
 
 export function getSidebarProps(slug: string, entries: StarlightBlogEntry[], locale: Locale): Props['sidebar'] {
   return entries.map((entry) => {
-    const localizedEntrySlug = getPathWithLocale(entry.slug, locale)
+    const localizedEntrySlug = getPathWithLocale(entry.id, locale)
     return {
       attrs: {},
       badge: undefined,

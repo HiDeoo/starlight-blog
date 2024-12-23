@@ -49,18 +49,20 @@ import { PackageManagers } from '@hideoo/starlight-plugins-docs-components'
    })
    ```
 
-3. Starlight Blog uses Astro’s [content collections](https://docs.astro.build/en/guides/content-collections/), which are configured in the `src/content/config.ts` file.
+3. Starlight Blog uses Astro’s [content collections](https://docs.astro.build/en/guides/content-collections/), which are configured in the `src/content.config.ts` file.
 
    Update the content config file to add support for customizing individual blog posts using their frontmatter:
 
    ```diff lang="ts"
-   // src/content/config.ts
+   // src/content.config.ts
    import { defineCollection } from 'astro:content';
+   import { docsLoader } from '@astrojs/starlight/loaders';
    import { docsSchema } from '@astrojs/starlight/schema';
    +import { blogSchema } from 'starlight-blog/schema'
 
    export const collections = {
      docs: defineCollection({
+       loader: docsLoader(),
        schema: docsSchema({
    +      extend: (context) => blogSchema(context)
        })

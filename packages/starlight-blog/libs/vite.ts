@@ -35,7 +35,9 @@ function resolveVirtualModuleId<TModuleId extends string>(id: TModuleId): `\0${T
 
 export interface StarlightBlogContext {
   description: StarlightUserConfig['description']
+  rootDir: string
   site: AstroConfig['site']
+  srcDir: string
   title: StarlightUserConfig['title']
   titleDelimiter: StarlightUserConfig['titleDelimiter']
   trailingSlash: AstroConfig['trailingSlash']

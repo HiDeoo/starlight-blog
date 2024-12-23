@@ -1,6 +1,6 @@
 {
   "name": "starlight-blog",
-  "version": "0.14.1",
+  "version": "0.16.1",
   "license": "MIT",
   "description": "Starlight plugin to add a blog to your documentation.",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
@@ -22,31 +22,31 @@
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest",
     "test:e2e": "playwright install --with-deps chromium && playwright test",
-    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0"
+    "lint": "eslint . --cache --max-warnings=0"
   },
   "dependencies": {
-    "@astrojs/rss": "4.0.5",
-    "astro-remote": "0.3.2",
-    "github-slugger": "2.0.0",
-    "marked": "12.0.2",
-    "marked-plaintify": "1.0.1",
-    "ultrahtml": "1.5.3"
+    "@astrojs/mdx": "^4.0.2",
+    "@astrojs/rss": "^4.0.10",
+    "astro-remote": "^0.3.3",
+    "github-slugger": "^2.0.0",
+    "marked": "^15.0.4",
+    "marked-plaintify": "^1.1.1",
+    "ultrahtml": "^1.5.3"
   },
   "devDependencies": {
-    "@astrojs/starlight": "0.28.3",
-    "@playwright/test": "1.36.1",
-    "astro": "4.16.4",
-    "vitest": "1.3.1"
+    "@playwright/test": "^1.49.1",
+    "vitest": "2.1.6"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.28.3"
+    "@astrojs/starlight": ">=0.30.0"
   },
   "engines": {
-    "node": ">=18.14.1"
+    "node": ">=18.17.1"
   },
   "packageManager": "pnpm@8.6.9",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "sideEffects": false,
   "keywords": [
@@ -59,7 +59,8 @@
   "homepage": "https://github.com/HiDeoo/starlight-blog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/HiDeoo/starlight-blog.git"
+    "url": "https://github.com/HiDeoo/starlight-blog.git",
+    "directory": "packages/starlight-blog"
   },
   "bugs": "https://github.com/HiDeoo/starlight-blog/issues"
 }

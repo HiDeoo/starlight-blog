@@ -1,23 +1,19 @@
-name: Release
+name: release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - main
 
 jobs:
-  integration:
-    name: Integration
-    uses: ./.github/workflows/integration.yml
-
-  publish:
-    name: Publish
-    needs:
-      - integration
+  changeset:
+    name: Changeset
+    if: ${{ github.repository_owner == 'hideoo' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,19 +30,17 @@ jobs:
         with:
           cache: pnpm
           node-version: 18
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Publish
-        run: pnpm publish --no-git-checks
-        working-directory: packages/starlight-blog
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
-
-      - name: Generate changelog
-        uses: hideoo/changelogithub-action@v1
+      - name: Create Release Pull Request or Publish
+        uses: changesets/action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          version: pnpm run version
+          publish: pnpm changeset publish
+          commit: 'ci: release'
+          title: 'ci: release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

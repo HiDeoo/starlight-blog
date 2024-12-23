@@ -1,4 +1,5 @@
 .astro
+.changeset
 .github/blocks
 .next
 .vercel
@@ -10,3 +11,4 @@ dist
 dist-ssr
 out
 pnpm-lock.yaml
+test-results

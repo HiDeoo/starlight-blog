@@ -99,7 +99,9 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                   plugins: [
                     vitePluginStarlightBlogConfig(config, {
                       description: starlightConfig.description,
+                      rootDir: astroConfig.root.pathname,
                       site: astroConfig.site,
+                      srcDir: astroConfig.srcDir.pathname,
                       title: starlightConfig.title,
                       titleDelimiter: starlightConfig.titleDelimiter,
                       trailingSlash: astroConfig.trailingSlash,
