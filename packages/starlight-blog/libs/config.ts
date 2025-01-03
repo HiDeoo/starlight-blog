@@ -47,6 +47,11 @@ const configSchema = z
      * When using the object form, the keys must be BCP-47 tags (e.g. `en`, `ar`, or `zh-CN`).
      */
     title: z.union([z.string(), z.record(z.string())]).default('Blog'),
+
+    /**
+     * Show the Blog link in the theme selector (top nav-bar).
+     */
+    enableLinkInThemeSelector: z.boolean().default(true)
   })
   .default({})
 
