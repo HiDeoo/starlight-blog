@@ -4,13 +4,14 @@ import type { Props } from '@astrojs/starlight/props'
 
 import { getRelativeBlogUrl } from '../libs/page'
 import { getBlogTitle } from '../libs/title'
+import { showBlogLinkInThemeSelect } from '../libs/theme_select'
 
 const { locale } = Astro.props
 ---
 
-<div>
+{showBlogLinkInThemeSelect() && <div>
   <a href={getRelativeBlogUrl('/', locale)}>{getBlogTitle(locale)}</a>
-</div>
+</div>}
 <StarlightThemeSelect {...Astro.props}>
   <slot />
 </StarlightThemeSelect>
