@@ -37,7 +37,7 @@ export default defineConfig({
         },
         {
           label: 'Guides',
-          items: ['guides/frontmatter', 'guides/authors', 'guides/i18n', 'guides/rss'],
+          items: ['guides/frontmatter', 'guides/authors', 'guides/i18n', 'guides/rss', 'guides/route-data'],
         },
         {
           label: 'Resources',

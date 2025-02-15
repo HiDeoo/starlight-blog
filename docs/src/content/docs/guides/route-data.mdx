@@ -1,0 +1,151 @@
+---
+title: Route Data
+description: Learn how to use Starlight Blog’s route data to access information about your blog posts.
+tableOfContents:
+  maxHeadingLevel: 4
+---
+
+Starlight Blog relies on Starlight’s built-in [route data](https://starlight.astro.build/guides/route-data/) to provide information about the blog posts in your project.
+This guide explains how to use Starlight Blog’s route data.
+
+See the [“Route Data” guide](https://starlight.astro.build/reference/route-data/) in the Starlight documentation for more information.
+
+## What is route data?
+
+Starlight Blog route data is an object containing the information about all the blog posts in your project.
+It includes information like a list of all the blog posts, the title of each post, the date it was published, and the author.
+Contrary to Starlight route data, the Starlight Blog route data is not customizable.
+
+## Using route data
+
+The `posts` object contains an array of all the blog posts in your project.
+
+You can access this data from the `Astro.locals.starlightBlog` global in Astro components:
+
+```astro title="example.astro"
+---
+const { posts } = Astro.locals.starlightBlog
+//        ^ The list of all blog posts
+---
+```
+
+This can be useful for example to create a widget that lists recent blog posts on your homepage:
+
+import { Preview } from '@hideoo/starlight-plugins-docs-components'
+import RouteDataExample from '../../../components/RouteDataExample.astro'
+
+<Preview>
+
+```astro title="RecentBlogPosts.astro" "Astro.locals.starlightBlog.posts"
+<ul>
+  {
+    Astro.locals.starlightBlog.posts.slice(0, 5).map((post) => (
+      <li>
+        <a href={post.href}>{post.title}</a>
+      </li>
+    ))
+  }
+</ul>
+```
+
+<Fragment slot="preview">
+
+<RouteDataExample />
+
+</Fragment>
+
+</Preview>
+
+## `starlightBlog`
+
+The `starlightRoute` object has the following properties:
+
+### `posts`
+
+An list of all the blog posts in your project ordered by descending [publication date](/guides/frontmatter#date-required/).
+
+Each post has the following properties:
+
+#### `title`
+
+**Type:** `string`
+
+The [title](/guides/frontmatter#title-required/) of the blog post.
+
+#### `href`
+
+**Type:** `string`
+
+The link to the blog post.
+
+#### `createdAt`
+
+**Type:** `Date`
+
+The [date](/guides/frontmatter#date-required/) of the blog post.
+
+#### `updatedAt`
+
+**Type:** `Date | undefined`
+
+The last update date of the blog post.
+It is only defined if the [`lastUpdated`](/guides/frontmatter#lastupdated/) frontmatter field is specified and different from the [`date`](/guides/frontmatter#date-required/) frontmatter field.
+
+#### `draft`
+
+**Type:** `boolean`
+
+Whether the blog post is a [draft](/guides/frontmatter/#draft).
+Draft blog posts are only visible in development mode.
+
+#### `featured`
+
+**Type:** `boolean`
+
+Whether the blog post is [featured](/guides/frontmatter/#featured).
+
+#### `authors`
+
+**Type:** `{ name: string; title?: string; url?: string; }[]`
+
+The list of authors of the blog post.
+
+Each author has the following properties:
+
+##### `name`
+
+**Type:** `string`
+
+The [name](/configuration/#name-required) of the author.
+
+##### `title`
+
+**Type:** `string | undefined`
+
+The optional [title](/configuration/#title-1) of the author.
+
+##### `url`
+
+**Type:** `string | undefined`
+
+The optional [URL](/configuration/#url) to link the author to.
+
+#### `tags`
+
+**Type:** `{ label: string; href: string; }[]`
+
+The list of tags of the blog post.
+
+Each tag has the following properties:
+
+##### `label`
+
+**Type:** `string`
+
+The label of the tag.
+
+##### `href`
+
+**Type:** `string`
+
+The link to the tag page.

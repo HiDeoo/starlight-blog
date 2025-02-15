@@ -50,20 +50,16 @@ export function getPathWithLocale(path: string, locale: Locale): string {
   return path ? `${stripTrailingSlash(locale)}/${stripLeadingSlash(path)}` : locale
 }
 
+export function isAnyBlogPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}(/?$|/.+/?$)`).exec(slug) !== null
+}
+
 export function isAnyBlogPostPage(slug: string) {
   return (
     new RegExp(
       `^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/(?!(\\d+/?|tags/.+|authors/.+)$).+$`,
     ).exec(slug) !== null
   )
-}
-
-export function isAnyBlogTagPage(slug: string) {
-  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/tags/.+$`).exec(slug) !== null
-}
-
-export function isAnyBlogAuthorPage(slug: string) {
-  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/authors/.+$`).exec(slug) !== null
 }
 
 export function isBlogRoot(slug: string) {

@@ -12,6 +12,7 @@
     "./middleware": "./middleware.ts",
     "./overrides/MarkdownContent.astro": "./overrides/MarkdownContent.astro",
     "./overrides/ThemeSelect.astro": "./overrides/ThemeSelect.astro",
+    "./route-data": "./route-data.ts",
     "./routes/Authors.astro": "./routes/Authors.astro",
     "./routes/Blog.astro": "./routes/Blog.astro",
     "./routes/Tags.astro": "./routes/Tags.astro",

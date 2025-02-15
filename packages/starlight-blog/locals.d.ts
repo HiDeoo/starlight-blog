@@ -1,8 +1,12 @@
 declare namespace App {
   type StarlightLocals = import('@astrojs/starlight').StarlightLocals
   interface Locals extends StarlightLocals {
-    // TODO(HiDeoo) comment
-    starlightBlog: import('./middleware').StarlightBlogRouteData
+    /**
+     * Starlight Blog route data.
+     *
+     * @see https://starlight-blog-docs.vercel.app/guides/route-data/
+     */
+    starlightBlog: import('./route-data').StarlightBlogRouteData
   }
 }
 
