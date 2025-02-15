@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.17.1
+
+### Patch Changes
+
+- [#113](https://github.com/HiDeoo/starlight-blog/pull/113) [`b6f7122`](https://github.com/HiDeoo/starlight-blog/commit/b6f7122206a11eb737a614cf2a6daf119531e6db) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes an issue where aside icons were not removed from RSS content.
+
 ## 0.17.0
 
 ### Minor Changes
