@@ -1,0 +1,14 @@
+li:has(.sl-blog-mobile-link) {
+  border-bottom: 1px solid var(--sl-color-gray-6);
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 50rem) {
+  li:has(.sl-blog-mobile-link) {
+    display: none;
+  }
+
+  .top-level > li:has(.sl-blog-mobile-link) + li {
+    margin-top: 0;
+  }
+}

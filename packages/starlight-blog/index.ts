@@ -1,3 +1,5 @@
+/// <reference path="./locals.d.ts" />
+
 import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroIntegrationLogger } from 'astro'
 
@@ -14,15 +16,18 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
   return {
     name: 'starlight-blog-plugin',
     hooks: {
-      setup({
+      'i18n:setup'({ injectTranslations }) {
+        injectTranslations(Translations)
+      },
+      'config:setup'({
         addIntegration,
+        addRouteMiddleware,
         astroConfig,
         config: starlightConfig,
-        injectTranslations,
         logger,
         updateConfig: updateStarlightConfig,
       }) {
-        injectTranslations(Translations)
+        addRouteMiddleware({ entrypoint: 'starlight-blog/middleware' })
 
         const rssLink = astroConfig.site
           ? `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
@@ -34,9 +39,9 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
           components: {
             ...starlightConfig.components,
             ...overrideStarlightComponent(starlightConfig.components, logger, 'MarkdownContent'),
-            ...overrideStarlightComponent(starlightConfig.components, logger, 'Sidebar'),
             ...overrideStarlightComponent(starlightConfig.components, logger, 'ThemeSelect'),
           },
+          customCss: [...(starlightConfig.customCss ?? []), 'starlight-blog/styles'],
           head: [
             ...(starlightConfig.head ?? []),
             ...(astroConfig.site
@@ -124,7 +129,7 @@ function overrideStarlightComponent(
   if (components?.[component]) {
     logger.warn(`It looks like you already have a \`${component}\` component override in your Starlight configuration.`)
     logger.warn(
-      `To use \`starlight-blog\`, either remove your override or update it to render the content from \`starlight-blog/overrides/${component}.astro\`.`,
+      `To use \`starlight-blog\`, either remove your override or update it to render the content from \`starlight-blog/components/${component}.astro\`.`,
     )
 
     return {}

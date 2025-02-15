@@ -4,7 +4,9 @@ import { describe, expect, test, vi } from 'vitest'
 import { getRSSOptions } from '../../../libs/rss'
 
 vi.mock('astro/container', () => ({
-  experimental_AstroContainer: { create: () => ({ renderToString: () => Promise.resolve('') }) },
+  experimental_AstroContainer: {
+    create: () => ({ addServerRenderer: () => undefined, renderToString: () => Promise.resolve('') }),
+  },
 }))
 
 vi.mock('astro:content', async () => {

@@ -7,14 +7,18 @@
   "type": "module",
   "exports": {
     ".": "./index.ts",
+    "./components/MarkdownContent.astro": "./components/starlight/MarkdownContent.astro",
+    "./components/ThemeSelect.astro": "./components/starlight/ThemeSelect.astro",
+    "./middleware": "./middleware.ts",
     "./overrides/MarkdownContent.astro": "./overrides/MarkdownContent.astro",
-    "./overrides/Sidebar.astro": "./overrides/Sidebar.astro",
     "./overrides/ThemeSelect.astro": "./overrides/ThemeSelect.astro",
+    "./route-data": "./route-data.ts",
     "./routes/Authors.astro": "./routes/Authors.astro",
     "./routes/Blog.astro": "./routes/Blog.astro",
     "./routes/Tags.astro": "./routes/Tags.astro",
     "./routes/rss": "./routes/rss.xml.ts",
     "./schema": "./schema.ts",
+    "./styles": "./styles.css",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -24,8 +28,8 @@
     "lint": "eslint . --cache --max-warnings=0"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.2",
-    "@astrojs/rss": "^4.0.10",
+    "@astrojs/mdx": "^4.0.8",
+    "@astrojs/rss": "^4.0.11",
     "astro-remote": "^0.3.3",
     "github-slugger": "^2.0.0",
     "marked": "^15.0.4",
@@ -37,7 +41,7 @@
     "vitest": "2.1.6"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.30.0"
+    "@astrojs/starlight": ">=0.32.0"
   },
   "engines": {
     "node": ">=18.17.1"

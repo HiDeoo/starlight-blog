@@ -1,0 +1,9 @@
+<ul>
+  {
+    Astro.locals.starlightBlog.posts.slice(0, 5).map((post) => (
+      <li>
+        <a href={post.href}>{post.title}</a>
+      </li>
+    ))
+  }
+</ul>

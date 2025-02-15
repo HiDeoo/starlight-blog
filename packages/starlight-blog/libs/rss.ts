@@ -1,8 +1,7 @@
-// import { getContainerRenderer as getMDXRenderer } from '@astrojs/mdx'
+import mdxRenderer from '@astrojs/mdx/server.js'
 import type { RSSOptions } from '@astrojs/rss'
 import type { GetStaticPathsResult } from 'astro'
-import type { experimental_AstroContainer as AstroContainer } from 'astro/container'
-// import { loadRenderers } from 'astro:container'
+import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { render } from 'astro:content'
 import { DOCTYPE_NODE, ELEMENT_NODE, TEXT_NODE, transform, walk, type Node } from 'ultrahtml'
 import sanitize from 'ultrahtml/transformers/sanitize'
@@ -32,16 +31,15 @@ export function getRSSStaticPaths() {
   return paths satisfies GetStaticPathsResult
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getRSSOptions(site: URL | undefined, locale: Locale, _t: App.Locals['t']) {
+export async function getRSSOptions(site: URL | undefined, locale: Locale, t: App.Locals['t']) {
   const entries = await getBlogEntries(locale)
   entries.splice(20)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
   const feedSite = site!
 
-  // const renderers = await loadRenderers([getMDXRenderer()])
-  // const container = await AstroContainer.create({ renderers })
+  const container = await AstroContainer.create()
+  container.addServerRenderer({ name: 'mdx', renderer: mdxRenderer })
 
   const options: RSSOptions = {
     title: getRSSTitle(locale),
@@ -57,7 +55,7 @@ export async function getRSSOptions(site: URL | undefined, locale: Locale, _t: A
           pubDate: entry.data.date,
           categories: entry.data.tags,
           description: await getRSSDescription(entry),
-          // content: await getRSSContent(entry, feedSite, container, t),
+          content: await getRSSContent(entry, feedSite, container, t),
         }
       }),
     ),
@@ -109,8 +107,6 @@ function getRSSDescription(entry: StarlightBlogEntry): Promise<string> | undefin
   return stripMarkdown(entry.data.excerpt)
 }
 
-// @ts-expect-error - Currently not used due to an Astro bug.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getRSSContent(
   entry: StarlightBlogEntry,
   baseURL: URL,
@@ -118,6 +114,7 @@ async function getRSSContent(
   t: App.Locals['t'],
 ): Promise<string> {
   const { Content } = await render(entry)
+  // @ts-expect-error - Skip Starlight Blog route data.
   const html = await container.renderToString(Content, { locals: { t } })
 
   const content = await transform(html, [
