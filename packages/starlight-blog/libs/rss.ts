@@ -135,7 +135,7 @@ async function getRSSContent(
             node.attributes['src'] = stripTrailingSlash(baseURL.href) + node.attributes['src']
           }
           // Remove aside icons.
-          if (node.name === 'svg' && node.attributes['style']?.includes('--sl-icon-size')) {
+          if (node.name === 'svg' && node.attributes['class']?.includes('starlight-aside__icon')) {
             removeHTMLNode(node)
           }
           // Remove Expressive Code copy button.
