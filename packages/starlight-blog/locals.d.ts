@@ -1,6 +1,9 @@
 declare namespace App {
   type StarlightLocals = import('@astrojs/starlight').StarlightLocals
-  interface Locals extends StarlightLocals {}
+  interface Locals extends StarlightLocals {
+    // TODO(HiDeoo) comment
+    starlightBlog: import('./middleware').StarlightBlogRouteData
+  }
 }
 
 declare namespace StarlightApp {

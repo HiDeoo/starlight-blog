@@ -1,49 +1,8 @@
 ---
-import StarlightMarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro'
-import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/MarkdownContent.astro'
 
-import Cover from '../components/Cover.astro'
-import Metadata from '../components/Metadata.astro'
-import PostTags from '../components/PostTags.astro'
-import PrevNextLinks from '../components/PrevNextLinks.astro'
-import { getBlogEntry, type StarlightBlogEntryPaginated } from '../libs/content'
-import { isAnyBlogPostPage } from '../libs/page'
-
-const { id, locale } = Astro.props
-
-const isBlogPost = isAnyBlogPostPage(id)
-let blogEntry: StarlightBlogEntryPaginated | undefined = undefined
-
-if (isBlogPost) {
-  blogEntry = await getBlogEntry(id, locale)
-}
+import StarlightBlogMarkdownContent from '../components/starlight/MarkdownContent.astro'
 ---
 
-<StarlightMarkdownContent {...Astro.props}>
-  {
-    isBlogPost && blogEntry ? (
-      <>
-        {blogEntry.entry.data.cover && <Cover cover={blogEntry.entry.data.cover} />}
-        <Metadata entry={blogEntry.entry} {locale} showBadges={false} />
-      </>
-    ) : null
-  }
-  <slot />
-  {
-    isBlogPost && blogEntry ? (
-      <div class="post-footer">
-        <PostTags entry={blogEntry.entry} {locale} />
-        <PrevNextLinks next={blogEntry.nextLink} prev={blogEntry.prevLink} />
-      </div>
-    ) : null
-  }
-</StarlightMarkdownContent>
-
-<style>
-  .post-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-block-start: 2rem !important;
-  }
-</style>
+<StarlightBlogMarkdownContent><slot /></StarlightBlogMarkdownContent>
+<Default><slot /></Default>

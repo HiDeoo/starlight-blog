@@ -1,4 +1,5 @@
-import type { Props, StarlightPageProps } from '@astrojs/starlight/props'
+import type { StarlightPageProps } from '@astrojs/starlight/props'
+import type { StarlightRouteData } from '@astrojs/starlight/route-data'
 import type { AstroConfig } from 'astro'
 import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
@@ -49,14 +50,6 @@ export function getPathWithLocale(path: string, locale: Locale): string {
   return path ? `${stripTrailingSlash(locale)}/${stripLeadingSlash(path)}` : locale
 }
 
-export function isAnyBlogPage(slug: string) {
-  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}(/?$|/.+/?$)`).exec(slug) !== null
-}
-
-export function isBlogRoot(slug: string) {
-  return slug === getPathWithLocale(config.prefix, getLocaleFromPath(slug))
-}
-
 export function isAnyBlogPostPage(slug: string) {
   return (
     new RegExp(
@@ -65,15 +58,27 @@ export function isAnyBlogPostPage(slug: string) {
   )
 }
 
+export function isAnyBlogTagPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/tags/.+$`).exec(slug) !== null
+}
+
+export function isAnyBlogAuthorPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/authors/.+$`).exec(slug) !== null
+}
+
+export function isBlogRoot(slug: string) {
+  return slug === getPathWithLocale(config.prefix, getLocaleFromPath(slug))
+}
+
 export function isBlogPostPage(slug: string, postSlug: string) {
   return slug === postSlug
 }
 
-export function isBlogTagsPage(slug: string, tag: string) {
+export function isBlogTagPage(slug: string, tag: string) {
   return slug === `${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/tags/${tag}`
 }
 
-export function isBlogAuthorsPage(slug: string, author: string) {
+export function isBlogAuthorPage(slug: string, author: string) {
   return slug === `${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/authors/${author}`
 }
 
@@ -88,7 +93,11 @@ export function getPageProps(title: string): StarlightPageProps {
   }
 }
 
-export function getSidebarProps(slug: string, entries: StarlightBlogEntry[], locale: Locale): Props['sidebar'] {
+export function getSidebarProps(
+  slug: string,
+  entries: StarlightBlogEntry[],
+  locale: Locale,
+): StarlightRouteData['sidebar'] {
   return entries.map((entry) => {
     const localizedEntrySlug = getPathWithLocale(entry.id, locale)
     return {

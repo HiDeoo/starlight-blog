@@ -1,0 +1,30 @@
+---
+import { getRelativeBlogUrl } from '../../libs/page'
+import { getBlogTitle } from '../../libs/title'
+
+const { locale } = Astro.locals.starlightRoute
+---
+
+<div>
+  <a href={getRelativeBlogUrl('/', locale)}>{getBlogTitle(locale)}</a>
+</div>
+
+<style>
+  div {
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+    display: none;
+    padding-inline-end: 1rem;
+  }
+
+  @media (min-width: 50rem) {
+    div {
+      display: flex;
+    }
+  }
+
+  a {
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

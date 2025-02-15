@@ -1,0 +1,36 @@
+---
+import Default from '@astrojs/starlight/components/MarkdownContent.astro'
+
+import { getBlogEntry } from '../../libs/content'
+import Cover from '../Cover.astro'
+import Metadata from '../Metadata.astro'
+import PostTags from '../PostTags.astro'
+import PrevNextLinks from '../PrevNextLinks.astro'
+
+const { id, locale } = Astro.locals.starlightRoute
+
+if (Astro.locals.starlightBlog.page?.type !== 'post') {
+  return null
+}
+
+const { entry, nextLink, prevLink } = await getBlogEntry(id, locale)
+---
+
+<Default>
+  {entry.data.cover && <Cover cover={entry.data.cover} />}
+  <Metadata entry={entry} {locale} showBadges={false} />
+  <slot />
+  <div class="post-footer">
+    <PostTags entry={entry} {locale} />
+    <PrevNextLinks next={nextLink} prev={prevLink} />
+  </div>
+</Default>
+
+<style>
+  .post-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-block-start: 2rem !important;
+  }
+</style>

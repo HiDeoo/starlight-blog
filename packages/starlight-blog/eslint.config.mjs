@@ -15,4 +15,10 @@ export default hideoo(
       '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
+  {
+    files: ['index.ts'],
+    rules: {
+      '@typescript-eslint/triple-slash-reference': 'off',
+    },
+  },
 )
