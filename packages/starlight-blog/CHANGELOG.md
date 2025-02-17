@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.17.2
+
+### Patch Changes
+
+- [#115](https://github.com/HiDeoo/starlight-blog/pull/115) [`90da130`](https://github.com/HiDeoo/starlight-blog/commit/90da130940fc3b918f66a7cb0c4a6b1d1ef2a033) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Improves build performance for large sites by adding a caching layer to blog entries and data.
+
 ## 0.17.1
 
 ### Patch Changes
