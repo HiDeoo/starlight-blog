@@ -1,7 +1,7 @@
 import type { StarlightRouteData } from '@astrojs/starlight/route-data'
 import { assert, describe, expect, test, vi } from 'vitest'
 
-import { getRouteData } from '../../../middleware'
+import { getBlogData } from '../../../middleware'
 
 vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
@@ -22,13 +22,13 @@ vi.mock('astro:content', async () => {
 
 describe('posts', () => {
   test('includes all blog posts', async () => {
-    const { posts } = await getTestRouteData()
+    const { posts } = await getTestBlogData()
 
     expect(posts).toHaveLength(7)
   })
 
   test('sorts blog posts by date', async () => {
-    const { posts } = await getTestRouteData()
+    const { posts } = await getTestBlogData()
 
     expect(posts.map((post) => post.title)).toEqual([
       'Post 7',
@@ -42,7 +42,7 @@ describe('posts', () => {
   })
 
   test('includes post data in the expected format', async () => {
-    const { posts } = await getTestRouteData()
+    const { posts } = await getTestBlogData()
 
     const post = posts[0]
     assert(post)
@@ -65,6 +65,6 @@ describe('posts', () => {
   })
 })
 
-function getTestRouteData() {
-  return getRouteData({ locale: 'en' } as StarlightRouteData)
+function getTestBlogData() {
+  return getBlogData({ locale: 'en' } as StarlightRouteData)
 }

@@ -20,9 +20,9 @@
 
 - [#111](https://github.com/HiDeoo/starlight-blog/pull/111) [`144e6b2`](https://github.com/HiDeoo/starlight-blog/commit/144e6b2cad8ff011806f9b8d5bb7f609f7e8fc13) Thanks [@HiDeoo](https://github.com/HiDeoo)! - ⚠️ **BREAKING CHANGE:** The Starlight Blog plugin no longer [overrides](https://starlight.astro.build/guides/overriding-components/) the [`<Sidebar>` component](https://starlight.astro.build/reference/overrides/#sidebar). If you were manually rendering `starlight-blog/overrides/Sidebar.astro` in a custom override, you can now remove it.
 
-- [#111](https://github.com/HiDeoo/starlight-blog/pull/111) [`144e6b2`](https://github.com/HiDeoo/starlight-blog/commit/144e6b2cad8ff011806f9b8d5bb7f609f7e8fc13) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds a route data object accessible on Starlight pages using `Astro.locals.starlightBlog` containing information about all the blog posts in your project. This can be useful for example to create a widget that lists recent blog posts on your homepage.
+- [#111](https://github.com/HiDeoo/starlight-blog/pull/111) [`144e6b2`](https://github.com/HiDeoo/starlight-blog/commit/144e6b2cad8ff011806f9b8d5bb7f609f7e8fc13) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds a blog data object accessible on Starlight pages using `Astro.locals.starlightBlog` containing information about all the blog posts in your project. This can be useful for example to create a widget that lists recent blog posts on your homepage.
 
-  See the [“Route Data” guide](https://starlight-blog-docs.vercel.app/guides/route-data/) for more information.
+  See the [Blog Data” guide](https://starlight-blog-docs.vercel.app/guides/blog-data/) for more information.
 
 - [#111](https://github.com/HiDeoo/starlight-blog/pull/111) [`144e6b2`](https://github.com/HiDeoo/starlight-blog/commit/144e6b2cad8ff011806f9b8d5bb7f609f7e8fc13) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes a regression introduced in version `0.16.0` of the plugin where the generated RSS feed no longer included content of blog posts due to a bug in Astro.
 

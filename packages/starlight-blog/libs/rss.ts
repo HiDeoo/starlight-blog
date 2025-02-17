@@ -114,7 +114,7 @@ async function getRSSContent(
   t: App.Locals['t'],
 ): Promise<string> {
   const { Content } = await render(entry)
-  // @ts-expect-error - Skip Starlight Blog route data.
+  // @ts-expect-error - Skip Starlight Blog data.
   const html = await container.renderToString(Content, { locals: { t } })
 
   const content = await transform(html, [

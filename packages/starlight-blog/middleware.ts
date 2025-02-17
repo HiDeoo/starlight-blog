@@ -2,6 +2,7 @@ import { defineRouteMiddleware, type StarlightRouteData } from '@astrojs/starlig
 import type { APIContext, AstroBuiltinAttributes } from 'astro'
 import type { HTMLAttributes } from 'astro/types'
 
+import type { StarlightBlogData } from './data'
 import { getAllAuthors } from './libs/authors'
 import { getBlogEntries, getBlogEntryMetadata, getSidebarBlogEntries } from './libs/content'
 import type { Locale } from './libs/i18n'
@@ -17,13 +18,14 @@ import {
 } from './libs/page'
 import { getAllTags, getEntryTags } from './libs/tags'
 import { getBlogTitle } from './libs/title'
-import type { StarlightBlogRouteData } from './route-data'
+
+const blogDataPerLocale = new Map<Locale, StarlightBlogData>()
 
 export const onRequest = defineRouteMiddleware(async (context) => {
   const { starlightRoute } = context.locals
   const { id, locale } = starlightRoute
 
-  context.locals.starlightBlog = await getRouteData(starlightRoute)
+  context.locals.starlightBlog = await getBlogData(starlightRoute)
 
   const isBlog = isAnyBlogPage(id)
 
@@ -37,20 +39,28 @@ export const onRequest = defineRouteMiddleware(async (context) => {
   starlightRoute.sidebar = await getBlogSidebar(context)
 })
 
-export async function getRouteData({ locale }: StarlightRouteData): Promise<StarlightBlogRouteData> {
-  return {
-    posts: await getPostsRouteData(locale),
+export async function getBlogData({ locale }: StarlightRouteData): Promise<StarlightBlogData> {
+  if (blogDataPerLocale.has(locale)) {
+    return blogDataPerLocale.get(locale) as StarlightBlogData
   }
+
+  const blogData: StarlightBlogData = {
+    posts: await getBlogPostsData(locale),
+  }
+
+  blogDataPerLocale.set(locale, blogData)
+
+  return blogData
 }
 
-async function getPostsRouteData(locale: Locale): Promise<StarlightBlogRouteData['posts']> {
+async function getBlogPostsData(locale: Locale): Promise<StarlightBlogData['posts']> {
   const entries = await getBlogEntries(locale)
 
   return entries.map((entry) => {
     const { authors } = getBlogEntryMetadata(entry, locale)
     const tags = getEntryTags(entry)
 
-    const postRouteData: StarlightBlogRouteData['posts'][number] = {
+    const postsData: StarlightBlogData['posts'][number] = {
       authors: authors.map(({ name, title, url }) => ({
         name,
         title,
@@ -68,10 +78,10 @@ async function getPostsRouteData(locale: Locale): Promise<StarlightBlogRouteData
     }
 
     if (entry.data.lastUpdated && typeof entry.data.lastUpdated !== 'boolean') {
-      postRouteData.updatedAt = entry.data.lastUpdated
+      postsData.updatedAt = entry.data.lastUpdated
     }
 
-    return postRouteData
+    return postsData
   })
 }
 
