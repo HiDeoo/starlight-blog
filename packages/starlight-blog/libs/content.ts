@@ -11,6 +11,8 @@ import { DefaultLocale, getLangFromLocale, type Locale } from './i18n'
 import { getRelativeUrl, getRelativeBlogUrl, getPathWithLocale } from './page'
 import { stripLeadingSlash, stripTrailingSlash } from './path'
 
+const blogEntriesPerLocale = new Map<Locale, StarlightBlogEntry[]>()
+
 export async function getBlogStaticPaths() {
   const paths = []
 
@@ -100,7 +102,11 @@ export function getBlogEntryMetadata(entry: StarlightBlogEntry, locale: Locale):
   }
 }
 
-export async function getBlogEntries(locale: Locale) {
+export async function getBlogEntries(locale: Locale): Promise<StarlightBlogEntry[]> {
+  if (blogEntriesPerLocale.has(locale)) {
+    return blogEntriesPerLocale.get(locale) as StarlightBlogEntry[]
+  }
+
   const docEntries = await getCollection('docs')
   const blogEntries: StarlightEntry[] = []
 
@@ -142,9 +148,13 @@ export async function getBlogEntries(locale: Locale) {
 
   validateBlogEntries(blogEntries)
 
-  return blogEntries.sort((a, b) => {
+  blogEntries.sort((a, b) => {
     return b.data.date.getTime() - a.data.date.getTime()
   })
+
+  blogEntriesPerLocale.set(locale, blogEntries)
+
+  return blogEntries
 }
 
 export async function getBlogEntryExcerpt(entry: StarlightBlogEntry) {

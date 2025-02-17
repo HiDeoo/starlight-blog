@@ -1,4 +1,4 @@
-export interface StarlightBlogRouteData {
+export interface StarlightBlogData {
   /**
    * An list of all the blog posts in your project ordered by descending publication date.
    */

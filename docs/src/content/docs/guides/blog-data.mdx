@@ -1,22 +1,19 @@
 ---
-title: Route Data
-description: Learn how to use Starlight Blog’s route data to access information about your blog posts.
+title: Blog Data
+description: Learn how to use Starlight Blog’s data to access information about your blog posts.
 tableOfContents:
   maxHeadingLevel: 4
 ---
 
-Starlight Blog relies on Starlight’s built-in [route data](https://starlight.astro.build/guides/route-data/) to provide information about the blog posts in your project.
-This guide explains how to use Starlight Blog’s route data.
+Starlight Blog exposes information about the blog posts in your project.
+This guide explains how to use Starlight Blog’s data.
 
-See the [“Route Data” guide](https://starlight.astro.build/reference/route-data/) in the Starlight documentation for more information.
+## What is blog data?
 
-## What is route data?
-
-Starlight Blog route data is an object containing the information about all the blog posts in your project.
+Starlight Blog data is an object containing the information about all the blog posts in your project.
 It includes information like a list of all the blog posts, the title of each post, the date it was published, and the author.
-Contrary to Starlight route data, the Starlight Blog route data is not customizable.
 
-## Using route data
+## Using blog data
 
 The `posts` object contains an array of all the blog posts in your project.
 
@@ -32,7 +29,7 @@ const { posts } = Astro.locals.starlightBlog
 This can be useful for example to create a widget that lists recent blog posts on your homepage:
 
 import { Preview } from '@hideoo/starlight-plugins-docs-components'
-import RouteDataExample from '../../../components/RouteDataExample.astro'
+import BlogDataExample from '../../../components/BlogDataExample.astro'
 
 <Preview>
 
@@ -50,7 +47,7 @@ import RouteDataExample from '../../../components/RouteDataExample.astro'
 
 <Fragment slot="preview">
 
-<RouteDataExample />
+<BlogDataExample />
 
 </Fragment>
 
@@ -58,7 +55,7 @@ import RouteDataExample from '../../../components/RouteDataExample.astro'
 
 ## `starlightBlog`
 
-The `starlightRoute` object has the following properties:
+The `starlightBlog` object has the following properties:
 
 ### `posts`
 
