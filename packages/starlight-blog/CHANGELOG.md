@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.17.3
+
+### Patch Changes
+
+- [#120](https://github.com/HiDeoo/starlight-blog/pull/120) [`24172db`](https://github.com/HiDeoo/starlight-blog/commit/24172dbe1b36442f982b86a5d3588749eb906658) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes a potential build issue for blogs with more than 20 posts also generating an RSS feed.
+
 ## 0.17.2
 
 ### Patch Changes
