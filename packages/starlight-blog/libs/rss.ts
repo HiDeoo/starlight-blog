@@ -32,8 +32,8 @@ export function getRSSStaticPaths() {
 }
 
 export async function getRSSOptions(site: URL | undefined, locale: Locale, t: App.Locals['t']) {
-  const entries = await getBlogEntries(locale)
-  entries.splice(20)
+  let entries = await getBlogEntries(locale)
+  entries = entries.slice(0, 20)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
   const feedSite = site!
