@@ -6,7 +6,7 @@ test('should add a blog link to the header of all pages with the configured titl
   const link = blogPage.page.getByRole('link', { exact: true, name: 'Demo Blog' })
 
   await expect(link).toBeVisible()
-  await expect(link).toHaveAttribute('href', '/blog')
+  await expect(link).toHaveAttribute('href', '/blog/')
 })
 
 test('should use the configured title for the page', async ({ blogPage }) => {
@@ -70,7 +70,7 @@ test('should add a link to all posts in the sidebar', async ({ blogPage }) => {
   const link = blogPage.sidebar.getByRole('link', { name: 'All posts' })
 
   await expect(link).toBeVisible()
-  await expect(link).toHaveAttribute('href', '/blog')
+  await expect(link).toHaveAttribute('href', '/blog/')
 })
 
 test('should add links to recent posts in the sidebar', async ({ blogPage }) => {
@@ -300,7 +300,7 @@ test.describe('i18n', () => {
 
     await expect(blogPage.page.getByRole('link', { exact: true, name: 'Blog Démo' })).toHaveAttribute(
       'href',
-      '/fr/blog',
+      '/fr/blog/',
     )
   })
 
@@ -333,7 +333,7 @@ test.describe('i18n', () => {
   test('should add a localized link to all posts in the sidebar', async ({ blogPage }) => {
     await blogPage.goto(undefined, 'fr')
 
-    await expect(blogPage.sidebar.getByRole('link', { name: 'Tous les articles' })).toHaveAttribute('href', '/fr/blog')
+    await expect(blogPage.sidebar.getByRole('link', { name: 'Tous les articles' })).toHaveAttribute('href', '/fr/blog/')
   })
 
   test('should add localized links to recent posts in the sidebar', async ({ blogPage }) => {
@@ -394,7 +394,7 @@ test.describe('i18n', () => {
     const frPostLink = titles.getByRole('link', { name: 'Achivi amans (fr)' })
 
     await expect(frPostLink).toBeVisible()
-    await expect(frPostLink).toHaveAttribute('href', '/fr/blog/achivi-amans')
+    await expect(frPostLink).toHaveAttribute('href', '/fr/blog/achivi-amans/')
 
     await expect(articles.getByText('12 déc. 2020')).toBeVisible()
     await expect(articles.getByText('30 déc. 2021')).toBeVisible()
@@ -403,7 +403,7 @@ test.describe('i18n', () => {
 
     const frTag = articles.getByRole('link', { name: 'Ébauche' })
     await expect(frTag).toBeVisible()
-    await expect(frTag).toHaveAttribute('href', '/fr/blog/tags/ébauche')
+    await expect(frTag).toHaveAttribute('href', '/fr/blog/tags/ébauche/')
 
     const links = await titles.getByRole('link').all()
     const hrefs = await Promise.all(links.map((link) => link.getAttribute('href')))

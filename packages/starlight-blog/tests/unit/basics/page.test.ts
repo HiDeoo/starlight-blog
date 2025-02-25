@@ -4,13 +4,13 @@ import { getRelativeBlogUrl, getRelativeUrl } from '../../../libs/page'
 
 describe('getRelativeBlogUrl', () => {
   test('returns the blog root path', () => {
-    expect(getRelativeBlogUrl('/', undefined)).toBe('/blog')
-    expect(getRelativeBlogUrl('/', 'fr')).toBe('/fr/blog')
+    expect(getRelativeBlogUrl('/', undefined)).toBe('/blog/')
+    expect(getRelativeBlogUrl('/', 'fr')).toBe('/fr/blog/')
   })
 
   test('returns a blog post path', () => {
-    expect(getRelativeBlogUrl('/post-1', undefined)).toBe('/blog/post-1')
-    expect(getRelativeBlogUrl('/post-1', 'fr')).toBe('/fr/blog/post-1')
+    expect(getRelativeBlogUrl('/post-1', undefined)).toBe('/blog/post-1/')
+    expect(getRelativeBlogUrl('/post-1', 'fr')).toBe('/fr/blog/post-1/')
   })
 
   test('returns the RSS feed path', () => {
@@ -22,11 +22,11 @@ describe('getRelativeBlogUrl', () => {
 describe('getRelativeUrl', () => {
   describe('with no base', () => {
     test('returns the path with no base', () => {
-      expect(getRelativeUrl('/blog')).toBe('/blog')
+      expect(getRelativeUrl('/blog')).toBe('/blog/')
     })
 
     test('prefixes the path with a leading slash if needed', () => {
-      expect(getRelativeUrl('blog')).toBe('/blog')
+      expect(getRelativeUrl('blog')).toBe('/blog/')
     })
   })
 
@@ -42,7 +42,7 @@ describe('getRelativeUrl', () => {
 
     test('returns the path prefixed with the base', async () => {
       const { getRelativeUrl } = await import('../../../libs/page')
-      expect(getRelativeUrl('/blog')).toBe('/base/blog')
+      expect(getRelativeUrl('/blog')).toBe('/base/blog/')
     })
   })
 
@@ -51,8 +51,8 @@ describe('getRelativeUrl', () => {
       expect(getRelativeUrl('/blog/')).toBe('/blog/')
     })
 
-    test('does not ensure trailing slashes', () => {
-      expect(getRelativeUrl('/blog')).toBe('/blog')
+    test('ensures trailing slashes', () => {
+      expect(getRelativeUrl('/blog')).toBe('/blog/')
     })
   })
 })

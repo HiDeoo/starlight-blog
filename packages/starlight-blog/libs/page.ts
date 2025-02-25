@@ -11,7 +11,7 @@ import { ensureTrailingSlash, stripLeadingSlash, stripTrailingSlash } from './pa
 
 const trailingSlashTransformers: Record<AstroConfig['trailingSlash'], (path: string) => string> = {
   always: ensureTrailingSlash,
-  ignore: (href) => href,
+  ignore: ensureTrailingSlash,
   never: stripTrailingSlash,
 }
 

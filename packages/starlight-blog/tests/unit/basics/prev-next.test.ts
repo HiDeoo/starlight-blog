@@ -30,9 +30,9 @@ describe('getBlogStaticPaths', () => {
 
 describe('getBlogEntry', () => {
   test('respects the `prevNextLinksOrder` option in `reverse-chronological` order', async () => {
-    const post = await getBlogEntry('/blog/post-6', undefined)
+    const post = await getBlogEntry('/blog/post-6/', undefined)
 
-    expect(post.prevLink?.href).toBe('/blog/post-7')
-    expect(post.nextLink?.href).toBe('/blog/post-5')
+    expect(post.prevLink?.href).toBe('/blog/post-7/')
+    expect(post.nextLink?.href).toBe('/blog/post-5/')
   })
 })
