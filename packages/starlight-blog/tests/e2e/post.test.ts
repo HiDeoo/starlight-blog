@@ -53,38 +53,38 @@ test('should display tags in a post having tags', async ({ postPage }) => {
   const amazingContentTag = postPage.content.getByRole('link', { exact: true, name: 'Amazing Content' })
 
   await expect(starlightTag).toBeVisible()
-  await expect(starlightTag).toHaveAttribute('href', '/blog/tags/starlight')
+  await expect(starlightTag).toHaveAttribute('href', '/blog/tags/starlight/')
 
   await expect(amazingContentTag).toBeVisible()
-  await expect(amazingContentTag).toHaveAttribute('href', '/blog/tags/amazing-content')
+  await expect(amazingContentTag).toHaveAttribute('href', '/blog/tags/amazing-content/')
 })
 
 test('should display navigation links', async ({ postPage }) => {
   await postPage.goto('nitidum-fuit')
 
   await expect(postPage.prevLink).toBeVisible()
-  await expect(postPage.prevLink).toHaveAttribute('href', '/blog/funda-pro')
+  await expect(postPage.prevLink).toHaveAttribute('href', '/blog/funda-pro/')
   await expect(postPage.nextLink).not.toBeVisible()
 
   await postPage.goto('funda-pro')
 
   await expect(postPage.prevLink).toBeVisible()
-  await expect(postPage.prevLink).toHaveAttribute('href', '/blog/spectat-fingit')
+  await expect(postPage.prevLink).toHaveAttribute('href', '/blog/spectat-fingit/')
   await expect(postPage.nextLink).toBeVisible()
-  await expect(postPage.nextLink).toHaveAttribute('href', '/blog/nitidum-fuit')
+  await expect(postPage.nextLink).toHaveAttribute('href', '/blog/nitidum-fuit/')
 
   await postPage.goto('vario-nunc-polo')
 
   await expect(postPage.prevLink).toBeVisible()
-  await expect(postPage.prevLink).toHaveAttribute('href', '/blog/sequantur-quaeritis-tandem')
+  await expect(postPage.prevLink).toHaveAttribute('href', '/blog/sequantur-quaeritis-tandem/')
   await expect(postPage.nextLink).toBeVisible()
-  await expect(postPage.nextLink).toHaveAttribute('href', '/blog/mihi-terrae-somnia')
+  await expect(postPage.nextLink).toHaveAttribute('href', '/blog/mihi-terrae-somnia/')
 
   await postPage.goto('sequantur-quaeritis-tandem')
 
   await expect(postPage.prevLink).not.toBeVisible()
   await expect(postPage.nextLink).toBeVisible()
-  await expect(postPage.nextLink).toHaveAttribute('href', '/blog/vario-nunc-polo')
+  await expect(postPage.nextLink).toHaveAttribute('href', '/blog/vario-nunc-polo/')
 })
 
 test('should include a cover image', async ({ postPage }) => {
@@ -114,31 +114,31 @@ test.describe('i18n', () => {
     const tag = postPage.content.getByRole('link', { exact: true, name: 'Ébauche' })
 
     await expect(tag).toBeVisible()
-    await expect(tag).toHaveAttribute('href', '/fr/blog/tags/ébauche')
+    await expect(tag).toHaveAttribute('href', '/fr/blog/tags/ébauche/')
   })
 
   test('should display localized navigation links', async ({ postPage }) => {
     await postPage.goto('nitidum-fuit', 'fr')
 
-    await expect(postPage.prevLink).toHaveAttribute('href', '/fr/blog/funda-pro')
+    await expect(postPage.prevLink).toHaveAttribute('href', '/fr/blog/funda-pro/')
 
     await postPage.goto('funda-pro', 'fr')
 
-    await expect(postPage.prevLink).toHaveAttribute('href', '/fr/blog/spectat-fingit')
-    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/nitidum-fuit')
+    await expect(postPage.prevLink).toHaveAttribute('href', '/fr/blog/spectat-fingit/')
+    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/nitidum-fuit/')
 
     await postPage.goto('vario-nunc-polo', 'fr')
 
-    await expect(postPage.prevLink).toHaveAttribute('href', '/fr/blog/sequantur-quaeritis-tandem')
-    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/mihi-terrae-somnia')
+    await expect(postPage.prevLink).toHaveAttribute('href', '/fr/blog/sequantur-quaeritis-tandem/')
+    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/mihi-terrae-somnia/')
 
     await postPage.goto('sequantur-quaeritis-tandem', 'fr')
 
     await expect(postPage.prevLink).not.toBeVisible()
-    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/vario-nunc-polo')
+    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/vario-nunc-polo/')
 
     await postPage.goto('ipsum-nunc-aliquet', 'fr')
-    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/achivi-amans')
+    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/achivi-amans/')
     await expect(postPage.nextLink).toHaveText('Achivi amans (fr)')
   })
 

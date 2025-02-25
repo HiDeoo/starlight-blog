@@ -49,7 +49,7 @@ describe('posts', () => {
 
     expect(post.title).toBe('Post 7')
 
-    expect(post.href).toBe('/en/blog/post-7')
+    expect(post.href).toBe('/en/blog/post-7/')
 
     expect(post.createdAt).toBeInstanceOf(Date)
     expect(post.createdAt.toISOString()).toBe('2024-02-24T00:00:00.000Z')
@@ -59,8 +59,8 @@ describe('posts', () => {
     expect(post.authors).toEqual([{ name: 'HiDeoo' }])
 
     expect(post.tags).toEqual([
-      { label: 'tag-1', href: '/en/blog/tags/tag-1' },
-      { label: 'tag-2', href: '/en/blog/tags/tag-2' },
+      { label: 'tag-1', href: '/en/blog/tags/tag-1/' },
+      { label: 'tag-2', href: '/en/blog/tags/tag-2/' },
     ])
   })
 })
