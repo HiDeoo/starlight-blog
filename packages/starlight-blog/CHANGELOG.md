@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.18.0
+
+### Minor Changes
+
+- [#122](https://github.com/HiDeoo/starlight-blog/pull/122) [`75dee60`](https://github.com/HiDeoo/starlight-blog/commit/75dee601d9914a57269ba942b0332db04658ebdc) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Respects Starlight convention to generate URLs with a trailing slash when using the [`trailingSlash: 'ignore'`](https://docs.astro.build/en/reference/configuration-reference/#trailingslash) Astro configuration option (the default) as many common hosting providers redirect to URLs with a trailing slash by default.
+
 ## 0.17.3
 
 ### Patch Changes
