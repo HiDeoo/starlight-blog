@@ -13,7 +13,13 @@ vi.mock('astro:content', async () => {
     ['post-1.md', { title: 'Post 1', date: new Date('2023-08-24') }],
     [
       'post-7.md',
-      { title: 'Post 7', date: new Date('2024-02-24'), authors: [{ name: 'HiDeoo' }], tags: ['tag-1', 'tag-2'] },
+      {
+        title: 'Post 7',
+        date: new Date('2024-02-24'),
+        authors: [{ name: 'HiDeoo' }],
+        tags: ['tag-1', 'tag-2'],
+        cover: { alt: 'Cover image description', image: mockCoverImage() },
+      },
     ],
     ['post-6.md', { title: 'Post 6', date: new Date('2024-01-24') }],
     ['post-5.md', { title: 'Post 5', date: new Date('2023-12-24') }],
@@ -62,9 +68,25 @@ describe('posts', () => {
       { label: 'tag-1', href: '/en/blog/tags/tag-1/' },
       { label: 'tag-2', href: '/en/blog/tags/tag-2/' },
     ])
+
+    expect(post.cover).toEqual({
+      alt: 'Cover image description',
+      image: mockCoverImage(),
+    })
+
+    expect(post.entry.data.title).toBe('Post 7')
   })
 })
 
 function getTestBlogData() {
   return getBlogData({ locale: 'en' } as StarlightRouteData)
+}
+
+function mockCoverImage() {
+  return {
+    format: 'webp' as const,
+    height: 100,
+    src: '',
+    width: 100,
+  }
 }
