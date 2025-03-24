@@ -66,8 +66,10 @@ async function getBlogPostsData(locale: Locale): Promise<StarlightBlogData['post
         title,
         url,
       })),
+      cover: entry.data.cover,
       createdAt: entry.data.date,
       draft: entry.data.draft,
+      entry: entry,
       featured: entry.data.featured === true,
       href: getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`),
       tags: tags.map(({ label, slug }) => ({

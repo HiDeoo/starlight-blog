@@ -101,6 +101,32 @@ Draft blog posts are only visible in development mode.
 
 Whether the blog post is [featured](/guides/frontmatter/#featured).
 
+#### `cover`
+
+**Type:** `{ alt: string; image: ImageMetadata } | { alt: string; dark: ImageMetadata; light: ImageMetadata } | undefined`
+
+The optional cover image of the blog post.
+
+Based on how the cover image is [defined](/guides/frontmatter#cover) in the frontmatter of the blog post, it can either be a single image or a pair of images for dark and light themes.
+Images are imported and transformed into metadata, allowing you to pass it as a `src` to `<Image/>` or `getImage()`.
+
+Check the Starlight Blog [`<Cover>` component](https://github.com/HiDeoo/starlight-blog/blob/main/packages/starlight-blog/components/Cover.astro) to see an example of how to use the cover image or learn more about [images in content collections](https://docs.astro.build/en/guides/images/#images-in-content-collections) in the Astro docs.
+
+#### `entry`
+
+The Astro content collection entry for the blog post which includes frontmatter values at `entry.data`.
+
+```js
+entry: {
+  data: {
+    description: string | undefined;
+    // etc.
+  }
+}
+```
+
+Learn more about the shape of this object in [Astro’s Collection Entry Type](https://docs.astro.build/en/reference/modules/astro-content/#collectionentry) reference.
+
 #### `authors`
 
 **Type:** `{ name: string; title?: string; url?: string; }[]`

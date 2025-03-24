@@ -1,3 +1,7 @@
+import type { ImageMetadata } from 'astro'
+
+import type { StarlightBlogEntry } from './libs/content'
+
 export interface StarlightBlogData {
   /**
    * An list of all the blog posts in your project ordered by descending publication date.
@@ -29,6 +33,43 @@ export interface StarlightBlogData {
       url?: string | undefined
     }[]
     /**
+     * The optional cover image of the blog post.
+     *
+     * @see https://starlight-blog-docs.vercel.app/guides/frontmatter#cover
+     */
+    cover?:
+      | {
+          /**
+           * The alternative text describing the cover image for assistive technologies.
+           */
+          alt: string
+          /**
+           * The cover image metadata to display.
+           *
+           * @see https://docs.astro.build/en/guides/images/#images-in-content-collections
+           */
+          image: ImageMetadata
+        }
+      | {
+          /**
+           * The alternative text describing the cover image for assistive technologies.
+           */
+          alt: string
+          /**
+           * The cover image metadata to displayin dark mode.
+           *
+           * @see https://docs.astro.build/en/guides/images/#images-in-content-collections
+           */
+          dark: ImageMetadata
+          /**
+           * The cover image metadata to displayin light mode.
+           *
+           * @see https://docs.astro.build/en/guides/images/#images-in-content-collections
+           */
+          light: ImageMetadata
+        }
+      | undefined
+    /**
      * The date of the blog post.
      *
      * @see https://starlight-blog-docs.vercel.app/guides/frontmatter/#date-required
@@ -41,6 +82,12 @@ export interface StarlightBlogData {
      * @see https://starlight-blog-docs.vercel.app/guides/frontmatter/#draft
      */
     draft: boolean
+    /**
+     * The Astro content collection entry for the blog post which includes frontmatter values at `entry.data`.
+     *
+     * @see https://docs.astro.build/en/reference/modules/astro-content/#collectionentry
+     */
+    entry: StarlightBlogEntry
     /**
      * Whether the blog post is featured.
      *
