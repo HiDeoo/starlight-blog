@@ -1,5 +1,13 @@
 # starlight-blog
 
+## 0.19.0
+
+### Minor Changes
+
+- [#128](https://github.com/HiDeoo/starlight-blog/pull/128) [`047cc90`](https://github.com/HiDeoo/starlight-blog/commit/047cc9050452779a0faf0319ecfadd24510617fb) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Exposes the [cover image](https://starlight-blog-docs.vercel.app/guides/blog-data/#cover) and [Astro content collection entry](https://starlight-blog-docs.vercel.app/guides/blog-dat/#entry) of blog posts in the blog data object accessible on Starlight pages.
+
+  See the [“Blog Data” guide](https://starlight-blog-docs.vercel.app/guides/blog-data/) for more information.
+
 ## 0.18.0
 
 ### Minor Changes
