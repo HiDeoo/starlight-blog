@@ -1,5 +1,17 @@
 # starlight-blog
 
+## 0.20.0
+
+### Minor Changes
+
+- [#131](https://github.com/HiDeoo/starlight-blog/pull/131) [`32d0fdd`](https://github.com/HiDeoo/starlight-blog/commit/32d0fddf2ee01410e9c830de37209648f35de99d) Thanks [@HiDeoo](https://github.com/HiDeoo)! - ⚠️ **BREAKING CHANGE:** The minimum supported version of Starlight is now version `0.33.0`.
+
+  Please use the `@astrojs/upgrade` command to upgrade your project:
+
+  ```sh
+  npx @astrojs/upgrade
+  ```
+
 ## 0.19.0
 
 ### Minor Changes
