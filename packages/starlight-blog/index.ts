@@ -35,6 +35,8 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
             )}/rss.xml`
           : undefined
 
+        const configIncludesRSSSocial = starlightConfig.social?.some((social) => social.icon === 'rss') ?? false
+
         updateStarlightConfig({
           components: {
             ...starlightConfig.components,
@@ -58,14 +60,18 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                 ]
               : []),
           ],
-          social: {
-            ...starlightConfig.social,
-            ...(astroConfig.site && rssLink && !starlightConfig.social?.rss
-              ? {
-                  rss: rssLink,
-                }
-              : {}),
-          },
+          social: [
+            ...(starlightConfig.social ?? []),
+            ...(astroConfig.site && rssLink && !configIncludesRSSSocial
+              ? [
+                  {
+                    href: rssLink,
+                    icon: 'rss',
+                    label: 'RSS',
+                  } as const,
+                ]
+              : []),
+          ],
         })
 
         addIntegration({

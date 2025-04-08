@@ -1,3 +1,4 @@
+// @ts-check
 import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
 import starlightBlog from 'starlight-blog'
@@ -45,10 +46,10 @@ export default defineConfig({
         },
         { label: 'Demo', link: '/blog/' },
       ],
-      social: {
-        blueSky: 'https://bsky.app/profile/hideoo.dev',
-        github: 'https://github.com/HiDeoo/starlight-blog',
-      },
+      social: [
+        { href: 'https://bsky.app/profile/hideoo.dev', icon: 'blueSky', label: 'Bluesky' },
+        { href: 'https://github.com/HiDeoo/starlight-blog', icon: 'github', label: 'GitHub' },
+      ],
       title: 'Starlight Blog',
     }),
   ],
