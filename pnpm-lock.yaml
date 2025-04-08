@@ -45,11 +45,11 @@ importers:
   docs:
     dependencies:
       '@astrojs/starlight':
-        specifier: ^0.32.0
-        version: 0.32.0(astro@5.3.0)
+        specifier: ^0.33.0
+        version: 0.33.0(astro@5.3.0)
       '@hideoo/starlight-plugins-docs-components':
         specifier: ^0.4.0
-        version: 0.4.0(@astrojs/starlight@0.32.0)(astro@5.3.0)
+        version: 0.4.0(@astrojs/starlight@0.33.0)(astro@5.3.0)
       astro:
         specifier: ^5.3.0
         version: 5.3.0(typescript@5.7.2)
@@ -69,8 +69,8 @@ importers:
         specifier: ^4.0.11
         version: 4.0.11
       '@astrojs/starlight':
-        specifier: '>=0.32.0'
-        version: 0.32.0(astro@5.3.0)
+        specifier: '>=0.33.0'
+        version: 0.33.0(astro@5.3.0)
       astro-remote:
         specifier: ^0.3.3
         version: 0.3.3
@@ -254,8 +254,8 @@ packages:
       zod: 3.24.2
     dev: false
 
-  /@astrojs/starlight@0.32.0(astro@5.3.0):
-    resolution: {integrity: sha512-RJ+zPeTBlfgZJA3cWl3Nml9RLQhYUupnE0obL3iVxvVKhoCwUJnxmKicPp9EBxSML0TK8X4CUpnEwiC7OtfYwg==}
+  /@astrojs/starlight@0.33.0(astro@5.3.0):
+    resolution: {integrity: sha512-BAdz3TJ5f7e0iDwu7ZNy6i6Rlca2sgi416K8pGPN3VMIlgJmj9NCqSUGZh+OQhk5FNzmnssi8w+xQQeNpe5hDw==}
     peerDependencies:
       astro: ^5.1.5
     dependencies:
@@ -952,15 +952,15 @@ packages:
     resolution: {integrity: sha512-qylbgiR1n1eQXfpy97+b6pbtE5tf4uxPIqCSE0mp9fw/Npc4CiUxJlMoiUYw169GXTaZzqH/lFVm2sbO2Id2Ug==}
     dev: true
 
-  /@hideoo/starlight-plugins-docs-components@0.4.0(@astrojs/starlight@0.32.0)(astro@5.3.0):
+  /@hideoo/starlight-plugins-docs-components@0.4.0(@astrojs/starlight@0.33.0)(astro@5.3.0):
     resolution: {integrity: sha512-MbpFyLriouQVxyDmyq5Gaa1TIrFrJm3krR8QwPIbhEOVtJIf0Xi85gJAYQgt8uBH8ul98foq0sSsIAp5MWIkAQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@astrojs/starlight': '>=0.30.0'
     dependencies:
-      '@astrojs/starlight': 0.32.0(astro@5.3.0)
-      starlight-package-managers: 0.8.1(@astrojs/starlight@0.32.0)
-      starlight-showcases: 0.3.0(@astrojs/starlight@0.32.0)(astro@5.3.0)
+      '@astrojs/starlight': 0.33.0(astro@5.3.0)
+      starlight-package-managers: 0.8.1(@astrojs/starlight@0.33.0)
+      starlight-showcases: 0.3.0(@astrojs/starlight@0.33.0)(astro@5.3.0)
     transitivePeerDependencies:
       - astro
     dev: false
@@ -6244,16 +6244,16 @@ packages:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
     dev: true
 
-  /starlight-package-managers@0.8.1(@astrojs/starlight@0.32.0):
+  /starlight-package-managers@0.8.1(@astrojs/starlight@0.33.0):
     resolution: {integrity: sha512-a+zGIOdbN7B4T/VaszuvW8585Aau4LSU8HlVCmBCJJwxkrGAUC9lRya4y0md5tOAFyW/gfhUNJZM8qqyMNTe7Q==}
     engines: {node: '>=18.17.1'}
     peerDependencies:
       '@astrojs/starlight': '>=0.22.0'
     dependencies:
-      '@astrojs/starlight': 0.32.0(astro@5.3.0)
+      '@astrojs/starlight': 0.33.0(astro@5.3.0)
     dev: false
 
-  /starlight-showcases@0.3.0(@astrojs/starlight@0.32.0)(astro@5.3.0):
+  /starlight-showcases@0.3.0(@astrojs/starlight@0.33.0)(astro@5.3.0):
     resolution: {integrity: sha512-jxKVE5IM0TZgRIni4YK1oKDh6C9pBh94oj2pKuhzg2/Cg1wjCrWy39U3i1bXkh6rL+Ly+ypQBPH3AD9cP6TLXA==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -6261,7 +6261,7 @@ packages:
     dependencies:
       '@astro-community/astro-embed-twitter': 0.5.8(astro@5.3.0)
       '@astro-community/astro-embed-youtube': 0.5.6(astro@5.3.0)
-      '@astrojs/starlight': 0.32.0(astro@5.3.0)
+      '@astrojs/starlight': 0.33.0(astro@5.3.0)
     transitivePeerDependencies:
       - astro
     dev: false
