@@ -27,7 +27,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
         logger,
         updateConfig: updateStarlightConfig,
       }) {
-        addRouteMiddleware({ entrypoint: 'starlight-blog/middleware' })
+        addRouteMiddleware({ entrypoint: 'starlight-blog/middleware', order: 'post' })
 
         const rssLink = astroConfig.site
           ? `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
