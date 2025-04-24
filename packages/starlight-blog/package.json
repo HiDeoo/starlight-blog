@@ -8,10 +8,12 @@
   "exports": {
     ".": "./index.ts",
     "./components/MarkdownContent.astro": "./components/starlight/MarkdownContent.astro",
+    "./components/SiteTitle.astro": "./components/starlight/SiteTitle.astro",
     "./components/ThemeSelect.astro": "./components/starlight/ThemeSelect.astro",
     "./data": "./data.ts",
     "./middleware": "./middleware.ts",
     "./overrides/MarkdownContent.astro": "./overrides/MarkdownContent.astro",
+    "./overrides/SiteTitle.astro": "./overrides/SiteTitle.astro",
     "./overrides/ThemeSelect.astro": "./overrides/ThemeSelect.astro",
     "./routes/Authors.astro": "./routes/Authors.astro",
     "./routes/Blog.astro": "./routes/Blog.astro",
