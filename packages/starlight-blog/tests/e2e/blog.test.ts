@@ -264,6 +264,14 @@ test('should render markdown content in custom excerpt', async ({ blogPage }) =>
   await expect(articles.first().locator('strong').getByText('vestibulum')).toBeVisible()
 })
 
+test('should render a cover image', async ({ blogPage }) => {
+  await blogPage.goto()
+
+  const articles = blogPage.page.getByRole('article')
+
+  await expect(articles.nth(1).getByRole('img', { name: 'A cover' })).toBeVisible()
+})
+
 test('should not list draft blog posts in production', async ({ blogPage }) => {
   await blogPage.goto()
 
