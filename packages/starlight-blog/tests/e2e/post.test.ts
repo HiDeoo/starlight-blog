@@ -138,8 +138,10 @@ test.describe('i18n', () => {
     await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/vario-nunc-polo/')
 
     await postPage.goto('ipsum-nunc-aliquet', 'fr')
-    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/achivi-amans/')
-    await expect(postPage.nextLink).toHaveText('Achivi amans (fr)')
+    await expect(postPage.prevLink).toHaveAttribute('href', '/fr/blog/achivi-amans/')
+    await expect(postPage.prevLink).toHaveText('Achivi amans (fr)')
+    await expect(postPage.nextLink).toHaveAttribute('href', '/fr/blog/vestris-malum/')
+    await expect(postPage.nextLink).toHaveText('Vestris malum')
   })
 
   test('should display a fallback notice when appropriate', async ({ postPage }) => {

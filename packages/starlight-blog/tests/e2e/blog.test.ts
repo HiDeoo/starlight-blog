@@ -399,7 +399,7 @@ test.describe('i18n', () => {
     await expect(articles.getByText('12 déc. 2020')).toBeVisible()
     await expect(articles.getByText('30 déc. 2021')).toBeVisible()
 
-    expect(await articles.nth(4).locator('.sl-markdown-content').textContent()).toMatch(/aliquam. \(fr\)/)
+    expect(await articles.nth(3).locator('.sl-markdown-content').textContent()).toMatch(/aliquam. \(fr\)/)
 
     const frTag = articles.getByRole('link', { name: 'Ébauche' })
     await expect(frTag).toBeVisible()
