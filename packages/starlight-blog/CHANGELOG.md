@@ -1,5 +1,24 @@
 # starlight-blog
 
+## 0.21.0
+
+### Minor Changes
+
+- [#139](https://github.com/HiDeoo/starlight-blog/pull/139) [`6ed1559`](https://github.com/HiDeoo/starlight-blog/commit/6ed15599bf075feeac4165e57d56b86967d72ad2) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Displays cover images for blog posts in pages that list blog posts such as the blog index page.
+
+- [#139](https://github.com/HiDeoo/starlight-blog/pull/139) [`6ed1559`](https://github.com/HiDeoo/starlight-blog/commit/6ed15599bf075feeac4165e57d56b86967d72ad2) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds a new [`navigation`](https://starlight-blog-docs.vercel.app/configuration/#navigation) option to the blog configuration to control the type of navigation links to the blog to display on a page.
+
+  The current behavior (`header-end`) to add a link to the blog before the theme switcher in the header on large viewports and a link to the mobile menu sidebar for non-blog pages on smaller viewports remains unchanged. Two new behaviors are now available:
+
+  - `header-start` — Adds a link to the blog after the site title or logo in the header on large viewports. On smaller viewports, a link to the blog is added to the mobile menu sidebar for non-blog pages.
+  - `none` — Does not add any links to the blog and it is up to the user to add links to the blog wherever they want.
+
+### Patch Changes
+
+- [#139](https://github.com/HiDeoo/starlight-blog/pull/139) [`6ed1559`](https://github.com/HiDeoo/starlight-blog/commit/6ed15599bf075feeac4165e57d56b86967d72ad2) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes an inconsistency in blog post ordering for posts with the same date.
+
+  Blog posts are now consistently ordered by their [`date`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#date-required) in descending order, and then by their [`title`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#title-required) in ascending order if the dates are identical.
+
 ## 0.20.0
 
 ### Minor Changes
