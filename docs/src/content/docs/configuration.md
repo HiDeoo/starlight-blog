@@ -89,6 +89,17 @@ The base prefix for all blog routes.
 By default, the blog will be available at `/blog` and blog posts at `/blog/example-post`.
 Setting this option to `'news'` will make the blog available at `/news` and blog posts at `/news/example-post`.
 
+### `navigation`
+
+**Type:** `'header-start' | 'header-end' | 'none'`  
+**Default:** `'header-end'`
+
+The type of navigation links to the blog to display on a page.
+
+- `header-start` — Adds a link to the blog after the site title or logo in the header on large viewports. On smaller viewports, a link to the blog is added to the mobile menu sidebar for non-blog pages. When using this option, the Starlight [`<SiteTitle>`](https://starlight.astro.build/reference/overrides/#sitetitle) will be [overridden](https://starlight.astro.build/guides/overriding-components/).
+- `header-end` — Adds a link to the blog before the theme switcher in the header on large viewports. On smaller viewports, a link to the blog is added to the mobile menu sidebar for non-blog pages. When using this option, the Starlight [`<ThemeSelect>`](https://starlight.astro.build/reference/overrides/#themeselect) will be [overridden](https://starlight.astro.build/guides/overriding-components/).
+- `none` — Does not add any links to the blog and it is up to the user to add links to the blog wherever they want.
+
 ## Author configuration
 
 Global authors for all blog posts or regular authors that can be referenced in individual blog posts can be defined using the [`authors`](#authors) configuration option.

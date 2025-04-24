@@ -15,6 +15,16 @@ const configSchema = z
      */
     authors: z.record(blogAuthorSchema).default({}),
     /**
+     * The type of navigation links to display on a page.
+     *
+     * - `header-start` adds a link to the blog after the site title or logo in the header on large viewports.
+     * - `header-end` adds a link to the blog before the theme switcher in the header on large viewports.
+     * - `none` does not add any links to the blog.
+     *
+     * @default 'header-end'
+     */
+    navigation: z.union([z.literal('header-start'), z.literal('header-end'), z.literal('none')]).default('header-end'),
+    /**
      * The base prefix for all blog routes.
      *
      * @default 'blog'

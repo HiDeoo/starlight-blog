@@ -1,11 +1,13 @@
 import { defineRouteMiddleware, type StarlightRouteData } from '@astrojs/starlight/route-data'
 import type { APIContext, AstroBuiltinAttributes } from 'astro'
 import type { HTMLAttributes } from 'astro/types'
+import config from 'virtual:starlight-blog-config'
 
 import type { StarlightBlogData } from './data'
 import { getAllAuthors } from './libs/authors'
 import { getBlogEntries, getBlogEntryMetadata, getSidebarBlogEntries } from './libs/content'
 import type { Locale } from './libs/i18n'
+import { isNavigationWithSidebarLink } from './libs/navigation'
 import {
   getPathWithLocale,
   getRelativeBlogUrl,
@@ -30,9 +32,11 @@ export const onRequest = defineRouteMiddleware(async (context) => {
   const isBlog = isAnyBlogPage(id)
 
   if (!isBlog) {
-    starlightRoute.sidebar.unshift(
-      makeSidebarLink(getBlogTitle(locale), getRelativeBlogUrl('/', locale), false, { class: 'sl-blog-mobile-link' }),
-    )
+    if (isNavigationWithSidebarLink(config)) {
+      starlightRoute.sidebar.unshift(
+        makeSidebarLink(getBlogTitle(locale), getRelativeBlogUrl('/', locale), false, { class: 'sl-blog-mobile-link' }),
+      )
+    }
     return
   }
 

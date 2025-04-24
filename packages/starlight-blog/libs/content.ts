@@ -149,7 +149,7 @@ export async function getBlogEntries(locale: Locale): Promise<StarlightBlogEntry
   validateBlogEntries(blogEntries)
 
   blogEntries.sort((a, b) => {
-    return b.data.date.getTime() - a.data.date.getTime()
+    return b.data.date.getTime() - a.data.date.getTime() || a.data.title.localeCompare(b.data.title)
   })
 
   blogEntriesPerLocale.set(locale, blogEntries)

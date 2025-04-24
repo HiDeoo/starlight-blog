@@ -5,6 +5,7 @@ import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
 import { getPathWithLocale, getRelativeUrl } from '../libs/page'
 
+import Cover from './Cover.astro'
 import Metadata from './Metadata.astro'
 import PostTags from './PostTags.astro'
 
@@ -23,6 +24,7 @@ const Excerpt = await getBlogEntryExcerpt(entry)
     <h2>
       <a href={getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`)}>{entry.data.title}</a>
     </h2>
+    {entry.data.cover && <Cover cover={entry.data.cover} />}
     <Metadata entry={entry} {locale} />
   </header>
   <div class="sl-markdown-content">

@@ -4,6 +4,7 @@ import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/ty
 import type { AstroIntegrationLogger } from 'astro'
 
 import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig } from './libs/config'
+import { isNavigationWithCustomCss, isNavigationOverride } from './libs/navigation'
 import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 import { Translations } from './translations'
@@ -14,7 +15,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
   const config = validateConfig(userConfig)
 
   return {
-    name: 'starlight-blog-plugin',
+    name: 'starlight-blog',
     hooks: {
       'i18n:setup'({ injectTranslations }) {
         injectTranslations(Translations)
@@ -37,42 +38,37 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
 
         const configIncludesRSSSocial = starlightConfig.social?.some((social) => social.icon === 'rss') ?? false
 
-        updateStarlightConfig({
-          components: {
-            ...starlightConfig.components,
-            ...overrideStarlightComponent(starlightConfig.components, logger, 'MarkdownContent'),
-            ...overrideStarlightComponent(starlightConfig.components, logger, 'ThemeSelect'),
-          },
-          customCss: [...(starlightConfig.customCss ?? []), 'starlight-blog/styles'],
-          head: [
-            ...(starlightConfig.head ?? []),
-            ...(astroConfig.site
-              ? [
-                  {
-                    tag: 'link' as const,
-                    attrs: {
-                      href: rssLink,
-                      rel: 'alternate',
-                      title: typeof config.title === 'string' ? config.title : 'Blog',
-                      type: 'application/rss+xml',
-                    },
-                  },
-                ]
-              : []),
-          ],
-          social: [
-            ...(starlightConfig.social ?? []),
-            ...(astroConfig.site && rssLink && !configIncludesRSSSocial
-              ? [
-                  {
-                    href: rssLink,
-                    icon: 'rss',
-                    label: 'RSS',
-                  } as const,
-                ]
-              : []),
-          ],
-        })
+        const components: StarlightUserConfig['components'] = { ...starlightConfig.components }
+        overrideComponent(components, logger, 'MarkdownContent')
+        if (config.navigation === 'header-start') overrideComponent(components, logger, 'SiteTitle')
+        if (config.navigation === 'header-end') overrideComponent(components, logger, 'ThemeSelect')
+
+        const customCss: StarlightUserConfig['customCss'] = [...(starlightConfig.customCss ?? [])]
+        if (isNavigationWithCustomCss(config)) customCss.push('starlight-blog/styles')
+
+        const head: StarlightUserConfig['head'] = [...(starlightConfig.head ?? [])]
+        if (astroConfig.site) {
+          head.push({
+            tag: 'link',
+            attrs: {
+              href: rssLink,
+              rel: 'alternate',
+              title: typeof config.title === 'string' ? config.title : 'Blog',
+              type: 'application/rss+xml',
+            },
+          })
+        }
+
+        const social: StarlightUserConfig['social'] = [...(starlightConfig.social ?? [])]
+        if (astroConfig.site && rssLink && !configIncludesRSSSocial) {
+          social.push({
+            href: rssLink,
+            icon: 'rss',
+            label: 'RSS',
+          })
+        }
+
+        updateStarlightConfig({ components, customCss, head, social })
 
         addIntegration({
           name: 'starlight-blog-integration',
@@ -127,21 +123,18 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
   }
 }
 
-function overrideStarlightComponent(
-  components: StarlightUserConfig['components'],
+function overrideComponent(
+  components: NonNullable<StarlightUserConfig['components']>,
   logger: AstroIntegrationLogger,
   component: keyof NonNullable<StarlightUserConfig['components']>,
 ) {
-  if (components?.[component]) {
+  if (components[component]) {
     logger.warn(`It looks like you already have a \`${component}\` component override in your Starlight configuration.`)
     logger.warn(
-      `To use \`starlight-blog\`, either remove your override or update it to render the content from \`starlight-blog/components/${component}.astro\`.`,
+      `To use \`starlight-blog\`, either${isNavigationOverride(component) ? ` update the \`navigation\` plugin option,` : ''} remove your override or update it to render the content from \`starlight-blog/components/${component}.astro\`.`,
     )
-
-    return {}
+    return
   }
 
-  return {
-    [component]: `starlight-blog/overrides/${component}.astro`,
-  }
+  components[component] = `starlight-blog/overrides/${component}.astro`
 }
