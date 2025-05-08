@@ -3,7 +3,7 @@ import type { RSSOptions } from '@astrojs/rss'
 import type { GetStaticPathsResult } from 'astro'
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { render } from 'astro:content'
-import { DOCTYPE_NODE, ELEMENT_NODE, TEXT_NODE, transform, walk, type Node } from 'ultrahtml'
+import { COMMENT_NODE, DOCTYPE_NODE, ELEMENT_NODE, TEXT_NODE, transform, walk, type Node } from 'ultrahtml'
 import sanitize from 'ultrahtml/transformers/sanitize'
 import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
@@ -140,6 +140,16 @@ async function getRSSContent(
           }
           // Remove Expressive Code copy button.
           if (node.attributes['data-code']) {
+            removeHTMLNode(node)
+          }
+          // Remove excerpt delimiters.
+          if (
+            node.name === 'p' &&
+            'hidden' in node.attributes &&
+            node.children.length === 1 &&
+            node.children[0]?.type === COMMENT_NODE &&
+            node.children[0].value === ' excerpt '
+          ) {
             removeHTMLNode(node)
           }
         }

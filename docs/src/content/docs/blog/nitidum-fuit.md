@@ -1,7 +1,6 @@
 ---
 title: Nitidum fuit
 date: 2020-01-01
-excerpt: Aliquam elementum sodales massa, eu laoreet odio semper vitae. Sed diam ligula, facilisis vitae ex vitae, mollis mollis lacus. Pellentesque at mi eu tellus tristique sollicitudin. Mauris nec nulla eu.
 tags:
   - Example
 ---
@@ -14,6 +13,7 @@ Lorem markdownum tuoque erat summae contingere est optabat cannae recessit, non 
 var phreaking_rom = reimageMemeLatency.bare_word(copy_drive_standby + bmp, qbe);
 handleSsid.floppy_lossy_tcp += pixel_up.sample_x_wi(dawHdtv.matrix(daemonStorage), code, 2);
 name_tutorial *= control_open_swappable;
+name_tutorial_str = '<!-- excerpt -->';
 ```
 
 ## Est ferae dedisti admonuit spretae Ampyx praedamque

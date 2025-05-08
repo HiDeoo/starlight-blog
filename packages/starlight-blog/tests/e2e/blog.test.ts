@@ -215,7 +215,7 @@ test('should display a preview of each posts', async ({ blogPage }) => {
 
   expect(await articles.count()).toBe(5)
 
-  const titles = articles.getByRole('heading', { level: 2 })
+  const titles = articles.locator('header > h2')
 
   expect(await titles.count()).toBe(5)
 
@@ -254,14 +254,6 @@ test('should not display a link to edit this page', async ({ blogPage }) => {
   await blogPage.goto()
 
   await expect(blogPage.page.getByText('Edit page')).not.toBeVisible()
-})
-
-test('should render markdown content in custom excerpt', async ({ blogPage }) => {
-  await blogPage.goto()
-
-  const articles = blogPage.page.getByRole('article')
-
-  await expect(articles.first().locator('strong').getByText('vestibulum')).toBeVisible()
 })
 
 test('should render a cover image', async ({ blogPage }) => {

@@ -1,0 +1,95 @@
+---
+title: Excerpts
+description: Learn how to define excerpts for your blog posts.
+---
+
+## Post excerpts
+
+Excerpts represent a short summary or preview of a blog post displayed in the blog post list, authors, and tags pages.
+Multiple options are available to define excerpts in a blog post:
+
+- Using the `excerpt` frontmatter property
+- Using excerpt delimiters in the blog post content
+- Falling back to the entire blog post content
+
+## `excerpt` frontmatter property
+
+The [`excerpt` frontmatter property](/guides/frontmatter/#excerpt) can be used to define a custom excerpt for a blog post.
+Basic Markdown formatting is supported in the excerpt.
+
+When defined, the content of the `excerpt` property will be used as the excerpt of the blog post.
+
+```md {5}
+---
+// src/content/docs/blog/blog-post.md
+title: My blog post
+date: 2025-05-08
+excerpt: A small excerpt of the blog post…
+---
+```
+
+## Excerpt delimiters
+
+Excerpts can also be defined using excerpt delimiters in the blog post content.
+Any content above an excerpt delimiter should be standalone renderable content and will be used as the excerpt of the blog post.
+
+The excerpt delimiter depends on either if the Markdown or MDX syntax is used in the blog post:
+
+- Markdown: `<!-- excerpt -->`
+- MDX: `{/* excerpt */}`
+
+The following examples shows how to use an excerpt delimiter in a blog post:
+
+import { Tabs, TabItem } from '@astrojs/starlight/components'
+
+<Tabs syncKey="content-type">
+
+<TabItem label="Markdown">
+
+```md {13}
+---
+// src/content/docs/blog/blog-post.md
+title: My blog post
+date: 2025-05-08
+---
+
+Markdown content **included** in the blog post excerpt.
+
+:::note
+Any content after the excerpt delimiter is not included in the excerpt.
+:::
+
+<!-- excerpt -->
+
+Markdown content **not included** in the blog post excerpt.
+```
+
+</TabItem>
+
+<TabItem label="MDX">
+
+```mdx {13}
+---
+// src/content/docs/blog/blog-post.mdx
+title: My blog post
+date: 2025-05-08
+---
+
+MDX content **included** in the blog post excerpt.
+
+import { Aside } from '@astrojs/starlight/components'
+
+<Aside>Any content after the excerpt delimiter is not included in the excerpt.</Aside>
+
+{/* excerpt */}
+
+MDX content **not included** in the blog post excerpt.
+```
+
+</TabItem>
+
+</Tabs>
+
+## Fallback
+
+When no [`excerpt` frontmatter property](#excerpt-frontmatter-property) is defined and no [excerpt delimiters](#excerpt-delimiters) are present in a blog post, the entire blog post content will be used as the excerpt.

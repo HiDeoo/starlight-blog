@@ -74,14 +74,16 @@ tags:
 
 **Type:** `string`
 
-The excerpt of the blog post used in the blog post list and tags pages.
-If not provided, the entire blog post content will be rendered.
+The excerpt of the blog post used in the blog post list, authors, and tags pages which supports basic Markdown formatting.
 
 ```md
 ---
 excerpt: A small excerpt of the blog post…
 ---
 ```
+
+If not provided, excerpt delimiters will be used if present in the blog post content or the entire blog post content will be rendered otherwise.
+To learn more about excerpts, check the ["Excerpts" guide](/guides/excerpts).
 
 ### `authors`
 

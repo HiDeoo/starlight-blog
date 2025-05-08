@@ -1,11 +1,10 @@
 ---
-import { Markdown } from 'astro-remote'
-
-import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../libs/content'
+import type { StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
 import { getPathWithLocale, getRelativeUrl } from '../libs/page'
 
 import Cover from './Cover.astro'
+import Excerpt from './Excerpt.astro'
 import Metadata from './Metadata.astro'
 import PostTags from './PostTags.astro'
 
@@ -15,8 +14,6 @@ interface Props {
 }
 
 const { entry, locale } = Astro.props
-
-const Excerpt = await getBlogEntryExcerpt(entry)
 ---
 
 <article class="preview">
@@ -28,7 +25,7 @@ const Excerpt = await getBlogEntryExcerpt(entry)
     <Metadata entry={entry} {locale} />
   </header>
   <div class="sl-markdown-content">
-    {typeof Excerpt === 'string' ? <Markdown content={Excerpt} /> : <Excerpt />}
+    <Excerpt {entry} />
   </div>
   <footer>
     <PostTags {entry} {locale} />

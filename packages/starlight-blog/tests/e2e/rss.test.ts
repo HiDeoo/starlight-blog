@@ -26,4 +26,10 @@ test.describe('feed', () => {
 
     expect(await rssPage.getAllContent()).not.toContain('img src="/')
   })
+
+  test('should not contain excerpt delimiters', async ({ rssPage }) => {
+    await rssPage.goto()
+
+    expect(await rssPage.getAllContent()).not.toContain('<!-- excerpt -->')
+  })
 })
