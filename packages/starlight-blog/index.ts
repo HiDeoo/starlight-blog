@@ -6,6 +6,7 @@ import type { AstroIntegrationLogger } from 'astro'
 import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig } from './libs/config'
 import { isNavigationWithCustomCss, isNavigationOverride } from './libs/navigation'
 import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
+import { remarkStarlightBlog } from './libs/remark'
 import { vitePluginStarlightBlogConfig } from './libs/vite'
 import { Translations } from './translations'
 
@@ -101,6 +102,9 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
               }
 
               updateConfig({
+                markdown: {
+                  remarkPlugins: [[remarkStarlightBlog]],
+                },
                 vite: {
                   plugins: [
                     vitePluginStarlightBlogConfig(config, {

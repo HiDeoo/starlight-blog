@@ -1,0 +1,25 @@
+---
+import { Markdown } from 'astro-remote'
+
+import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../../../packages/starlight-blog/libs/content'
+
+import ExcerptContent from './ExcerptContent.astro'
+
+interface Props {
+  entry: StarlightBlogEntry
+}
+
+const { entry } = Astro.props
+
+const Content = await getBlogEntryExcerpt(entry)
+---
+
+{
+  typeof Content === 'string' ? (
+    <Markdown content={Content} />
+  ) : (
+    <ExcerptContent>
+      <Content />
+    </ExcerptContent>
+  )
+}

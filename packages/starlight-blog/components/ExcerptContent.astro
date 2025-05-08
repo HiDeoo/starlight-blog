@@ -1,0 +1,13 @@
+---
+import { ExcerptDelimiter } from '../libs/remark'
+
+let html = await Astro.slots.render('default')
+
+const exceptDelimiterIndex = html.indexOf(ExcerptDelimiter)
+
+if (exceptDelimiterIndex !== -1) {
+  html = html.slice(0, exceptDelimiterIndex)
+}
+---
+
+<Fragment set:html={html} />

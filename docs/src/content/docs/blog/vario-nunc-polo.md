@@ -21,6 +21,12 @@ Lorem markdownum, numen adducere Parthaoniae versa mirabere mea. Magnum utque, e
 
 > Crebri pantherarum talis sed etiamnum habet: modo transire. Cum Xanthos rura per iter erat tunc **insanos tibi** ignorant cum inde fulgebant, dicentem certamina **temptabat iam inpleratque**. Enim figuram aliter, semper curru mihi est.
 
+```js
+const promOptical = disk_extension_zero()
+```
+
+<!-- excerpt -->
+
 ### Notae esse et gurgite sibi dat dona
 
 Tangi silentibus argento; laetis tu gratus iuveni ut iuvenum latos saepe, _deum_ pius similis munere inmansuetusque. Fine defessa. In natum luminis notat terra pulcherrima nomen falsi magis! Anguipedum armenta minoribus _tolluntur_ fecerit instanti quid iactantem haesit exaudire sanguineam, delapsa **fores exegi serpente** liquida; de.
