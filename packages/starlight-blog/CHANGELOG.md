@@ -1,5 +1,13 @@
 # starlight-blog
 
+## 0.22.0
+
+### Minor Changes
+
+- [#144](https://github.com/HiDeoo/starlight-blog/pull/144) [`93a5d70`](https://github.com/HiDeoo/starlight-blog/commit/93a5d70e06524f2eefe46ad3d3e4a9390cb646cf) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for defining excerpts using excerpt delimiters in blog posts. Any content above an excerpt delimiter will be used as the excerpt of a blog post.
+
+  To learn more about excerpts, check the new ["Excerpts" guide](https://starlight-blog-docs.vercel.app/guides/excerpts/).
+
 ## 0.21.0
 
 ### Minor Changes
