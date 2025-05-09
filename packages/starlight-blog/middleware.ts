@@ -4,8 +4,8 @@ import type { HTMLAttributes } from 'astro/types'
 import config from 'virtual:starlight-blog-config'
 
 import type { StarlightBlogData } from './data'
-import { getAllAuthors } from './libs/authors'
-import { getBlogEntries, getBlogEntryMetadata, getSidebarBlogEntries } from './libs/content'
+import { getAllAuthors, getEntryAuthors } from './libs/authors'
+import { getBlogEntries, getSidebarBlogEntries } from './libs/content'
 import type { Locale } from './libs/i18n'
 import { isNavigationWithSidebarLink } from './libs/navigation'
 import {
@@ -61,7 +61,7 @@ async function getBlogPostsData(locale: Locale): Promise<StarlightBlogData['post
   const entries = await getBlogEntries(locale)
 
   return entries.map((entry) => {
-    const { authors } = getBlogEntryMetadata(entry, locale)
+    const authors = getEntryAuthors(entry)
     const tags = getEntryTags(entry)
 
     const postsData: StarlightBlogData['posts'][number] = {

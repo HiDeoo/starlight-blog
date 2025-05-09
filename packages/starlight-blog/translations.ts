@@ -4,7 +4,9 @@ export const Translations = {
     'starlightBlog.authors.count_other': '{{count}} posts by {{author}}',
     'starlightBlog.pagination.prev': 'Newer posts',
     'starlightBlog.pagination.next': 'Older posts',
-    'starlightBlog.post.lastUpdate': ' - Last update: {{date}}',
+    'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
+    'starlightBlog.post.lastUpdate':
+      ' - Last update: <time datetime="{{isoDate}}">{{date, datetime(dateStyle: medium)}}</time>',
     'starlightBlog.post.draft': 'Draft',
     'starlightBlog.post.featured': 'Featured',
     'starlightBlog.post.tags': 'Tags:',
@@ -22,7 +24,9 @@ export const Translations = {
     'starlightBlog.authors.count_other': '{{count}} articles par {{author}}',
     'starlightBlog.pagination.prev': 'Nouveaux articles',
     'starlightBlog.pagination.next': 'Anciens articles',
-    'starlightBlog.post.lastUpdate': ' - Dernière mise à jour : {{date}}',
+    'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
+    'starlightBlog.post.lastUpdate':
+      ' - Dernière mise à jour : <time datetime="{{isoDate}}">{{date, datetime(dateStyle: medium)}}</time>',
     'starlightBlog.post.draft': 'Brouillon',
     'starlightBlog.post.featured': 'Mis en avant',
     'starlightBlog.post.tags': 'Étiquettes :',
@@ -40,7 +44,9 @@ export const Translations = {
     'starlightBlog.authors.count_other': '{{count}} articoli di {{author}}',
     'starlightBlog.pagination.prev': 'Articoli più recenti',
     'starlightBlog.pagination.next': 'Articoli meno recenti',
-    'starlightBlog.post.lastUpdate': ' - Ultimo aggiornamento: {{date}}',
+    'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
+    'starlightBlog.post.lastUpdate':
+      ' - Ultimo aggiornamento: <time datetime="{{isoDate}}">{{date, datetime(dateStyle: medium)}}</time>',
     'starlightBlog.post.draft': 'Bozza',
     'starlightBlog.post.featured': 'In evidenza',
     'starlightBlog.post.tags': 'Tag:',
@@ -58,7 +64,9 @@ export const Translations = {
     'starlightBlog.authors.count_other': '{{count}} Beiträge von {{author}}',
     'starlightBlog.pagination.prev': 'Neuere Beiträge',
     'starlightBlog.pagination.next': 'Ältere Beiträge',
-    'starlightBlog.post.lastUpdate': ' - Zuletzt aktualisiert: {{date}}',
+    'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
+    'starlightBlog.post.lastUpdate':
+      ' - Zuletzt aktualisiert: <time datetime="{{isoDate}}">{{date, datetime(dateStyle: medium)}}</time>',
     'starlightBlog.post.draft': 'Entwurf',
     'starlightBlog.post.featured': 'Empfohlen',
     'starlightBlog.post.tags': 'Stichwörter:',
