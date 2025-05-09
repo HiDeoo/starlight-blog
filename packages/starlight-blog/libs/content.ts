@@ -4,10 +4,7 @@ import starlightConfig from 'virtual:starlight/user-config'
 import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
 
-import type { StarlightBlogAuthor } from '../schema'
-
-import { getEntryAuthors } from './authors'
-import { DefaultLocale, getLangFromLocale, type Locale } from './i18n'
+import { DefaultLocale, type Locale } from './i18n'
 import { getRelativeUrl, getRelativeBlogUrl, getPathWithLocale } from './page'
 import { stripLeadingSlash, stripTrailingSlash } from './path'
 
@@ -86,19 +83,6 @@ export async function getBlogEntry(slug: string, locale: Locale): Promise<Starli
     entry,
     nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
     prevLink: config.prevNextLinksOrder === 'reverse-chronological' ? prevLink : nextLink,
-  }
-}
-
-export function getBlogEntryMetadata(entry: StarlightBlogEntry, locale: Locale): StarlightBlogEntryMetadata {
-  return {
-    authors: getEntryAuthors(entry),
-    date: entry.data.date.toLocaleDateString(getLangFromLocale(locale), { dateStyle: 'medium' }),
-    lastUpdated:
-      typeof entry.data.lastUpdated === 'boolean'
-        ? undefined
-        : entry.data.lastUpdated?.toLocaleDateString(getLangFromLocale(locale), {
-            dateStyle: 'medium',
-          }),
   }
 }
 
@@ -244,12 +228,6 @@ export interface StarlightBlogEntryPaginated {
   entry: StarlightBlogEntry
   nextLink: StarlightBlogLink | undefined
   prevLink: StarlightBlogLink | undefined
-}
-
-interface StarlightBlogEntryMetadata {
-  authors: StarlightBlogAuthor[]
-  date: string
-  lastUpdated: string | undefined
 }
 
 interface StarlightBlogStaticProps {

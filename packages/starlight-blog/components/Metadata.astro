@@ -1,7 +1,8 @@
 ---
 import { Badge } from '@astrojs/starlight/components'
 
-import { getBlogEntryMetadata, type StarlightBlogEntry } from '../libs/content'
+import { getEntryAuthors } from '../libs/authors'
+import type { StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
 
 import Author from './Author.astro'
@@ -12,8 +13,8 @@ interface Props {
   showBadges?: boolean
 }
 
-const { entry, locale, showBadges = true } = Astro.props
-const { authors, date, lastUpdated } = getBlogEntryMetadata(entry, locale)
+const { entry, showBadges = true } = Astro.props
+const authors = getEntryAuthors(entry)
 
 const hasAuthors = authors.length > 0
 ---
@@ -21,17 +22,17 @@ const hasAuthors = authors.length > 0
 <div class="metadata not-content">
   <div class="dates">
     <time datetime={entry.data.date.toISOString()}>
-      {date}
+      {Astro.locals.t('starlightBlog.post.date', { date: entry.data.date })}
     </time>
     {
-      lastUpdated !== undefined &&
+      entry.data.lastUpdated !== undefined &&
       typeof entry.data.lastUpdated !== 'boolean' &&
       entry.data.lastUpdated?.toISOString() !== entry.data.date.toISOString() ? (
         <span
           class="update-date"
           set:html={Astro.locals.t('starlightBlog.post.lastUpdate', {
-            date: `<time datetime="${entry.data.lastUpdated?.toISOString()}">${lastUpdated}</time>`,
-            interpolation: { escapeValue: false },
+            date: entry.data.lastUpdated,
+            isoDate: entry.data.lastUpdated.toISOString(),
           })}
         />
       ) : null
