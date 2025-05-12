@@ -1,5 +1,6 @@
 ---
 import { LinkCard, CardGrid } from '@astrojs/starlight/components'
+import config from 'virtual:starlight-blog-config'
 
 import type { StarlightBlogLink } from '../libs/content'
 
@@ -16,10 +17,28 @@ const { next, prev } = Astro.props
     <div class="pagination" data-pagefind-ignore>
       <CardGrid>
         {prev && (
-          <LinkCard href={prev.href} rel="prev" title={prev.label ?? Astro.locals.t('starlightBlog.pagination.prev')} />
+          <LinkCard
+            href={prev.href}
+            rel="prev"
+            title={
+              prev.label ??
+              (config.prevNextLinksOrder === 'reverse-chronological'
+                ? Astro.locals.t('starlightBlog.pagination.prev')
+                : Astro.locals.t('starlightBlog.pagination.next'))
+            }
+          />
         )}
         {next && (
-          <LinkCard href={next.href} rel="next" title={next.label ?? Astro.locals.t('starlightBlog.pagination.next')} />
+          <LinkCard
+            href={next.href}
+            rel="next"
+            title={
+              next.label ??
+              (config.prevNextLinksOrder === 'reverse-chronological'
+                ? Astro.locals.t('starlightBlog.pagination.next')
+                : Astro.locals.t('starlightBlog.pagination.prev'))
+            }
+          />
         )}
       </CardGrid>
     </div>
