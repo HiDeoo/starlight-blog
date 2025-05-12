@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.23.2
+
+### Patch Changes
+
+- [#153](https://github.com/HiDeoo/starlight-blog/pull/153) [`e288d9b`](https://github.com/HiDeoo/starlight-blog/commit/e288d9b3aa18652d8de3afda6622df6099e9192e) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes an issue with an invalid import specifier.
+
 ## 0.23.1
 
 ### Patch Changes
