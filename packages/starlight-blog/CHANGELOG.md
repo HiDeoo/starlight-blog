@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.23.1
+
+### Patch Changes
+
+- [#150](https://github.com/HiDeoo/starlight-blog/pull/150) [`27cb85c`](https://github.com/HiDeoo/starlight-blog/commit/27cb85c13eac94d8cf9f65371a73fee2f23a7251) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes invalid labels for the prev/next links in the blog post list pages when using the [`prevNextLinksOrder` plugin option](https://starlight-blog-docs.vercel.app/configuration/#prevnextlinksorder) set to `chronological`.
+
 ## 0.23.0
 
 ### Minor Changes
