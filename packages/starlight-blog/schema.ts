@@ -20,6 +20,15 @@ export const blogAuthorSchema = z.object({
   url: z.string().url().optional(),
 })
 
+const metricsSchema = z
+  .object({
+    // TODO(HiDeoo)
+    readingTime: z.number().optional(),
+    // TODO(HiDeoo)
+    words: z.number().optional(),
+  })
+  .optional()
+
 export const blogEntrySchema = ({ image }: SchemaContext) =>
   z.object({
     /**
@@ -37,6 +46,8 @@ export const blogEntrySchema = ({ image }: SchemaContext) =>
      * If not provided, the entire blog post content will be rendered.
      */
     excerpt: z.string().optional(),
+    // TODO(HiDeoo)
+    metrics: metricsSchema,
     /**
      * A list of tags associated with the blog post.
      */
@@ -97,6 +108,7 @@ If you believe this is a bug, please file an issue at https://github.com/HiDeoo/
 }
 
 export type StarlightBlogAuthor = z.infer<typeof blogAuthorSchema>
+export type StarlightBlogUserMetrics = z.infer<typeof metricsSchema>
 
 interface SchemaContext {
   image: ImageFunction

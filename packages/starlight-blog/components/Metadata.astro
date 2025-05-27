@@ -25,7 +25,7 @@ let metrics: Metrics | undefined
 
 if (config.metrics.readingTime !== false || config.metrics.words !== false) {
   const html = await renderBlogEntryToString(entry, Astro.locals.t)
-  metrics = await getMetrics(html, Astro.currentLocale)
+  metrics = await getMetrics(html, Astro.currentLocale, entry.data.metrics)
 }
 ---
 

@@ -1,3 +1,5 @@
+import type { StarlightBlogUserMetrics } from '../schema'
+
 import { transformHTMLForMetrics } from './html'
 import { getLangFromLocale, type Locale } from './i18n'
 
@@ -5,13 +7,17 @@ import { getLangFromLocale, type Locale } from './i18n'
 // 184 ± 29 words/min → 213 words/min
 const wordsPerMinute = 213
 
-export async function getMetrics(html: string, locale: Locale): Promise<Metrics> {
+export async function getMetrics(
+  html: string,
+  locale: Locale,
+  userMetrics: StarlightBlogUserMetrics,
+): Promise<Metrics> {
   const { content, images } = await transformHTMLForMetrics(html)
 
-  const words = getWordCount(content, getLangFromLocale(locale))
+  const words = userMetrics?.words ?? getWordCount(content, getLangFromLocale(locale))
 
-  let seconds = (words / wordsPerMinute) * 60
-  seconds = addImagesTime(seconds, images)
+  let seconds = userMetrics?.readingTime ?? (words / wordsPerMinute) * 60
+  if (!userMetrics?.readingTime) seconds = addImagesTime(seconds, images)
 
   return {
     readingTime: {
