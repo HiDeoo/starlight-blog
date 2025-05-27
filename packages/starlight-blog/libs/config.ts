@@ -14,6 +14,15 @@ const configSchema = z
      * field.
      */
     authors: z.record(blogAuthorSchema).default({}),
+    // TODO(HiDeoo)
+    metrics: z
+      .object({
+        // TODO(HiDeoo)
+        readingTime: z.boolean().default(false),
+        // TODO(HiDeoo)
+        words: z.union([z.literal(false), z.literal('rounded'), z.literal('total')]).default(false),
+      })
+      .default({ readingTime: false, words: false }),
     /**
      * The type of navigation links to display on a page.
      *

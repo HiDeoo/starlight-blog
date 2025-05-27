@@ -14,7 +14,7 @@ export async function getMetrics(html: string, locale: Locale): Promise<Metrics>
   seconds = addImagesTime(seconds, images)
 
   return {
-    time: {
+    readingTime: {
       minutes: Math.ceil(seconds / 60),
       seconds: Math.ceil(seconds),
     },
@@ -36,7 +36,6 @@ function getWordCount(markdown: string, lang: string) {
   return wordCount
 }
 
-// https://blog.medium.com/read-time-and-you-bc2048ab620c
 function addImagesTime(seconds: number, images: number): number {
   if (images === 0) return seconds
 
@@ -46,12 +45,13 @@ function addImagesTime(seconds: number, images: number): number {
 }
 
 function getImageTime(index: number): number {
+  // https://blog.medium.com/read-time-and-you-bc2048ab620c
   return Math.max(3, 12 - index)
 }
 
 // TODO(HiDeoo) add comment about behavior/units/etc.
-interface Metrics {
-  time: {
+export interface Metrics {
+  readingTime: {
     minutes: number
     seconds: number
   }
