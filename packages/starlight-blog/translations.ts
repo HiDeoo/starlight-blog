@@ -1,5 +1,3 @@
-// TODO(HiDeoo) fr translation
-
 export const Translations = {
   en: {
     'starlightBlog.authors.count_one': '{{count}} post by {{author}}',
@@ -27,6 +25,9 @@ export const Translations = {
   fr: {
     'starlightBlog.authors.count_one': '{{count}} article par {{author}}',
     'starlightBlog.authors.count_other': '{{count}} articles par {{author}}',
+    'starlightBlog.metrics.readingTime.minutes': ' - {{count}} min de lecture',
+    'starlightBlog.metrics.words_one': ' - {{count}} mot',
+    'starlightBlog.metrics.words_other': ' - {{count}} mots',
     'starlightBlog.pagination.prev': 'Nouveaux articles',
     'starlightBlog.pagination.next': 'Anciens articles',
     'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
