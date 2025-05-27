@@ -44,6 +44,7 @@ export default defineConfig({
             'guides/excerpts',
             'guides/i18n',
             'guides/rss',
+            'guides/metrics',
             'guides/blog-data',
           ],
         },

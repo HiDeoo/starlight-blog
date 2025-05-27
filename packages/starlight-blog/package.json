@@ -38,7 +38,7 @@
     "marked": "^15.0.4",
     "marked-plaintify": "^1.1.1",
     "mdast-util-mdx-expression": "^2.0.1",
-    "ultrahtml": "^1.5.3",
+    "ultrahtml": "^1.6.0",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {

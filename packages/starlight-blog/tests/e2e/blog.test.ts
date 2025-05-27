@@ -234,7 +234,7 @@ test('should display a preview of each posts', async ({ blogPage }) => {
 test('should use sorted posts', async ({ blogPage }) => {
   await blogPage.goto()
 
-  const times = await blogPage.page.getByRole('article').locator(':not(.update-date) > time').all()
+  const times = await blogPage.page.getByRole('article').locator(':not(.metadata-alt) > time').all()
   const datetimes = await Promise.all(times.map((time) => time.getAttribute('datetime')))
 
   const dates = datetimes.map((datetime) => {

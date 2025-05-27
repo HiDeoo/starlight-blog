@@ -17,8 +17,9 @@ Blog post content…
 
 ## Frontmatter fields
 
-### `title` (required)
+### `title`
 
+**Required**  
 **Type:** `string`
 
 The title of the blog post which will be displayed at the top of the page and in the blog post list.
@@ -29,8 +30,9 @@ title: A blog post
 ---
 ```
 
-### `date` (required)
+### `date`
 
+**Required**  
 **Type:** `Date`
 
 The date of the blog post which must be a valid [YAML timestamp](https://yaml.org/type/timestamp.html).
@@ -172,4 +174,34 @@ type CoverConfig =
       // Relative path to an image file in your project to use in light mode.
       light: string
     }
+```
+
+### `metrics`
+
+Override the computed [metrics](/guides/metrics/) of the blog post.
+
+#### `readingTime`
+
+**Type:** `number`
+
+The [reading time](/configuration/#readingtime) of the blog post in seconds.
+
+```md
+---
+metrics:
+  readingTime: 120 # 2 minutes
+---
+```
+
+#### `words`
+
+**Type:** `number`
+
+The [word count](/configuration/#words) of the blog post.
+
+```md
+---
+metrics:
+  words: 1400
+---
 ```

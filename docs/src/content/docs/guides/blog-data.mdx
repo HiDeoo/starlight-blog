@@ -2,7 +2,7 @@
 title: Blog Data
 description: Learn how to use Starlight Blog’s data to access information about your blog posts.
 tableOfContents:
-  maxHeadingLevel: 4
+  maxHeadingLevel: 5
 ---
 
 Starlight Blog exposes information about the blog posts in your project.
@@ -26,7 +26,7 @@ const { posts } = Astro.locals.starlightBlog
 ---
 ```
 
-This can be useful for example to create a widget that lists recent blog posts on your homepage:
+This can be useful for example to create a widget that lists recent blog posts with their word count on your homepage:
 
 import { Preview } from '@hideoo/starlight-plugins-docs-components'
 import BlogDataExample from '../../../components/BlogDataExample.astro'
@@ -39,6 +39,7 @@ import BlogDataExample from '../../../components/BlogDataExample.astro'
     Astro.locals.starlightBlog.posts.slice(0, 5).map((post) => (
       <li>
         <a href={post.href}>{post.title}</a>
+        <em>({post.metrics.words.total} words)</em>
       </li>
     ))
   }
@@ -139,7 +140,7 @@ Each author has the following properties:
 
 **Type:** `string`
 
-The [name](/configuration/#name-required) of the author.
+The [name](/configuration/#name) of the author.
 
 ##### `title`
 
@@ -172,3 +173,45 @@ The label of the tag.
 **Type:** `string`
 
 The link to the tag page.
+
+#### `metrics`
+
+**Type:** `{ readingTime: { minutes: number; seconds: number; }; words: { rounded: number; total: number; }; }`
+
+The metrics of the blog post.
+
+##### `readingTime`
+
+**Type:** `{ minutes: number; seconds: number; }`
+
+The estimated reading time of the blog post.
+
+###### `minutes`
+
+**Type:** `number`
+
+The estimated reading time of the blog post in minutes, rounded up to the nearest minute.
+
+###### `seconds`
+
+**Type:** `number`
+
+The estimated reading time of the blog post in seconds, rounded up to the nearest second.
+
+##### `words`
+
+**Type:** `{ rounded: number; total: number; }`
+
+The word count of the blog post.
+
+###### `rounded`
+
+**Type:** `number`
+
+The word count of the blog post rounded up to the nearest multiple of 100.
+
+###### `total`
+
+**Type:** `number`
+
+The total word count of the blog post.
