@@ -90,8 +90,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       ultrahtml:
-        specifier: ^1.5.3
-        version: 1.5.3
+        specifier: ^1.6.0
+        version: 1.6.0
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -2203,7 +2203,7 @@ packages:
       marked: 12.0.2
       marked-footnote: 1.2.2(marked@12.0.2)
       marked-smartypants: 1.1.6(marked@12.0.2)
-      ultrahtml: 1.5.3
+      ultrahtml: 1.6.0
     dev: false
 
   /astro@5.3.0(typescript@5.7.2):
@@ -6788,6 +6788,10 @@ packages:
 
   /ultrahtml@1.5.3:
     resolution: {integrity: sha512-GykOvZwgDWZlTQMtp5jrD4BVL+gNn2NVlVafjcFUJ7taY20tqYdwdoWBFy6GBJsNTZe1GkGPkSl5knQAjtgceg==}
+
+  /ultrahtml@1.6.0:
+    resolution: {integrity: sha512-R9fBn90VTJrqqLDwyMph+HGne8eqY1iPfYhPzZrvKpIfwkWZbcYlfpsb8B9dTvBfpy1/hqAD7Wi8EKfP9e8zdw==}
+    dev: false
 
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
