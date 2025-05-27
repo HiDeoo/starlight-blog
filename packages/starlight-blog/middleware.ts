@@ -5,8 +5,10 @@ import config from 'virtual:starlight-blog-config'
 
 import type { StarlightBlogData } from './data'
 import { getAllAuthors, getEntryAuthors } from './libs/authors'
+import { renderBlogEntryToString } from './libs/container'
 import { getBlogEntries, getSidebarBlogEntries } from './libs/content'
 import type { Locale } from './libs/i18n'
+import { getMetrics } from './libs/metrics'
 import { isNavigationWithSidebarLink } from './libs/navigation'
 import {
   getPathWithLocale,
@@ -27,7 +29,7 @@ export const onRequest = defineRouteMiddleware(async (context) => {
   const { starlightRoute } = context.locals
   const { id, locale } = starlightRoute
 
-  context.locals.starlightBlog = await getBlogData(starlightRoute)
+  context.locals.starlightBlog = await getBlogData(starlightRoute, context.locals.t)
 
   const isBlog = isAnyBlogPage(id)
 
@@ -43,13 +45,13 @@ export const onRequest = defineRouteMiddleware(async (context) => {
   starlightRoute.sidebar = await getBlogSidebar(context)
 })
 
-export async function getBlogData({ locale }: StarlightRouteData): Promise<StarlightBlogData> {
+export async function getBlogData({ locale }: StarlightRouteData, t: App.Locals['t']): Promise<StarlightBlogData> {
   if (blogDataPerLocale.has(locale)) {
     return blogDataPerLocale.get(locale) as StarlightBlogData
   }
 
   const blogData: StarlightBlogData = {
-    posts: await getBlogPostsData(locale),
+    posts: await getBlogPostsData(locale, t),
   }
 
   blogDataPerLocale.set(locale, blogData)
@@ -57,38 +59,43 @@ export async function getBlogData({ locale }: StarlightRouteData): Promise<Starl
   return blogData
 }
 
-async function getBlogPostsData(locale: Locale): Promise<StarlightBlogData['posts']> {
+async function getBlogPostsData(locale: Locale, t: App.Locals['t']): Promise<StarlightBlogData['posts']> {
   const entries = await getBlogEntries(locale)
 
-  return entries.map((entry) => {
-    const authors = getEntryAuthors(entry)
-    const tags = getEntryTags(entry)
+  return Promise.all(
+    entries.map(async (entry) => {
+      const authors = getEntryAuthors(entry)
+      const tags = getEntryTags(entry)
+      const html = await renderBlogEntryToString(entry, t)
+      const metrics = await getMetrics(html, locale, entry.data.metrics)
 
-    const postsData: StarlightBlogData['posts'][number] = {
-      authors: authors.map(({ name, title, url }) => ({
-        name,
-        title,
-        url,
-      })),
-      cover: entry.data.cover,
-      createdAt: entry.data.date,
-      draft: entry.data.draft,
-      entry: entry,
-      featured: entry.data.featured === true,
-      href: getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`),
-      tags: tags.map(({ label, slug }) => ({
-        label,
-        href: getRelativeBlogUrl(`/tags/${slug}`, locale),
-      })),
-      title: entry.data.title,
-    }
+      const postsData: StarlightBlogData['posts'][number] = {
+        authors: authors.map(({ name, title, url }) => ({
+          name,
+          title,
+          url,
+        })),
+        cover: entry.data.cover,
+        createdAt: entry.data.date,
+        draft: entry.data.draft,
+        entry: entry,
+        featured: entry.data.featured === true,
+        href: getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`),
+        metrics,
+        tags: tags.map(({ label, slug }) => ({
+          label,
+          href: getRelativeBlogUrl(`/tags/${slug}`, locale),
+        })),
+        title: entry.data.title,
+      }
 
-    if (entry.data.lastUpdated && typeof entry.data.lastUpdated !== 'boolean') {
-      postsData.updatedAt = entry.data.lastUpdated
-    }
+      if (entry.data.lastUpdated && typeof entry.data.lastUpdated !== 'boolean') {
+        postsData.updatedAt = entry.data.lastUpdated
+      }
 
-    return postsData
-  })
+      return postsData
+    }),
+  )
 }
 
 async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['sidebar']> {

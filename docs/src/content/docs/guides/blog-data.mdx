@@ -39,6 +39,7 @@ import BlogDataExample from '../../../components/BlogDataExample.astro'
     Astro.locals.starlightBlog.posts.slice(0, 5).map((post) => (
       <li>
         <a href={post.href}>{post.title}</a>
+        <em>({post.metrics.words.total} words)</em>
       </li>
     ))
   }

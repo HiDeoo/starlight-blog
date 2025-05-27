@@ -98,6 +98,23 @@ export interface StarlightBlogData {
      * The link to the blog post.
      */
     href: string
+    // TODO(HiDeoo)
+    metrics: {
+      // TODO(HiDeoo)
+      readingTime: {
+        // TODO(HiDeoo)
+        minutes: number
+        // TODO(HiDeoo)
+        seconds: number
+      }
+      // TODO(HiDeoo)
+      words: {
+        // TODO(HiDeoo)
+        rounded: number
+        // TODO(HiDeoo)
+        total: number
+      }
+    }
     /**
      * A list of tags associated with the blog post.
      *
