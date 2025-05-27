@@ -67,7 +67,7 @@ The number of recent blog posts to display in the blog sidebar.
 **Type:** [`StarlightBlogAuthorsConfig`](#author-configuration)
 
 A list of global authors for all blog posts or regular authors that can be referenced in individual blog posts.
-Check the ["Authors" guide](/guides/authors) section for more informations.
+Check the ["Authors" guide](/guides/authors) for more informations.
 
 ### `prevNextLinksOrder`
 
@@ -100,6 +100,13 @@ The type of navigation links to the blog to display on a page.
 - `header-end` — Adds a link to the blog before the theme switcher in the header on large viewports. On smaller viewports, a link to the blog is added to the mobile menu sidebar for non-blog pages. When using this option, the Starlight [`<ThemeSelect>`](https://starlight.astro.build/reference/overrides/#themeselect) will be [overridden](https://starlight.astro.build/guides/overriding-components/).
 - `none` — Does not add any links to the blog and it is up to the user to add links to the blog wherever they want.
 
+### `metrics`
+
+**Type:** [`StarlightBlogMetricsConfig`](#metrics-configuration)
+
+The configuration of various metrics that can be displayed alongside blog posts, such as an estimated reading time or a word count.
+Check the ["Metrics" guide](/guides/metrics) for more informations.
+
 ## Author configuration
 
 Global authors for all blog posts or regular authors that can be referenced in individual blog posts can be defined using the [`authors`](#authors) configuration option.
@@ -121,8 +128,9 @@ starlightBlog({
 
 An author can be configured using the following options:
 
-### `name` (required)
+### `name`
 
+**Required**  
 **Type:** `string`
 
 The name of the author.
@@ -145,3 +153,31 @@ A URL to link the author's name to.
 
 A URL or path to an image in the `public/` directory to display as the author's picture.
 When using remote images, check out the [“Authorizing remote images”](https://docs.astro.build/en/guides/images/#authorizing-remote-images) guide to enable image optimization.
+
+## Metrics configuration
+
+Configure metrics that can be displayed alongside blog posts.
+Check the ["Metrics" guide](/guides/metrics) for more informations.
+
+### `readingTime`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+Controls whether or not the estimated reading time of blog posts are displayed.
+The estimated reading time is displayed in minutes, rounded up to the nearest minute.
+
+See the ["Metrics" guide](/guides/metrics/#about-metrics) for more informations on how the estimated reading time is calculated.
+
+### `words`
+
+**Type:** `false | 'total' | 'rounded'`  
+**Default:** `false`
+
+Controls whether or not the word count of blog posts are displayed.
+
+- `false` — Do not display the word count.
+- `'total'` — Display the total word count of the blog post.
+- `'rounded'` — Display the word count of the blog post rounded up to the nearest multiple of 100.
+
+See the ["Metrics" guide](/guides/metrics/#about-metrics) for more informations on how the word count is computed.

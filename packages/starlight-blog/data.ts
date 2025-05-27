@@ -16,7 +16,7 @@ export interface StarlightBlogData {
       /**
        * The name of the author.
        *
-       * @see https://starlight-blog-docs.vercel.app/configuration/#name-required
+       * @see https://starlight-blog-docs.vercel.app/configuration/#name
        */
       name: string
       /**
@@ -98,20 +98,48 @@ export interface StarlightBlogData {
      * The link to the blog post.
      */
     href: string
-    // TODO(HiDeoo)
+    /**
+     * The metrics of the blog post.
+     *
+     * @see https://starlight-blog-docs.vercel.app/guides/metrics/
+     */
     metrics: {
-      // TODO(HiDeoo)
+      /**
+       * The estimated reading time metrics of the blog post.
+       *
+       * @see https://starlight-blog-docs.vercel.app/guides/blog-data/#readingtime
+       */
       readingTime: {
-        // TODO(HiDeoo)
+        /**
+         * The estimated reading time of the blog post in minutes, rounded up to the nearest minute.
+         *
+         * @see https://starlight-blog-docs.vercel.app/guides/blog-data/#minutes
+         */
         minutes: number
-        // TODO(HiDeoo)
+        /**
+         * The estimated reading time of the blog post in seconds, rounded up to the nearest second.
+         *
+         * @see https://starlight-blog-docs.vercel.app/guides/blog-data/#seconds
+         */
         seconds: number
       }
-      // TODO(HiDeoo)
+      /**
+       * The word count metrics of the blog post.
+       *
+       * @see https://starlight-blog-docs.vercel.app/guides/blog-data/#words
+       */
       words: {
-        // TODO(HiDeoo)
+        /**
+         * The word count of the blog post rounded up to the nearest multiple of 100.
+         *
+         * @see https://starlight-blog-docs.vercel.app/guides/blog-data/#rounded
+         */
         rounded: number
-        // TODO(HiDeoo)
+        /**
+         * The total word count of the blog post.
+         *
+         * @see https://starlight-blog-docs.vercel.app/guides/blog-data/#total
+         */
         total: number
       }
     }

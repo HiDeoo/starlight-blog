@@ -55,7 +55,6 @@ function getImageTime(index: number): number {
   return Math.max(3, 12 - index)
 }
 
-// TODO(HiDeoo) add comment about behavior/units/etc.
 export interface Metrics {
   readingTime: {
     minutes: number

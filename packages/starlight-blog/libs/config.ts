@@ -14,13 +14,28 @@ const configSchema = z
      * field.
      */
     authors: z.record(blogAuthorSchema).default({}),
-    // TODO(HiDeoo)
+    /**
+     * The configuration of various metrics that can be displayed alongside blog posts.
+     */
     metrics: z
       .object({
-        // TODO(HiDeoo)
+        /**
+         * Controls whether or not the estimated reading time of blog posts are displayed.
+         * The estimated reading time is displayed in minutes, rounded up to the nearest minute.
+         *
+         * @default false
+         */
         readingTime: z.boolean().default(false),
-        // TODO(HiDeoo)
-        words: z.union([z.literal(false), z.literal('rounded'), z.literal('total')]).default(false),
+        /**
+         * Controls whether or not the word count of blog posts are displayed.
+         *
+         * - `false` does not display the word count.
+         * - `total` displays the total word count of the blog post.
+         * - `rounded` displays the word count of the blog post rounded up to the nearest multiple of 100.
+         *
+         * @default false
+         */
+        words: z.union([z.literal(false), z.literal('total'), z.literal('rounded')]).default(false),
       })
       .default({ readingTime: false, words: false }),
     /**

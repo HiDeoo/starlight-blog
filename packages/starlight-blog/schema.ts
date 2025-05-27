@@ -22,9 +22,15 @@ export const blogAuthorSchema = z.object({
 
 const metricsSchema = z
   .object({
-    // TODO(HiDeoo)
+    /**
+     * The reading time of the blog post in seconds.
+     * If not provided, an estimated reading time will be calculated based on the blog post content.
+     */
     readingTime: z.number().optional(),
-    // TODO(HiDeoo)
+    /**
+     * The number of words in the blog post.
+     * If not provided, the word count will be computed from the blog post content.
+     */
     words: z.number().optional(),
   })
   .optional()
@@ -46,7 +52,9 @@ export const blogEntrySchema = ({ image }: SchemaContext) =>
      * If not provided, the entire blog post content will be rendered.
      */
     excerpt: z.string().optional(),
-    // TODO(HiDeoo)
+    /**
+     * The metrics of the blog post.
+     */
     metrics: metricsSchema,
     /**
      * A list of tags associated with the blog post.
