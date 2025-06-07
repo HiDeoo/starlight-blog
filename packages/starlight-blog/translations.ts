@@ -68,7 +68,7 @@ export const Translations = {
   de: {
     'starlightBlog.authors.count_one': '{{count}} Beitrag von {{author}}',
     'starlightBlog.authors.count_other': '{{count}} Beiträge von {{author}}',
-    'starlightBlog.metrics.readingTime.minutes': ' - {{count}} Min. Lesezeit',
+    'starlightBlog.metrics.readingTime.minutes': ' - {{count}} min Lesezeit',
     'starlightBlog.metrics.words_one': ' - {{count}} Wort',
     'starlightBlog.metrics.words_other': ' - {{count}} Wörter',
     'starlightBlog.pagination.prev': 'Neuere Beiträge',
