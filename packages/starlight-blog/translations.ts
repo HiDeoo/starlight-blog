@@ -2,6 +2,9 @@ export const Translations = {
   en: {
     'starlightBlog.authors.count_one': '{{count}} post by {{author}}',
     'starlightBlog.authors.count_other': '{{count}} posts by {{author}}',
+    'starlightBlog.metrics.readingTime.minutes': ' - {{count}} min read',
+    'starlightBlog.metrics.words_one': ' - {{count}} word',
+    'starlightBlog.metrics.words_other': ' - {{count}} words',
     'starlightBlog.pagination.prev': 'Newer posts',
     'starlightBlog.pagination.next': 'Older posts',
     'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
@@ -22,6 +25,9 @@ export const Translations = {
   fr: {
     'starlightBlog.authors.count_one': '{{count}} article par {{author}}',
     'starlightBlog.authors.count_other': '{{count}} articles par {{author}}',
+    'starlightBlog.metrics.readingTime.minutes': ' - {{count}} min de lecture',
+    'starlightBlog.metrics.words_one': ' - {{count}} mot',
+    'starlightBlog.metrics.words_other': ' - {{count}} mots',
     'starlightBlog.pagination.prev': 'Nouveaux articles',
     'starlightBlog.pagination.next': 'Anciens articles',
     'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
@@ -62,6 +68,9 @@ export const Translations = {
   de: {
     'starlightBlog.authors.count_one': '{{count}} Beitrag von {{author}}',
     'starlightBlog.authors.count_other': '{{count}} Beiträge von {{author}}',
+    'starlightBlog.metrics.readingTime.minutes': ' - {{count}} min Lesezeit',
+    'starlightBlog.metrics.words_one': ' - {{count}} Wort',
+    'starlightBlog.metrics.words_other': ' - {{count}} Wörter',
     'starlightBlog.pagination.prev': 'Neuere Beiträge',
     'starlightBlog.pagination.next': 'Ältere Beiträge',
     'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',

@@ -21,7 +21,7 @@ vi.mock('astro:content', async () => {
         cover: { alt: 'Cover image description', image: mockCoverImage() },
       },
     ],
-    ['post-6.md', { title: 'Post 6', date: new Date('2024-01-24') }],
+    ['post-6.md', { title: 'Post 6', date: new Date('2024-01-24'), metrics: { readingTime: 590, words: 1990 } }],
     ['post-5.md', { title: 'Post 5', date: new Date('2023-12-24') }],
   ])
 })
@@ -48,7 +48,22 @@ describe('posts', () => {
   })
 
   test('includes post data in the expected format', async () => {
-    const { posts } = await getTestBlogData()
+    vi.doMock('../../../libs/metrics', async () => {
+      const mod = await vi.importActual<typeof import('../../../libs/metrics')>('../../../libs/metrics')
+
+      return {
+        ...mod,
+        getMetrics: vi.fn().mockResolvedValue({
+          readingTime: { minutes: 5, seconds: 290 },
+          words: { rounded: 1100, total: 1065 },
+        }),
+      }
+    })
+
+    vi.resetModules()
+    const middleware = await import('../../../middleware')
+
+    const { posts } = await getTestBlogData(middleware.getBlogData)
 
     const post = posts[0]
     assert(post)
@@ -75,11 +90,30 @@ describe('posts', () => {
     })
 
     expect(post.entry.data.title).toBe('Post 7')
+
+    expect(post.metrics.readingTime.minutes).toBe(5)
+    expect(post.metrics.readingTime.seconds).toBe(290)
+    expect(post.metrics.words.rounded).toBe(1100)
+    expect(post.metrics.words.total).toBe(1065)
+
+    vi.doUnmock('../../../libs/metrics')
+  })
+
+  test('uses user-provided metrics in post data', async () => {
+    const { posts } = await getTestBlogData()
+
+    const post = posts[1]
+    assert(post)
+
+    expect(post.metrics.readingTime.minutes).toBe(10)
+    expect(post.metrics.readingTime.seconds).toBe(590)
+    expect(post.metrics.words.rounded).toBe(2000)
+    expect(post.metrics.words.total).toBe(1990)
   })
 })
 
-function getTestBlogData() {
-  return getBlogData({ locale: 'en' } as StarlightRouteData)
+function getTestBlogData(getter?: typeof getBlogData) {
+  return (getter ?? getBlogData)({ locale: 'en' } as StarlightRouteData, (() => '') as App.Locals['t'])
 }
 
 function mockCoverImage() {
