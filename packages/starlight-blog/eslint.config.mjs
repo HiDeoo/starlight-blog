@@ -21,4 +21,10 @@ export default hideoo(
       '@typescript-eslint/triple-slash-reference': 'off',
     },
   },
+  {
+    files: ['components/Cover.astro'],
+    rules: {
+      'astro/jsx-a11y/alt-text': 'off',
+    },
+  },
 )

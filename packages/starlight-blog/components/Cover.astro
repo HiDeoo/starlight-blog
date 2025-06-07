@@ -1,4 +1,5 @@
 ---
+import type { ComponentProps } from 'astro/types'
 import { Image } from 'astro:assets'
 
 import type { StarlightBlogEntry } from '../libs/content'
@@ -11,11 +12,27 @@ const { cover } = Astro.props
 
 const darkImage = 'dark' in cover ? cover.dark : cover.image
 const lightImage = 'light' in cover ? cover.light : undefined
+
+const commonImageProps = { alt: cover.alt, loading: 'eager' } as const
+const commonDarkImageProps = { ...commonImageProps, 'class:list': { 'light:sl-hidden': Boolean(lightImage) } } as const
+const commonLightImageProps = { ...commonImageProps, 'class:list': 'dark:sl-hidden' } as const
+
+const darkImageProps: ComponentProps<typeof Image> =
+  typeof darkImage === 'string'
+    ? { ...commonDarkImageProps, inferSize: true, src: darkImage }
+    : { ...commonDarkImageProps, src: darkImage }
+
+const lightImageProps: ComponentProps<typeof Image> | undefined =
+  lightImage === undefined
+    ? undefined
+    : typeof lightImage === 'string'
+      ? { ...commonLightImageProps, inferSize: true, src: lightImage }
+      : { ...commonLightImageProps, src: lightImage }
 ---
 
 <figure>
-  <Image alt={cover.alt} class:list={{ 'light:sl-hidden': Boolean(lightImage) }} loading="eager" src={darkImage} />
-  {lightImage && <Image alt={cover.alt} class="dark:sl-hidden" loading="eager" src={lightImage} />}
+  <Image {...darkImageProps} />
+  {lightImage && lightImageProps && <Image {...lightImageProps} />}
 </figure>
 
 <style>
