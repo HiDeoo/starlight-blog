@@ -22,7 +22,14 @@ vi.mock('astro:content', async () => {
       },
     ],
     ['post-6.md', { title: 'Post 6', date: new Date('2024-01-24'), metrics: { readingTime: 590, words: 1990 } }],
-    ['post-5.md', { title: 'Post 5', date: new Date('2023-12-24') }],
+    [
+      'post-5.md',
+      {
+        title: 'Post 5',
+        date: new Date('2023-12-24'),
+        authors: [{ name: 'HiDeoo' }, { name: 'Ghost', title: 'A ghost', url: 'https://example.com' }],
+      },
+    ],
   ])
 })
 
@@ -109,6 +116,25 @@ describe('posts', () => {
     expect(post.metrics.readingTime.seconds).toBe(590)
     expect(post.metrics.words.rounded).toBe(2000)
     expect(post.metrics.words.total).toBe(1990)
+  })
+})
+
+describe('authors', () => {
+  test('includes all blog post authors', async () => {
+    const { authors } = await getTestBlogData()
+
+    expect(authors).toHaveLength(2)
+  })
+
+  test('includes author data in the expected format', async () => {
+    const { authors } = await getTestBlogData()
+
+    const author = authors[1]
+    assert(author)
+
+    expect(author.name).toBe('Ghost')
+    expect(author.title).toBe('A ghost')
+    expect(author.url).toBe('https://example.com')
   })
 })
 

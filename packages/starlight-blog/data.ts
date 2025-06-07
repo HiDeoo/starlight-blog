@@ -12,26 +12,7 @@ export interface StarlightBlogData {
      *
      * @see https://starlight-blog-docs.vercel.app/guides/authors/
      */
-    authors: {
-      /**
-       * The name of the author.
-       *
-       * @see https://starlight-blog-docs.vercel.app/configuration/#name
-       */
-      name: string
-      /**
-       * An optional title for the author.
-       *
-       * @see https://starlight-blog-docs.vercel.app/configuration/#title-1
-       */
-      title?: string | undefined
-      /**
-       * An optional URL to link the author to.
-       *
-       * @see https://starlight-blog-docs.vercel.app/configuration/#url
-       */
-      url?: string | undefined
-    }[]
+    authors: StarlightBlogAuthorData[]
     /**
      * The optional cover image of the blog post.
      *
@@ -172,4 +153,29 @@ export interface StarlightBlogData {
      */
     updatedAt?: Date
   }[]
+  /**
+   * An unordered list of all the known authors in your blog.
+   */
+  authors: StarlightBlogAuthorData[]
+}
+
+interface StarlightBlogAuthorData {
+  /**
+   * The name of the author.
+   *
+   * @see https://starlight-blog-docs.vercel.app/configuration/#name
+   */
+  name: string
+  /**
+   * An optional title for the author.
+   *
+   * @see https://starlight-blog-docs.vercel.app/configuration/#title-1
+   */
+  title?: string | undefined
+  /**
+   * An optional URL to link the author to.
+   *
+   * @see https://starlight-blog-docs.vercel.app/configuration/#url
+   */
+  url?: string | undefined
 }

@@ -50,9 +50,18 @@ export async function getBlogData({ locale }: StarlightRouteData, t: App.Locals[
     return blogDataPerLocale.get(locale) as StarlightBlogData
   }
 
-  const blogData: StarlightBlogData = {
-    posts: await getBlogPostsData(locale, t),
+  const posts = await getBlogPostsData(locale, t)
+
+  const authors = new Map<string, StarlightBlogData['authors'][number]>()
+
+  for (const post of posts) {
+    for (const author of post.authors) {
+      if (authors.has(author.name)) continue
+      authors.set(author.name, author)
+    }
   }
+
+  const blogData: StarlightBlogData = { posts, authors: [...authors.values()] }
 
   blogDataPerLocale.set(locale, blogData)
 
