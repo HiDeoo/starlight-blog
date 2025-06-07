@@ -163,15 +163,17 @@ type CoverConfig =
   | {
       // Alternative text describing the cover image for assistive technologies.
       alt: string
-      // Relative path to an image file in your project.
+      // Relative path to an image file in your project or URL to a remote image.
       image: string
     }
   | {
       // Alternative text describing the cover image for assistive technologies.
       alt: string
-      // Relative path to an image file in your project to use in dark mode.
+      // Relative path to an image file in your project or URL to a remote image
+      // to use in dark mode.
       dark: string
-      // Relative path to an image file in your project to use in light mode.
+      // Relative path to an image file in your project or URL to a remote image
+      // to use in light mode.
       light: string
     }
 ```

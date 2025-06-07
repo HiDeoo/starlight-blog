@@ -44,11 +44,11 @@ export interface StarlightBlogData {
            */
           alt: string
           /**
-           * The cover image metadata to display.
+           * The cover image metadata for a local image or a URL to a remote image to display.
            *
            * @see https://docs.astro.build/en/guides/images/#images-in-content-collections
            */
-          image: ImageMetadata
+          image: ImageMetadata | string
         }
       | {
           /**
@@ -56,17 +56,17 @@ export interface StarlightBlogData {
            */
           alt: string
           /**
-           * The cover image metadata to displayin dark mode.
+           * The cover image metadata for a local image or a URL to a remote image to display in dark mode.
            *
            * @see https://docs.astro.build/en/guides/images/#images-in-content-collections
            */
-          dark: ImageMetadata
+          dark: ImageMetadata | string
           /**
-           * The cover image metadata to displayin light mode.
+           * The cover image metadata for a local image or a URL to a remote image to display in light mode.
            *
            * @see https://docs.astro.build/en/guides/images/#images-in-content-collections
            */
-          light: ImageMetadata
+          light: ImageMetadata | string
         }
       | undefined
     /**
