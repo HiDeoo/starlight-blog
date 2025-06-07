@@ -1,35 +1,36 @@
 ---
 title: Blog Data
-description: Learn how to use Starlight Blog’s data to access information about your blog posts.
+description: Learn how to use Starlight Blog’s data to access information about your blog posts and authors.
 tableOfContents:
   maxHeadingLevel: 5
 ---
 
-Starlight Blog exposes information about the blog posts in your project.
+Starlight Blog exposes information about the blog posts and authors in your project.
 This guide explains how to use Starlight Blog’s data.
 
 ## What is blog data?
 
-Starlight Blog data is an object containing the information about all the blog posts in your project.
-It includes information like a list of all the blog posts, the title of each post, the date it was published, and the author.
+Starlight Blog data is an object containing the information about all the blog posts and authors in your project.
+It includes information like a list of all the blog authors, a list of all the blog posts, the title of each post, the date it was published, and the author.
 
 ## Using blog data
 
-The `posts` object contains an array of all the blog posts in your project.
+The [`posts`](#posts) property contains an array of all the blog posts in your project while the [`authors`](#authors-1) property contains an array of all the authors.
 
 You can access this data from the `Astro.locals.starlightBlog` global in Astro components:
 
 ```astro title="example.astro"
 ---
-const { posts } = Astro.locals.starlightBlog
-//        ^ The list of all blog posts
+const { posts, authors } = Astro.locals.starlightBlog
+//        │       └─ The list of all blog authors
+//        └─ The list of all blog posts
 ---
 ```
 
 This can be useful for example to create a widget that lists recent blog posts with their word count on your homepage:
 
 import { Preview } from '@hideoo/starlight-plugins-docs-components'
-import BlogDataExample from '../../../components/BlogDataExample.astro'
+import BlogDataPostsExample from '../../../components/BlogDataPostsExample.astro'
 
 <Preview>
 
@@ -48,7 +49,36 @@ import BlogDataExample from '../../../components/BlogDataExample.astro'
 
 <Fragment slot="preview">
 
-<BlogDataExample />
+<BlogDataPostsExample />
+
+</Fragment>
+
+</Preview>
+
+Another example is to create a list of all the known authors of your blog:
+
+import BlogDataAuthorsExample from '../../../components/BlogDataAuthorsExample.astro'
+
+<Preview>
+
+```astro title="BlogAuthors.astro" "Astro.locals.starlightBlog.authors"
+---
+const authorNames = Astro.locals.starlightBlog.authors
+  .map((author) => author.name)
+  .sort((a, b) => a.localeCompare(b, Astro.currentLocale))
+
+const authorList = new Intl.ListFormat(Astro.currentLocale, {
+  style: 'long',
+  type: 'conjunction',
+}).format(authorNames)
+---
+
+<p><b>Authors:</b> {authorList}</p>
+```
+
+<Fragment slot="preview">
+
+<BlogDataAuthorsExample />
 
 </Fragment>
 
@@ -130,29 +160,9 @@ Learn more about the shape of this object in [Astro’s Collection Entry Type](h
 
 #### `authors`
 
-**Type:** `{ name: string; title?: string; url?: string; }[]`
+**Type:** <code><a href="#starlightblogauthordata">StarlightBlogAuthorData</a>[]</code>
 
 The list of authors of the blog post.
-
-Each author has the following properties:
-
-##### `name`
-
-**Type:** `string`
-
-The [name](/configuration/#name) of the author.
-
-##### `title`
-
-**Type:** `string | undefined`
-
-The optional [title](/configuration/#title-1) of the author.
-
-##### `url`
-
-**Type:** `string | undefined`
-
-The optional [URL](/configuration/#url) to link the author to.
 
 #### `tags`
 
@@ -215,3 +225,31 @@ The word count of the blog post rounded up to the nearest multiple of 100.
 **Type:** `number`
 
 The total word count of the blog post.
+
+### `authors`
+
+**Type:** <code><a href="#starlightblogauthordata">StarlightBlogAuthorData</a>[]</code>
+
+An unordered list of all the known authors in your blog.
+
+## `StarlightBlogAuthorData`
+
+Blog post authors are represented by a `StarlightBlogAuthorData` object with the following properties:
+
+### `name`
+
+**Type:** `string`
+
+The [name](/configuration/#name) of the author.
+
+### `title`
+
+**Type:** `string | undefined`
+
+The optional [title](/configuration/#title-1) of the author.
+
+### `url`
+
+**Type:** `string | undefined`
+
+The optional [URL](/configuration/#url) to link the author to.
