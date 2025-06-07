@@ -1,5 +1,19 @@
 # starlight-blog
 
+## 0.24.0
+
+### Minor Changes
+
+- [#162](https://github.com/HiDeoo/starlight-blog/pull/162) [`bc995dc`](https://github.com/HiDeoo/starlight-blog/commit/bc995dce6ad26075316ee3240c6933bd00ffb090) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Exposes a list of all the authors in the blog data object accessible on Starlight pages using `Astro.locals.starlightBlog.authors`. This can be useful for example to create a widget that lists all the authors of your blog on your homepage.
+
+  See the [“Blog Data” guide](https://starlight-blog-docs.vercel.app/guides/blog-data/) for more information.
+
+- [#160](https://github.com/HiDeoo/starlight-blog/pull/160) [`f91a48c`](https://github.com/HiDeoo/starlight-blog/commit/f91a48c9d5527dcc54f0374e511fedd9bab95515) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for [remote](https://docs.astro.build/en/guides/images/#remote-images) [cover images](https://starlight-blog-docs.vercel.app/guides/frontmatter/#cover) in blog posts.
+
+- [#155](https://github.com/HiDeoo/starlight-blog/pull/155) [`e5746c1`](https://github.com/HiDeoo/starlight-blog/commit/e5746c19e8d350e0fc7e759de221fa6948100875) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for [metrics](https://starlight-blog-docs.vercel.app/configuration/#metrics-configuration) that can be displayed alongside blog posts, such as an estimated reading time or a word count.
+
+  To learn more about metrics, check the new ["Metrics" guide](https://starlight-blog-docs.vercel.app/guides/metrics/).
+
 ## 0.23.2
 
 ### Patch Changes

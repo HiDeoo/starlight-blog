@@ -1,6 +1,6 @@
 {
   "name": "starlight-blog",
-  "version": "0.23.2",
+  "version": "0.24.0",
   "license": "MIT",
   "description": "Starlight plugin to add a blog to your documentation.",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
