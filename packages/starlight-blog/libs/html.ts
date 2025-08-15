@@ -29,6 +29,14 @@ export async function transformHTMLForRSS(html: string, baseURL: URL) {
           if (node.attributes['data-code']) {
             removeHTMLNode(node)
           }
+          // Remove Starlight section anchor links (sl-anchor-link class).
+          if (node.name === 'a' && node.attributes['class']?.includes('sl-anchor-link')) {
+            removeHTMLNode(node)
+          }
+          // Remove sr-only elements (screen reader only accessibility text).
+          if (node.attributes['class']?.includes('sr-only')) {
+            removeHTMLNode(node)
+          }
         }
       })
 
