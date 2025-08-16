@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.24.1
+
+### Patch Changes
+
+- [#169](https://github.com/HiDeoo/starlight-blog/pull/169) [`0e3ede8`](https://github.com/HiDeoo/starlight-blog/commit/0e3ede848fedfeebaabf40f4da967fcd6d0d2c33) Thanks [@Hofer-Julian](https://github.com/Hofer-Julian)! - Removes anchor links for headings in RSS feed.
+
 ## 0.24.0
 
 ### Minor Changes
