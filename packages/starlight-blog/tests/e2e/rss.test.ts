@@ -32,4 +32,10 @@ test.describe('feed', () => {
 
     expect(await rssPage.getAllContent()).not.toContain('<!-- excerpt -->')
   })
+
+  test('should not contain heading anchor links', async ({ rssPage }) => {
+    await rssPage.goto()
+
+    expect(await rssPage.getAllContent()).not.toContain('Section titled')
+  })
 })
