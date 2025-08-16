@@ -49,7 +49,7 @@
     "@astrojs/starlight": ">=0.33.0"
   },
   "engines": {
-    "node": ">=18.17.1"
+    "node": ">=18.20.8"
   },
   "packageManager": "pnpm@8.6.9",
   "publishConfig": {

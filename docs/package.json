@@ -14,14 +14,14 @@
     "lint": "eslint . --cache --max-warnings=0"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.33.0",
+    "@astrojs/starlight": "^0.35.2",
     "@hideoo/starlight-plugins-docs-components": "^0.4.0",
-    "astro": "^5.3.0",
+    "astro": "^5.13.2",
     "sharp": "^0.33.5",
     "starlight-blog": "workspace:*"
   },
   "engines": {
-    "node": ">=18.17.1"
+    "node": ">=18.20.8"
   },
   "packageManager": "pnpm@8.6.9",
   "private": true,
