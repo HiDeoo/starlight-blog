@@ -3,8 +3,12 @@ import type { Page } from '@playwright/test'
 import { BasePage } from './BasePage'
 
 export class AuthorsPage extends BasePage {
-  constructor(public override readonly page: Page) {
+  public override readonly page: Page
+
+  constructor(page: Page) {
     super(page)
+
+    this.page = page
   }
 
   goto(author: string, locale?: string) {
