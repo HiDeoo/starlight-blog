@@ -35,14 +35,19 @@
     "@astrojs/rss": "^4.0.11",
     "astro-remote": "^0.3.3",
     "github-slugger": "^2.0.0",
+    "hast-util-from-html": "^2.0.3",
+    "hast-util-to-html": "^9.0.5",
+    "hast-util-to-string": "^3.0.1",
     "marked": "^15.0.4",
     "marked-plaintify": "^1.1.1",
     "mdast-util-mdx-expression": "^2.0.1",
-    "ultrahtml": "^1.6.0",
+    "unist-util-is": "^6.0.0",
+    "unist-util-remove": "^4.0.0",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",
+    "@types/hast": "^3.0.4",
     "vitest": "2.1.6"
   },
   "peerDependencies": {

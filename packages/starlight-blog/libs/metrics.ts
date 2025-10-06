@@ -7,12 +7,8 @@ import { getLangFromLocale, type Locale } from './i18n'
 // 184 ± 29 words/min → 213 words/min
 const wordsPerMinute = 213
 
-export async function getMetrics(
-  html: string,
-  locale: Locale,
-  userMetrics: StarlightBlogUserMetrics,
-): Promise<Metrics> {
-  const { content, images } = await transformHTMLForMetrics(html)
+export function getMetrics(html: string, locale: Locale, userMetrics: StarlightBlogUserMetrics): Metrics {
+  const { content, images } = transformHTMLForMetrics(html)
 
   const words = userMetrics?.words ?? getWordCount(content, getLangFromLocale(locale))
 

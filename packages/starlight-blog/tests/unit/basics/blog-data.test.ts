@@ -60,7 +60,7 @@ describe('posts', () => {
 
       return {
         ...mod,
-        getMetrics: vi.fn().mockResolvedValue({
+        getMetrics: vi.fn().mockReturnValue({
           readingTime: { minutes: 5, seconds: 290 },
           words: { rounded: 1100, total: 1065 },
         }),
