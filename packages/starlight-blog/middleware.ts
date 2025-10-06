@@ -76,7 +76,7 @@ async function getBlogPostsData(locale: Locale, t: App.Locals['t']): Promise<Sta
       const authors = getEntryAuthors(entry)
       const tags = getEntryTags(entry)
       const html = await renderBlogEntryToString(entry, t)
-      const metrics = await getMetrics(html, locale, entry.data.metrics)
+      const metrics = getMetrics(html, locale, entry.data.metrics)
 
       const postsData: StarlightBlogData['posts'][number] = {
         authors: authors.map(({ name, title, url }) => ({

@@ -1,112 +1,129 @@
-import { COMMENT_NODE, DOCTYPE_NODE, ELEMENT_NODE, TEXT_NODE, transform, walk, type Node } from 'ultrahtml'
-import sanitize from 'ultrahtml/transformers/sanitize'
+import type { Comment, Element, Node as HastNode, Root } from 'hast'
+import { fromHtml } from 'hast-util-from-html'
+import { toHtml } from 'hast-util-to-html'
+import { toString } from 'hast-util-to-string'
+import { is } from 'unist-util-is'
+import { remove } from 'unist-util-remove'
 
 import { stripTrailingSlash } from './path'
 
-export async function transformHTMLForRSS(html: string, baseURL: URL) {
-  const content = await transform(html, [
-    async (node) => {
-      // Thanks @delucis - https://github.com/delucis/astro-blog-full-text-rss/blob/204be3d5b84357d9a8e6b73ee751766b76ad727e/src/pages/rss.xml.ts
-      // Thanks @Princesseuh - https://github.com/Princesseuh/erika.florist/blob/90d0063b3524b27aae193aff768db12709be0d05/src/middleware.ts
-      await walk(node, (node) => {
-        removeDoctypePreamble(node)
-        removeExcerptDelimiters(node)
+export function transformHTMLForRSS(html: string, baseURL: URL) {
+  const ast = fromHtml(html)
 
-        if (node.type === ELEMENT_NODE) {
-          // Transform link with relative path to absolute URL.
-          if (node.name === 'a' && node.attributes['href']?.startsWith('/')) {
-            node.attributes['href'] = stripTrailingSlash(baseURL.href) + node.attributes['href']
-          }
-          // Transform image with relative path to absolute URL.
-          if (node.name === 'img' && node.attributes['src']?.startsWith('/')) {
-            node.attributes['src'] = stripTrailingSlash(baseURL.href) + node.attributes['src']
-          }
-          // Remove aside icons.
-          if (node.name === 'svg' && node.attributes['class']?.includes('starlight-aside__icon')) {
-            removeHTMLNode(node)
-          }
-          // Remove Expressive Code copy button.
-          if (node.attributes['data-code']) {
-            removeHTMLNode(node)
-          }
-          // Remove Starlight section anchor links (sl-anchor-link class).
-          if (node.name === 'a' && node.attributes['class']?.includes('sl-anchor-link')) {
-            removeHTMLNode(node)
-          }
-          // Remove sr-only elements (screen reader only accessibility text).
-          if (node.attributes['class']?.includes('sr-only')) {
-            removeHTMLNode(node)
-          }
-        }
-      })
+  remove(ast, (node) => {
+    // Transform link with relative path to absolute URL.
+    if (isElement(node, 'a') && isStringAttribute(node, 'href') && node.properties['href'].startsWith('/')) {
+      node.properties['href'] = stripTrailingSlash(baseURL.href) + node.properties['href']
+    }
 
-      return node
-    },
-    sanitize({
-      dropAttributes: {
-        class: ['*'],
-        'data-astro-source-file': ['*'],
-        'data-astro-source-loc': ['*'],
-        'data-language': ['*'],
-        style: ['*'],
-      },
-      dropElements: ['link', 'script', 'style'],
-    }),
-  ])
+    // Transform image with relative path to absolute URL.
+    if (isElement(node, 'img') && isStringAttribute(node, 'src') && node.properties['src'].startsWith('/')) {
+      node.properties['src'] = stripTrailingSlash(baseURL.href) + node.properties['src']
+    }
 
-  // Strips empty attributes with no name if any.
-  return content.replaceAll(/\s=""\s/g, ' ')
+    // Removals based on class names and attributes should be done before cleaning up some attributes.
+    if (
+      // Remove screen reader only accessibility text.
+      hasCssClass(node, 'sr-only') ||
+      // Remove aside icons.
+      hasCssClass(node, 'starlight-aside__icon') ||
+      // Remove Starlight section anchor links.
+      hasCssClass(node, 'sl-anchor-link')
+    ) {
+      return true
+    }
+
+    // Remove irrelevant attributes.
+    removeAttribute(node, 'style')
+    removeAttribute(node, 'className')
+    removeAttribute(node, 'dataAstroSourceFile')
+    removeAttribute(node, 'dataAstroSourceLoc')
+    removeAttribute(node, 'dataLanguage')
+
+    return (
+      // Remove excerpt delimiters.
+      isExcerpt(node) ||
+      // Remove link, script, and style elements.
+      isElement(node, 'link') ||
+      isElement(node, 'script') ||
+      isElement(node, 'style') ||
+      // Remove Expressive Code copy button.
+      hasAttribute(node, 'dataCode')
+    )
+  })
+
+  return toHtml(getBodyChildren(ast))
 }
 
-export async function transformHTMLForMetrics(html: string) {
+export function transformHTMLForMetrics(html: string) {
   let images = 0
 
-  const content = await transform(html, [
-    async (node) => {
-      await walk(node, (node) => {
-        removeDoctypePreamble(node)
-        removeExcerptDelimiters(node)
+  const ast = fromHtml(html)
 
-        if (node.type === ELEMENT_NODE) {
-          // Remove code blocks.
-          if (node.name === 'div' && node.attributes['class']?.includes('expressive-code')) {
-            removeHTMLNode(node)
-          }
-          // Count images.
-          if (node.name === 'img') {
-            images++
-          }
-        }
-      })
+  remove(ast, (node) => {
+    // Count images.
+    if (isElementNode(node) && node.tagName === 'img') images++
 
-      return node
-    },
-    sanitize({ unblockElements: [] }),
-  ])
+    return (
+      // Remove screen reader only accessibility text.
+      hasCssClass(node, 'sr-only') ||
+      // Remove code blocks.
+      hasCssClass(node, 'expressive-code')
+    )
+  })
 
-  return { content, images }
+  return { content: toString(ast), images }
 }
 
-function removeExcerptDelimiters(node: Node) {
-  if (
-    node.type === ELEMENT_NODE &&
-    node.name === 'p' &&
-    'hidden' in node.attributes &&
+function getBodyChildren(ast: Root) {
+  const html = ast.children[0]
+  if (!html || !isElement(html, 'html')) return ast
+
+  const body = html.children.find((child) => isElement(child, 'body'))
+
+  return body?.children ?? ast
+}
+
+function isElementNode(node: HastNode): node is Element {
+  return is(node, { type: 'element' })
+}
+
+function isCommentNode(node: HastNode | undefined): node is Comment {
+  return is(node, { type: 'comment' })
+}
+
+function isElement(node: HastNode, tagName: string): node is Element {
+  return isElementNode(node) && node.tagName === tagName
+}
+
+function isStringAttribute<T extends string>(
+  node: Element,
+  attribute: T,
+): node is Element & { properties: Record<T, string> } {
+  return typeof node.properties[attribute] === 'string'
+}
+
+function hasCssClass(node: HastNode, className: string): boolean {
+  return (
+    isElementNode(node) &&
+    Array.isArray(node.properties['className']) &&
+    node.properties['className'].includes(className)
+  )
+}
+
+function hasAttribute(node: HastNode, attribute: string): boolean {
+  return isElementNode(node) && attribute in node.properties
+}
+
+function removeAttribute(node: HastNode, attribute: string) {
+  if (isElementNode(node) && attribute in node.properties) node.properties[attribute] = undefined
+}
+
+function isExcerpt(node: HastNode): boolean {
+  return (
+    isElement(node, 'p') &&
     node.children.length === 1 &&
-    node.children[0]?.type === COMMENT_NODE &&
-    node.children[0].value === ' excerpt '
-  ) {
-    removeHTMLNode(node)
-  }
-}
-
-function removeDoctypePreamble(node: Node) {
-  if (node.type === DOCTYPE_NODE) {
-    removeHTMLNode(node)
-  }
-}
-
-function removeHTMLNode(node: Node) {
-  node.type = TEXT_NODE
-  node.value = ''
+    isCommentNode(node.children[0]) &&
+    node.children[0].value.trim() === 'excerpt'
+  )
 }
