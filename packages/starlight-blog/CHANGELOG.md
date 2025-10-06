@@ -1,5 +1,13 @@
 # starlight-blog
 
+## 0.24.2
+
+### Patch Changes
+
+- [#175](https://github.com/HiDeoo/starlight-blog/pull/175) [`d624bf0`](https://github.com/HiDeoo/starlight-blog/commit/d624bf0ece2492c9f79b47cf7994c06638d94e8b) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes a potential issue where RSS content might be truncated in some cases.
+
+- [#175](https://github.com/HiDeoo/starlight-blog/pull/175) [`d624bf0`](https://github.com/HiDeoo/starlight-blog/commit/d624bf0ece2492c9f79b47cf7994c06638d94e8b) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes a potential issue where metrics might not be calculated correctly in some cases.
+
 ## 0.24.1
 
 ### Patch Changes
