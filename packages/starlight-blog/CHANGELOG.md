@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.24.3
+
+### Patch Changes
+
+- [#178](https://github.com/HiDeoo/starlight-blog/pull/178) [`b2d4c4d`](https://github.com/HiDeoo/starlight-blog/commit/b2d4c4db486e63160ea9ed303831024c48d8ec1b) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Setups trusted publishing using OpenID Connect (OIDC) authentication — no code changes.
+
 ## 0.24.2
 
 ### Patch Changes
