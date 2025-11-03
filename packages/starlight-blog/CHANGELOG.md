@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.25.0
+
+### Minor Changes
+
+- [#181](https://github.com/HiDeoo/starlight-blog/pull/181) [`5393110`](https://github.com/HiDeoo/starlight-blog/commit/53931103074eae1cc595f7b8f1cbcc477a0704a4) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds Astro’s built-in optimized asset support for local author profile pictures.
+
 ## 0.24.3
 
 ### Patch Changes
