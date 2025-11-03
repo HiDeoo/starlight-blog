@@ -1,3 +1,5 @@
+import path from 'node:path'
+
 import type { StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroConfig, ViteUserConfig } from 'astro'
 
@@ -11,6 +13,7 @@ export function vitePluginStarlightBlogConfig(
   const modules = {
     'virtual:starlight-blog-config': `export default ${JSON.stringify(starlightBlogConfig)}`,
     'virtual:starlight-blog-context': `export default ${JSON.stringify(context)}`,
+    'virtual:starlight-blog-images': getImagesVirtualModule(starlightBlogConfig, context),
   }
 
   const moduleResolutionMap = Object.fromEntries(
@@ -27,6 +30,29 @@ export function vitePluginStarlightBlogConfig(
       return id in modules ? resolveVirtualModuleId(id) : undefined
     },
   }
+}
+
+export function getImagesVirtualModule(starlightBlogConfig: StarlightBlogConfig, context: StarlightBlogContext) {
+  let module = ''
+  const authors = Object.entries(starlightBlogConfig.authors)
+
+  for (const [id, author] of authors) {
+    if (!author.picture?.startsWith('.')) continue
+    module += `import ${id} from ${resolveModuleId(author.picture, context)};\n`
+  }
+
+  module += 'export const authors = {\n'
+  for (const [id, author] of authors) {
+    if (!author.picture) continue
+    module += `  "${author.name}": ${author.picture.startsWith('.') ? id : resolveModuleId(author.picture, context)},\n`
+  }
+  module += '};\n'
+
+  return module
+}
+
+function resolveModuleId(id: string, context: StarlightBlogContext) {
+  return JSON.stringify(id.startsWith('.') ? path.resolve(context.rootDir, id) : id)
 }
 
 function resolveVirtualModuleId<TModuleId extends string>(id: TModuleId): `\0${TModuleId}` {

@@ -151,8 +151,11 @@ A URL to link the author's name to.
 
 **Type:** `string`
 
-A URL or path to an image in the `public/` directory to display as the author's picture.
-When using remote images, check out the [“Authorizing remote images”](https://docs.astro.build/en/guides/images/#authorizing-remote-images) guide to enable image optimization.
+A URL or path to an image to display as the author's picture.
+
+- For local images in `src/`, provide the relative path to the image, e.g. `./src/assets/author.png`.
+- For local images in `public/`, provide an absolute path starting with a `/`, e.g. `/images/author.png`.
+- For remote images, provide the URL to the image. When using remote images, check out the [“Authorizing remote images”](https://docs.astro.build/en/guides/images/#authorizing-remote-images) guide to enable image optimization.
 
 ## Metrics configuration
 
