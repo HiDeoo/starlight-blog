@@ -1,5 +1,7 @@
 ---
+import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
+import { authors } from 'virtual:starlight-blog-images'
 
 import { getRelativeUrl } from '../libs/page'
 import type { StarlightBlogAuthor } from '../schema'
@@ -13,11 +15,17 @@ const { author } = Astro.props
 const isLink = author.url !== undefined
 const Element = isLink ? 'a' : 'div'
 
-const pictureSrc = author.picture
-  ? author.picture.startsWith('http')
-    ? author.picture
-    : getRelativeUrl(author.picture, true)
-  : undefined
+const picture = authors[author.name]
+
+const pictureSrc = (
+  picture === undefined
+    ? undefined
+    : typeof picture === 'string'
+      ? picture.startsWith('http')
+        ? picture
+        : getRelativeUrl(picture, true)
+      : picture
+) as ImageMetadata | undefined
 ---
 
 <Element href={isLink ? author.url : undefined} class="author">

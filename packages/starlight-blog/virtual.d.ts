@@ -9,3 +9,9 @@ declare module 'virtual:starlight-blog-context' {
 
   export default StarlightBlogContext
 }
+
+declare module 'virtual:starlight-blog-images' {
+  type ImageMetadata = import('astro').ImageMetadata
+
+  export const authors: Record<string, string | ImageMetadata>
+}
