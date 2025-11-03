@@ -15,7 +15,7 @@ const { author } = Astro.props
 const isLink = author.url !== undefined
 const Element = isLink ? 'a' : 'div'
 
-const picture = authors[author.name]
+const picture = authors[author.name] ?? author.picture
 
 const pictureSrc = (
   picture === undefined
