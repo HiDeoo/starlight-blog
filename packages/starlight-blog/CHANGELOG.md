@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.25.1
+
+### Patch Changes
+
+- [#183](https://github.com/HiDeoo/starlight-blog/pull/183) [`d491d87`](https://github.com/HiDeoo/starlight-blog/commit/d491d87f64be60103826cdf200e255798dc53445) Thanks [@rksvc](https://github.com/rksvc)! - Removes Expressive Code line numbers in RSS feed.
+
 ## 0.25.0
 
 ### Minor Changes
