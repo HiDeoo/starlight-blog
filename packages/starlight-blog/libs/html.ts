@@ -28,7 +28,9 @@ export function transformHTMLForRSS(html: string, baseURL: URL) {
       // Remove aside icons.
       hasCssClass(node, 'starlight-aside__icon') ||
       // Remove Starlight section anchor links.
-      hasCssClass(node, 'sl-anchor-link')
+      hasCssClass(node, 'sl-anchor-link') ||
+      // Remove Expressive Code line numbers.
+      hasCssClass(node, 'ln')
     ) {
       return true
     }
