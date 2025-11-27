@@ -21,6 +21,14 @@ const pageProps = getPageProps(author.name)
 ---
 
 <Page {...pageProps}>
-  <PostCount>{Astro.locals.t('starlightBlog.authors.count', { count: entries.length, author: author.name })}</PostCount>
+  <PostCount
+    >{
+      Astro.locals.t('starlightBlog.authors.count', {
+        interpolation: { escapeValue: false },
+        count: entries.length,
+        author: author.name,
+      })
+    }</PostCount
+  >
   <Posts {entries} {locale} />
 </Page>

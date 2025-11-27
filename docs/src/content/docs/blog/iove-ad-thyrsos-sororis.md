@@ -7,6 +7,8 @@ authors:
     picture: https://avatars.githubusercontent.com/u/10137?s=200
     url: https://github.com/ghost
   - hideoo
+  - name: Bob O'Alice
+    picture: https://avatars.githubusercontent.com/u/10137?s=200
 ---
 
 ## Externa sum verba in timor
