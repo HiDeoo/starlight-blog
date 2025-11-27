@@ -1,16 +1,22 @@
 import { expect, test } from './test'
 
 test('should display a preview of each posts from a specific author', async ({ authorsPage }) => {
-  const author = 'Ghost'
-  const count = 6
+  const authors: [author: string, slug: string, count: number][] = [
+    ['Ghost', 'ghost', 6],
+    ["Bob O'Alice", 'bob-oalice', 1],
+  ]
 
-  await authorsPage.goto(author.toLowerCase())
+  for (const [author, slug, count] of authors) {
+    await authorsPage.goto(slug)
 
-  await expect(authorsPage.content.getByText(`${count} posts by ${author}`, { exact: true })).toBeVisible()
+    await expect(
+      authorsPage.content.getByText(`${count} post${count > 1 ? 's' : ''} by ${author}`, { exact: true }),
+    ).toBeVisible()
 
-  const articles = authorsPage.content.getByRole('article')
+    const articles = authorsPage.content.getByRole('article')
 
-  expect(await articles.count()).toBe(count)
+    expect(await articles.count()).toBe(count)
+  }
 })
 
 test('should not include draft blog posts', async ({ authorsPage }) => {

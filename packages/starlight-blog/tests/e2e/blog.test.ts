@@ -174,7 +174,7 @@ test('should add links to authors in the sidebar', async ({ blogPage }) => {
 
   const links = group.getByRole('link')
 
-  expect(await links.count()).toBe(3)
+  expect(await links.count()).toBe(4)
 
   const allLinks = await links.all()
   const allHrefs = await Promise.all(allLinks.map((link) => link.getAttribute('href')))
@@ -184,6 +184,7 @@ test('should add links to authors in the sidebar', async ({ blogPage }) => {
   await expect(links.nth(0)).toContainText('HiDeoo')
   await expect(links.nth(1)).toContainText('Ghost')
   await expect(links.nth(2)).toContainText('Astro')
+  await expect(links.nth(3)).toContainText("Bob O'Alice")
 })
 
 test('should not add links to authors from draft blog posts in the sidebar', async ({ blogPage }) => {

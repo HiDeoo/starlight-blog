@@ -21,6 +21,14 @@ const pageProps = getPageProps(label)
 ---
 
 <Page {...pageProps}>
-  <PostCount>{Astro.locals.t('starlightBlog.tags.count', { count: entries.length, tag: label })}</PostCount>
+  <PostCount
+    >{
+      Astro.locals.t('starlightBlog.tags.count', {
+        interpolation: { escapeValue: false },
+        count: entries.length,
+        tag: label,
+      })
+    }</PostCount
+  >
   <Posts {entries} {locale} />
 </Page>
