@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.25.2
+
+### Patch Changes
+
+- [#186](https://github.com/HiDeoo/starlight-blog/pull/186) [`1bdbaa4`](https://github.com/HiDeoo/starlight-blog/commit/1bdbaa473101a2f0ff914fdb606553ee2626c4c1) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes a potential issue where author and tag names containing special characters could be improperly escaped in some UI strings.
+
 ## 0.25.1
 
 ### Patch Changes
