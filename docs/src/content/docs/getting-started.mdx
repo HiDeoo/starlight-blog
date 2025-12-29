@@ -70,6 +70,8 @@ import { PackageManagers } from '@hideoo/starlight-plugins-docs-components'
    };
    ```
 
+   If you are already [extending Starlight’s schema](https://starlight.astro.build/reference/frontmatter/#extend) with additional fields, you can rely on [Zod's API](https://v3.zod.dev/?id=merge) to compose schemas together, e.g. `blogSchema(context).merge(mySchema)`.
+
 4. Create your first blog post by creating a `.md` or `.mdx` file in the `src/content/docs/blog/` directory:
 
    ```md
