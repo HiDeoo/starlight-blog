@@ -15,3 +15,8 @@ declare module 'virtual:starlight-blog-images' {
 
   export const authors: Record<string, string | ImageMetadata>
 }
+
+declare module 'virtual:starlight-blog/components/*' {
+  const Component: any // eslint-disable-line @typescript-eslint/no-explicit-any
+  export default Component
+}

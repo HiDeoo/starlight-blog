@@ -15,6 +15,11 @@ const configSchema = z
      */
     authors: z.record(blogAuthorSchema).default({}),
     /**
+     * Component overrides for the blog.
+     * Key is the component name, value is the path to the custom component.
+     */
+    components: z.record(z.string()).optional().default({}),
+    /**
      * The configuration of various metrics that can be displayed alongside blog posts.
      */
     metrics: z

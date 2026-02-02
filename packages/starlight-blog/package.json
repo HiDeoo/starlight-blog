@@ -7,10 +7,12 @@
   "type": "module",
   "exports": {
     ".": "./index.ts",
+    "./components/*.astro": "./components/*.astro",
     "./components/MarkdownContent.astro": "./components/starlight/MarkdownContent.astro",
     "./components/SiteTitle.astro": "./components/starlight/SiteTitle.astro",
     "./components/ThemeSelect.astro": "./components/starlight/ThemeSelect.astro",
     "./data": "./data.ts",
+    "./libs": "./libs/index.ts",
     "./middleware": "./middleware.ts",
     "./overrides/MarkdownContent.astro": "./overrides/MarkdownContent.astro",
     "./overrides/SiteTitle.astro": "./overrides/SiteTitle.astro",

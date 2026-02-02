@@ -3,10 +3,10 @@ import type { StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
 import { getPathWithLocale, getRelativeUrl } from '../libs/page'
 
-import Cover from './Cover.astro'
-import Excerpt from './Excerpt.astro'
-import Metadata from './Metadata.astro'
-import PostTags from './PostTags.astro'
+import Cover from 'virtual:starlight-blog/components/Cover'
+import Excerpt from 'virtual:starlight-blog/components/Excerpt'
+import Metadata from 'virtual:starlight-blog/components/Metadata'
+import PostTags from 'virtual:starlight-blog/components/PostTags'
 
 interface Props {
   entry: StarlightBlogEntry

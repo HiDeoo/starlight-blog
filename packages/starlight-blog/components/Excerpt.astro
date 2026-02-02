@@ -3,7 +3,7 @@ import { Markdown } from 'astro-remote'
 
 import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../libs/content'
 
-import ExcerptContent from './ExcerptContent.astro'
+import ExcerptContent from 'virtual:starlight-blog/components/ExcerptContent'
 
 interface Props {
   entry: StarlightBlogEntry

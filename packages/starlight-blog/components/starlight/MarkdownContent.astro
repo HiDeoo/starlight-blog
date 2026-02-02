@@ -3,10 +3,10 @@ import Default from '@astrojs/starlight/components/MarkdownContent.astro'
 
 import { getBlogEntry } from '../../libs/content'
 import { isAnyBlogPostPage } from '../../libs/page'
-import Cover from '../Cover.astro'
-import Metadata from '../Metadata.astro'
-import PostTags from '../PostTags.astro'
-import PrevNextLinks from '../PrevNextLinks.astro'
+import Cover from 'virtual:starlight-blog/components/Cover'
+import Metadata from 'virtual:starlight-blog/components/Metadata'
+import PostTags from 'virtual:starlight-blog/components/PostTags'
+import PrevNextLinks from 'virtual:starlight-blog/components/PrevNextLinks'
 
 const { id, locale } = Astro.locals.starlightRoute
 
