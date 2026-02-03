@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 import type { StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroConfig, ViteUserConfig } from 'astro'
@@ -72,11 +72,11 @@ function resolveComponentModule(id: string, config: StarlightBlogConfig) {
 
   const dirname = path.dirname(fileURLToPath(import.meta.url))
   const defaultPath = path.resolve(dirname, `../components/${componentName}.astro`)
-  return `export { default } from '${defaultPath}';`
+  return `export { default } from '${pathToFileURL(defaultPath).href}';`
 }
 
 function resolveModuleId(id: string, context: StarlightBlogContext) {
-  return JSON.stringify(id.startsWith('.') ? path.resolve(context.rootDir, id) : id)
+  return JSON.stringify(id.startsWith('.') ? pathToFileURL(path.resolve(context.rootDir, id)).href : id)
 }
 
 function resolveVirtualModuleId<TModuleId extends string>(id: TModuleId): `\0${TModuleId}` {
