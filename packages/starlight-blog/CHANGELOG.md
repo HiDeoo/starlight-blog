@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.25.3
+
+### Patch Changes
+
+- [#194](https://github.com/HiDeoo/starlight-blog/pull/194) [`d8721b8`](https://github.com/HiDeoo/starlight-blog/commit/d8721b8a917ab13fdfab63427f3dfc2137d4c406) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes a memory leak issue for blog posts with an excerpt due to a third-party dependency.
+
 ## 0.25.2
 
 ### Patch Changes
