@@ -75,8 +75,8 @@ importers:
         specifier: '>=0.33.0'
         version: 0.35.2(astro@5.13.2)
       astro-remote:
-        specifier: ^0.3.3
-        version: 0.3.3
+        specifier: ^0.3.4
+        version: 0.3.4
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -2316,8 +2316,8 @@ packages:
       rehype-expressive-code: 0.41.3
     dev: false
 
-  /astro-remote@0.3.3:
-    resolution: {integrity: sha512-ufS/aOBXQKAe6hZ5NbiHUsC01o0ZcEwS+nNhd/mr1avLV+NbgYJEbwY8VRorzLs/GH5COOTaxl2795DkGIUTcw==}
+  /astro-remote@0.3.4:
+    resolution: {integrity: sha512-jL5skNQLA0YBc1R3bVGXyHew3FqGqsT7AgLzWAVeTLzFkwVMUYvs4/lKJSmS7ygcF1GnHnoKG6++8GL9VtWwGQ==}
     engines: {node: '>=18.14.1'}
     dependencies:
       entities: 4.5.0
