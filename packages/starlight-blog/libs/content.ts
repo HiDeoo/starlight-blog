@@ -5,7 +5,7 @@ import config from 'virtual:starlight-blog-config'
 import context from 'virtual:starlight-blog-context'
 
 import { DefaultLocale, type Locale } from './i18n'
-import { getRelativeUrl, getRelativeBlogUrl, getPathWithLocale } from './page'
+import { getRelativeUrl, getRelativeBlogUrl, getPathWithLocale, isFeedOrIndexLikePath } from './page'
 import { stripLeadingSlash, stripTrailingSlash } from './path'
 
 const blogEntriesPerLocale = new Map<Locale, StarlightBlogEntry[]>()
@@ -54,6 +54,9 @@ export async function getSidebarBlogEntries(locale: Locale) {
 }
 
 export async function getBlogEntry(slug: string, locale: Locale): Promise<StarlightBlogEntryPaginated> {
+  // Exclude feed and index files
+  if (isFeedOrIndexLikePath(slug)) {
+  
   const entries = await getBlogEntries(locale)
 
   const entryIndex = entries.findIndex((entry) => {

@@ -50,11 +50,22 @@ export function getPathWithLocale(path: string, locale: Locale): string {
   return path ? `${stripTrailingSlash(locale)}/${stripLeadingSlash(path)}` : locale
 }
 
+// Files that should not be treated as blog posts
+const NON_POST_TERMINALS = new Set(['rss.xml', 'sitemap-index.xml', 'sitemap-0.xml'])
+
+/** Check if a path refers to a feed or index file (not a blog post) */
+export function isFeedOrIndexLikePath(pathname: string): boolean {
+  const normalized = pathname.replace(/\/+$/, '')
+  const terminal = normalized.split('/').pop() ?? ''
+  return NON_POST_TERMINALS.has(terminal)
+}
+
 export function isAnyBlogPage(slug: string) {
   return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}(/?$|/.+/?$)`).exec(slug) !== null
 }
 
 export function isAnyBlogPostPage(slug: string) {
+  if (isFeedOrIndexLikePath(slug)) return false
   return (
     new RegExp(
       `^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/(?!(\\d+/?|tags/.+|authors/.+)$).+$`,
