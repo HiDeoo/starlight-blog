@@ -54,6 +54,14 @@ export async function getSidebarBlogEntries(locale: Locale) {
 }
 
 export async function getBlogEntry(slug: string, locale: Locale): Promise<StarlightBlogEntryPaginated> {
+  // Exclude feed and index files
+  const NON_POST_TERMINALS = new Set(['rss.xml', 'sitemap-index.xml', 'sitemap-0.xml'])
+  const normalized = slug.replace(/\/+$/, '')
+  const terminal = normalized.split('/').pop() ?? ''
+  if (NON_POST_TERMINALS.has(terminal)) {
+    throw new Error(`Blog post with slug '${slug}' not found.`)
+  }
+  
   const entries = await getBlogEntries(locale)
 
   const entryIndex = entries.findIndex((entry) => {
