@@ -1,5 +1,17 @@
 # starlight-blog
 
+## 0.26.0
+
+### Minor Changes
+
+- [#199](https://github.com/HiDeoo/starlight-blog/pull/199) [`3c6cf12`](https://github.com/HiDeoo/starlight-blog/commit/3c6cf1209335c295921fbf283de26d20d9a6bae4) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for Astro v6, drops support for Astro v5.
+
+  ⚠️ **BREAKING CHANGE:** The minimum supported version of Starlight is now `0.38.0`.
+
+  Please follow the [upgrade guide](https://github.com/withastro/starlight/releases/tag/%40astrojs%2Fstarlight%400.38.0) to update your project.
+
+- [#201](https://github.com/HiDeoo/starlight-blog/pull/201) [`a3cddb7`](https://github.com/HiDeoo/starlight-blog/commit/a3cddb7381a6029af430fac9351c39488b6e96ff) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds a new `rss` configuration option to disable the automatic generation of an RSS feed for the blog when the Astro `site` option is set.
+
 ## 0.25.3
 
 ### Patch Changes
