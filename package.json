@@ -20,7 +20,7 @@
     "@hideoo/tsconfig": "^2.0.3",
     "astro": "^6.0.2",
     "eslint": "^9.39.4",
-    "prettier": "^3.8.1",
+    "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3"
   },
