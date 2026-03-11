@@ -1,7 +1,7 @@
 import type { GetStaticPathsResult } from 'astro'
 import { slug } from 'github-slugger'
 import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog-config'
+import config from 'virtual:starlight-blog/config'
 
 import type { StarlightBlogAuthor } from '../schema'
 

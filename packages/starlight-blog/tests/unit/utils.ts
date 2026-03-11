@@ -19,25 +19,27 @@ function mockBlogPost(docsFilePath: string, entry: StarlightBlogEntryData): Star
   return {
     id: `blog/${slug(docsFilePath.replace(/\.[^.]+$/, '').replace(/\/index$/, ''))}`,
     collection: 'docs',
-    data: blogEntrySchema({
-      image: () =>
-        z.object({
-          src: z.string(),
-          width: z.number(),
-          height: z.number(),
-          format: z.union([
-            z.literal('png'),
-            z.literal('jpg'),
-            z.literal('jpeg'),
-            z.literal('tiff'),
-            z.literal('webp'),
-            z.literal('gif'),
-            z.literal('svg'),
-            z.literal('avif'),
-          ]),
-        }),
-    })
-      .passthrough()
+    data: z
+      .looseObject(
+        blogEntrySchema({
+          image: () =>
+            z.object({
+              src: z.string(),
+              width: z.number(),
+              height: z.number(),
+              format: z.union([
+                z.literal('png'),
+                z.literal('jpg'),
+                z.literal('jpeg'),
+                z.literal('tiff'),
+                z.literal('webp'),
+                z.literal('gif'),
+                z.literal('svg'),
+                z.literal('avif'),
+              ]),
+            }),
+        }).shape,
+      )
       .parse(entry) as StarlightBlogEntry['data'],
     filePath: `src/content/docs/blog/${docsFilePath}`,
     body: '',

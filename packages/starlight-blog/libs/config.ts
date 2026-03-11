@@ -13,7 +13,7 @@ const configSchema = z
      * Global authors are keyed by a unique identifier that can also be referenced in a blog post `authors` frontmatter
      * field.
      */
-    authors: z.record(blogAuthorSchema).default({}),
+    authors: z.record(z.string(), blogAuthorSchema).default({}),
     /**
      * The configuration of various metrics that can be displayed alongside blog posts.
      */
@@ -80,24 +80,19 @@ const configSchema = z
      * The value can be a string, or for multilingual sites, an object with values for each different locale.
      * When using the object form, the keys must be BCP-47 tags (e.g. `en`, `ar`, or `zh-CN`).
      */
-    title: z.union([z.string(), z.record(z.string())]).default('Blog'),
+    title: z.union([z.string(), z.record(z.string(), z.string())]).default('Blog'),
   })
-  .default({})
+  .prefault({})
 
 export function validateConfig(userConfig: unknown): StarlightBlogConfig {
   const config = configSchema.safeParse(userConfig)
 
   if (!config.success) {
-    const errors = config.error.flatten()
-
     throw new AstroError(
       `Invalid starlight-blog configuration:
 
-${errors.formErrors.map((formError) => ` - ${formError}`).join('\n')}
-${Object.entries(errors.fieldErrors)
-  .map(([fieldName, fieldErrors]) => ` - ${fieldName}: ${fieldErrors.join(' - ')}`)
-  .join('\n')}
-  `,
+${z.prettifyError(config.error)}
+`,
       `See the error report above for more informations.\n\nIf you believe this is a bug, please file an issue at https://github.com/HiDeoo/starlight-blog/issues/new/choose`,
     )
   }

@@ -50,7 +50,9 @@ export function transformHTMLForRSS(html: string, baseURL: URL) {
       isElement(node, 'script') ||
       isElement(node, 'style') ||
       // Remove Expressive Code copy button.
-      hasAttribute(node, 'dataCode')
+      hasAttribute(node, 'dataCode') ||
+      // Remove live regions.
+      hasAttribute(node, 'ariaLive')
     )
   })
 

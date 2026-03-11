@@ -11,9 +11,9 @@ export function vitePluginStarlightBlogConfig(
   context: StarlightBlogContext,
 ): VitePlugin {
   const modules = {
-    'virtual:starlight-blog-config': `export default ${JSON.stringify(starlightBlogConfig)}`,
-    'virtual:starlight-blog-context': `export default ${JSON.stringify(context)}`,
-    'virtual:starlight-blog-images': getImagesVirtualModule(starlightBlogConfig, context),
+    'virtual:starlight-blog/config': `export default ${JSON.stringify(starlightBlogConfig)}`,
+    'virtual:starlight-blog/context': `export default ${JSON.stringify(context)}`,
+    'virtual:starlight-blog/images': getImagesVirtualModule(starlightBlogConfig, context),
   }
 
   const moduleResolutionMap = Object.fromEntries(

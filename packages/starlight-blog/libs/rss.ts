@@ -1,8 +1,8 @@
 import type { RSSOptions } from '@astrojs/rss'
 import type { GetStaticPathsResult } from 'astro'
 import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog-config'
-import context from 'virtual:starlight-blog-context'
+import config from 'virtual:starlight-blog/config'
+import context from 'virtual:starlight-blog/context'
 
 import { renderBlogEntryToString } from './container'
 import { getBlogEntries, type StarlightBlogEntry } from './content'

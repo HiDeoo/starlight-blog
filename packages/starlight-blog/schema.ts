@@ -1,5 +1,6 @@
 import { AstroError } from 'astro/errors'
-import { z, type ZodLiteral, type ZodNumber, type ZodObject, type ZodString, type ZodUnion } from 'astro/zod'
+import { z } from 'astro/zod'
+import type { ImageFunction } from 'astro:content'
 
 export const blogAuthorSchema = z.object({
   /**
@@ -17,7 +18,7 @@ export const blogAuthorSchema = z.object({
   /**
    * The URL to the author's website.
    */
-  url: z.string().url().optional(),
+  url: z.url().optional(),
 })
 
 const metricsSchema = z
@@ -123,22 +124,3 @@ export type StarlightBlogUserMetrics = z.infer<typeof metricsSchema>
 interface SchemaContext {
   image: ImageFunction
 }
-
-// https://github.com/withastro/astro/blob/7d597506615fa5a34327304e8321be7b9c4b799d/packages/astro/src/assets/types.ts#L34-L42
-type ImageFunction = () => ZodObject<{
-  src: ZodString
-  width: ZodNumber
-  height: ZodNumber
-  format: ZodUnion<
-    [
-      ZodLiteral<'png'>,
-      ZodLiteral<'jpg'>,
-      ZodLiteral<'jpeg'>,
-      ZodLiteral<'tiff'>,
-      ZodLiteral<'webp'>,
-      ZodLiteral<'gif'>,
-      ZodLiteral<'svg'>,
-      ZodLiteral<'avif'>,
-    ]
-  >
-}>

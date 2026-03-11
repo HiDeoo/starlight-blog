@@ -27,9 +27,9 @@ export function defineVitestConfig(
         trailingSlash: context?.trailingSlash ?? 'ignore',
       }),
       {
-        name: 'virtual-modules',
+        name: 'vite-plugin-starlight-blog-test',
         load(id) {
-          if (id !== 'virtual:starlight-blog-test') return undefined
+          if (id !== 'virtual:starlight-blog/test') return undefined
 
           const config: Partial<StarlightConfig> = context?.locales
             ? {
@@ -45,7 +45,7 @@ export function defineVitestConfig(
           return `export default ${JSON.stringify(config)}`
         },
         resolveId(id) {
-          return id === 'virtual:starlight/user-config' ? 'virtual:starlight-blog-test' : undefined
+          return id === 'virtual:starlight/user-config' ? 'virtual:starlight-blog/test' : undefined
         },
       },
     ],

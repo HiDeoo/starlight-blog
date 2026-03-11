@@ -30,33 +30,33 @@
     "lint": "eslint . --cache --max-warnings=0"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^6.3.1",
-    "@astrojs/mdx": "^4.0.8",
-    "@astrojs/rss": "^4.0.11",
+    "@astrojs/markdown-remark": "^7.0.0",
+    "@astrojs/mdx": "^5.0.0",
+    "@astrojs/rss": "^4.0.17",
     "astro-remote": "^0.3.4",
     "github-slugger": "^2.0.0",
     "hast-util-from-html": "^2.0.3",
     "hast-util-to-html": "^9.0.5",
     "hast-util-to-string": "^3.0.1",
-    "marked": "^15.0.4",
+    "marked": "^17.0.4",
     "marked-plaintify": "^1.1.1",
     "mdast-util-mdx-expression": "^2.0.1",
-    "unist-util-is": "^6.0.0",
+    "unist-util-is": "^6.0.1",
     "unist-util-remove": "^4.0.0",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.49.1",
+    "@playwright/test": "^1.58.2",
     "@types/hast": "^3.0.4",
-    "vitest": "2.1.6"
+    "vitest": "^4.1.0-beta.6"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.33.0"
+    "@astrojs/starlight": ">=0.38.0"
   },
   "engines": {
-    "node": ">=18.20.8"
+    "node": ">=22.12.0"
   },
-  "packageManager": "pnpm@8.6.9",
+  "packageManager": "pnpm@10.32.1",
   "publishConfig": {
     "access": "public"
   },

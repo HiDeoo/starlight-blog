@@ -1,8 +1,8 @@
 import type { GetStaticPathsResult } from 'astro'
 import { type CollectionEntry, getCollection, getEntry, render } from 'astro:content'
 import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog-config'
-import context from 'virtual:starlight-blog-context'
+import config from 'virtual:starlight-blog/config'
+import context from 'virtual:starlight-blog/context'
 
 import { DefaultLocale, type Locale } from './i18n'
 import { getRelativeUrl, getRelativeBlogUrl, getPathWithLocale } from './page'
@@ -165,7 +165,7 @@ function getBlogStaticPath(
 
   return {
     params: {
-      page: index === 0 ? undefined : index + 1,
+      page: index === 0 ? undefined : `${index + 1}`,
       prefix: getPathWithLocale(config.prefix, locale),
     },
     props: {

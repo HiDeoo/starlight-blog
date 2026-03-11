@@ -1,7 +1,7 @@
 import { defineRouteMiddleware, type StarlightRouteData } from '@astrojs/starlight/route-data'
 import type { APIContext, AstroBuiltinAttributes } from 'astro'
 import type { HTMLAttributes } from 'astro/types'
-import config from 'virtual:starlight-blog-config'
+import config from 'virtual:starlight-blog/config'
 
 import type { StarlightBlogData } from './data'
 import { getAllAuthors, getEntryAuthors } from './libs/authors'
@@ -130,7 +130,7 @@ async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['
       makeSidebarGroup(
         t('starlightBlog.sidebar.tags'),
         [...tags]
-          .sort(([, a], [, b]) => {
+          .toSorted(([, a], [, b]) => {
             if (a.entries.length === b.entries.length) {
               return a.label.localeCompare(b.label)
             }
@@ -155,7 +155,7 @@ async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['
       makeSidebarGroup(
         t('starlightBlog.sidebar.authors'),
         [...authors]
-          .sort(([, a], [, b]) => {
+          .toSorted(([, a], [, b]) => {
             if (a.entries.length === b.entries.length) {
               return a.author.name.localeCompare(b.author.name)
             }

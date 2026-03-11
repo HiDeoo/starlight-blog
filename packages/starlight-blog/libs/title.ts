@@ -1,5 +1,5 @@
 import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog-config'
+import config from 'virtual:starlight-blog/config'
 
 import { getLangFromLocale, type Locale } from './i18n'
 

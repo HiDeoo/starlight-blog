@@ -12,22 +12,22 @@
     "version": "pnpm changeset version && pnpm i --no-frozen-lockfile"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.29.7",
-    "@hideoo/eslint-config": "^4.0.0",
-    "@hideoo/prettier-config": "^2.0.0",
-    "@hideoo/tsconfig": "^2.0.1",
-    "astro": "^5.13.2",
-    "eslint": "^9.17.0",
-    "prettier": "^3.4.2",
+    "@astrojs/check": "^0.9.7",
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
+    "@hideoo/eslint-config": "^4.1.1",
+    "@hideoo/prettier-config": "^2.0.1",
+    "@hideoo/tsconfig": "^2.0.3",
+    "astro": "^6.0.2",
+    "eslint": "^9.39.4",
+    "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.9.3"
   },
   "engines": {
-    "node": ">=18.20.8"
+    "node": ">=22.12.0"
   },
-  "packageManager": "pnpm@8.6.9",
+  "packageManager": "pnpm@10.32.1",
   "private": true,
   "sideEffects": false,
   "keywords": [

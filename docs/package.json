@@ -14,16 +14,16 @@
     "lint": "eslint . --cache --max-warnings=0"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.35.2",
-    "@hideoo/starlight-plugins-docs-components": "^0.4.0",
-    "astro": "^5.13.2",
-    "sharp": "^0.33.5",
+    "@astrojs/starlight": "^0.38.0",
+    "@hideoo/starlight-plugins-docs-components": "^0.4.2",
+    "astro": "^6.0.2",
+    "sharp": "^0.34.5",
     "starlight-blog": "workspace:*"
   },
   "engines": {
-    "node": ">=18.20.8"
+    "node": ">=22.12.0"
   },
-  "packageManager": "pnpm@8.6.9",
+  "packageManager": "pnpm@10.32.1",
   "private": true,
   "sideEffects": false,
   "keywords": [

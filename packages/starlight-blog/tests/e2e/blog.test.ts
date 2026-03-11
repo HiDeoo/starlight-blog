@@ -246,7 +246,7 @@ test('should use sorted posts', async ({ blogPage }) => {
     return new Date(datetime)
   })
 
-  const sortedDates = [...dates].sort((a, b) => b.getTime() - a.getTime())
+  const sortedDates = dates.toSorted((a, b) => b.getTime() - a.getTime())
 
   expect(dates).toEqual(sortedDates)
 })
