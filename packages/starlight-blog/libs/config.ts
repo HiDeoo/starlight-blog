@@ -75,6 +75,13 @@ const configSchema = z
      */
     recentPostCount: z.number().min(1).default(10).transform(infinityToMax),
     /**
+     * Defines whether or not an RSS feed should be generated for the blog.
+     *
+     * By default, an RSS feed is automatically generated for your blog when the Astro `site` option is set.
+     * Setting this option to `false` will disable the RSS feed even if the Astro `site` option is set.
+     */
+    rss: z.boolean().default(true),
+    /**
      * The title of the blog.
      *
      * The value can be a string, or for multilingual sites, an object with values for each different locale.

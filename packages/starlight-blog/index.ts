@@ -31,11 +31,12 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
       }) {
         addRouteMiddleware({ entrypoint: 'starlight-blog/middleware' })
 
-        const rssLink = astroConfig.site
-          ? `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
-              stripTrailingSlash(config.prefix),
-            )}/rss.xml`
-          : undefined
+        const rssLink =
+          astroConfig.site && config.rss
+            ? `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
+                stripTrailingSlash(config.prefix),
+              )}/rss.xml`
+            : undefined
 
         const configIncludesRSSSocial = starlightConfig.social?.some((social) => social.icon === 'rss') ?? false
 
@@ -48,7 +49,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
         if (isNavigationWithCustomCss(config)) customCss.push('starlight-blog/styles')
 
         const head: StarlightUserConfig['head'] = [...(starlightConfig.head ?? [])]
-        if (astroConfig.site) {
+        if (rssLink) {
           head.push({
             tag: 'link',
             attrs: {
@@ -61,7 +62,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
         }
 
         const social: StarlightUserConfig['social'] = [...(starlightConfig.social ?? [])]
-        if (astroConfig.site && rssLink && !configIncludesRSSSocial) {
+        if (rssLink && !configIncludesRSSSocial) {
           social.push({
             href: rssLink,
             icon: 'rss',
@@ -93,7 +94,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                 prerender: true,
               })
 
-              if (astroConfig.site) {
+              if (rssLink) {
                 injectRoute({
                   entrypoint: 'starlight-blog/routes/rss',
                   pattern: '/[...prefix]/rss.xml',

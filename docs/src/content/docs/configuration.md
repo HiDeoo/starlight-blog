@@ -107,6 +107,16 @@ The type of navigation links to the blog to display on a page.
 The configuration of various metrics that can be displayed alongside blog posts, such as an estimated reading time or a word count.
 Check the ["Metrics" guide](/guides/metrics) for more informations.
 
+### `rss`
+
+**Type:** `boolean`  
+**Default:** `true` if `site` is set, otherwise `false`
+
+Defines whether or not an [RSS feed](/guides/rss/) should be generated for the blog.
+
+By default, an RSS feed is automatically generated for your blog when the Astro [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) option is set.
+Setting this option to `false` will disable the RSS feed even if the Astro `site` option is set.
+
 ## Author configuration
 
 Global authors for all blog posts or regular authors that can be referenced in individual blog posts can be defined using the [`authors`](#authors) configuration option.

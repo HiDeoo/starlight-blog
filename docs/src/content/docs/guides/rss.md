@@ -32,3 +32,25 @@ export default defineConfig({
 ```
 
 This will create a `.xml` file for feed readers, add a sidebar link to the RSS feed, add the standard RSS icon to your website's header and configure RSS feed auto-discovery.
+
+## Disable the RSS feed
+
+To disable the RSS feed, even when the Astro [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) configuration option is set, you can set the [`rss` option](/configuration/#rss) to `false`.
+
+```diff lang=js title="astro.config.mjs"
+import starlight from '@astrojs/starlight'
+import { defineConfig } from 'astro/config'
+import starlightBlog from 'starlight-blog'
+
+export default defineConfig({
+  site: 'https://www.example.com'
+  starlight({
+    social: {
+      plugins: [starlightBlog({
++        rss: false,
+      })],
+      title: 'My Docs',
+    },
+  }),
+})
+```

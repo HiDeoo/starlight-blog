@@ -173,7 +173,7 @@ async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['
     )
   }
 
-  if (context.site) {
+  if (context.site && config.rss) {
     sidebar.push(makeSidebarLink(t('starlightBlog.sidebar.rss'), getRelativeBlogUrl('/rss.xml', locale, true), false))
   }
 
