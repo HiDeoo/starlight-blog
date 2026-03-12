@@ -69,11 +69,17 @@ const configSchema = z
     /**
      * The number of blog posts to display per page in the blog post list.
      */
-    postCount: z.number().min(1).or(z.literal(Infinity)).default(5).transform(infinityToMax),
+    postCount: z
+      .union([z.number().min(1), z.literal(Infinity)])
+      .default(5)
+      .transform(infinityToMax),
     /**
      * The number of recent blog posts to display in the sidebar.
      */
-    recentPostCount: z.number().min(1).or(z.literal(Infinity)).default(10).transform(infinityToMax),
+    recentPostCount: z
+      .union([z.number().min(1), z.literal(Infinity)])
+      .default(10)
+      .transform(infinityToMax),
     /**
      * Defines whether or not an RSS feed should be generated for the blog.
      *
