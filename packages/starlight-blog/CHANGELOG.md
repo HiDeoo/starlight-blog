@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.26.1
+
+### Patch Changes
+
+- [#202](https://github.com/HiDeoo/starlight-blog/pull/202) [`99e3282`](https://github.com/HiDeoo/starlight-blog/commit/99e328203cb0c1221e398e5cbf32db1747b12bc3) Thanks [@julien-deramond](https://github.com/julien-deramond)! - Fixes a regression in version `0.26.0` preventing to use `Infinity` as a value for the `postCount` and `recentPostCount` configuration options.
+
 ## 0.26.0
 
 ### Minor Changes
