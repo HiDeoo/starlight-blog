@@ -2,4 +2,4 @@
 'starlight-blog': patch
 ---
 
-Restore support of `Infinity` with `recentPostCount` and `postCount` options
+Fixes a regression in version `0.26.0` preventing to use `Infinity` as a value for the `postCount` and `recentPostCount` configuration options.
