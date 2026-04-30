@@ -87,6 +87,8 @@ const configSchema = z
      * Setting this option to `false` will disable the RSS feed even if the Astro `site` option is set.
      */
     rss: z.boolean().default(true),
+    // TODO(HiDeoo)
+    structuredData: z.boolean().default(true),
     /**
      * The title of the blog.
      *

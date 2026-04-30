@@ -34,7 +34,7 @@ export function defineVitestConfig(
           const config: Partial<StarlightConfig> = context?.locales
             ? {
                 isMultilingual: true,
-                defaultLocale: { label: 'English', lang: 'en', dir: 'ltr', locale: 'en' },
+                defaultLocale: getDefaultLocaleConfig(context.locales),
                 locales: context.locales,
               }
             : {
@@ -50,4 +50,24 @@ export function defineVitestConfig(
       },
     ],
   })
+}
+
+function getDefaultLocaleConfig(locales: StarlightConfig['locales']) {
+  const rootLocale = locales?.root
+
+  if (rootLocale) {
+    return {
+      label: rootLocale.label,
+      lang: rootLocale.lang,
+      dir: rootLocale.dir,
+      locale: 'root',
+    }
+  }
+
+  return {
+    label: 'English',
+    lang: 'en',
+    dir: 'ltr' as const,
+    locale: 'en',
+  }
 }
