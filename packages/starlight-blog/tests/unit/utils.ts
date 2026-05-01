@@ -32,6 +32,25 @@ export async function getTestBlogData(options?: {
   return getBlogData({ locale: options?.locale ?? 'en' } as StarlightRouteData, (() => '') as App.Locals['t'])
 }
 
+export function getStructuredDataScripts(context: APIContext) {
+  return context.locals.starlightRoute.head.filter(
+    (entry) => entry.tag === 'script' && entry.attrs?.['type'] === 'application/ld+json',
+  )
+}
+
+export function getStructuredDataNodes(
+  scripts: ReturnType<typeof getStructuredDataScripts>,
+): Record<string, unknown>[] {
+  return scripts.flatMap((entry) => {
+    const content = JSON.parse(entry.content ?? '{}') as Record<string, unknown>
+    return Array.isArray(content['@graph']) ? (content['@graph'] as Record<string, unknown>[]) : [content]
+  })
+}
+
+export function getStructuredDataNode(nodes: Record<string, unknown>[], type: string) {
+  return nodes.find((node) => node['@type'] === type)
+}
+
 export function mockCoverImage(src = 'test.webp') {
   return {
     format: 'webp' as const,
@@ -45,11 +64,12 @@ export function getTestContext(
   starlightBlog: StarlightBlogData,
   post: StarlightBlogData['posts'][number] | undefined,
   options?: {
-    id?: string
-    site?: URL | false
-    locale?: StarlightRouteData['locale']
     entryMetaLang?: string
+    id?: string
     isFallback?: boolean
+    lang?: string
+    locale?: StarlightRouteData['locale']
+    site?: URL | false
   },
 ) {
   return {
@@ -61,6 +81,7 @@ export function getTestContext(
         head: [],
         id: options?.id ?? post?.entry.id,
         isFallback: options?.isFallback,
+        lang: options?.lang ?? 'en',
         locale: options?.locale ?? 'en',
       },
     },
