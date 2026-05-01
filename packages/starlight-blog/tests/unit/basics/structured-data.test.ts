@@ -14,7 +14,7 @@ vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
   return mockBlogPosts([
     ['post-6.md', { title: 'Post 6', date: new Date('2024-06-01') }],
-    ['post-5.md', { title: 'Post 5', date: new Date('2024-05-01') }],
+    ['post-5.md', { title: 'Post 5', date: new Date('2024-05-01'), tags: ['tag-1'] }],
     ['post-4.md', { title: 'Post 4', date: new Date('2024-04-01') }],
     ['post-3.md', { title: 'Post 3', date: new Date('2024-03-01'), excerpt: 'Excerpt of **post 3**' }],
     [
@@ -45,7 +45,7 @@ vi.mock('astro:content', async () => {
   ])
 })
 
-describe('blog root', () => {
+describe('root', () => {
   test('adds structured data to the blog root page', async () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, undefined, { id: 'blog' })
@@ -138,7 +138,7 @@ describe('blog root', () => {
   })
 })
 
-describe('blog pagination', () => {
+describe('pagination', () => {
   test('adds structured data to a paginated blog page', async () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, undefined, { id: 'blog/2' })
@@ -195,7 +195,7 @@ describe('blog pagination', () => {
   })
 })
 
-describe('blog post', () => {
+describe('post', () => {
   test('does not add structured data when site is not defined', async () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[0], { site: false })
@@ -333,6 +333,81 @@ describe('blog post', () => {
     expect(blogPosting).not.toHaveProperty('description')
     expect(blogPosting).not.toHaveProperty('image')
     expect(blogPosting).not.toHaveProperty('keywords')
+  })
+})
+
+describe('tags', () => {
+  test('adds structured data to a tag page', async () => {
+    const starlightBlog = await getTestBlogData()
+    const context = getTestContext(starlightBlog, undefined, { id: 'blog/tags/tag-1' })
+
+    await addStructuredData(context)
+
+    const scripts = getStructuredDataScripts(context)
+
+    expect(scripts).toHaveLength(1)
+
+    expect.assert(scripts[0]?.content)
+    expect(JSON.parse(scripts[0].content)).toMatchInlineSnapshot(`
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "about": {
+              "@id": "https://example.com/en/blog/tags/tag-1/#tag",
+            },
+            "hasPart": {
+              "@id": "https://example.com/en/blog/tags/tag-1/#posts",
+            },
+            "inLanguage": "en",
+            "isPartOf": {
+              "@id": "https://example.com/en/blog/#blog",
+            },
+            "name": "tag-1",
+            "url": "https://example.com/en/blog/tags/tag-1/",
+          },
+          {
+            "@id": "https://example.com/en/blog/#blog",
+            "@type": "Blog",
+            "name": "Blog",
+            "url": "https://example.com/en/blog/",
+          },
+          {
+            "@id": "https://example.com/en/blog/tags/tag-1/#tag",
+            "@type": "DefinedTerm",
+            "name": "tag-1",
+            "url": "https://example.com/en/blog/tags/tag-1/",
+          },
+          {
+            "@id": "https://example.com/en/blog/tags/tag-1/#posts",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 5",
+                  "url": "https://example.com/en/blog/post-5/",
+                },
+                "position": 1,
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 1",
+                  "url": "https://example.com/en/blog/post-1/",
+                },
+                "position": 2,
+              },
+            ],
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": 2,
+          },
+        ],
+      }
+    `)
   })
 })
 

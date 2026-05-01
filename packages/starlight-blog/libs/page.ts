@@ -74,6 +74,10 @@ export function isBlogPostPage(slug: string, postSlug: string) {
   return slug === postSlug
 }
 
+export function isAnyBlogTagPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/tags/.+/?$`).exec(slug) !== null
+}
+
 export function isBlogTagPage(slug: string, tag: string) {
   return slug === `${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/tags/${tag}`
 }
