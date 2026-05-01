@@ -7,11 +7,11 @@ import {
   getStructuredDataScripts,
   getTestBlogData,
   getTestContext,
-  mockCoverImage,
 } from '../utils'
 
 vi.mock('astro:content', async () => {
-  const { mockBlogPosts } = await import('../utils')
+  const { mockBlogPosts, mockCoverImage } = await import('../utils')
+
   return mockBlogPosts([
     ['post-6.md', { title: 'Post 6', date: new Date('2024-06-01') }],
     ['post-5.md', { title: 'Post 5', date: new Date('2024-05-01'), tags: ['tag-1'] }],
@@ -408,6 +408,88 @@ describe('tags', () => {
         ],
       }
     `)
+  })
+})
+
+describe('authors', () => {
+  test('adds structured data to an author page', async () => {
+    const starlightBlog = await getTestBlogData()
+    const context = getTestContext(starlightBlog, undefined, { id: 'blog/authors/ghost' })
+
+    await addStructuredData(context)
+
+    const scripts = getStructuredDataScripts(context)
+
+    expect(scripts).toHaveLength(1)
+
+    expect.assert(scripts[0]?.content)
+    expect(JSON.parse(scripts[0].content)).toMatchInlineSnapshot(`
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "about": {
+              "@id": "https://example.com/en/blog/authors/ghost/#author",
+            },
+            "hasPart": {
+              "@id": "https://example.com/en/blog/authors/ghost/#posts",
+            },
+            "inLanguage": "en",
+            "isPartOf": {
+              "@id": "https://example.com/en/blog/#blog",
+            },
+            "name": "Ghost",
+            "url": "https://example.com/en/blog/authors/ghost/",
+          },
+          {
+            "@id": "https://example.com/en/blog/#blog",
+            "@type": "Blog",
+            "name": "Blog",
+            "url": "https://example.com/en/blog/",
+          },
+          {
+            "@id": "https://example.com/en/blog/authors/ghost/#author",
+            "@type": "Person",
+            "name": "Ghost",
+            "url": "https://example.com",
+          },
+          {
+            "@id": "https://example.com/en/blog/authors/ghost/#posts",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 1",
+                  "url": "https://example.com/en/blog/post-1/",
+                },
+                "position": 1,
+              },
+            ],
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": 1,
+          },
+        ],
+      }
+    `)
+  })
+
+  test('omits the author url when it is not defined', async () => {
+    const starlightBlog = await getTestBlogData()
+    const context = getTestContext(starlightBlog, undefined, { id: 'blog/authors/hideoo' })
+
+    await addStructuredData(context)
+
+    const scripts = getStructuredDataScripts(context)
+    const nodes = getStructuredDataNodes(scripts)
+
+    const author = getStructuredDataNode(nodes, 'Person')
+
+    expect(author).toBeDefined()
+    expect(author).toHaveProperty('name', 'HiDeoo')
+    expect(author).not.toHaveProperty('url')
   })
 })
 

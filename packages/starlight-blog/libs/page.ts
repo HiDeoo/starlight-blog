@@ -86,6 +86,10 @@ export function isBlogAuthorPage(slug: string, author: string) {
   return slug === `${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/authors/${author}`
 }
 
+export function isAnyBlogAuthorPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/authors/.+/?$`).exec(slug) !== null
+}
+
 export function getPageProps(title: string): StarlightPageProps {
   return {
     frontmatter: {

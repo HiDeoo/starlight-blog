@@ -13,9 +13,18 @@ import config from 'virtual:starlight-blog/config'
 
 import type { StarlightBlogData } from '../data'
 
+import { getAuthorSlug } from './authors'
 import type { StarlightBlogEntry } from './content'
+import type { Locale } from './i18n'
 import { stripMarkdown } from './markdown'
-import { getRelativeBlogUrl, isAnyBlogPostPage, isAnyBlogTagPage, isBlogPaginationPage, isBlogRoot } from './page'
+import {
+  getRelativeBlogUrl,
+  isAnyBlogAuthorPage,
+  isAnyBlogPostPage,
+  isAnyBlogTagPage,
+  isBlogPaginationPage,
+  isBlogRoot,
+} from './page'
 import { getBlogTitle } from './title'
 
 // TODO(HiDeoo) validation tool
@@ -37,6 +46,11 @@ export async function addStructuredData(context: APIContext) {
 
   if (isAnyBlogTagPage(starlightRoute.id)) {
     addBlogTagStructuredData(context)
+    return
+  }
+
+  if (isAnyBlogAuthorPage(starlightRoute.id)) {
+    addBlogAuthorStructuredData(context)
     return
   }
 
@@ -82,6 +96,24 @@ function addBlogTagStructuredData(context: APIContextWithSite) {
     pagePosts: tagPage.posts,
     relation: 'isPartOf',
     things: [tag],
+  })
+}
+
+function addBlogAuthorStructuredData(context: APIContextWithSite) {
+  const authorPage = getStructuredDataAuthorPage(context)
+  if (!authorPage) return
+
+  const pageMetadata = getStructuredDataPageMetadata(context, `/authors/${authorPage.slug}`)
+  const author = getStructuredDataAuthor(authorPage.author, getStructuredDataPageEntityId(pageMetadata, 'author'))
+
+  addBlogCollectionStructuredData(context, {
+    about: author['@id'],
+    allPosts: authorPage.posts,
+    name: authorPage.author.name,
+    pageMetadata,
+    pagePosts: authorPage.posts,
+    relation: 'isPartOf',
+    things: [author],
   })
 }
 
@@ -148,7 +180,7 @@ async function addBlogPostStructuredData(context: APIContextWithSite) {
     url: postUrl,
   }
 
-  if (post.authors.length > 0) blogPosting.author = post.authors.map(getStructureDataAuthor)
+  if (post.authors.length > 0) blogPosting.author = post.authors.map((author) => getStructuredDataAuthor(author))
   if (post.updatedAt) blogPosting.dateModified = post.updatedAt.toISOString()
   if (description) blogPosting.description = description
   if (image) blogPosting.image = image
@@ -199,8 +231,8 @@ async function getStructuredDataDescription(entry: StarlightBlogEntry) {
   return
 }
 
-function getStructureDataAuthor(author: StarlightBlogData['authors'][number]) {
-  const person: Person = { '@type': 'Person', name: author.name }
+function getStructuredDataAuthor(author: StarlightBlogData['authors'][number], id?: string) {
+  const person: Person = { '@type': 'Person', ...(id ? { '@id': id } : {}), name: author.name }
 
   if (author.url) person.url = author.url
 
@@ -257,6 +289,30 @@ function getStructuredDataUrl(image: string | { src: string }, site: URL) {
 }
 
 function getStructuredDataTagPage(context: APIContextWithSite) {
+  const page = getStructuredDataFilteredPage(context, (post, slug, locale) => {
+    const href = getRelativeBlogUrl(`/tags/${slug}`, locale)
+    return post.tags.find((tag) => tag.href === href)?.label
+  })
+
+  if (!page) return
+
+  return { label: page.match, posts: page.posts, slug: page.slug }
+}
+
+function getStructuredDataAuthorPage(context: APIContextWithSite) {
+  const page = getStructuredDataFilteredPage(context, (post, slug) =>
+    post.authors.find((author) => getAuthorSlug(author.name) === slug),
+  )
+
+  if (!page) return
+
+  return { author: page.match, posts: page.posts, slug: page.slug }
+}
+
+function getStructuredDataFilteredPage<T>(
+  context: APIContextWithSite,
+  getMatch: (post: StarlightBlogData['posts'][number], slug: string, locale: Locale) => T | undefined,
+) {
   const {
     locals: { starlightBlog, starlightRoute },
   } = context
@@ -264,22 +320,20 @@ function getStructuredDataTagPage(context: APIContextWithSite) {
   const slug = starlightRoute.id.split('/').at(-1)
   if (!slug) return
 
-  const href = getRelativeBlogUrl(`/tags/${slug}`, starlightRoute.locale)
-
   const posts: StarlightBlogData['posts'] = []
-  let label: string | undefined
+  let match: T | undefined
 
   for (const post of starlightBlog.posts) {
-    const tag = post.tags.find((tag) => tag.href === href)
-    if (!tag) continue
+    const currentMatch = getMatch(post, slug, starlightRoute.locale)
+    if (!currentMatch) continue
 
     posts.push(post)
-    label ??= tag.label
+    match ??= currentMatch
   }
 
-  if (!label) return
+  if (!match) return
 
-  return { label, posts, slug }
+  return { match, posts, slug }
 }
 
 function getStructuredDataTag(pageMetadata: StructuredDataPageMetadata, label: string): DefinedTerm {
