@@ -66,6 +66,10 @@ export function isBlogRoot(slug: string) {
   return slug === getPathWithLocale(config.prefix, getLocaleFromPath(slug))
 }
 
+export function isBlogPaginationPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/\\d+/?$`).exec(slug) !== null
+}
+
 export function isBlogPostPage(slug: string, postSlug: string) {
   return slug === postSlug
 }

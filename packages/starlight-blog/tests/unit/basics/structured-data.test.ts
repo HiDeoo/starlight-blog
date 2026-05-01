@@ -138,6 +138,63 @@ describe('blog root', () => {
   })
 })
 
+describe('blog pagination', () => {
+  test('adds structured data to a paginated blog page', async () => {
+    const starlightBlog = await getTestBlogData()
+    const context = getTestContext(starlightBlog, undefined, { id: 'blog/2' })
+
+    await addStructuredData(context)
+
+    const scripts = getStructuredDataScripts(context)
+
+    expect(scripts).toHaveLength(1)
+
+    expect.assert(scripts[0]?.content)
+    expect(JSON.parse(scripts[0].content)).toMatchInlineSnapshot(`
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "hasPart": {
+              "@id": "https://example.com/en/blog/2/#posts",
+            },
+            "inLanguage": "en",
+            "isPartOf": {
+              "@id": "https://example.com/en/blog/#blog",
+            },
+            "name": "Blog",
+            "url": "https://example.com/en/blog/2/",
+          },
+          {
+            "@id": "https://example.com/en/blog/#blog",
+            "@type": "Blog",
+            "name": "Blog",
+            "url": "https://example.com/en/blog/",
+          },
+          {
+            "@id": "https://example.com/en/blog/2/#posts",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 1",
+                  "url": "https://example.com/en/blog/post-1/",
+                },
+                "position": 1,
+              },
+            ],
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": 6,
+          },
+        ],
+      }
+    `)
+  })
+})
+
 describe('blog post', () => {
   test('does not add structured data when site is not defined', async () => {
     const starlightBlog = await getTestBlogData()
