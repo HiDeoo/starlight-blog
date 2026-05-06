@@ -6,13 +6,94 @@ import { getStructuredDataScripts, getTestBlogData, getTestContext } from '../ut
 vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
 
-  return mockBlogPosts([['post-1.md', { title: 'Post 1', date: new Date('2024-01-01') }]])
+  return mockBlogPosts([
+    ['post-2.md', { title: 'Post 2', date: new Date('2024-02-01') }],
+    [
+      'post-1.md',
+      {
+        title: 'Post 1',
+        date: new Date('2024-01-01'),
+        tags: ['tag-1'],
+        authors: [{ name: 'Ghost', url: 'https://example.com' }],
+      },
+    ],
+  ])
+})
+
+describe('root', () => {
+  test('uses localized blog title and URLs on the root page', async () => {
+    const starlightBlog = await getTestBlogData({ locale: 'fr' })
+    const context = getTestContext(starlightBlog, undefined, {
+      id: 'blog',
+      lang: 'fr',
+      locale: 'fr',
+    })
+
+    await addStructuredData(context)
+
+    const scripts = getStructuredDataScripts(context)
+
+    expect(scripts).toHaveLength(1)
+
+    expect.assert(scripts[0]?.content)
+    expect(JSON.parse(scripts[0].content)).toMatchInlineSnapshot(`
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "hasPart": {
+              "@id": "https://example.com/fr/blog/#posts",
+            },
+            "inLanguage": "fr",
+            "mainEntity": {
+              "@id": "https://example.com/fr/blog/#blog",
+            },
+            "name": "Blogue",
+            "url": "https://example.com/fr/blog/",
+          },
+          {
+            "@id": "https://example.com/fr/blog/#blog",
+            "@type": "Blog",
+            "name": "Blogue",
+            "url": "https://example.com/fr/blog/",
+          },
+          {
+            "@id": "https://example.com/fr/blog/#posts",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 2",
+                  "url": "https://example.com/fr/blog/post-2/",
+                },
+                "position": 1,
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 1",
+                  "url": "https://example.com/fr/blog/post-1/",
+                },
+                "position": 2,
+              },
+            ],
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": 2,
+          },
+        ],
+      }
+    `)
+  })
 })
 
 describe('blog post', () => {
   test('uses fallback content language for fallback pages', async () => {
     const starlightBlog = await getTestBlogData({ locale: 'fr' })
-    const context = getTestContext(starlightBlog, starlightBlog.posts[0], {
+    const context = getTestContext(starlightBlog, starlightBlog.posts[1], {
       locale: 'fr',
       entryMetaLang: 'en',
       isFallback: true,
@@ -31,6 +112,14 @@ describe('blog post', () => {
         "@graph": [
           {
             "@type": "BlogPosting",
+            "author": [
+              {
+                "@id": "https://example.com/fr/blog/authors/ghost/#author",
+                "@type": "Person",
+                "name": "Ghost",
+                "url": "https://example.com",
+              },
+            ],
             "datePublished": "2024-01-01T00:00:00.000Z",
             "headline": "Post 1",
             "inLanguage": "en",
@@ -40,6 +129,9 @@ describe('blog post', () => {
               "name": "Blogue",
               "url": "https://example.com/fr/blog/",
             },
+            "keywords": [
+              "tag-1",
+            ],
             "mainEntityOfPage": "https://example.com/fr/blog/post-1/",
             "url": "https://example.com/fr/blog/post-1/",
           },
@@ -58,6 +150,146 @@ describe('blog post', () => {
                 "position": 2,
               },
             ],
+          },
+        ],
+      }
+    `)
+  })
+})
+
+describe('tags', () => {
+  test('uses localized blog title and URLs on a tag page', async () => {
+    const starlightBlog = await getTestBlogData({ locale: 'fr' })
+    const context = getTestContext(starlightBlog, undefined, {
+      id: 'blog/tags/tag-1',
+      lang: 'fr',
+      locale: 'fr',
+    })
+
+    await addStructuredData(context)
+
+    const scripts = getStructuredDataScripts(context)
+
+    expect(scripts).toHaveLength(1)
+
+    expect.assert(scripts[0]?.content)
+    expect(JSON.parse(scripts[0].content)).toMatchInlineSnapshot(`
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "hasPart": {
+              "@id": "https://example.com/fr/blog/tags/tag-1/#posts",
+            },
+            "inLanguage": "fr",
+            "isPartOf": {
+              "@id": "https://example.com/fr/blog/#blog",
+            },
+            "mainEntity": {
+              "@id": "https://example.com/fr/blog/tags/tag-1/#tag",
+            },
+            "name": "tag-1",
+            "url": "https://example.com/fr/blog/tags/tag-1/",
+          },
+          {
+            "@id": "https://example.com/fr/blog/#blog",
+            "@type": "Blog",
+            "name": "Blogue",
+            "url": "https://example.com/fr/blog/",
+          },
+          {
+            "@id": "https://example.com/fr/blog/tags/tag-1/#tag",
+            "@type": "DefinedTerm",
+            "name": "tag-1",
+            "url": "https://example.com/fr/blog/tags/tag-1/",
+          },
+          {
+            "@id": "https://example.com/fr/blog/tags/tag-1/#posts",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 1",
+                  "url": "https://example.com/fr/blog/post-1/",
+                },
+                "position": 1,
+              },
+            ],
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": 1,
+          },
+        ],
+      }
+    `)
+  })
+})
+
+describe('authors', () => {
+  test('uses localized blog title and URLs on an author page', async () => {
+    const starlightBlog = await getTestBlogData({ locale: 'fr' })
+    const context = getTestContext(starlightBlog, undefined, {
+      id: 'blog/authors/ghost',
+      lang: 'fr',
+      locale: 'fr',
+    })
+
+    await addStructuredData(context)
+
+    const scripts = getStructuredDataScripts(context)
+
+    expect(scripts).toHaveLength(1)
+
+    expect.assert(scripts[0]?.content)
+    expect(JSON.parse(scripts[0].content)).toMatchInlineSnapshot(`
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "hasPart": {
+              "@id": "https://example.com/fr/blog/authors/ghost/#posts",
+            },
+            "inLanguage": "fr",
+            "isPartOf": {
+              "@id": "https://example.com/fr/blog/#blog",
+            },
+            "mainEntity": {
+              "@id": "https://example.com/fr/blog/authors/ghost/#author",
+            },
+            "name": "Ghost",
+            "url": "https://example.com/fr/blog/authors/ghost/",
+          },
+          {
+            "@id": "https://example.com/fr/blog/#blog",
+            "@type": "Blog",
+            "name": "Blogue",
+            "url": "https://example.com/fr/blog/",
+          },
+          {
+            "@id": "https://example.com/fr/blog/authors/ghost/#author",
+            "@type": "Person",
+            "name": "Ghost",
+            "url": "https://example.com",
+          },
+          {
+            "@id": "https://example.com/fr/blog/authors/ghost/#posts",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "BlogPosting",
+                  "headline": "Post 1",
+                  "url": "https://example.com/fr/blog/post-1/",
+                },
+                "position": 1,
+              },
+            ],
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": 1,
           },
         ],
       }

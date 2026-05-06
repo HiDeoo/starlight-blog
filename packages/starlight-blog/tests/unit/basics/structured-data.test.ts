@@ -183,7 +183,7 @@ describe('pagination', () => {
                   "headline": "Post 1",
                   "url": "https://example.com/en/blog/post-1/",
                 },
-                "position": 1,
+                "position": 6,
               },
             ],
             "itemListOrder": "https://schema.org/ItemListOrderDescending",
@@ -233,10 +233,12 @@ describe('post', () => {
             "@type": "BlogPosting",
             "author": [
               {
+                "@id": "https://example.com/en/blog/authors/hideoo/#author",
                 "@type": "Person",
                 "name": "HiDeoo",
               },
               {
+                "@id": "https://example.com/en/blog/authors/ghost/#author",
                 "@type": "Person",
                 "name": "Ghost",
                 "url": "https://example.com",
@@ -354,15 +356,15 @@ describe('tags', () => {
         "@graph": [
           {
             "@type": "CollectionPage",
-            "about": {
-              "@id": "https://example.com/en/blog/tags/tag-1/#tag",
-            },
             "hasPart": {
               "@id": "https://example.com/en/blog/tags/tag-1/#posts",
             },
             "inLanguage": "en",
             "isPartOf": {
               "@id": "https://example.com/en/blog/#blog",
+            },
+            "mainEntity": {
+              "@id": "https://example.com/en/blog/tags/tag-1/#tag",
             },
             "name": "tag-1",
             "url": "https://example.com/en/blog/tags/tag-1/",
@@ -429,15 +431,15 @@ describe('authors', () => {
         "@graph": [
           {
             "@type": "CollectionPage",
-            "about": {
-              "@id": "https://example.com/en/blog/authors/ghost/#author",
-            },
             "hasPart": {
               "@id": "https://example.com/en/blog/authors/ghost/#posts",
             },
             "inLanguage": "en",
             "isPartOf": {
               "@id": "https://example.com/en/blog/#blog",
+            },
+            "mainEntity": {
+              "@id": "https://example.com/en/blog/authors/ghost/#author",
             },
             "name": "Ghost",
             "url": "https://example.com/en/blog/authors/ghost/",
