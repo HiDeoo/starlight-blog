@@ -33,6 +33,7 @@ A [Starlight](https://starlight.astro.build) plugin to add a blog to your docume
 - Cover images
 - Custom sidebar with recent/featured posts and tags
 - RSS
+- Structured data
 
 ## License
 

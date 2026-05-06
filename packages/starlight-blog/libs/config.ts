@@ -87,7 +87,12 @@ const configSchema = z
      * Setting this option to `false` will disable the RSS feed even if the Astro `site` option is set.
      */
     rss: z.boolean().default(true),
-    // TODO(HiDeoo)
+    /**
+     * Defines whether or not structured data should be added to blog pages.
+     *
+     * By default, structured data is automatically added to blog pages when the Astro `site` option is set.
+     * Setting this option to `false` will disable the structured data even if the Astro `site` option is set.
+     */
     structuredData: z.boolean().default(true),
     /**
      * The title of the blog.
