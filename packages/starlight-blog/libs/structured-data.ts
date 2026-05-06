@@ -1,15 +1,5 @@
 import type { APIContext } from 'astro'
-import type {
-  Blog,
-  BlogPosting,
-  BreadcrumbList,
-  CollectionPage,
-  DefinedTerm,
-  ItemList,
-  ListItem,
-  Person,
-} from 'schema-dts'
-import config from 'virtual:starlight-blog/config'
+import type { Blog, BlogPosting, BreadcrumbList, CollectionPage, DefinedTerm, ListItem, Person } from 'schema-dts'
 
 import type { StarlightBlogData } from '../data'
 
@@ -26,8 +16,6 @@ import {
   isBlogRoot,
 } from './page'
 import { getBlogTitle } from './title'
-
-// TODO(HiDeoo) validation tool
 
 export async function addStructuredData(context: APIContext) {
   if (!isAPIContextWithSite(context)) return
@@ -61,24 +49,17 @@ export async function addStructuredData(context: APIContext) {
 
 function addBlogRootStructuredData(context: APIContextWithSite) {
   addBlogCollectionStructuredData(context, {
-    allPosts: context.locals.starlightBlog.posts,
     blogRelation: 'mainEntity',
     pageMetadata: getStructuredDataPageMetadata(context, '/'),
-    pagePosts: context.locals.starlightBlog.posts.slice(0, config.postCount),
   })
 }
 
 function addBlogPaginationStructuredData(context: APIContextWithSite) {
   const pageNumber = getStructuredDataPaginationPageNumber(context.locals.starlightRoute.id)
-  const start = (pageNumber - 1) * config.postCount
-  const end = start + config.postCount
 
   addBlogCollectionStructuredData(context, {
-    allPosts: context.locals.starlightBlog.posts,
     blogRelation: 'isPartOf',
     pageMetadata: getStructuredDataPageMetadata(context, `/${pageNumber}`),
-    pagePosts: context.locals.starlightBlog.posts.slice(start, end),
-    startPosition: start,
   })
 }
 
@@ -91,12 +72,10 @@ function addBlogTagStructuredData(context: APIContextWithSite) {
   const tag = getStructuredDataTag(pageMetadata, tagPage.label)
 
   addBlogCollectionStructuredData(context, {
-    allPosts: tagPage.posts,
     blogRelation: 'isPartOf',
     mainEntityId: tagId,
     name: tagPage.label,
     pageMetadata,
-    pagePosts: tagPage.posts,
     things: [tag],
   })
 }
@@ -110,12 +89,10 @@ function addBlogAuthorStructuredData(context: APIContextWithSite) {
   const author = getStructuredDataAuthor(authorPage.author, authorId)
 
   addBlogCollectionStructuredData(context, {
-    allPosts: authorPage.posts,
     blogRelation: 'isPartOf',
     mainEntityId: authorId,
     name: authorPage.author.name,
     pageMetadata,
-    pagePosts: authorPage.posts,
     things: [author],
   })
 }
@@ -123,28 +100,22 @@ function addBlogAuthorStructuredData(context: APIContextWithSite) {
 function addBlogCollectionStructuredData(
   context: APIContextWithSite,
   options: {
-    allPosts: StarlightBlogData['posts']
     blogRelation: 'isPartOf' | 'mainEntity'
     mainEntityId?: string
     name?: string
     pageMetadata: StructuredDataPageMetadata
-    pagePosts: StarlightBlogData['posts']
-    startPosition?: number
     things?: Thing[]
   },
 ) {
   const {
     locals: { starlightRoute },
-    site,
   } = context
 
   const blogMetadata = getStructuredDataBlogMetadata(context)
   const blog = getStructuredDataBlog(blogMetadata)
-  const entityId = getStructuredDataPageEntityId(options.pageMetadata, 'posts')
 
   const collectionPage: CollectionPage = {
     '@type': 'CollectionPage',
-    hasPart: { '@id': entityId },
     inLanguage: starlightRoute.lang,
     name: options.name ?? blogMetadata.title,
     url: options.pageMetadata.url,
@@ -155,15 +126,7 @@ function addBlogCollectionStructuredData(
 
   if (options.mainEntityId) collectionPage.mainEntity = { '@id': options.mainEntityId }
 
-  const itemList = getStructuredDataItemList(
-    entityId,
-    options.pagePosts,
-    options.allPosts,
-    site,
-    options.startPosition ?? 0,
-  )
-
-  addStructuredDataScript(context, [collectionPage, blog, ...(options.things ?? []), itemList])
+  addStructuredDataScript(context, [collectionPage, blog, ...(options.things ?? [])])
 }
 
 async function addBlogPostStructuredData(context: APIContextWithSite) {
@@ -251,36 +214,6 @@ function getStructuredDataAuthor(author: StarlightBlogData['authors'][number], i
   if (author.url) person.url = author.url
 
   return person
-}
-
-function getStructuredDataItemList(
-  id: string,
-  posts: StarlightBlogData['posts'],
-  allPosts: StarlightBlogData['posts'],
-  site: URL,
-  startPosition: number,
-): ItemList {
-  return {
-    '@id': id,
-    '@type': 'ItemList',
-    itemListOrder: 'https://schema.org/ItemListOrderDescending',
-    itemListElement: posts.map((post, index) => getStructuredDataPostListItem(startPosition + index + 1, post, site)),
-    numberOfItems: allPosts.length,
-  }
-}
-
-function getStructuredDataPostListItem(
-  position: number,
-  post: StarlightBlogData['posts'][number],
-  site: URL,
-): ListItem {
-  const postUrl = new URL(post.href, site).href
-
-  return {
-    '@type': 'ListItem',
-    position,
-    item: { '@type': 'BlogPosting', headline: post.title, url: postUrl },
-  }
 }
 
 function getStructuredDataBreadcrumbListItem(position: number, name: string, item?: string) {
@@ -400,7 +333,7 @@ function isAPIContextWithSite(context: APIContext): context is APIContextWithSit
 
 type APIContextWithSite = APIContext & { site: URL }
 
-type StructuredDataPageEntity = 'author' | 'posts' | 'tag'
+type StructuredDataPageEntity = 'author' | 'tag'
 
 interface StructuredDataPageMetadata {
   url: string
@@ -413,7 +346,7 @@ interface StructuredDataBlogMetadata extends StructuredDataPageMetadata {
 
 // We avoid importing `Thing` from `schema-dts` as it seems that the large union is causing some type inference
 // performance issues.
-export type Thing = Blog | BlogPosting | BreadcrumbList | CollectionPage | DefinedTerm | ItemList | ListItem | Person
+export type Thing = Blog | BlogPosting | BreadcrumbList | CollectionPage | DefinedTerm | ListItem | Person
 
 interface Graph {
   '@context': 'https://schema.org'

@@ -42,9 +42,6 @@ describe('root', () => {
         "@graph": [
           {
             "@type": "CollectionPage",
-            "hasPart": {
-              "@id": "https://example.com/fr/blog/#posts",
-            },
             "inLanguage": "fr",
             "mainEntity": {
               "@id": "https://example.com/fr/blog/#blog",
@@ -57,32 +54,6 @@ describe('root', () => {
             "@type": "Blog",
             "name": "Blogue",
             "url": "https://example.com/fr/blog/",
-          },
-          {
-            "@id": "https://example.com/fr/blog/#posts",
-            "@type": "ItemList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "item": {
-                  "@type": "BlogPosting",
-                  "headline": "Post 2",
-                  "url": "https://example.com/fr/blog/post-2/",
-                },
-                "position": 1,
-              },
-              {
-                "@type": "ListItem",
-                "item": {
-                  "@type": "BlogPosting",
-                  "headline": "Post 1",
-                  "url": "https://example.com/fr/blog/post-1/",
-                },
-                "position": 2,
-              },
-            ],
-            "itemListOrder": "https://schema.org/ItemListOrderDescending",
-            "numberOfItems": 2,
           },
         ],
       }
@@ -179,9 +150,6 @@ describe('tags', () => {
         "@graph": [
           {
             "@type": "CollectionPage",
-            "hasPart": {
-              "@id": "https://example.com/fr/blog/tags/tag-1/#posts",
-            },
             "inLanguage": "fr",
             "isPartOf": {
               "@id": "https://example.com/fr/blog/#blog",
@@ -203,23 +171,6 @@ describe('tags', () => {
             "@type": "DefinedTerm",
             "name": "tag-1",
             "url": "https://example.com/fr/blog/tags/tag-1/",
-          },
-          {
-            "@id": "https://example.com/fr/blog/tags/tag-1/#posts",
-            "@type": "ItemList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "item": {
-                  "@type": "BlogPosting",
-                  "headline": "Post 1",
-                  "url": "https://example.com/fr/blog/post-1/",
-                },
-                "position": 1,
-              },
-            ],
-            "itemListOrder": "https://schema.org/ItemListOrderDescending",
-            "numberOfItems": 1,
           },
         ],
       }
@@ -249,9 +200,6 @@ describe('authors', () => {
         "@graph": [
           {
             "@type": "CollectionPage",
-            "hasPart": {
-              "@id": "https://example.com/fr/blog/authors/ghost/#posts",
-            },
             "inLanguage": "fr",
             "isPartOf": {
               "@id": "https://example.com/fr/blog/#blog",
@@ -273,23 +221,6 @@ describe('authors', () => {
             "@type": "Person",
             "name": "Ghost",
             "url": "https://example.com",
-          },
-          {
-            "@id": "https://example.com/fr/blog/authors/ghost/#posts",
-            "@type": "ItemList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "item": {
-                  "@type": "BlogPosting",
-                  "headline": "Post 1",
-                  "url": "https://example.com/fr/blog/post-1/",
-                },
-                "position": 1,
-              },
-            ],
-            "itemListOrder": "https://schema.org/ItemListOrderDescending",
-            "numberOfItems": 1,
           },
         ],
       }
