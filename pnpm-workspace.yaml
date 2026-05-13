@@ -1,3 +1,11 @@
 packages:
   - 'docs'
   - 'packages/*'
+
+allowBuilds:
+  esbuild: false
+  sharp: false
+  unrs-resolver: false
+
+# Prevent installing packages published in the last 3 days.
+minimumReleaseAge: 4320
