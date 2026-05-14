@@ -44,5 +44,8 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Test
-        run: pnpm test
+      - name: Run unit tests
+        run: pnpm -r test:unit
+
+      - name: Run E2E tests
+        run: pnpm -r test:e2e:ci
