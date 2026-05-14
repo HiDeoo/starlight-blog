@@ -6,7 +6,6 @@
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
   "scripts": {
-    "test": "pnpm --stream -r test",
     "lint": "astro check --noSync && pnpm -r lint",
     "format": "prettier -w --cache --ignore-unknown .",
     "version": "pnpm changeset version && pnpm i --no-frozen-lockfile"

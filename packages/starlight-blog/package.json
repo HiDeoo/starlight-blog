@@ -24,9 +24,9 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest",
     "test:e2e": "playwright install --with-deps chromium && playwright test",
+    "test:e2e:ci": "playwright test",
     "lint": "eslint . --cache --max-warnings=0"
   },
   "dependencies": {
