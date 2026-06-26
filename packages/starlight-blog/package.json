@@ -30,9 +30,9 @@
     "lint": "eslint . --cache --max-warnings=0"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.0.0",
-    "@astrojs/mdx": "^5.0.0",
-    "@astrojs/rss": "^4.0.17",
+    "@astrojs/markdown-remark": "^7.2.0",
+    "@astrojs/mdx": "^7.0.0",
+    "@astrojs/rss": "^4.0.18",
     "astro-remote": "^0.3.4",
     "github-slugger": "^2.0.0",
     "hast-util-from-html": "^2.0.3",
@@ -51,7 +51,7 @@
     "vitest": "^4.1.0-beta.6"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.38.0"
+    "@astrojs/starlight": ">=0.41.0"
   },
   "engines": {
     "node": ">=22.12.0"
