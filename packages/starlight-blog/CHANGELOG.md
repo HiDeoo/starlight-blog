@@ -1,5 +1,17 @@
 # starlight-blog
 
+## 0.27.0
+
+### Minor Changes
+
+- [#209](https://github.com/HiDeoo/starlight-blog/pull/209) [`e6c8154`](https://github.com/HiDeoo/starlight-blog/commit/e6c81545a8ac9a50d70d9033c62462390985e22c) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for Astro v7, drops support for Astro v6.
+
+  ⚠️ **BREAKING CHANGE:** The minimum supported version of Starlight is now `0.41.0`.
+
+  Please follow the [upgrade guide](https://github.com/withastro/starlight/releases/tag/%40astrojs%2Fstarlight%400.41.0) to update your project.
+
+- [#209](https://github.com/HiDeoo/starlight-blog/pull/209) [`e6c8154`](https://github.com/HiDeoo/starlight-blog/commit/e6c81545a8ac9a50d70d9033c62462390985e22c) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for the Sätteri Markdown processor.
+
 ## 0.26.1
 
 ### Patch Changes
