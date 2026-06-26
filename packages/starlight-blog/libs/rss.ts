@@ -47,7 +47,7 @@ export async function getRSSOptions(site: URL | undefined, locale: Locale, t: Ap
           link,
           pubDate: entry.data.date,
           categories: entry.data.tags,
-          description: await getRSSDescription(entry),
+          description: getRSSDescription(entry),
           content: await getRSSContent(entry, feedSite, t),
         }
       }),
@@ -94,7 +94,7 @@ function getRSSTitle(locale: Locale): string {
   return title
 }
 
-function getRSSDescription(entry: StarlightBlogEntry): Promise<string> | undefined {
+function getRSSDescription(entry: StarlightBlogEntry): string | undefined {
   if (!entry.data.excerpt) return
 
   return stripMarkdown(entry.data.excerpt)

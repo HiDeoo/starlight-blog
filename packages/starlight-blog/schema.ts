@@ -1,6 +1,7 @@
-import { AstroError } from 'astro/errors'
 import { z } from 'astro/zod'
 import type { ImageFunction } from 'astro:content'
+
+import { throwPluginError } from './libs/error'
 
 export const blogAuthorSchema = z.object({
   /**
@@ -105,13 +106,11 @@ export function blogSchema(context: SchemaContext) {
   // Checking for `context` to provide a better migration error message.
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!context) {
-    throw new AstroError(
+    throwPluginError(
       'Missing blog schema validation context.',
       `You may need to update your content collections configuration in the \`src/content.config.ts\` file and pass the context to the \`blogSchema\` function:
 
-\`docs: defineCollection({ loader: docsLoader(), schema: docsSchema({ extend: (context) => blogSchema(context) }) })\`
-
-If you believe this is a bug, please file an issue at https://github.com/HiDeoo/starlight-blog/issues/new/choose`,
+\`docs: defineCollection({ loader: docsLoader(), schema: docsSchema({ extend: (context) => blogSchema(context) }) })\``,
     )
   }
 

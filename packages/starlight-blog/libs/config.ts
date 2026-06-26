@@ -1,8 +1,8 @@
-import { AstroError } from 'astro/errors'
 import { z } from 'astro/zod'
 
 import { blogAuthorSchema } from '../schema'
 
+import { throwPluginError } from './error'
 import { stripLeadingSlash, stripTrailingSlash } from './path'
 
 const configSchema = z
@@ -101,13 +101,10 @@ export function validateConfig(userConfig: unknown): StarlightBlogConfig {
   const config = configSchema.safeParse(userConfig)
 
   if (!config.success) {
-    throw new AstroError(
-      `Invalid starlight-blog configuration:
+    throwPluginError(`Invalid starlight-blog configuration:
 
 ${z.prettifyError(config.error)}
-`,
-      `See the error report above for more informations.\n\nIf you believe this is a bug, please file an issue at https://github.com/HiDeoo/starlight-blog/issues/new/choose`,
-    )
+`)
   }
 
   return config.data

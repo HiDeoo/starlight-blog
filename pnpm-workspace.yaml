@@ -17,3 +17,6 @@ minimumReleaseAgeExclude:
   - 'rehype-expressive-code'
   - 'expressive-code'
   - '@expressive-code/*'
+  - 'satteri'
+  - '@bruits/*'
+  - '@napi-rs/*'
