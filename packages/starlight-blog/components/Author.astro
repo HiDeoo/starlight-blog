@@ -28,7 +28,12 @@ const pictureSrc = (
 ) as ImageMetadata | undefined
 ---
 
-<Element href={isLink ? author.url : undefined} class="author">
+<Element
+  href={isLink ? author.url : undefined}
+  rel={isLink ? 'noreferrer noopener' : undefined}
+  target={isLink ? '_blank' : undefined}
+  class="author"
+>
   {pictureSrc && <Image alt={author.name} loading="eager" src={pictureSrc} height={40} width={40} />}
   <div class="text">
     <div class="name">{author.name}</div>
