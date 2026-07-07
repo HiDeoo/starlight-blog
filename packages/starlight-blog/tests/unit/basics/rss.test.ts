@@ -10,7 +10,6 @@ vi.mock('astro/container', () => ({
 }))
 
 afterEach(() => {
-  vi.doUnmock('astro:content')
   vi.useRealTimers()
 })
 
@@ -269,6 +268,7 @@ function getItemAtIndex(items: RSSOptions['items'], index: number) {
 
 async function getTestRSS(posts: MockBlogPost[] = defaultBlogPosts) {
   vi.resetModules()
+  vi.doUnmock('astro:content')
 
   vi.doMock('astro:content', async () => {
     const { mockBlogPosts } = await import('../utils')
