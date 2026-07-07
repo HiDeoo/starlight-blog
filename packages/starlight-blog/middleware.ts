@@ -32,7 +32,7 @@ export const onRequest = defineRouteMiddleware(async (context) => {
 
   context.locals.starlightBlog = await getBlogData(starlightRoute, context.locals.t)
 
-  if (config.structuredData) await addStructuredData(context)
+  if (config.structuredData) addStructuredData(context)
 
   const isBlog = isAnyBlogPage(id)
 

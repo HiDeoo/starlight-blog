@@ -29,7 +29,7 @@ describe('root', () => {
       locale: 'fr',
     })
 
-    await addStructuredData(context)
+    addStructuredData(context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -70,7 +70,7 @@ describe('blog post', () => {
       isFallback: true,
     })
 
-    await addStructuredData(context)
+    addStructuredData(context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -137,7 +137,7 @@ describe('tags', () => {
       locale: 'fr',
     })
 
-    await addStructuredData(context)
+    addStructuredData(context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -187,7 +187,7 @@ describe('authors', () => {
       locale: 'fr',
     })
 
-    await addStructuredData(context)
+    addStructuredData(context)
 
     const scripts = getStructuredDataScripts(context)
 

@@ -17,7 +17,7 @@ import {
 } from './page'
 import { getBlogTitle } from './title'
 
-export async function addStructuredData(context: APIContext) {
+export function addStructuredData(context: APIContext) {
   if (!isAPIContextWithSite(context)) return
 
   const { starlightRoute } = context.locals
@@ -44,7 +44,7 @@ export async function addStructuredData(context: APIContext) {
 
   if (!isAnyBlogPostPage(starlightRoute.id)) return
 
-  await addBlogPostStructuredData(context)
+  addBlogPostStructuredData(context)
 }
 
 function addBlogRootStructuredData(context: APIContextWithSite) {
@@ -129,7 +129,7 @@ function addBlogCollectionStructuredData(
   addStructuredDataScript(context, [collectionPage, blog, ...(options.things ?? [])])
 }
 
-async function addBlogPostStructuredData(context: APIContextWithSite) {
+function addBlogPostStructuredData(context: APIContextWithSite) {
   const { locals, site } = context
   const { starlightBlog, starlightRoute } = locals
   const { entry, entryMeta } = starlightRoute
@@ -141,7 +141,7 @@ async function addBlogPostStructuredData(context: APIContextWithSite) {
   const blog = getStructuredDataBlog(blogMetadata)
   const postUrl = new URL(post.href, site).href
   const image = getStructuredDataImage(post.cover, site)
-  const description = await getStructuredDataDescription(post.entry)
+  const description = getStructuredDataDescription(post.entry)
 
   const blogPosting: BlogPosting = {
     '@type': 'BlogPosting',
@@ -197,11 +197,11 @@ function getStructuredDataBlog(blogMetadata: StructuredDataBlogMetadata): Blog {
   return { '@id': blogMetadata.id, '@type': 'Blog', name: blogMetadata.title, url: blogMetadata.url }
 }
 
-async function getStructuredDataDescription(entry: StarlightBlogEntry) {
+function getStructuredDataDescription(entry: StarlightBlogEntry) {
   if (entry.data.description) return entry.data.description
 
   if (entry.data.excerpt) {
-    const description = await stripMarkdown(entry.data.excerpt)
+    const description = stripMarkdown(entry.data.excerpt)
     if (description.length > 0) return description
   }
 
