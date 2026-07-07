@@ -1,7 +1,11 @@
 import type { RSSFeedItem, RSSOptions } from '@astrojs/rss'
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 import type { MockBlogPost } from '../utils'
+
+const astroContentMock = vi.hoisted(() => ({
+  content: undefined as Awaited<ReturnType<typeof import('../utils').mockBlogPosts>> | undefined,
+}))
 
 vi.mock('astro/container', () => ({
   experimental_AstroContainer: {
@@ -9,7 +13,17 @@ vi.mock('astro/container', () => ({
   },
 }))
 
+vi.mock('astro:content', async () => {
+  const mod = await vi.importActual<typeof import('astro:content')>('astro:content')
+
+  return {
+    ...mod,
+    getCollection: () => astroContentMock.content?.getCollection() ?? [],
+  }
+})
+
 afterEach(() => {
+  astroContentMock.content = undefined
   vi.useRealTimers()
 })
 
@@ -48,12 +62,6 @@ const defaultBlogPosts: MockBlogPost[] = [
 const t = ((key: string) => key) as App.Locals['t']
 
 describe('RSS feed', () => {
-  beforeEach(() => {
-    vi.useFakeTimers()
-    // Use a date after all mocked blog posts so no post is part of the current archive period.
-    vi.setSystemTime(new Date('2025-01-01T00:00:00.000Z'))
-  })
-
   test('includes only the last 20 blog posts', async () => {
     const { getRSSOptions } = await getTestRSS()
 
@@ -225,13 +233,11 @@ describe('RSS archive feed', () => {
 })
 
 describe('RSS current archive period', () => {
-  beforeEach(() => {
-    // Use a date within the mocked current archive period so the posts from that period are not part of an archive.
-    vi.setSystemTime(new Date('2024-02-28T00:00:00.000Z'))
-  })
+  // Use a date within the mocked current archive period so the posts from that period are not part of an archive.
+  const date = new Date('2024-02-28T00:00:00.000Z')
 
   test('includes all posts from the current archive period', async () => {
-    const { getRSSOptions } = await getTestRSS(getCurrentPeriodBlogPosts())
+    const { getRSSOptions } = await getTestRSS(getCurrentPeriodBlogPosts(), date)
 
     const { items } = await getRSSOptions(new URL('http://example.com'), undefined, t)
 
@@ -242,7 +248,7 @@ describe('RSS current archive period', () => {
   })
 
   test('does not generate an archive for the current archive period', async () => {
-    const { getRSSArchiveStaticPaths } = await getTestRSS(getCurrentPeriodBlogPosts())
+    const { getRSSArchiveStaticPaths } = await getTestRSS(getCurrentPeriodBlogPosts(), date)
 
     const paths = await getRSSArchiveStaticPaths()
     const archives = paths.map((path) => path.params.archive)
@@ -252,7 +258,7 @@ describe('RSS current archive period', () => {
   })
 
   test('links to the newest completed archive before the current archive period', async () => {
-    const { getRSSOptions } = await getTestRSS(getCurrentPeriodBlogPosts())
+    const { getRSSOptions } = await getTestRSS(getCurrentPeriodBlogPosts(), date)
 
     const options = await getRSSOptions(new URL('http://example.com'), undefined, t)
 
@@ -266,17 +272,20 @@ function getItemAtIndex(items: RSSOptions['items'], index: number) {
   return (items as RSSFeedItem[])[index]
 }
 
-async function getTestRSS(posts: MockBlogPost[] = defaultBlogPosts) {
+// Use a date after all mocked blog posts so no post is part of the current archive period.
+async function getTestRSS(posts: MockBlogPost[] = defaultBlogPosts, now = new Date('2025-01-01T00:00:00.000Z')) {
+  vi.useRealTimers()
   vi.resetModules()
-  vi.doUnmock('astro:content')
 
-  vi.doMock('astro:content', async () => {
-    const { mockBlogPosts } = await import('../utils')
+  const { mockBlogPosts } = await import('../utils')
+  astroContentMock.content = await mockBlogPosts(posts)
 
-    return mockBlogPosts(posts)
-  })
+  const rss = await import('../../../libs/rss')
 
-  return import('../../../libs/rss')
+  vi.useFakeTimers()
+  vi.setSystemTime(now)
+
+  return rss
 }
 
 function getCurrentPeriodBlogPosts(): MockBlogPost[] {
