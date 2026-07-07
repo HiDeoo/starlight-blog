@@ -1,5 +1,6 @@
 ---
 title: Vario nunc polo
+description: Donec eros nulla, suscipit a mauris ut, sollicitudin porttitor orci.
 date: 2020-12-12
 lastUpdated: 2021-12-30
 tags:

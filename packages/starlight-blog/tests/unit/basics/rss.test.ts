@@ -13,8 +13,16 @@ vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
 
   return mockBlogPosts([
-    ['post-21.md', { title: 'Post 21', date: new Date('2024-02-24') }],
-    ['post-20.md', { title: 'Post 20', date: new Date('2024-01-24') }],
+    ['post-21.md', { title: 'Post 21', date: new Date('2024-02-24'), description: 'Description of post 21' }],
+    [
+      'post-20.md',
+      {
+        title: 'Post 20',
+        date: new Date('2024-01-24'),
+        description: 'Description of post 20',
+        excerpt: 'Excerpt of **post 20**',
+      },
+    ],
     ['post-19.md', { title: 'Post 19', date: new Date('2023-12-24') }],
     ['post-18.md', { title: 'Post 18', date: new Date('2023-11-24') }],
     ['post-17.md', { title: 'Post 17', date: new Date('2023-10-24') }],
@@ -57,6 +65,13 @@ describe('getRSSOptions', () => {
     expect(options.description).toMatchInlineSnapshot(`"Basic tests for the Starlight Blog plugin."`)
     expect(options.site).toBe(url)
     expect(options.customData).toMatchInlineSnapshot(`"<language>en</language>"`)
+  })
+
+  test('includes item descriptions', async () => {
+    const { items } = await getRSSOptions(new URL('http://example.com'), undefined, t)
+
+    expect(getItemAtIndex(items, 0)?.description).toBe('Description of post 21')
+    expect(getItemAtIndex(items, 1)?.description).toBe('Excerpt of post 20')
   })
 })
 

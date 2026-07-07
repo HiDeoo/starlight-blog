@@ -95,7 +95,7 @@ function getRSSTitle(locale: Locale): string {
 }
 
 function getRSSDescription(entry: StarlightBlogEntry): string | undefined {
-  if (!entry.data.excerpt) return
+  if (!entry.data.excerpt) return entry.data.description
 
   return stripMarkdown(entry.data.excerpt)
 }
