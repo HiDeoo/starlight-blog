@@ -100,6 +100,12 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                   pattern: '/[...prefix]/rss.xml',
                   prerender: true,
                 })
+
+                injectRoute({
+                  entrypoint: 'starlight-blog/routes/rss-archive',
+                  pattern: '/[...prefix]/rss/[archive].xml',
+                  prerender: true,
+                })
               }
 
               applyMarkdownPlugin(astroConfig.markdown.processor)

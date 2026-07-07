@@ -8,7 +8,7 @@ import type { StarlightBlogData } from '../../data'
 import type { StarlightBlogEntry } from '../../libs/content'
 import { blogEntrySchema } from '../../schema'
 
-export async function mockBlogPosts(posts: Parameters<typeof mockBlogPost>[]) {
+export async function mockBlogPosts(posts: MockBlogPost[]) {
   const mod = await vi.importActual<typeof import('astro:content')>('astro:content')
   const mockPosts = posts.map((post) => mockBlogPost(...post))
 
@@ -125,3 +125,5 @@ type StarlightBlogEntryData = z.input<ReturnType<typeof blogEntrySchema>> & {
   description?: string
   lastUpdated?: Date | boolean
 }
+
+export type MockBlogPost = Parameters<typeof mockBlogPost>
