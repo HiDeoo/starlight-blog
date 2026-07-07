@@ -19,6 +19,7 @@
     "./routes/Blog.astro": "./routes/Blog.astro",
     "./routes/Tags.astro": "./routes/Tags.astro",
     "./routes/rss": "./routes/rss.xml.ts",
+    "./routes/rss-archive": "./routes/rss-archive.xml.ts",
     "./schema": "./schema.ts",
     "./styles": "./styles.css",
     "./package.json": "./package.json"
