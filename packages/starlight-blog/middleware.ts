@@ -20,6 +20,7 @@ import {
   isBlogRoot,
   isBlogTagPage,
 } from './libs/page'
+import { addStructuredData } from './libs/structured-data'
 import { getAllTags, getEntryTags } from './libs/tags'
 import { getBlogTitle } from './libs/title'
 
@@ -30,6 +31,8 @@ export const onRequest = defineRouteMiddleware(async (context) => {
   const { id, locale } = starlightRoute
 
   context.locals.starlightBlog = await getBlogData(starlightRoute, context.locals.t)
+
+  if (config.structuredData) addStructuredData(context)
 
   const isBlog = isAnyBlogPage(id)
 

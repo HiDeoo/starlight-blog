@@ -66,8 +66,16 @@ export function isBlogRoot(slug: string) {
   return slug === getPathWithLocale(config.prefix, getLocaleFromPath(slug))
 }
 
+export function isBlogPaginationPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/\\d+/?$`).exec(slug) !== null
+}
+
 export function isBlogPostPage(slug: string, postSlug: string) {
   return slug === postSlug
+}
+
+export function isAnyBlogTagPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/tags/.+/?$`).exec(slug) !== null
 }
 
 export function isBlogTagPage(slug: string, tag: string) {
@@ -76,6 +84,10 @@ export function isBlogTagPage(slug: string, tag: string) {
 
 export function isBlogAuthorPage(slug: string, author: string) {
   return slug === `${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/authors/${author}`
+}
+
+export function isAnyBlogAuthorPage(slug: string) {
+  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/authors/.+/?$`).exec(slug) !== null
 }
 
 export function getPageProps(title: string): StarlightPageProps {

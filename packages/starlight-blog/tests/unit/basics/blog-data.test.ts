@@ -1,7 +1,6 @@
-import type { StarlightRouteData } from '@astrojs/starlight/route-data'
 import { assert, describe, expect, test, vi } from 'vitest'
 
-import { getBlogData } from '../../../middleware'
+import { getTestBlogData, mockCoverImage } from '../utils'
 
 vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
@@ -70,7 +69,7 @@ describe('posts', () => {
     vi.resetModules()
     const middleware = await import('../../../middleware')
 
-    const { posts } = await getTestBlogData(middleware.getBlogData)
+    const { posts } = await getTestBlogData({ getter: middleware.getBlogData })
 
     const post = posts[0]
     assert(post)
@@ -104,6 +103,7 @@ describe('posts', () => {
     expect(post.metrics.words.total).toBe(1065)
 
     vi.doUnmock('../../../libs/metrics')
+    vi.resetModules()
   })
 
   test('uses user-provided metrics in post data', async () => {
@@ -137,16 +137,3 @@ describe('authors', () => {
     expect(author.url).toBe('https://example.com')
   })
 })
-
-function getTestBlogData(getter?: typeof getBlogData) {
-  return (getter ?? getBlogData)({ locale: 'en' } as StarlightRouteData, (() => '') as App.Locals['t'])
-}
-
-function mockCoverImage() {
-  return {
-    format: 'webp' as const,
-    height: 100,
-    src: '',
-    width: 100,
-  }
-}

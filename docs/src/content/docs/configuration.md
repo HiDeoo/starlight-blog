@@ -117,6 +117,16 @@ Defines whether or not an [RSS feed](/guides/rss/) should be generated for the b
 By default, an RSS feed is automatically generated for your blog when the Astro [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) option is set.
 Setting this option to `false` will disable the RSS feed even if the Astro `site` option is set.
 
+### `structuredData`
+
+**Type:** `boolean`  
+**Default:** `true` if `site` is set, otherwise `false`
+
+Defines whether or not [structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) should be added to blog pages.
+
+By default, structured data is automatically added to blog pages when the Astro [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) option is set.
+Setting this option to `false` will disable the structured data even if the Astro `site` option is set.
+
 ## Author configuration
 
 Global authors for all blog posts or regular authors that can be referenced in individual blog posts can be defined using the [`authors`](#authors) configuration option.

@@ -15,7 +15,10 @@ export async function getAllAuthors(locale: Locale): Promise<StarlightBlogEntryA
 
   for (const entry of entries) {
     for (const author of getEntryAuthors(entry)) {
-      const infos = entryAuthors.get(author.name) ?? { entries: [], author: { ...author, slug: slug(author.name) } }
+      const infos = entryAuthors.get(author.name) ?? {
+        entries: [],
+        author: { ...author, slug: getAuthorSlug(author.name) },
+      }
 
       infos.entries.push(entry)
 
@@ -70,6 +73,10 @@ export function getEntryAuthors(entry: StarlightBlogEntry): StarlightBlogAuthor[
   }
 
   return authors
+}
+
+export function getAuthorSlug(name: string) {
+  return slug(name)
 }
 
 function getAuthorFromConfig(id: string): StarlightBlogAuthor {

@@ -88,6 +88,13 @@ const configSchema = z
      */
     rss: z.boolean().default(true),
     /**
+     * Defines whether or not structured data should be added to blog pages.
+     *
+     * By default, structured data is automatically added to blog pages when the Astro `site` option is set.
+     * Setting this option to `false` will disable the structured data even if the Astro `site` option is set.
+     */
+    structuredData: z.boolean().default(true),
+    /**
      * The title of the blog.
      *
      * The value can be a string, or for multilingual sites, an object with values for each different locale.
