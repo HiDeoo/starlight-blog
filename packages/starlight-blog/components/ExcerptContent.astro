@@ -1,12 +1,27 @@
 ---
-import { ExcerptDelimiter } from '../libs/remark'
+import { markdownToHtml } from 'satteri'
 
-let html = await Astro.slots.render('default')
+import { HtmlExcerptDelimiter } from '../libs/markdown'
 
-const exceptDelimiterIndex = html.indexOf(ExcerptDelimiter)
+interface Props {
+  content?: string
+}
 
-if (exceptDelimiterIndex !== -1) {
-  html = html.slice(0, exceptDelimiterIndex)
+const { content } = Astro.props
+
+let html = ''
+
+if (content) {
+  const result = markdownToHtml(content, { features: { frontmatter: false, gfm: true } })
+  html = result.html
+} else {
+  html = await Astro.slots.render('default')
+
+  const exceptDelimiterIndex = html.indexOf(HtmlExcerptDelimiter)
+
+  if (exceptDelimiterIndex !== -1) {
+    html = html.slice(0, exceptDelimiterIndex)
+  }
 }
 ---
 

@@ -3,8 +3,7 @@ import 'mdast-util-mdx-expression'
 import type { RemarkPlugin } from '@astrojs/markdown-remark'
 import { CONTINUE, EXIT, visit } from 'unist-util-visit'
 
-const excerptKeyword = 'excerpt'
-export const ExcerptDelimiter = `<p hidden><!-- ${excerptKeyword} --></p>`
+import { HtmlExcerptDelimiter, MarkdownExcerptDelimiter, MdxExcerptDelimiter } from './markdown'
 
 export const remarkStarlightBlog: RemarkPlugin = function () {
   return function (tree) {
@@ -12,10 +11,10 @@ export const remarkStarlightBlog: RemarkPlugin = function () {
       if (!parent || index === undefined) return CONTINUE
 
       if (
-        (node.type === 'mdxFlowExpression' && node.value === `/* ${excerptKeyword} */`) ||
-        (node.type === 'html' && node.value === `<!-- ${excerptKeyword} -->`)
+        (node.type === 'mdxFlowExpression' && node.value === MdxExcerptDelimiter) ||
+        (node.type === 'html' && node.value === MarkdownExcerptDelimiter)
       ) {
-        parent.children.splice(index, 1, { type: 'html', value: ExcerptDelimiter })
+        parent.children.splice(index, 1, { type: 'html', value: HtmlExcerptDelimiter })
 
         return EXIT
       }

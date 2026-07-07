@@ -1,6 +1,4 @@
 ---
-import { Markdown } from 'astro-remote'
-
 import { getBlogEntryExcerpt, type StarlightBlogEntry } from '../libs/content'
 
 import ExcerptContent from './ExcerptContent.astro'
@@ -16,7 +14,7 @@ const Content = await getBlogEntryExcerpt(entry)
 
 {
   typeof Content === 'string' ? (
-    <Markdown content={Content} />
+    <ExcerptContent content={Content} />
   ) : (
     <ExcerptContent>
       <Content />
