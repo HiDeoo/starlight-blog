@@ -5,7 +5,7 @@ import { blogAuthorSchema } from '../schema'
 import { throwPluginError } from './error'
 import { stripLeadingSlash, stripTrailingSlash } from './path'
 
-const configSchema = z
+const blogConfigSchema = z
   .object({
     /**
      * A list of global author(s).
@@ -104,7 +104,11 @@ const configSchema = z
   })
   .prefault({})
 
-export function validateConfig(userConfig: unknown): StarlightBlogConfig {
+const configSchema = z
+  .union([blogConfigSchema, z.array(blogConfigSchema).min(1)])
+  .transform((config) => (Array.isArray(config) ? config : [config]))
+
+export function validateConfig(userConfig: unknown): StarlightBlogConfig[] {
   const config = configSchema.safeParse(userConfig)
 
   if (!config.success) {
@@ -114,7 +118,33 @@ ${z.prettifyError(config.error)}
 `)
   }
 
+  validatePrefixes(config.data)
+
   return config.data
+}
+
+function validatePrefixes(configs: StarlightBlogConfig[]) {
+  const seen = new Set<string>()
+
+  for (const { prefix } of configs) {
+    if (seen.has(prefix)) {
+      throwPluginError(`Invalid starlight-blog configuration:
+
+Duplicate blog prefix '${prefix}'. Each blog must use a unique prefix.`)
+    }
+
+    seen.add(prefix)
+  }
+
+  for (const { prefix } of configs) {
+    const nestedConfig = configs.find(({ prefix: otherPrefix }) => otherPrefix.startsWith(`${prefix}/`))
+
+    if (nestedConfig) {
+      throwPluginError(`Invalid starlight-blog configuration:
+
+Nested blog prefixes are not supported: '${prefix}' and '${nestedConfig.prefix}'.`)
+    }
+  }
 }
 
 function infinityToMax(value: number): number {
@@ -122,4 +152,4 @@ function infinityToMax(value: number): number {
 }
 
 export type StarlightBlogUserConfig = z.input<typeof configSchema>
-export type StarlightBlogConfig = z.output<typeof configSchema>
+export type StarlightBlogConfig = z.output<typeof blogConfigSchema>

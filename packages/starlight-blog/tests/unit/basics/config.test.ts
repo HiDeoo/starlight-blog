@@ -6,22 +6,22 @@ describe('counts', () => {
   test('uses default count values', () => {
     const config = validateConfig({})
 
-    expect(config.postCount).toBe(5)
-    expect(config.recentPostCount).toBe(10)
+    expect(config[0]?.postCount).toBe(5)
+    expect(config[0]?.recentPostCount).toBe(10)
   })
 
   test('supports custom count values', () => {
     const config = validateConfig({ postCount: 3, recentPostCount: 7 })
 
-    expect(config.postCount).toBe(3)
-    expect(config.recentPostCount).toBe(7)
+    expect(config[0]?.postCount).toBe(3)
+    expect(config[0]?.recentPostCount).toBe(7)
   })
 
   test('supports `Infinity` for count values', () => {
     const config = validateConfig({ postCount: Infinity, recentPostCount: Infinity })
 
-    expect(config.postCount).toBeTypeOf('number')
-    expect(config.recentPostCount).toBeTypeOf('number')
+    expect(config[0]?.postCount).toBeTypeOf('number')
+    expect(config[0]?.recentPostCount).toBeTypeOf('number')
   })
 
   test('errors with less than 1 for count values', () => {

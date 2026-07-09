@@ -1,21 +1,23 @@
 import { defineRouteMiddleware, type StarlightRouteData } from '@astrojs/starlight/route-data'
 import type { APIContext, AstroBuiltinAttributes } from 'astro'
+import { AstroError } from 'astro/errors'
 import type { HTMLAttributes } from 'astro/types'
-import config from 'virtual:starlight-blog/config'
+import configs from 'virtual:starlight-blog/configs'
 
 import type { StarlightBlogData } from './data'
 import { getAllAuthors, getEntryAuthors } from './libs/authors'
+import type { StarlightBlogConfig } from './libs/config'
 import { renderBlogEntryToString } from './libs/container'
 import { getBlogEntries, getSidebarBlogEntries } from './libs/content'
 import type { Locale } from './libs/i18n'
 import { getMetrics } from './libs/metrics'
 import { isNavigationWithSidebarLink } from './libs/navigation'
 import {
+  getBlogConfigFromPath,
   getPathWithLocale,
   getRelativeBlogUrl,
   getRelativeUrl,
   getSidebarProps,
-  isAnyBlogPage,
   isBlogAuthorPage,
   isBlogRoot,
   isBlogTagPage,
@@ -24,36 +26,75 @@ import { addStructuredData } from './libs/structured-data'
 import { getAllTags, getEntryTags } from './libs/tags'
 import { getBlogTitle } from './libs/title'
 
-const blogDataPerLocale = new Map<Locale, StarlightBlogData>()
+// A map of prefixes to a map of locales to blog data.
+const blogsDataPerLocale = new Map<string, Map<Locale, StarlightBlogData>>()
 
 export const onRequest = defineRouteMiddleware(async (context) => {
   const { starlightRoute } = context.locals
   const { id, locale } = starlightRoute
 
-  context.locals.starlightBlog = await getBlogData(starlightRoute, context.locals.t)
+  const blogsData = new Map(
+    await Promise.all(
+      [...configs.values()].map(
+        async (config) => [config.prefix, await getBlogData(config, starlightRoute, context.locals.t)] as const,
+      ),
+    ),
+  )
 
-  if (config.structuredData) addStructuredData(context)
+  context.locals.starlightBlogs = blogsData
 
-  const isBlog = isAnyBlogPage(id)
+  Object.defineProperty(context.locals, 'starlightBlog', {
+    configurable: true,
+    enumerable: true,
+    get() {
+      if (configs.size > 1) {
+        throw new AstroError(
+          '`locals.starlightBlog` is not defined',
+          '`locals.starlightBlog` is not available when multiple blog instances are configured.\n' +
+            'Use `locals.starlightBlogs.get(prefix)` instead.',
+        )
+      }
 
-  if (!isBlog) {
-    if (isNavigationWithSidebarLink(config)) {
-      starlightRoute.sidebar.unshift(
-        makeSidebarLink(getBlogTitle(locale), getRelativeBlogUrl('/', locale), false, { class: 'sl-blog-mobile-link' }),
-      )
+      const [config] = configs.values()
+      if (!config) throw new Error('No blog instance configured.')
+
+      const data = context.locals.starlightBlogs.get(config.prefix)
+      if (!data) throw new Error(`Missing blog data for the configured blog instance with prefix '${config.prefix}'.`)
+
+      return data
+    },
+  })
+
+  const config = getBlogConfigFromPath(id)
+
+  if (!config) {
+    for (const blog of [...configs.values()].toReversed()) {
+      if (isNavigationWithSidebarLink(blog)) {
+        starlightRoute.sidebar.unshift(
+          makeSidebarLink(getBlogTitle(blog, locale), getRelativeBlogUrl(blog, '/', locale), false, {
+            class: 'sl-blog-mobile-link',
+          }),
+        )
+      }
     }
+
     return
   }
 
-  starlightRoute.sidebar = await getBlogSidebar(context)
+  if (config.structuredData) addStructuredData(config, context)
+
+  starlightRoute.sidebar = await getBlogSidebar(config, context)
 })
 
-export async function getBlogData({ locale }: StarlightRouteData, t: App.Locals['t']): Promise<StarlightBlogData> {
-  if (blogDataPerLocale.has(locale)) {
-    return blogDataPerLocale.get(locale) as StarlightBlogData
-  }
+export async function getBlogData(
+  config: StarlightBlogConfig,
+  { locale }: StarlightRouteData,
+  t: App.Locals['t'],
+): Promise<StarlightBlogData> {
+  const blogDataPerLocale = getBlogDataPerLocale(config, locale)
+  if (blogDataPerLocale) return blogDataPerLocale
 
-  const posts = await getBlogPostsData(locale, t)
+  const posts = await getBlogPostsData(config, locale, t)
 
   const authors = new Map<string, StarlightBlogData['authors'][number]>()
 
@@ -66,17 +107,21 @@ export async function getBlogData({ locale }: StarlightRouteData, t: App.Locals[
 
   const blogData: StarlightBlogData = { posts, authors: [...authors.values()] }
 
-  blogDataPerLocale.set(locale, blogData)
+  setBlogDataPerLocale(config, locale, blogData)
 
   return blogData
 }
 
-async function getBlogPostsData(locale: Locale, t: App.Locals['t']): Promise<StarlightBlogData['posts']> {
-  const entries = await getBlogEntries(locale)
+async function getBlogPostsData(
+  config: StarlightBlogConfig,
+  locale: Locale,
+  t: App.Locals['t'],
+): Promise<StarlightBlogData['posts']> {
+  const entries = await getBlogEntries(config, locale)
 
   return Promise.all(
     entries.map(async (entry) => {
-      const authors = getEntryAuthors(entry)
+      const authors = getEntryAuthors(config, entry)
       const tags = getEntryTags(entry)
       const html = await renderBlogEntryToString(entry, t)
       const metrics = getMetrics(html, locale, entry.data.metrics)
@@ -96,7 +141,7 @@ async function getBlogPostsData(locale: Locale, t: App.Locals['t']): Promise<Sta
         metrics,
         tags: tags.map(({ label, slug }) => ({
           label,
-          href: getRelativeBlogUrl(`/tags/${slug}`, locale),
+          href: getRelativeBlogUrl(config, `/tags/${slug}`, locale),
         })),
         title: entry.data.title,
       }
@@ -110,14 +155,17 @@ async function getBlogPostsData(locale: Locale, t: App.Locals['t']): Promise<Sta
   )
 }
 
-async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['sidebar']> {
+async function getBlogSidebar(
+  config: StarlightBlogConfig,
+  context: APIContext,
+): Promise<StarlightRouteData['sidebar']> {
   const { starlightRoute, t } = context.locals
   const { id, locale } = starlightRoute
 
-  const { featured, recent } = await getSidebarBlogEntries(locale)
+  const { featured, recent } = await getSidebarBlogEntries(config, locale)
 
   const sidebar: StarlightRouteData['sidebar'] = [
-    makeSidebarLink(t('starlightBlog.sidebar.all'), getRelativeBlogUrl('/', locale), isBlogRoot(id)),
+    makeSidebarLink(t('starlightBlog.sidebar.all'), getRelativeBlogUrl(config, '/', locale), isBlogRoot(config, id)),
   ]
 
   if (featured.length > 0) {
@@ -126,7 +174,7 @@ async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['
 
   sidebar.push(makeSidebarGroup(t('starlightBlog.sidebar.recent'), getSidebarProps(id, recent, locale)))
 
-  const tags = await getAllTags(locale)
+  const tags = await getAllTags(config, locale)
 
   if (tags.size > 0) {
     sidebar.push(
@@ -143,15 +191,15 @@ async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['
           .map(([tagSlug, { entries, label }]) =>
             makeSidebarLink(
               `${label} (${entries.length})`,
-              getRelativeBlogUrl(`/tags/${tagSlug}`, locale),
-              isBlogTagPage(id, tagSlug),
+              getRelativeBlogUrl(config, `/tags/${tagSlug}`, locale),
+              isBlogTagPage(config, id, tagSlug),
             ),
           ),
       ),
     )
   }
 
-  const authors = await getAllAuthors(locale)
+  const authors = await getAllAuthors(config, locale)
 
   if (authors.size > 1) {
     sidebar.push(
@@ -168,8 +216,8 @@ async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['
           .map(([, { author, entries }]) =>
             makeSidebarLink(
               `${author.name} (${entries.length})`,
-              getRelativeBlogUrl(`/authors/${author.slug}`, locale),
-              isBlogAuthorPage(id, author.slug),
+              getRelativeBlogUrl(config, `/authors/${author.slug}`, locale),
+              isBlogAuthorPage(config, id, author.slug),
             ),
           ),
       ),
@@ -177,7 +225,9 @@ async function getBlogSidebar(context: APIContext): Promise<StarlightRouteData['
   }
 
   if (context.site && config.rss) {
-    sidebar.push(makeSidebarLink(t('starlightBlog.sidebar.rss'), getRelativeBlogUrl('/rss.xml', locale, true), false))
+    sidebar.push(
+      makeSidebarLink(t('starlightBlog.sidebar.rss'), getRelativeBlogUrl(config, '/rss.xml', locale, true), false),
+    )
   }
 
   return sidebar
@@ -207,4 +257,15 @@ function makeSidebarGroup(label: string, entries: StarlightRouteData['sidebar'])
     label,
     type: 'group',
   } satisfies StarlightRouteData['sidebar'][number]
+}
+
+function getBlogDataPerLocale(config: StarlightBlogConfig, locale: Locale) {
+  return blogsDataPerLocale.get(config.prefix)?.get(locale)
+}
+
+function setBlogDataPerLocale(config: StarlightBlogConfig, locale: Locale, data: StarlightBlogData) {
+  const localeCache = blogsDataPerLocale.get(config.prefix) ?? new Map<Locale, StarlightBlogData>()
+
+  localeCache.set(locale, data)
+  blogsDataPerLocale.set(config.prefix, localeCache)
 }

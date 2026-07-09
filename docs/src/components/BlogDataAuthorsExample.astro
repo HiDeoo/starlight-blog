@@ -1,12 +1,13 @@
 ---
-const authorNames = Astro.locals.starlightBlog.authors
-  .map((author) => author.name)
+const authorNames = Astro.locals.starlightBlogs
+  .get('blog')
+  ?.authors.map((author) => author.name)
   .toSorted((a, b) => a.localeCompare(b, Astro.currentLocale))
 
 const authorList = new Intl.ListFormat(Astro.currentLocale, {
   style: 'long',
   type: 'conjunction',
-}).format(authorNames)
+}).format(authorNames ?? [])
 ---
 
 <p><b>Authors:</b> {authorList}</p>

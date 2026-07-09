@@ -8,8 +8,10 @@ When defined, the following changes are made:
 
 - An RSS feed is generated at `/blog/rss.xml` (can be customized with the [`prefix`](/configuration/#prefix) option)
 - A sidebar link to the RSS feed is added to the blog
-- A [social link](https://starlight.astro.build/reference/configuration/#social) to the RSS feed is added to the Starlight header
+- A [social link](https://starlight.astro.build/reference/configuration/#social) to the RSS feed is added to the Starlight header when exactly one RSS feed is generated
 - [RSS feed auto-discovery](https://docs.astro.build/en/guides/rss/#enabling-rss-feed-auto-discovery) is automatically configured
+
+When using [multiple blog instances](/guides/multiple-instances/), each RSS-enabled instance gets its own feed.
 
 ## Configure your RSS feed
 

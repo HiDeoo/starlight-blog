@@ -1,13 +1,14 @@
 import type { RSSFeedItem, RSSOptions } from '@astrojs/rss'
 import type { GetStaticPathsResult } from 'astro'
 import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog/config'
+import configs from 'virtual:starlight-blog/configs'
 import context from 'virtual:starlight-blog/context'
 
+import type { StarlightBlogConfig } from './config'
 import { renderBlogEntryToString } from './container'
 import { getBlogEntries, type StarlightBlogEntry } from './content'
 import { transformHTMLForRSS } from './html'
-import { DefaultLocale, getLangFromLocale, type Locale } from './i18n'
+import { getLangFromLocale, getLocales, type Locale } from './i18n'
 import { stripMarkdown } from './markdown'
 import { getPathWithLocale, getRelativeBlogUrl, getRelativeUrl } from './page'
 import { getBlogTitle } from './title'
@@ -15,26 +16,45 @@ import { getBlogTitle } from './title'
 const rssItemLimit = 20
 
 export function getRSSStaticPaths() {
-  return getRSSLocales().map(getRSSStaticPath) satisfies GetStaticPathsResult
-}
-
-export async function getRSSArchiveStaticPaths() {
   const paths = []
 
-  for (const locale of getRSSLocales()) {
-    const entries = await getBlogEntries(locale)
-    if (entries.length <= rssItemLimit) continue
+  for (const config of configs.values()) {
+    if (!config.rss) continue
 
-    for (const archive of getRSSArchives(entries)) {
-      paths.push(getRSSArchiveStaticPath(locale, archive))
+    for (const locale of getLocales()) {
+      paths.push(getRSSStaticPath(config, locale))
     }
   }
 
   return paths satisfies GetStaticPathsResult
 }
 
-export async function getRSSOptions(site: URL | undefined, locale: Locale, t: App.Locals['t']) {
-  const entries = await getBlogEntries(locale)
+export async function getRSSArchiveStaticPaths() {
+  const paths = []
+
+  for (const config of configs.values()) {
+    if (!config.rss) continue
+
+    for (const locale of getLocales()) {
+      const entries = await getBlogEntries(config, locale)
+      if (entries.length <= rssItemLimit) continue
+
+      for (const archive of getRSSArchives(entries)) {
+        paths.push(getRSSArchiveStaticPath(config, locale, archive))
+      }
+    }
+  }
+
+  return paths satisfies GetStaticPathsResult
+}
+
+export async function getRSSOptions(
+  config: StarlightBlogConfig,
+  site: URL | undefined,
+  locale: Locale,
+  t: App.Locals['t'],
+) {
+  const entries = await getBlogEntries(config, locale)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
   const feedSite = site!
@@ -42,9 +62,10 @@ export async function getRSSOptions(site: URL | undefined, locale: Locale, t: Ap
   const archives = getRSSArchives(entries)
   const rssEntries = archives.length === 0 ? entries : getRSSEntries(entries)
   const isComplete = rssEntries.length === entries.length
-  const links = getRSSLinks(feedSite, locale, archives, isComplete)
+  const links = getRSSLinks(config, feedSite, locale, archives, isComplete)
 
   return getRSSOptionsForEntries(
+    config,
     rssEntries,
     feedSite,
     locale,
@@ -54,29 +75,27 @@ export async function getRSSOptions(site: URL | undefined, locale: Locale, t: Ap
 }
 
 export async function getRSSArchiveOptions(
+  config: StarlightBlogConfig,
   site: URL | undefined,
   locale: Locale,
   archive: string | undefined,
   t: App.Locals['t'],
 ) {
-  if (!archive) {
-    throw new Error("Missing RSS 'archive' parameter to generate archive RSS feed.")
-  }
+  if (!archive) throw new Error("Missing RSS 'archive' parameter to generate archive RSS feed.")
 
-  const entries = await getBlogEntries(locale)
+  const entries = await getBlogEntries(config, locale)
   const archives = getRSSArchives(entries)
 
-  if (!archives.includes(archive)) {
-    throw new Error(`Unknown RSS archive '${archive}'.`)
-  }
+  if (!archives.includes(archive)) throw new Error(`Unknown RSS archive '${archive}'.`)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- The route is only injected if `site` is defined in the user Astro config.
   const feedSite = site!
 
   const archiveEntries = entries.filter((entry) => getRSSArchiveKey(entry.data.date) === archive)
-  const links = getArchiveRSSLinks(feedSite, locale, archives, archive)
+  const links = getArchiveRSSLinks(config, feedSite, locale, archives, archive)
 
   return getRSSOptionsForEntries(
+    config,
     archiveEntries,
     feedSite,
     locale,
@@ -85,21 +104,7 @@ export async function getRSSArchiveOptions(
   )
 }
 
-function getRSSLocales(): Locale[] {
-  const locales: Locale[] = []
-
-  if (starlightConfig.isMultilingual) {
-    for (const localeKey of Object.keys(starlightConfig.locales)) {
-      locales.push(localeKey === 'root' ? undefined : localeKey)
-    }
-  } else {
-    locales.push(DefaultLocale)
-  }
-
-  return locales
-}
-
-function getRSSStaticPath(locale: Locale) {
+function getRSSStaticPath(config: StarlightBlogConfig, locale: Locale) {
   return {
     params: {
       prefix: getPathWithLocale(config.prefix, locale),
@@ -133,7 +138,7 @@ function getCurrentRSSArchiveKey() {
   return getRSSArchiveKey(new Date())
 }
 
-function getRSSArchiveStaticPath(locale: Locale, archive: string) {
+function getRSSArchiveStaticPath(config: StarlightBlogConfig, locale: Locale, archive: string) {
   return {
     params: {
       archive,
@@ -156,6 +161,7 @@ function getRSSEntries(entries: StarlightBlogEntry[]) {
 }
 
 async function getRSSOptionsForEntries(
+  config: StarlightBlogConfig,
   entries: StarlightBlogEntry[],
   site: URL,
   locale: Locale,
@@ -163,7 +169,7 @@ async function getRSSOptionsForEntries(
   customData: string,
 ) {
   const options: RSSOptions = {
-    title: getRSSTitle(locale),
+    title: getRSSTitle(config, locale),
     description: context.description ?? '',
     site: site,
     // https://datatracker.ietf.org/doc/html/rfc5005#appendix-B
@@ -197,7 +203,7 @@ async function getRSSItem(
   }
 }
 
-function getRSSTitle(locale: Locale): string {
+function getRSSTitle(config: StarlightBlogConfig, locale: Locale): string {
   let title: string
 
   if (typeof context.title === 'string') {
@@ -216,7 +222,7 @@ function getRSSTitle(locale: Locale): string {
     title += ` ${context.titleDelimiter ?? '|'} `
   }
 
-  title += getBlogTitle(locale)
+  title += getBlogTitle(config, locale)
 
   return title
 }
@@ -243,47 +249,59 @@ function getRSSCustomData(locale: Locale, links: RSSLink[], options: { archive?:
   return customData.join('\n')
 }
 
-function getRSSLinks(site: URL, locale: Locale, archives: string[], isComplete: boolean): RSSLink[] {
-  const links: RSSLink[] = [{ rel: 'self', href: getRSSURL(site, locale) }]
+function getRSSLinks(
+  config: StarlightBlogConfig,
+  site: URL,
+  locale: Locale,
+  archives: string[],
+  isComplete: boolean,
+): RSSLink[] {
+  const links: RSSLink[] = [{ rel: 'self', href: getRSSURL(config, site, locale) }]
 
   if (!isComplete) {
     const previousArchive = archives[0]
 
     if (previousArchive) {
-      links.push({ rel: 'prev-archive', href: getRSSArchiveURL(site, locale, previousArchive) })
+      links.push({ rel: 'prev-archive', href: getRSSArchiveURL(config, site, locale, previousArchive) })
     }
   }
 
   return links
 }
 
-function getArchiveRSSLinks(site: URL, locale: Locale, archives: string[], archive: string): RSSLink[] {
+function getArchiveRSSLinks(
+  config: StarlightBlogConfig,
+  site: URL,
+  locale: Locale,
+  archives: string[],
+  archive: string,
+): RSSLink[] {
   const archiveIndex = archives.indexOf(archive)
   const previousArchive = archives[archiveIndex + 1]
   const nextArchive = archiveIndex > 0 ? archives[archiveIndex - 1] : undefined
 
   const links: RSSLink[] = [
-    { rel: 'current', href: getRSSURL(site, locale) },
-    { rel: 'self', href: getRSSArchiveURL(site, locale, archive) },
+    { rel: 'current', href: getRSSURL(config, site, locale) },
+    { rel: 'self', href: getRSSArchiveURL(config, site, locale, archive) },
   ]
 
   if (previousArchive) {
-    links.push({ rel: 'prev-archive', href: getRSSArchiveURL(site, locale, previousArchive) })
+    links.push({ rel: 'prev-archive', href: getRSSArchiveURL(config, site, locale, previousArchive) })
   }
 
   if (nextArchive) {
-    links.push({ rel: 'next-archive', href: getRSSArchiveURL(site, locale, nextArchive) })
+    links.push({ rel: 'next-archive', href: getRSSArchiveURL(config, site, locale, nextArchive) })
   }
 
   return links
 }
 
-function getRSSURL(site: URL, locale: Locale) {
-  return new URL(getRelativeBlogUrl('/rss.xml', locale, true), site).href
+function getRSSURL(config: StarlightBlogConfig, site: URL, locale: Locale) {
+  return new URL(getRelativeBlogUrl(config, '/rss.xml', locale, true), site).href
 }
 
-function getRSSArchiveURL(site: URL, locale: Locale, archive: string) {
-  return new URL(getRelativeBlogUrl(`/rss/${archive}.xml`, locale, true), site).href
+function getRSSArchiveURL(config: StarlightBlogConfig, site: URL, locale: Locale, archive: string) {
+  return new URL(getRelativeBlogUrl(config, `/rss/${archive}.xml`, locale, true), site).href
 }
 
 interface RSSLink {

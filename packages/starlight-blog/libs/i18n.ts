@@ -3,6 +3,11 @@ import starlightConfig from 'virtual:starlight/user-config'
 export const DefaultLocale =
   starlightConfig.defaultLocale.locale === 'root' ? undefined : starlightConfig.defaultLocale.locale
 
+export function getLocales(): Locale[] {
+  if (!starlightConfig.isMultilingual) return [DefaultLocale]
+  return Object.keys(starlightConfig.locales).map((localeKey) => (localeKey === 'root' ? undefined : localeKey))
+}
+
 export function getLangFromLocale(locale: Locale): string {
   const lang = locale ? starlightConfig.locales?.[locale]?.lang : starlightConfig.locales?.root?.lang
   const defaultLang = starlightConfig.defaultLocale.lang ?? starlightConfig.defaultLocale.locale

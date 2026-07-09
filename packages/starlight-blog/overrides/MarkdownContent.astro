@@ -2,13 +2,14 @@
 import Default from '@astrojs/starlight/components/MarkdownContent.astro'
 
 import StarlightBlogMarkdownContent from '../components/starlight/MarkdownContent.astro'
-import { isAnyBlogPostPage } from '../libs/page'
+import { getBlogConfigFromPath, isAnyBlogPostPage } from '../libs/page'
 
 const { id } = Astro.locals.starlightRoute
+const config = getBlogConfigFromPath(id)
 ---
 
 {
-  isAnyBlogPostPage(id) ? (
+  config && isAnyBlogPostPage(config, id) ? (
     <StarlightBlogMarkdownContent>
       <slot />
     </StarlightBlogMarkdownContent>

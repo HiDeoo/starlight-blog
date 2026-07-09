@@ -1,0 +1,103 @@
+---
+title: Multiple Instances
+description: Learn how to use multiple instances of the Starlight Blog plugin to create multiple blogs in a documentation site.
+---
+
+By default, the Starlight Blog plugin adds one blog to your documentation project.
+
+Sometimes, you may want to generate multiple blog-like sections in the same project, for example a regular blog at `/blog/` and a news section at `/news/`.
+To achieve this, the Starlight Blog plugin allows you to configure multiple blog instances.
+
+Each blog instance is independent and uses its own configuration, posts, authors, tags, and RSS feed.
+
+## Configure multiple instances
+
+Pass an array of blog configurations to the plugin where each item in the array supports the same [configuration options](/configuration/) as a single blog instance.
+Each blog instance must have a unique [`prefix`](/configuration/#prefix).
+
+```js {11-18}
+// astro.config.mjs
+import starlight from '@astrojs/starlight'
+import { defineConfig } from 'astro/config'
+import starlightBlog from 'starlight-blog'
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      plugins: [
+        starlightBlog([
+          {
+            prefix: 'blog',
+            title: 'Blog',
+          },
+          {
+            prefix: 'news',
+            title: 'News',
+          },
+        ]),
+      ],
+      title: 'My Docs',
+    }),
+  ],
+})
+```
+
+The above configuration creates two separate blog instances, one accessible at `/blog/` and the other at `/news/`.
+
+## Add posts to multiple instances
+
+Posts for each blog instance are stored in the `docs` content collection, in a subdirectory named after the configured [`prefix`](/configuration/#prefix) of the blog instance.
+
+import { FileTree } from '@astrojs/starlight/components'
+
+<FileTree>
+
+- src/
+  - content/
+    - docs/
+      - blog/
+        - first-post.md
+      - news/
+        - first-story.md
+      - reference/
+        - configuration.md
+      - index.mdx
+  - content.config.ts
+- astro.config.mjs
+- package.json
+- tsconfig.json
+
+</FileTree>
+
+With the above file structure:
+
+- Files in `src/content/docs/blog/` are part of the blog available at `/blog/`.
+- Files in `src/content/docs/news/` are part of the blog available at `/news/`.
+
+## Use blog data
+
+With multiple blog instances, use `Astro.locals.starlightBlogs` to access [blog data](/guides/blog-data/) for each blog instance.
+It is a map keyed by blog [`prefix`](/configuration/#prefix) containing all the blog data for that instance.
+
+```astro title="RecentNews.astro" "Astro.locals.starlightBlogs.get('news')"
+---
+const news = Astro.locals.starlightBlogs.get('news')
+
+if (!news) {
+  throw new Error('Missing news blog data.')
+}
+---
+
+<h1>Recent News</h1>
+<ul>
+  {
+    news.posts.slice(0, 5).map((post) => (
+      <li>
+        <a href={post.href}>{post.title}</a>
+      </li>
+    ))
+  }
+</ul>
+```
+
+The above example shows how to access blog data for the `news` blog instance and display a list of the 5 most recent news posts.

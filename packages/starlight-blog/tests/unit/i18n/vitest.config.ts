@@ -8,8 +8,7 @@ export default defineVitestConfig(
     },
   },
   {
-    title: 'Starlight Blog Basics',
-    description: 'Basic tests for the Starlight Blog plugin.',
+    title: 'Starlight Blog i18n',
     locales: {
       root: { label: 'English', lang: 'en', dir: 'ltr' },
       fr: { label: 'Français', lang: 'fr', dir: 'ltr' },

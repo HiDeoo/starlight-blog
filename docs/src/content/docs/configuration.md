@@ -25,6 +25,9 @@ export default defineConfig({
 })
 ```
 
+To configure multiple blog instances, pass an array of blog configurations instead.
+See the ["Multiple Instances"](/guides/multiple-instances/) guide for more information.
+
 ## Plugin configuration
 
 The Starlight Blog plugin accepts the following configuration options:
@@ -86,8 +89,10 @@ Setting this option to `'chronological'` will make next links point to the next 
 
 The base prefix for all blog routes.
 
-By default, the blog will be available at `/blog` and blog posts at `/blog/example-post`.
-Setting this option to `'news'` will make the blog available at `/news` and blog posts at `/news/example-post`.
+By default, the blog will be available at `/blog/` and blog posts at `/blog/example-post`.
+Setting this option to `'news'` will make the blog available at `/news/` and blog posts at `/news/example-post`.
+
+When using [multiple blog instances](/guides/multiple-instances/), each blog instance must use a unique prefix.
 
 ### `navigation`
 

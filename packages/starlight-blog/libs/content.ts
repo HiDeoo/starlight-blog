@@ -1,43 +1,35 @@
 import type { GetStaticPathsResult } from 'astro'
 import { type CollectionEntry, getCollection, getEntry, render } from 'astro:content'
-import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog/config'
+import configs from 'virtual:starlight-blog/configs'
 import context from 'virtual:starlight-blog/context'
 
-import { DefaultLocale, type Locale } from './i18n'
+import type { StarlightBlogConfig } from './config'
+import { DefaultLocale, getLocales, type Locale } from './i18n'
 import { getRelativeUrl, getRelativeBlogUrl, getPathWithLocale } from './page'
 import { stripLeadingSlash, stripTrailingSlash } from './path'
 
-const blogEntriesPerLocale = new Map<Locale, StarlightBlogEntry[]>()
+// A map of prefixes to a map of locales to blog entries.
+const blogsEntriesPerLocale = new Map<string, Map<Locale, StarlightBlogEntry[]>>()
 
 export async function getBlogStaticPaths() {
   const paths = []
 
-  if (starlightConfig.isMultilingual) {
-    for (const localeKey of Object.keys(starlightConfig.locales)) {
-      const locale = localeKey === 'root' ? undefined : localeKey
-
-      const entries = await getBlogEntries(locale)
-      const pages = getPaginatedBlogEntries(entries)
+  for (const config of configs.values()) {
+    for (const locale of getLocales()) {
+      const entries = await getBlogEntries(config, locale)
+      const pages = getPaginatedBlogEntries(config, entries)
 
       for (const [index, entries] of pages.entries()) {
-        paths.push(getBlogStaticPath(pages, entries, index, locale))
+        paths.push(getBlogStaticPath(config, pages, entries, index, locale))
       }
-    }
-  } else {
-    const entries = await getBlogEntries(DefaultLocale)
-    const pages = getPaginatedBlogEntries(entries)
-
-    for (const [index, entries] of pages.entries()) {
-      paths.push(getBlogStaticPath(pages, entries, index, DefaultLocale))
     }
   }
 
   return paths satisfies GetStaticPathsResult
 }
 
-export async function getSidebarBlogEntries(locale: Locale) {
-  const entries = await getBlogEntries(locale)
+export async function getSidebarBlogEntries(config: StarlightBlogConfig, locale: Locale) {
+  const entries = await getBlogEntries(config, locale)
 
   const featured: StarlightBlogEntry[] = []
   const recent: StarlightBlogEntry[] = []
@@ -53,8 +45,12 @@ export async function getSidebarBlogEntries(locale: Locale) {
   return { featured, recent: recent.slice(0, config.recentPostCount) }
 }
 
-export async function getBlogEntry(slug: string, locale: Locale): Promise<StarlightBlogEntryPaginated> {
-  const entries = await getBlogEntries(locale)
+export async function getBlogEntry(
+  config: StarlightBlogConfig,
+  slug: string,
+  locale: Locale,
+): Promise<StarlightBlogEntryPaginated> {
+  const entries = await getBlogEntries(config, locale)
 
   const entryIndex = entries.findIndex((entry) => {
     if (entry.id === stripLeadingSlash(stripTrailingSlash(slug))) return true
@@ -86,10 +82,9 @@ export async function getBlogEntry(slug: string, locale: Locale): Promise<Starli
   }
 }
 
-export async function getBlogEntries(locale: Locale): Promise<StarlightBlogEntry[]> {
-  if (blogEntriesPerLocale.has(locale)) {
-    return blogEntriesPerLocale.get(locale) as StarlightBlogEntry[]
-  }
+export async function getBlogEntries(config: StarlightBlogConfig, locale: Locale): Promise<StarlightBlogEntry[]> {
+  const blogEntriesPerLocale = getBlogEntriesPerLocale(config, locale)
+  if (blogEntriesPerLocale) return blogEntriesPerLocale
 
   const docEntries = await getCollection('docs')
   const blogEntries: StarlightEntry[] = []
@@ -136,7 +131,7 @@ export async function getBlogEntries(locale: Locale): Promise<StarlightBlogEntry
     return b.data.date.getTime() - a.data.date.getTime() || a.data.title.localeCompare(b.data.title)
   })
 
-  blogEntriesPerLocale.set(locale, blogEntries)
+  setBlogEntriesPerLocale(config, locale, blogEntries)
 
   return blogEntries
 }
@@ -152,16 +147,17 @@ export async function getBlogEntryExcerpt(entry: StarlightBlogEntry) {
 }
 
 function getBlogStaticPath(
+  config: StarlightBlogConfig,
   pages: StarlightBlogEntry[][],
   entries: StarlightBlogEntry[],
   index: number,
   locale: Locale,
 ) {
   const prevPage = index === 0 ? undefined : pages.at(index - 1)
-  const prevLink = prevPage ? { href: getRelativeBlogUrl(index === 1 ? '/' : `/${index}`, locale) } : undefined
+  const prevLink = prevPage ? { href: getRelativeBlogUrl(config, index === 1 ? '/' : `/${index}`, locale) } : undefined
 
   const nextPage = pages.at(index + 1)
-  const nextLink = nextPage ? { href: getRelativeBlogUrl(`/${index + 2}`, locale) } : undefined
+  const nextLink = nextPage ? { href: getRelativeBlogUrl(config, `/${index + 2}`, locale) } : undefined
 
   return {
     params: {
@@ -169,6 +165,7 @@ function getBlogStaticPath(
       prefix: getPathWithLocale(config.prefix, locale),
     },
     props: {
+      prefix: config.prefix,
       entries,
       locale,
       nextLink: config.prevNextLinksOrder === 'reverse-chronological' ? nextLink : prevLink,
@@ -177,7 +174,7 @@ function getBlogStaticPath(
   }
 }
 
-function getPaginatedBlogEntries(entries: StarlightBlogEntry[]): StarlightBlogEntry[][] {
+function getPaginatedBlogEntries(config: StarlightBlogConfig, entries: StarlightBlogEntry[]): StarlightBlogEntry[][] {
   const pages: StarlightBlogEntry[][] = []
 
   for (const entry of entries) {
@@ -211,6 +208,17 @@ function validateBlogEntry(entry: StarlightEntry): asserts entry is StarlightBlo
   }
 }
 
+function getBlogEntriesPerLocale(config: StarlightBlogConfig, locale: Locale) {
+  return blogsEntriesPerLocale.get(config.prefix)?.get(locale)
+}
+
+function setBlogEntriesPerLocale(config: StarlightBlogConfig, locale: Locale, entries: StarlightBlogEntry[]) {
+  const localeCache = blogsEntriesPerLocale.get(config.prefix) ?? new Map<Locale, StarlightBlogEntry[]>()
+
+  localeCache.set(locale, entries)
+  blogsEntriesPerLocale.set(config.prefix, localeCache)
+}
+
 type StarlightEntry = CollectionEntry<'docs'>
 
 export type StarlightBlogEntry = StarlightEntry & {
@@ -231,6 +239,7 @@ export interface StarlightBlogEntryPaginated {
 }
 
 interface StarlightBlogStaticProps {
+  prefix: string
   entries: StarlightBlogEntry[]
   locale: Locale
   nextLink: StarlightBlogLink | undefined

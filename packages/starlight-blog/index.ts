@@ -13,7 +13,7 @@ import { Translations } from './translations'
 export type { StarlightBlogConfig, StarlightBlogUserConfig }
 
 export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig): StarlightPlugin {
-  const config = validateConfig(userConfig)
+  const configs = validateConfig(userConfig)
 
   return {
     name: 'starlight-blog',
@@ -31,40 +31,52 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
       }) {
         addRouteMiddleware({ entrypoint: 'starlight-blog/middleware' })
 
-        const rssLink =
-          astroConfig.site && config.rss
-            ? `${stripTrailingSlash(astroConfig.site)}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
-                stripTrailingSlash(config.prefix),
-              )}/rss.xml`
-            : undefined
-
-        const configIncludesRSSSocial = starlightConfig.social?.some((social) => social.icon === 'rss') ?? false
+        const rssLinks = astroConfig.site
+          ? configs
+              .filter((config) => config.rss)
+              .map((config) => ({
+                href: `${stripTrailingSlash(
+                  astroConfig.site as string,
+                )}${stripTrailingSlash(astroConfig.base)}/${stripLeadingSlash(
+                  stripTrailingSlash(config.prefix),
+                )}/rss.xml`,
+                title: config.title,
+              }))
+          : []
 
         const components: StarlightUserConfig['components'] = { ...starlightConfig.components }
         overrideComponent(components, logger, 'MarkdownContent')
-        if (config.navigation === 'header-start') overrideComponent(components, logger, 'SiteTitle')
-        if (config.navigation === 'header-end') overrideComponent(components, logger, 'ThemeSelect')
+        if (configs.some((config) => config.navigation === 'header-start')) {
+          overrideComponent(components, logger, 'SiteTitle')
+        }
+        if (configs.some((config) => config.navigation === 'header-end')) {
+          overrideComponent(components, logger, 'ThemeSelect')
+        }
 
         const customCss: StarlightUserConfig['customCss'] = [...(starlightConfig.customCss ?? [])]
-        if (isNavigationWithCustomCss(config)) customCss.push('starlight-blog/styles')
+        if (configs.some(isNavigationWithCustomCss)) customCss.push('starlight-blog/styles')
 
         const head: StarlightUserConfig['head'] = [...(starlightConfig.head ?? [])]
-        if (rssLink) {
+
+        for (const { href, title } of rssLinks) {
           head.push({
             tag: 'link',
             attrs: {
-              href: rssLink,
+              href,
               rel: 'alternate',
-              title: typeof config.title === 'string' ? config.title : 'Blog',
+              title: typeof title === 'string' ? title : 'Blog',
               type: 'application/rss+xml',
             },
           })
         }
 
+        const configIncludesRSSSocial = starlightConfig.social?.some((social) => social.icon === 'rss') ?? false
         const social: StarlightUserConfig['social'] = [...(starlightConfig.social ?? [])]
-        if (rssLink && !configIncludesRSSSocial) {
+        const rssLink = rssLinks[0]
+
+        if (rssLinks.length === 1 && rssLink && !configIncludesRSSSocial) {
           social.push({
-            href: rssLink,
+            href: rssLink.href,
             icon: 'rss',
             label: 'RSS',
           })
@@ -94,7 +106,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                 prerender: true,
               })
 
-              if (rssLink) {
+              if (rssLinks.length > 0) {
                 injectRoute({
                   entrypoint: 'starlight-blog/routes/rss',
                   pattern: '/[...prefix]/rss.xml',
@@ -113,7 +125,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
               updateConfig({
                 vite: {
                   plugins: [
-                    vitePluginStarlightBlogConfig(config, {
+                    vitePluginStarlightBlogConfig(configs, {
                       description: starlightConfig.description,
                       rootDir: astroConfig.root.pathname,
                       site: astroConfig.site,

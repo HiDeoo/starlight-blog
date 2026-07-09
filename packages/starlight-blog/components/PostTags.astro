@@ -1,15 +1,17 @@
 ---
+import type { StarlightBlogConfig } from '../libs/config'
 import type { StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
 import { getRelativeBlogUrl } from '../libs/page'
 import { getEntryTags } from '../libs/tags'
 
 interface Props {
+  config: StarlightBlogConfig
   entry: StarlightBlogEntry
   locale: Locale
 }
 
-const { entry, locale } = Astro.props
+const { config, entry, locale } = Astro.props
 
 const tags = getEntryTags(entry)
 ---
@@ -21,7 +23,7 @@ const tags = getEntryTags(entry)
       <ul>
         {tags.map((tag) => (
           <li>
-            <a href={getRelativeBlogUrl(`/tags/${tag.slug}`, locale)}>{tag.label}</a>
+            <a href={getRelativeBlogUrl(config, `/tags/${tag.slug}`, locale)}>{tag.label}</a>
           </li>
         ))}
       </ul>

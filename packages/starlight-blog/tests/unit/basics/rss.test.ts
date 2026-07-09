@@ -1,7 +1,7 @@
 import type { RSSFeedItem, RSSOptions } from '@astrojs/rss'
 import { afterEach, describe, expect, test, vi } from 'vitest'
 
-import type { MockBlogPost } from '../utils'
+import { getTestConfig, type MockBlogPost } from '../utils'
 
 const astroContentMock = vi.hoisted(() => ({
   content: undefined as Awaited<ReturnType<typeof import('../utils').mockBlogPosts>> | undefined,
@@ -61,11 +61,13 @@ const defaultBlogPosts: MockBlogPost[] = [
 
 const t = ((key: string) => key) as App.Locals['t']
 
+const config = getTestConfig()
+
 describe('RSS feed', () => {
   test('includes only the last 20 blog posts', async () => {
     const { getRSSOptions } = await getTestRSS()
 
-    const { items } = await getRSSOptions(new URL('http://example.com'), undefined, t)
+    const { items } = await getRSSOptions(config, new URL('http://example.com'), undefined, t)
 
     expect(items).toHaveLength(20)
     expect(getItemAtIndex(items, 0)?.title).toBe('Post 21')
@@ -77,7 +79,7 @@ describe('RSS feed', () => {
 
     const url = new URL('http://example.com')
 
-    const options = await getRSSOptions(url, undefined, t)
+    const options = await getRSSOptions(config, url, undefined, t)
 
     expect(options.title).toBe('Starlight Blog Basics | Blog')
     expect(options.description).toMatchInlineSnapshot(`"Basic tests for the Starlight Blog plugin."`)
@@ -93,7 +95,7 @@ describe('RSS feed', () => {
   test('includes item descriptions', async () => {
     const { getRSSOptions } = await getTestRSS()
 
-    const { items } = await getRSSOptions(new URL('http://example.com'), undefined, t)
+    const { items } = await getRSSOptions(config, new URL('http://example.com'), undefined, t)
 
     expect(getItemAtIndex(items, 0)?.description).toBe('Description of post 21')
     expect(getItemAtIndex(items, 1)?.description).toBe('Excerpt of post 20')
@@ -102,7 +104,7 @@ describe('RSS feed', () => {
   test('links to the newest completed archive', async () => {
     const { getRSSOptions } = await getTestRSS()
 
-    const options = await getRSSOptions(new URL('http://example.com'), undefined, t)
+    const options = await getRSSOptions(config, new URL('http://example.com'), undefined, t)
 
     expect(options.customData).toContain(
       '<atom:link rel="prev-archive" href="http://example.com/blog/rss/2024-02.xml"/>',
@@ -119,7 +121,7 @@ describe('RSS complete feed', () => {
   test('includes all blog posts', async () => {
     const { getRSSOptions } = await getTestRSS(completeBlogPosts)
 
-    const { items } = await getRSSOptions(new URL('http://example.com'), undefined, t)
+    const { items } = await getRSSOptions(config, new URL('http://example.com'), undefined, t)
 
     expect(items).toHaveLength(2)
     expect(getItemAtIndex(items, 0)?.title).toBe('Post 2')
@@ -129,7 +131,7 @@ describe('RSS complete feed', () => {
   test('marks the feed as complete', async () => {
     const { getRSSOptions } = await getTestRSS(completeBlogPosts)
 
-    const options = await getRSSOptions(new URL('http://example.com'), undefined, t)
+    const options = await getRSSOptions(config, new URL('http://example.com'), undefined, t)
 
     expect(options.customData).toContain('<fh:complete/>')
     expect(options.customData).not.toContain('prev-archive')
@@ -172,7 +174,7 @@ describe('RSS archive feed', () => {
 
     const url = new URL('http://example.com')
 
-    const options = await getRSSArchiveOptions(url, undefined, '2024-01', t)
+    const options = await getRSSArchiveOptions(config, url, undefined, '2024-01', t)
 
     expect(options.title).toBe('Starlight Blog Basics | Blog')
     expect(options.description).toMatchInlineSnapshot(`"Basic tests for the Starlight Blog plugin."`)
@@ -190,7 +192,7 @@ describe('RSS archive feed', () => {
   test('includes only entries from the archive period', async () => {
     const { getRSSArchiveOptions } = await getTestRSS()
 
-    const { items } = await getRSSArchiveOptions(new URL('http://example.com'), undefined, '2024-01', t)
+    const { items } = await getRSSArchiveOptions(config, new URL('http://example.com'), undefined, '2024-01', t)
 
     expect(items).toHaveLength(1)
     expect(getItemAtIndex(items, 0)?.title).toBe('Post 20')
@@ -199,7 +201,7 @@ describe('RSS archive feed', () => {
   test('links to older and newer archives', async () => {
     const { getRSSArchiveOptions } = await getTestRSS()
 
-    const options = await getRSSArchiveOptions(new URL('http://example.com'), undefined, '2024-01', t)
+    const options = await getRSSArchiveOptions(config, new URL('http://example.com'), undefined, '2024-01', t)
 
     expect(options.customData).toContain(
       '<atom:link rel="prev-archive" href="http://example.com/blog/rss/2023-12.xml"/>',
@@ -212,7 +214,7 @@ describe('RSS archive feed', () => {
   test('does not link the newest archive to a newer archive', async () => {
     const { getRSSArchiveOptions } = await getTestRSS()
 
-    const options = await getRSSArchiveOptions(new URL('http://example.com'), undefined, '2024-02', t)
+    const options = await getRSSArchiveOptions(config, new URL('http://example.com'), undefined, '2024-02', t)
 
     expect(options.customData).toContain(
       '<atom:link rel="prev-archive" href="http://example.com/blog/rss/2024-01.xml"/>',
@@ -223,7 +225,7 @@ describe('RSS archive feed', () => {
   test('does not link the oldest archive to an older archive', async () => {
     const { getRSSArchiveOptions } = await getTestRSS()
 
-    const options = await getRSSArchiveOptions(new URL('http://example.com'), undefined, '2022-06', t)
+    const options = await getRSSArchiveOptions(config, new URL('http://example.com'), undefined, '2022-06', t)
 
     expect(options.customData).not.toContain('rel="prev-archive"')
     expect(options.customData).toContain(
@@ -239,7 +241,7 @@ describe('RSS current archive period', () => {
   test('includes all posts from the current archive period', async () => {
     const { getRSSOptions } = await getTestRSS(getCurrentPeriodBlogPosts(), date)
 
-    const { items } = await getRSSOptions(new URL('http://example.com'), undefined, t)
+    const { items } = await getRSSOptions(config, new URL('http://example.com'), undefined, t)
 
     // All 21 posts from the current archive period should be included, even though the RSS feed limit is 20.
     expect(items).toHaveLength(21)
@@ -260,7 +262,7 @@ describe('RSS current archive period', () => {
   test('links to the newest completed archive before the current archive period', async () => {
     const { getRSSOptions } = await getTestRSS(getCurrentPeriodBlogPosts(), date)
 
-    const options = await getRSSOptions(new URL('http://example.com'), undefined, t)
+    const options = await getRSSOptions(config, new URL('http://example.com'), undefined, t)
 
     expect(options.customData).toContain(
       '<atom:link rel="prev-archive" href="http://example.com/blog/rss/2024-01.xml"/>',

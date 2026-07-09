@@ -7,13 +7,13 @@ import type { StarlightBlogConfig } from './config'
 
 // Expose the starlight-blog plugin configuration and project context.
 export function vitePluginStarlightBlogConfig(
-  starlightBlogConfig: StarlightBlogConfig,
+  starlightBlogConfigs: StarlightBlogConfig[],
   context: StarlightBlogContext,
 ): VitePlugin {
   const modules = {
-    'virtual:starlight-blog/config': `export default ${JSON.stringify(starlightBlogConfig)}`,
+    'virtual:starlight-blog/configs': getConfigsVirtualModule(starlightBlogConfigs),
     'virtual:starlight-blog/context': `export default ${JSON.stringify(context)}`,
-    'virtual:starlight-blog/images': getImagesVirtualModule(starlightBlogConfig, context),
+    'virtual:starlight-blog/images': getImagesVirtualModule(starlightBlogConfigs, context),
   }
 
   const moduleResolutionMap = Object.fromEntries(
@@ -32,23 +32,55 @@ export function vitePluginStarlightBlogConfig(
   }
 }
 
-export function getImagesVirtualModule(starlightBlogConfig: StarlightBlogConfig, context: StarlightBlogContext) {
-  let module = ''
-  const authors = Object.entries(starlightBlogConfig.authors)
+function getConfigsVirtualModule(configs: StarlightBlogConfig[]) {
+  const entries = configs.map((config) => [config.prefix, config] as const)
 
-  for (const [id, author] of authors) {
-    if (!author.picture?.startsWith('.')) continue
-    module += `import ${id} from ${resolveModuleId(author.picture, context)};\n`
+  return `const configs = new Map(${JSON.stringify(entries)});
+export default configs;`
+}
+
+function getImagesVirtualModule(configs: StarlightBlogConfig[], context: StarlightBlogContext) {
+  // A map of resolved local image module IDs to generated import names.
+  const importedImages = new Map<string, string>()
+
+  const imports: string[] = []
+  const blogs: string[] = []
+  let importIndex = 0
+
+  for (const config of configs) {
+    const authors: string[] = []
+
+    for (const author of Object.values(config.authors)) {
+      if (!author.picture) continue
+
+      let pictureValue: string
+
+      if (author.picture.startsWith('.')) {
+        const moduleId = resolveModuleId(author.picture, context)
+        let importName = importedImages.get(moduleId)
+
+        if (!importName) {
+          importName = `authorImage${importIndex++}`
+          imports.push(`import ${importName} from ${moduleId};`)
+          importedImages.set(moduleId, importName)
+        }
+
+        pictureValue = importName
+      } else {
+        pictureValue = resolveModuleId(author.picture, context)
+      }
+
+      authors.push(`${JSON.stringify(author.name)}: ${pictureValue},`)
+    }
+
+    blogs.push(`${JSON.stringify(config.prefix)}: { ${authors.join('\n')}  },`)
   }
 
-  module += 'export const authors = {\n'
-  for (const [id, author] of authors) {
-    if (!author.picture) continue
-    module += `  "${author.name}": ${author.picture.startsWith('.') ? id : resolveModuleId(author.picture, context)},\n`
-  }
-  module += '};\n'
+  return `${imports.join('\n')}
 
-  return module
+export const authors = {
+  ${blogs.join('\n')}
+};`
 }
 
 function resolveModuleId(id: string, context: StarlightBlogContext) {

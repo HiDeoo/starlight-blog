@@ -1,19 +1,30 @@
 ---
+import configs from 'virtual:starlight-blog/configs'
+
 import { getRelativeBlogUrl } from '../../libs/page'
 import { getBlogTitle } from '../../libs/title'
 
 const { locale } = Astro.locals.starlightRoute
+const headerStartConfigs = [...configs.values()].filter((blog) => blog.navigation === 'header-start')
 ---
 
-<div>
-  <a href={getRelativeBlogUrl('/', locale)}>{getBlogTitle(locale)}</a>
-</div>
+{
+  headerStartConfigs.length > 0 && (
+    <div>
+      {headerStartConfigs.map((config) => (
+        <a href={getRelativeBlogUrl(config, '/', locale)}>{getBlogTitle(config, locale)}</a>
+      ))}
+    </div>
+  )
+}
 
 <style>
   div {
     border-inline-start: 1px solid var(--sl-color-gray-5);
     display: none;
+    gap: 1rem;
     margin-inline-start: 1rem;
+    min-inline-size: 0;
     padding-inline-start: 1rem;
   }
 
@@ -27,6 +38,10 @@ const { locale } = Astro.locals.starlightRoute
   a {
     color: var(--sl-color-text-accent);
     font-weight: 600;
+    min-inline-size: 0;
+    overflow: hidden;
     text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>

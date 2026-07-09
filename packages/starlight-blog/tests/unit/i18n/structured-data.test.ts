@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
 
 import { addStructuredData } from '../../../libs/structured-data'
-import { getStructuredDataScripts, getTestBlogData, getTestContext } from '../utils'
+import { getStructuredDataScripts, getTestBlogData, getTestConfig, getTestContext } from '../utils'
 
 vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
@@ -20,6 +20,8 @@ vi.mock('astro:content', async () => {
   ])
 })
 
+const config = getTestConfig()
+
 describe('root', () => {
   test('uses localized blog title and URLs on the root page', async () => {
     const starlightBlog = await getTestBlogData({ locale: 'fr' })
@@ -29,7 +31,7 @@ describe('root', () => {
       locale: 'fr',
     })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -70,7 +72,7 @@ describe('blog post', () => {
       isFallback: true,
     })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -137,7 +139,7 @@ describe('tags', () => {
       locale: 'fr',
     })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -187,7 +189,7 @@ describe('authors', () => {
       locale: 'fr',
     })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
