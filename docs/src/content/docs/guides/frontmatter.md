@@ -50,7 +50,7 @@ date: 2024-03-11
 
 If a date is specified in a blog post for this [Starlight frontmatter field](https://starlight.astro.build/reference/frontmatter/#lastupdated), such date will also be displayed next to the blog post date.
 
-Displayed only if different from the [`date`](#date-required) frontmatter field and must be a valid [YAML timestamp](https://yaml.org/type/timestamp.html).
+Displayed only if different from the [`date`](#date) frontmatter field and must be a valid [YAML timestamp](https://yaml.org/type/timestamp.html).
 
 ```md
 ---
@@ -85,13 +85,13 @@ excerpt: A small excerpt of the blog post…
 ```
 
 If not provided, excerpt delimiters will be used if present in the blog post content or the entire blog post content will be rendered otherwise.
-To learn more about excerpts, check the ["Excerpts" guide](/guides/excerpts).
+To learn more about excerpts, check the ["Excerpts" guide](/guides/excerpts/).
 
 ### `authors`
 
-**Type:** [`StarlightBlogAuthorsConfig`](/configuration#author-configuration)
+**Type:** [`StarlightBlogAuthorsConfig`](/configuration/#author-configuration)
 
-The author(s) of the blog post. Check the ["Authors" guide](/guides/authors) for more informations.
+The author(s) of the blog post. Check the ["Authors" guide](/guides/authors/) for more informations.
 
 ```md
 ---

@@ -11,14 +11,16 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint . --cache --max-warnings=0"
+    "lint": "eslint . --cache --max-warnings=0",
+    "linkcheck": "CHECK_LINKS=true pnpm build"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.41.1",
     "@hideoo/starlight-plugins-docs-components": "^0.4.2",
     "astro": "^7.0.6",
     "sharp": "^0.34.5",
-    "starlight-blog": "workspace:*"
+    "starlight-blog": "workspace:*",
+    "starlight-links-validator": "^0.25.2"
   },
   "engines": {
     "node": ">=22.12.0"

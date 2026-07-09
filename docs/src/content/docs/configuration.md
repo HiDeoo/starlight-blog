@@ -70,7 +70,7 @@ The number of recent blog posts to display in the blog sidebar.
 **Type:** [`StarlightBlogAuthorsConfig`](#author-configuration)
 
 A list of global authors for all blog posts or regular authors that can be referenced in individual blog posts.
-Check the ["Authors" guide](/guides/authors) for more informations.
+Check the ["Authors" guide](/guides/authors/) for more informations.
 
 ### `prevNextLinksOrder`
 
@@ -110,7 +110,7 @@ The type of navigation links to the blog to display on a page.
 **Type:** [`StarlightBlogMetricsConfig`](#metrics-configuration)
 
 The configuration of various metrics that can be displayed alongside blog posts, such as an estimated reading time or a word count.
-Check the ["Metrics" guide](/guides/metrics) for more informations.
+Check the ["Metrics" guide](/guides/metrics/) for more informations.
 
 ### `rss`
 
@@ -136,7 +136,7 @@ Setting this option to `false` will disable the structured data even if the Astr
 
 Global authors for all blog posts or regular authors that can be referenced in individual blog posts can be defined using the [`authors`](#authors) configuration option.
 When a blog post frontmatter does not define an author, the global authors from the configuration will be used instead.
-Check the ["Authors" guide](/guides/authors) for more informations.
+Check the ["Authors" guide](/guides/authors/) for more informations.
 
 ```js {3-8}
 starlightBlog({
@@ -185,7 +185,7 @@ A URL or path to an image to display as the author's picture.
 ## Metrics configuration
 
 Configure metrics that can be displayed alongside blog posts.
-Check the ["Metrics" guide](/guides/metrics) for more informations.
+Check the ["Metrics" guide](/guides/metrics/) for more informations.
 
 ### `readingTime`
 
