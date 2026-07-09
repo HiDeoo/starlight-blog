@@ -2,6 +2,7 @@
 import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
 import starlightBlog from 'starlight-blog'
+import starlightLinksValidator from 'starlight-links-validator'
 
 const site =
   process.env['VERCEL_ENV'] !== 'production' && process.env['VERCEL_URL']
@@ -45,6 +46,9 @@ export default defineConfig({
             },
           },
         }),
+        ...(process.env['CHECK_LINKS']
+          ? [starlightLinksValidator({ exclude: ['/blog/'], sameSitePolicy: 'error' })]
+          : []),
       ],
       sidebar: [
         {

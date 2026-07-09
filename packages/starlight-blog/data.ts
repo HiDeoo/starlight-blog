@@ -16,7 +16,7 @@ export interface StarlightBlogData {
     /**
      * The optional cover image of the blog post.
      *
-     * @see https://starlight-blog-docs.vercel.app/guides/frontmatter#cover
+     * @see https://starlight-blog-docs.vercel.app/guides/frontmatter/#cover
      */
     cover?:
       | {
@@ -53,7 +53,7 @@ export interface StarlightBlogData {
     /**
      * The date of the blog post.
      *
-     * @see https://starlight-blog-docs.vercel.app/guides/frontmatter/#date-required
+     * @see https://starlight-blog-docs.vercel.app/guides/frontmatter/#date
      */
     createdAt: Date
     /**
@@ -142,7 +142,7 @@ export interface StarlightBlogData {
     /**
      * The title of the blog post.
      *
-     * @see https://starlight-blog-docs.vercel.app/guides/frontmatter/#title-required
+     * @see https://starlight-blog-docs.vercel.app/guides/frontmatter/#title
      */
     title: string
     /**
