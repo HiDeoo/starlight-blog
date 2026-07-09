@@ -216,13 +216,13 @@ test('should display a preview of each posts', async ({ blogPage }) => {
 
   expect(await articles.count()).toBe(5)
 
-  const titles = articles.locator('header > h2')
+  const links = articles.locator('header > .preview-link')
+
+  expect(await links.count()).toBe(5)
+
+  const titles = links.getByRole('heading', { level: 2 })
 
   expect(await titles.count()).toBe(5)
-
-  const links = titles.getByRole('link')
-
-  expect(await titles.getByRole('link').count()).toBe(5)
 
   const allLinks = await links.all()
   const allHrefs = await Promise.all(allLinks.map((link) => link.getAttribute('href')))
@@ -261,8 +261,11 @@ test('should render a cover image', async ({ blogPage }) => {
   await blogPage.goto()
 
   const articles = blogPage.page.getByRole('article')
+  const link = articles.nth(1).locator('header > .preview-link')
 
-  await expect(articles.nth(1).getByRole('img', { name: 'A cover' })).toBeVisible()
+  await expect(link.getByRole('heading', { level: 2, name: 'Vario nunc polo' })).toBeVisible()
+  await expect(link.locator('figure img')).toBeVisible()
+  await expect(link.locator('figure img')).toHaveAttribute('alt', '')
 })
 
 test('should not list draft blog posts in production', async ({ blogPage }) => {
@@ -390,9 +393,9 @@ test.describe('i18n', () => {
     await blogPage.goto(undefined, 'fr')
 
     const articles = blogPage.page.getByRole('article')
-    const titles = articles.getByRole('heading', { level: 2 })
+    const previewLinks = articles.locator('header > .preview-link')
 
-    const frPostLink = titles.getByRole('link', { name: 'Achivi amans (fr)' })
+    const frPostLink = articles.getByRole('link', { name: 'Achivi amans (fr)' })
 
     await expect(frPostLink).toBeVisible()
     await expect(frPostLink).toHaveAttribute('href', '/fr/blog/achivi-amans/')
@@ -406,7 +409,7 @@ test.describe('i18n', () => {
     await expect(frTag).toBeVisible()
     await expect(frTag).toHaveAttribute('href', '/fr/blog/tags/ébauche/')
 
-    const links = await titles.getByRole('link').all()
+    const links = await previewLinks.all()
     const hrefs = await Promise.all(links.map((link) => link.getAttribute('href')))
 
     expect(hrefs.every((href) => href?.startsWith('/fr/blog/'))).toBe(true)

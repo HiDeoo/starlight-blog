@@ -5,15 +5,16 @@ import { Image } from 'astro:assets'
 import type { StarlightBlogEntry } from '../libs/content'
 
 interface Props {
+  alt?: string
   cover: NonNullable<StarlightBlogEntry['data']['cover']>
 }
 
-const { cover } = Astro.props
+const { cover, alt = cover.alt } = Astro.props
 
 const darkImage = 'dark' in cover ? cover.dark : cover.image
 const lightImage = 'light' in cover ? cover.light : undefined
 
-const commonImageProps = { alt: cover.alt, loading: 'eager' } as const
+const commonImageProps = { alt, loading: 'eager' } as const
 const commonDarkImageProps = { ...commonImageProps, 'class:list': { 'light:sl-hidden': Boolean(lightImage) } } as const
 const commonLightImageProps = { ...commonImageProps, 'class:list': 'dark:sl-hidden' } as const
 
