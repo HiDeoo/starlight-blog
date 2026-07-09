@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss'
 import type { APIRoute } from 'astro'
 
-import { getLocaleFromPath } from '../libs/page'
+import { getBlogConfigFromPath, getLocaleFromPath } from '../libs/page'
 import { getRSSOptions, getRSSStaticPaths } from '../libs/rss'
 
 export function getStaticPaths() {
@@ -9,5 +9,10 @@ export function getStaticPaths() {
 }
 
 export const GET: APIRoute = async ({ locals, params, site }) => {
-  return rss(await getRSSOptions(site, getLocaleFromPath(params['prefix'] ?? ''), locals.t))
+  const prefix = params['prefix'] ?? ''
+  const config = getBlogConfigFromPath(prefix)
+  if (!config) throw new Error(`Unknown blog prefix '${prefix}'.`)
+  if (!config.rss) throw new Error(`RSS is disabled for blog prefix '${prefix}'.`)
+
+  return rss(await getRSSOptions(config, site, getLocaleFromPath(params['prefix'] ?? ''), locals.t))
 }

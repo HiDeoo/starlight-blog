@@ -6,6 +6,7 @@ import {
   getStructuredDataNodes,
   getStructuredDataScripts,
   getTestBlogData,
+  getTestConfig,
   getTestContext,
 } from '../utils'
 
@@ -45,12 +46,14 @@ vi.mock('astro:content', async () => {
   ])
 })
 
+const config = getTestConfig()
+
 describe('root', () => {
   test('adds structured data to the blog root page', async () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, undefined, { id: 'blog' })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -87,7 +90,7 @@ describe('pagination', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, undefined, { id: 'blog/2' })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -124,7 +127,7 @@ describe('post', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[0], { site: false })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     expect(context.locals.starlightRoute.head).toHaveLength(0)
   })
@@ -133,7 +136,7 @@ describe('post', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[0], { id: 'getting-started' })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     expect(context.locals.starlightRoute.head).toHaveLength(0)
   })
@@ -142,7 +145,7 @@ describe('post', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[5])
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -211,7 +214,7 @@ describe('post', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[4])
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
     const nodes = getStructuredDataNodes(scripts)
@@ -223,7 +226,7 @@ describe('post', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[3])
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
     const nodes = getStructuredDataNodes(scripts)
@@ -235,7 +238,7 @@ describe('post', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[4])
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
     const nodes = getStructuredDataNodes(scripts)
@@ -247,7 +250,7 @@ describe('post', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, starlightBlog.posts[0])
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
     const nodes = getStructuredDataNodes(scripts)
@@ -267,7 +270,7 @@ describe('tags', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, undefined, { id: 'blog/tags/tag-1' })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -313,7 +316,7 @@ describe('authors', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, undefined, { id: 'blog/authors/ghost' })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
 
@@ -357,7 +360,7 @@ describe('authors', () => {
     const starlightBlog = await getTestBlogData()
     const context = getTestContext(starlightBlog, undefined, { id: 'blog/authors/hideoo' })
 
-    addStructuredData(context)
+    addStructuredData(config, context)
 
     const scripts = getStructuredDataScripts(context)
     const nodes = getStructuredDataNodes(scripts)

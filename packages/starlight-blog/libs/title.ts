@@ -1,9 +1,9 @@
 import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog/config'
 
+import type { StarlightBlogConfig } from './config'
 import { getLangFromLocale, type Locale } from './i18n'
 
-export function getBlogTitle(locale: Locale): string {
+export function getBlogTitle(config: StarlightBlogConfig, locale: Locale): string {
   if (typeof config.title === 'string') return config.title
 
   let title: string

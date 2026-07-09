@@ -1,6 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
 
 import { getBlogEntry, getBlogStaticPaths } from '../../../libs/content'
+import { getTestConfig } from '../utils'
 
 vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')
@@ -29,8 +30,10 @@ describe('getBlogStaticPaths', () => {
 })
 
 describe('getBlogEntry', () => {
+  const config = getTestConfig()
+
   test('respects the `prevNextLinksOrder` option in `reverse-chronological` order', async () => {
-    const post = await getBlogEntry('/blog/post-6/', undefined)
+    const post = await getBlogEntry(config, '/blog/post-6/', undefined)
 
     expect(post.prevLink?.href).toBe('/blog/post-7/')
     expect(post.nextLink?.href).toBe('/blog/post-5/')

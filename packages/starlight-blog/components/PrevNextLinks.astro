@@ -1,15 +1,16 @@
 ---
 import { LinkCard, CardGrid } from '@astrojs/starlight/components'
-import config from 'virtual:starlight-blog/config'
 
+import type { StarlightBlogConfig } from '../libs/config'
 import type { StarlightBlogLink } from '../libs/content'
 
 interface Props {
+  config: StarlightBlogConfig
   next: StarlightBlogLink | undefined
   prev: StarlightBlogLink | undefined
 }
 
-const { next, prev } = Astro.props
+const { config, next, prev } = Astro.props
 ---
 
 {

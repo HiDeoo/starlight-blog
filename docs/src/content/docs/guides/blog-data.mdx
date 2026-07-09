@@ -17,7 +17,8 @@ It includes information like a list of all the blog authors, a list of all the b
 
 The [`posts`](#posts) property contains an array of all the blog posts in your project while the [`authors`](#authors-1) property contains an array of all the authors.
 
-You can access this data from the `Astro.locals.starlightBlog` global in Astro components:
+You can access this data from the `Astro.locals.starlightBlog` global in Astro components.
+When using [multiple blog instances](/guides/multiple-instances/), use [`Astro.locals.starlightBlogs`](#starlightblogs) instead.
 
 ```astro title="example.astro"
 ---
@@ -231,6 +232,25 @@ The total word count of the blog post.
 **Type:** <code><a href="#starlightblogauthordata">StarlightBlogAuthorData</a>[]</code>
 
 An unordered list of all the known authors in your blog.
+
+## `starlightBlogs`
+
+The `starlightBlogs` map is keyed by blog [`prefix`](/configuration/#prefix) and contains all the blog data for each [blog instance](/guides/multiple-instances/).
+Each value is a [`starlightBlog`](#starlightblog) object with the same properties as described above.
+
+```astro title="example.astro"
+---
+const news = Astro.locals.starlightBlogs.get('news')
+
+if (!news) {
+  throw new Error('Missing news blog data.')
+}
+
+const { posts, authors } = news
+//        │       └─ The list of all authors for the 'news' blog instance
+//        └─ The list of all posts for the 'news' blog instance
+---
+```
 
 ## `StarlightBlogAuthorData`
 

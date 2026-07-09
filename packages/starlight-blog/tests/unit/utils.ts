@@ -2,11 +2,19 @@ import type { StarlightRouteData } from '@astrojs/starlight/route-data'
 import type { APIContext } from 'astro'
 import { z } from 'astro/zod'
 import { slug } from 'github-slugger'
+import configs from 'virtual:starlight-blog/configs'
 import { vi } from 'vitest'
 
 import type { StarlightBlogData } from '../../data'
+import type { StarlightBlogConfig } from '../../libs/config'
 import type { StarlightBlogEntry } from '../../libs/content'
 import { blogEntrySchema } from '../../schema'
+
+export function getTestConfig(prefix?: string): StarlightBlogConfig {
+  const config = prefix ? configs.get(prefix) : configs.values().next().value
+  if (!config) throw new Error('Failed to get test configuration.')
+  return config
+}
 
 export async function mockBlogPosts(posts: MockBlogPost[]) {
   const mod = await vi.importActual<typeof import('astro:content')>('astro:content')
@@ -19,6 +27,7 @@ export async function mockBlogPosts(posts: MockBlogPost[]) {
 }
 
 export async function getTestBlogData(options?: {
+  config?: StarlightBlogConfig
   getter?: typeof import('../../middleware').getBlogData
   locale?: StarlightRouteData['locale']
 }) {
@@ -29,7 +38,11 @@ export async function getTestBlogData(options?: {
     getBlogData = mod.getBlogData
   }
 
-  return getBlogData({ locale: options?.locale ?? 'en' } as StarlightRouteData, (() => '') as App.Locals['t'])
+  return getBlogData(
+    options?.config ?? getTestConfig(),
+    { locale: options?.locale ?? 'en' } as StarlightRouteData,
+    (() => '') as App.Locals['t'],
+  )
 }
 
 export function getStructuredDataScripts(context: APIContext) {
@@ -64,6 +77,7 @@ export function getTestContext(
   starlightBlog: StarlightBlogData,
   post: StarlightBlogData['posts'][number] | undefined,
   options?: {
+    config?: StarlightBlogConfig
     entryMetaLang?: string
     id?: string
     isFallback?: boolean
@@ -72,9 +86,12 @@ export function getTestContext(
     site?: URL | false
   },
 ) {
+  const config = options?.config ?? getTestConfig()
+
   return {
     locals: {
       starlightBlog,
+      starlightBlogs: new Map([[config.prefix, starlightBlog]]),
       starlightRoute: {
         entry: post?.entry,
         entryMeta: { dir: 'ltr', lang: options?.entryMetaLang ?? 'en' },
@@ -89,9 +106,23 @@ export function getTestContext(
   } as unknown as APIContext
 }
 
-function mockBlogPost(docsFilePath: string, entry: StarlightBlogEntryData): StarlightBlogEntry {
+function mockBlogPost(
+  docsFilePath: string,
+  entry: StarlightBlogEntryData,
+  options: { prefix?: string } = {},
+): StarlightBlogEntry {
+  const prefix = options.prefix ?? 'blog'
+
+  const path = `${prefix}/${docsFilePath}`
+  const id = path
+    .replace(/\.[^.]+$/, '')
+    .replace(/\/index$/, '')
+    .split('/')
+    .map((segment) => slug(segment))
+    .join('/')
+
   return {
-    id: `blog/${slug(docsFilePath.replace(/\.[^.]+$/, '').replace(/\/index$/, ''))}`,
+    id,
     collection: 'docs',
     data: z
       .looseObject(
@@ -115,7 +146,7 @@ function mockBlogPost(docsFilePath: string, entry: StarlightBlogEntryData): Star
         }).shape,
       )
       .parse(entry) as StarlightBlogEntry['data'],
-    filePath: `src/content/docs/blog/${docsFilePath}`,
+    filePath: `src/content/docs/${path}`,
     body: '',
   }
 }

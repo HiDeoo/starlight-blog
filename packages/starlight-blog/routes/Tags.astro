@@ -4,7 +4,7 @@ import type { InferGetStaticPropsType } from 'astro'
 import Page from '../components/Page.astro'
 import PostCount from '../components/PostCount.astro'
 import Posts from '../components/Posts.astro'
-import { getPageProps } from '../libs/page'
+import { getBlogConfig, getPageProps } from '../libs/page'
 import { getTagsStaticPaths } from '../libs/tags'
 
 export const prerender = true
@@ -15,8 +15,9 @@ export function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
-const { entries, label, locale } = Astro.props
+const { prefix, entries, label, locale } = Astro.props
 
+const config = getBlogConfig(prefix)
 const pageProps = getPageProps(label)
 ---
 
@@ -30,5 +31,5 @@ const pageProps = getPageProps(label)
       })
     }</PostCount
   >
-  <Posts {entries} {locale} />
+  <Posts {config} {entries} {locale} />
 </Page>

@@ -1,20 +1,20 @@
 import type { GetStaticPathsResult } from 'astro'
 import { slug } from 'github-slugger'
-import starlightConfig from 'virtual:starlight/user-config'
-import config from 'virtual:starlight-blog/config'
+import configs from 'virtual:starlight-blog/configs'
 
 import type { StarlightBlogAuthor } from '../schema'
 
+import type { StarlightBlogConfig } from './config'
 import { getBlogEntries, type StarlightBlogEntry } from './content'
-import { DefaultLocale, type Locale } from './i18n'
+import { getLocales, type Locale } from './i18n'
 import { getPathWithLocale } from './page'
 
-export async function getAllAuthors(locale: Locale): Promise<StarlightBlogEntryAuthors> {
-  const entries = await getBlogEntries(locale)
+export async function getAllAuthors(config: StarlightBlogConfig, locale: Locale): Promise<StarlightBlogEntryAuthors> {
+  const entries = await getBlogEntries(config, locale)
   const entryAuthors: StarlightBlogEntryAuthors = new Map()
 
   for (const entry of entries) {
-    for (const author of getEntryAuthors(entry)) {
+    for (const author of getEntryAuthors(config, entry)) {
       const infos = entryAuthors.get(author.name) ?? {
         entries: [],
         author: { ...author, slug: getAuthorSlug(author.name) },
@@ -32,38 +32,30 @@ export async function getAllAuthors(locale: Locale): Promise<StarlightBlogEntryA
 export async function getAuthorsStaticPaths() {
   const paths = []
 
-  if (starlightConfig.isMultilingual) {
-    for (const localeKey of Object.keys(starlightConfig.locales)) {
-      const locale = localeKey === 'root' ? undefined : localeKey
-
-      const entryAuthors = await getAllAuthors(locale)
+  for (const config of configs.values()) {
+    for (const locale of getLocales()) {
+      const entryAuthors = await getAllAuthors(config, locale)
 
       for (const [, { author, entries }] of entryAuthors.entries()) {
-        paths.push(getAuthorsStaticPath(entries, author, locale))
+        paths.push(getAuthorsStaticPath(config, entries, author, locale))
       }
-    }
-  } else {
-    const entryAuthors = await getAllAuthors(DefaultLocale)
-
-    for (const [, { author, entries }] of entryAuthors.entries()) {
-      paths.push(getAuthorsStaticPath(entries, author, DefaultLocale))
     }
   }
 
   return paths satisfies GetStaticPathsResult
 }
 
-export function getEntryAuthors(entry: StarlightBlogEntry): StarlightBlogAuthor[] {
+export function getEntryAuthors(config: StarlightBlogConfig, entry: StarlightBlogEntry): StarlightBlogAuthor[] {
   const authors: StarlightBlogAuthor[] = []
 
   if (!entry.data.authors) {
     authors.push(...Object.values(config.authors))
   } else if (typeof entry.data.authors === 'string') {
-    authors.push(getAuthorFromConfig(entry.data.authors))
+    authors.push(getAuthorFromConfig(config, entry.data.authors))
   } else if (Array.isArray(entry.data.authors)) {
     for (const author of entry.data.authors) {
       if (typeof author === 'string') {
-        authors.push(getAuthorFromConfig(author))
+        authors.push(getAuthorFromConfig(config, author))
       } else {
         authors.push(author)
       }
@@ -79,7 +71,7 @@ export function getAuthorSlug(name: string) {
   return slug(name)
 }
 
-function getAuthorFromConfig(id: string): StarlightBlogAuthor {
+function getAuthorFromConfig(config: StarlightBlogConfig, id: string): StarlightBlogAuthor {
   const author = config.authors[id]
 
   if (!author) {
@@ -89,13 +81,19 @@ function getAuthorFromConfig(id: string): StarlightBlogAuthor {
   return author
 }
 
-function getAuthorsStaticPath(entries: StarlightBlogEntry[], author: StarlightBlogEntryAuthor, locale: Locale) {
+function getAuthorsStaticPath(
+  config: StarlightBlogConfig,
+  entries: StarlightBlogEntry[],
+  author: StarlightBlogEntryAuthor,
+  locale: Locale,
+) {
   return {
     params: {
       prefix: getPathWithLocale(config.prefix, locale),
       author: author.slug,
     },
     props: {
+      prefix: config.prefix,
       author,
       entries,
       locale,

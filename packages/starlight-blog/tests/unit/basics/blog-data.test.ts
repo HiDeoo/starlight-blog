@@ -1,4 +1,4 @@
-import { assert, describe, expect, test, vi } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
 import { getTestBlogData, mockCoverImage } from '../utils'
 
@@ -72,7 +72,7 @@ describe('posts', () => {
     const { posts } = await getTestBlogData({ getter: middleware.getBlogData })
 
     const post = posts[0]
-    assert(post)
+    expect.assert(post)
 
     expect(post.title).toBe('Post 7')
 
@@ -110,7 +110,7 @@ describe('posts', () => {
     const { posts } = await getTestBlogData()
 
     const post = posts[1]
-    assert(post)
+    expect.assert(post)
 
     expect(post.metrics.readingTime.minutes).toBe(10)
     expect(post.metrics.readingTime.seconds).toBe(590)
@@ -130,7 +130,7 @@ describe('authors', () => {
     const { authors } = await getTestBlogData()
 
     const author = authors[1]
-    assert(author)
+    expect.assert(author)
 
     expect(author.name).toBe('Ghost')
     expect(author.title).toBe('A ghost')
