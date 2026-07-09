@@ -20,10 +20,10 @@ const { config, entry, locale } = Astro.props
 
 <article class="preview">
   <header>
-    <h2>
-      <a href={getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`)}>{entry.data.title}</a>
-    </h2>
-    {entry.data.cover && <Cover cover={entry.data.cover} />}
+    <a class="preview-link" href={getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`)}>
+      <h2>{entry.data.title}</h2>
+      {entry.data.cover && <Cover cover={entry.data.cover} alt="" />}
+    </a>
     <Metadata {config} {entry} {locale} />
   </header>
   <div class="sl-markdown-content">
@@ -41,11 +41,25 @@ const { config, entry, locale } = Astro.props
     gap: 1.5rem;
   }
 
-  h2 {
+  .preview-link {
+    display: inline-block;
     margin-bottom: 1.5rem;
+    text-decoration: none;
   }
 
-  h2 a {
-    text-decoration: none;
+  .preview-link h2 {
+    color: var(--sl-color-text-accent);
+  }
+
+  .preview-link:hover h2 {
+    color: var(--sl-color-white);
+  }
+
+  .preview-link:has(figure) {
+    display: block;
+  }
+
+  .preview-link:has(figure) h2 {
+    margin-bottom: 1.5rem;
   }
 </style>
