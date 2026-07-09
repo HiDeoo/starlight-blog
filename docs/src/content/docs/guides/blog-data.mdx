@@ -5,7 +5,7 @@ tableOfContents:
   maxHeadingLevel: 5
 ---
 
-Starlight Blog exposes information about the blog posts and authors in your project.
+The Starlight Blog plugin exposes blog-wide data about posts and authors in your project that you can use to build custom components such as recent-post lists, author summaries, or other blog related widgets.
 This guide explains how to use Starlight Blog’s data.
 
 ## What is blog data?
@@ -17,8 +17,12 @@ It includes information like a list of all the blog authors, a list of all the b
 
 The [`posts`](#posts) property contains an array of all the blog posts in your project while the [`authors`](#authors-1) property contains an array of all the authors.
 
-You can access this data from the `Astro.locals.starlightBlog` global in Astro components.
-When using [multiple blog instances](/guides/multiple-instances/), use [`Astro.locals.starlightBlogs`](#starlightblogs) instead.
+You can access this data from `Astro.locals.starlightBlog` in components rendered as part of a Starlight page, including MDX pages and custom pages using the [`<StarlightPage>` component](https://starlight.astro.build/guides/pages/#starlightpage-component).
+
+The Starlight Blog plugin exposes this data similarly to Starlight's own [`Astro.locals.starlightRoute`](https://starlight.astro.build/guides/route-data/) route data.
+
+When using [multiple blog instances](/guides/multiple-instances/), `Astro.locals.starlightBlog` is not available.
+Use [`Astro.locals.starlightBlogs`](#starlightblogs) instead.
 
 ```astro title="example.astro"
 ---
@@ -87,11 +91,14 @@ const authorList = new Intl.ListFormat(Astro.currentLocale, {
 
 ## `starlightBlog`
 
+When [multiple blog instances](/guides/multiple-instances/) are configured, `Astro.locals.starlightBlog` is not available and will throw an error.
+Use [`Astro.locals.starlightBlogs`](#starlightblogs) instead to access the data for a specific blog instance.
+
 The `starlightBlog` object has the following properties:
 
 ### `posts`
 
-An list of all the blog posts in your project ordered by descending [publication date](/guides/frontmatter#date-required/).
+A list of all the blog posts in your project ordered by descending [publication date](/guides/frontmatter/#date).
 
 Each post has the following properties:
 
@@ -99,7 +106,7 @@ Each post has the following properties:
 
 **Type:** `string`
 
-The [title](/guides/frontmatter#title-required/) of the blog post.
+The [title](/guides/frontmatter/#title) of the blog post.
 
 #### `href`
 
@@ -111,14 +118,14 @@ The link to the blog post.
 
 **Type:** `Date`
 
-The [date](/guides/frontmatter#date-required/) of the blog post.
+The [date](/guides/frontmatter/#date) of the blog post.
 
 #### `updatedAt`
 
 **Type:** `Date | undefined`
 
 The last update date of the blog post.
-It is only defined if the [`lastUpdated`](/guides/frontmatter#lastupdated/) frontmatter field is specified and different from the [`date`](/guides/frontmatter#date-required/) frontmatter field.
+It is only defined if the [`lastUpdated`](/guides/frontmatter/#lastupdated) frontmatter field is specified and is a date.
 
 #### `draft`
 
@@ -139,7 +146,7 @@ Whether the blog post is [featured](/guides/frontmatter/#featured).
 
 The optional cover image of the blog post.
 
-Based on how the cover image is [defined](/guides/frontmatter#cover) in the frontmatter of the blog post, it can either be a single image or a pair of images for dark and light themes.
+Based on how the cover image is [defined](/guides/frontmatter/#cover) in the frontmatter of the blog post, it can either be a single image or a pair of images for dark and light themes.
 Local images are imported and transformed into metadata while remote images are defined as a string URL that you can pass as a `src` to `<Image/>` or `getImage()`.
 
 Check the Starlight Blog [`<Cover>` component](https://github.com/HiDeoo/starlight-blog/blob/main/packages/starlight-blog/components/Cover.astro) to see an example of how to use the cover image or learn more about [images in content collections](https://docs.astro.build/en/guides/images/#images-in-content-collections) in the Astro docs.
@@ -189,7 +196,7 @@ The link to the tag page.
 
 **Type:** `{ readingTime: { minutes: number; seconds: number; }; words: { rounded: number; total: number; }; }`
 
-The metrics of the blog post.
+The [metrics](/guides/metrics/) of the blog post.
 
 ##### `readingTime`
 
