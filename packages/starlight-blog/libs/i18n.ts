@@ -1,16 +1,16 @@
-import starlightConfig from 'virtual:starlight/user-config'
+import context from 'virtual:starlight-blog/context'
 
-export const DefaultLocale =
-  starlightConfig.defaultLocale.locale === 'root' ? undefined : starlightConfig.defaultLocale.locale
+export const DefaultLocale = context.defaultLocale.locale === 'root' ? undefined : context.defaultLocale.locale
 
 export function getLocales(): Locale[] {
-  if (!starlightConfig.isMultilingual) return [DefaultLocale]
-  return Object.keys(starlightConfig.locales).map((localeKey) => (localeKey === 'root' ? undefined : localeKey))
+  if (!context.isMultilingual) return [DefaultLocale]
+  return Object.keys(context.locales ?? {}).map((localeKey) => (localeKey === 'root' ? undefined : localeKey))
 }
 
 export function getLangFromLocale(locale: Locale): string {
-  const lang = locale ? starlightConfig.locales?.[locale]?.lang : starlightConfig.locales?.root?.lang
-  const defaultLang = starlightConfig.defaultLocale.lang ?? starlightConfig.defaultLocale.locale
+  const localeConfig = locale ? context.locales?.[locale] : context.locales?.root
+  const lang = localeConfig?.lang ?? locale
+  const defaultLang = context.defaultLocale.lang ?? context.defaultLocale.locale
   return lang ?? defaultLang ?? 'en'
 }
 

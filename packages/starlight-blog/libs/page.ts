@@ -1,7 +1,6 @@
 import type { StarlightPageProps } from '@astrojs/starlight/props'
 import type { StarlightRouteData } from '@astrojs/starlight/route-data'
 import type { AstroConfig } from 'astro'
-import starlightConfig from 'virtual:starlight/user-config'
 import configs from 'virtual:starlight-blog/configs'
 import context from 'virtual:starlight-blog/context'
 
@@ -144,5 +143,5 @@ export function getSidebarProps(
 
 export function getLocaleFromPath(path: string): Locale {
   const baseSegment = path.split('/')[0]
-  return starlightConfig.locales && baseSegment && baseSegment in starlightConfig.locales ? baseSegment : undefined
+  return context.locales && baseSegment && baseSegment in context.locales ? baseSegment : undefined
 }

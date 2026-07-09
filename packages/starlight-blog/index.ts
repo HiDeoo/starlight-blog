@@ -7,7 +7,7 @@ import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig 
 import { isNavigationWithCustomCss, isNavigationOverride } from './libs/navigation'
 import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
 import { applyMarkdownPlugin } from './libs/processor'
-import { vitePluginStarlightBlogConfig } from './libs/vite'
+import { vitePluginStarlightBlog } from './libs/vite'
 import { Translations } from './translations'
 
 export type { StarlightBlogConfig, StarlightBlogUserConfig }
@@ -122,21 +122,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
 
               applyMarkdownPlugin(astroConfig.markdown.processor)
 
-              updateConfig({
-                vite: {
-                  plugins: [
-                    vitePluginStarlightBlogConfig(configs, {
-                      description: starlightConfig.description,
-                      rootDir: astroConfig.root.pathname,
-                      site: astroConfig.site,
-                      srcDir: astroConfig.srcDir.pathname,
-                      title: starlightConfig.title,
-                      titleDelimiter: starlightConfig.titleDelimiter,
-                      trailingSlash: astroConfig.trailingSlash,
-                    }),
-                  ],
-                },
-              })
+              updateConfig({ vite: { plugins: [vitePluginStarlightBlog(configs, starlightConfig, astroConfig)] } })
             },
           },
         })
