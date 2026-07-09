@@ -1,14 +1,12 @@
-import type { StarlightConfig } from '@astrojs/starlight/types'
 import { getViteConfig } from 'astro/config'
 
 import { validateConfig, type StarlightBlogUserConfig } from '../../libs/config'
-import { vitePluginStarlightBlogConfig, type StarlightBlogContext } from '../../libs/vite'
+import { vitePluginStarlightBlog } from '../../libs/vite'
 
 export function defineVitestConfig(
   userConfig: StarlightBlogUserConfig,
-  context?: Partial<StarlightBlogContext> & {
-    locales?: StarlightConfig['locales']
-  },
+  context?: Partial<Parameters<typeof vitePluginStarlightBlog>[1]> &
+    Partial<Pick<Parameters<typeof vitePluginStarlightBlog>[2], 'site' | 'trailingSlash'>>,
 ) {
   const config = validateConfig(userConfig)
 
@@ -17,57 +15,22 @@ export function defineVitestConfig(
 
   return getViteConfig({
     plugins: [
-      vitePluginStarlightBlogConfig(config, {
-        description: context?.description,
-        rootDir: rootDir.pathname,
-        site: context?.site,
-        srcDir: srcDir.pathname,
-        title: context?.title ?? 'Starlight Blog Test',
-        titleDelimiter: context?.titleDelimiter,
-        trailingSlash: context?.trailingSlash ?? 'ignore',
-      }),
-      {
-        name: 'vite-plugin-starlight-blog-test',
-        load(id) {
-          if (id !== 'virtual:starlight-blog/test') return undefined
-
-          const config: Partial<StarlightConfig> = context?.locales
-            ? {
-                isMultilingual: true,
-                defaultLocale: getDefaultLocaleConfig(context.locales),
-                locales: context.locales,
-              }
-            : {
-                isMultilingual: false,
-                defaultLocale: { label: 'English', lang: 'en', dir: 'ltr', locale: undefined },
-              }
-
-          return `export default ${JSON.stringify(config)}`
+      vitePluginStarlightBlog(
+        config,
+        {
+          defaultLocale: context?.defaultLocale,
+          description: context?.description,
+          locales: context?.locales,
+          title: context?.title ?? 'Starlight Blog Test',
+          titleDelimiter: context?.titleDelimiter,
         },
-        resolveId(id) {
-          return id === 'virtual:starlight/user-config' ? 'virtual:starlight-blog/test' : undefined
+        {
+          root: rootDir,
+          site: context?.site,
+          srcDir,
+          trailingSlash: context?.trailingSlash ?? 'ignore',
         },
-      },
+      ),
     ],
   })
-}
-
-function getDefaultLocaleConfig(locales: StarlightConfig['locales']) {
-  const rootLocale = locales?.root
-
-  if (rootLocale) {
-    return {
-      label: rootLocale.label,
-      lang: rootLocale.lang,
-      dir: rootLocale.dir,
-      locale: 'root',
-    }
-  }
-
-  return {
-    label: 'English',
-    lang: 'en',
-    dir: 'ltr' as const,
-    locale: 'en',
-  }
 }

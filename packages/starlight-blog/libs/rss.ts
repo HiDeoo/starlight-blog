@@ -1,6 +1,5 @@
 import type { RSSFeedItem, RSSOptions } from '@astrojs/rss'
 import type { GetStaticPathsResult } from 'astro'
-import starlightConfig from 'virtual:starlight/user-config'
 import configs from 'virtual:starlight-blog/configs'
 import context from 'virtual:starlight-blog/context'
 
@@ -210,11 +209,11 @@ function getRSSTitle(config: StarlightBlogConfig, locale: Locale): string {
     title = context.title
   } else {
     const lang = getLangFromLocale(locale)
-    if (starlightConfig.title[lang]) {
-      title = starlightConfig.title[lang]
+    if (context.title[lang]) {
+      title = context.title[lang]
     } else {
-      const defaultLang = starlightConfig.defaultLocale.lang ?? starlightConfig.defaultLocale.locale
-      title = defaultLang ? (starlightConfig.title[defaultLang] ?? '') : ''
+      const defaultLang = context.defaultLocale.lang ?? context.defaultLocale.locale
+      title = defaultLang ? (context.title[defaultLang] ?? '') : ''
     }
   }
 
