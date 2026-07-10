@@ -20,7 +20,7 @@ const { entry, nextLink, prevLink } = await getBlogEntry(config, id, locale)
 
 <Default>
   {entry.data.cover && <Cover cover={entry.data.cover} />}
-  <Metadata {config} {entry} {locale} showBadges={false} />
+  <Metadata {config} {entry} showBadges={false} />
   <slot />
   <div class="post-footer">
     <PostTags {config} entry={entry} {locale} />

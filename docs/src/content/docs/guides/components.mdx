@@ -1,0 +1,55 @@
+---
+title: Components
+description: Learn how to use components provided by the Starlight Blog plugin to render blog content in your project.
+---
+
+The Starlight Blog plugin provides components that you can use to display blog content in your project.
+
+## `<Preview>`
+
+The `<Preview>` component renders a blog post using the same preview available on blog listing pages.
+
+### Import
+
+```tsx
+import Preview from 'starlight-blog/ui/Preview.astro'
+```
+
+### Usage
+
+Render a post from [blog data](/guides/blog-data/) by passing it to the `<Preview>` component.
+
+import { Preview as DocsPreview } from '@hideoo/starlight-plugins-docs-components'
+import ComponentPreviewExample from '../../../components/ComponentPreviewExample.astro'
+
+<DocsPreview>
+
+```astro title="RecentPostPreview.astro" "<Preview {post} />"
+---
+import Preview from 'starlight-blog/ui/Preview.astro'
+
+const post = Astro.locals.starlightBlog.posts.at(0)
+---
+
+{post && <Preview {post} />}
+```
+
+<Fragment slot="preview">
+
+<ComponentPreviewExample />
+
+</Fragment>
+
+</DocsPreview>
+
+### Props
+
+The `<Preview>` component accepts the following props:
+
+#### `post`
+
+**Required**  
+**Type:** [`StarlightBlogPostData`](/guides/blog-data/#posts)
+
+The blog post to render.
+Use [blog data](/guides/blog-data/) to get a list of posts.

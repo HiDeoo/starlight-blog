@@ -1,8 +1,6 @@
 ---
-import type { StarlightBlogConfig } from '../libs/config'
-import type { StarlightBlogEntry } from '../libs/content'
-import type { Locale } from '../libs/i18n'
-import { getPathWithLocale, getRelativeUrl } from '../libs/page'
+import type { StarlightBlogPostData } from '../data'
+import { getBlogConfigFromPath, getLocaleFromRelativeUrl } from '../libs/page'
 
 import Cover from './Cover.astro'
 import Excerpt from './Excerpt.astro'
@@ -10,21 +8,25 @@ import Metadata from './Metadata.astro'
 import PostTags from './PostTags.astro'
 
 interface Props {
-  config: StarlightBlogConfig
-  entry: StarlightBlogEntry
-  locale: Locale
+  post: Pick<StarlightBlogPostData, 'entry' | 'href'>
 }
 
-const { config, entry, locale } = Astro.props
+const { post } = Astro.props
+const { entry } = post
+
+const locale = getLocaleFromRelativeUrl(post.href)
+
+const config = getBlogConfigFromPath(entry.id)
+if (!config) throw new Error(`Failed to get blog configuration for entry '${entry.id}'.`)
 ---
 
 <article class="preview">
   <header>
-    <a class="preview-link" href={getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`)}>
+    <a class="preview-link" href={post.href}>
       <h2>{entry.data.title}</h2>
       {entry.data.cover && <Cover cover={entry.data.cover} alt="" />}
     </a>
-    <Metadata {config} {entry} {locale} />
+    <Metadata {config} {entry} />
   </header>
   <div class="sl-markdown-content">
     <Excerpt {entry} />

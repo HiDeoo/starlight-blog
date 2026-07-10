@@ -88,7 +88,7 @@ export const onRequest = defineRouteMiddleware(async (context) => {
 
 export async function getBlogData(
   config: StarlightBlogConfig,
-  { locale }: StarlightRouteData,
+  { locale }: Pick<StarlightRouteData, 'locale'>,
   t: App.Locals['t'],
 ): Promise<StarlightBlogData> {
   const blogDataPerLocale = getBlogDataPerLocale(config, locale)

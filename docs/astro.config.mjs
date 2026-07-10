@@ -65,6 +65,7 @@ export default defineConfig({
             'guides/rss',
             'guides/metrics',
             'guides/blog-data',
+            'guides/components',
             'guides/multiple-instances',
           ],
         },

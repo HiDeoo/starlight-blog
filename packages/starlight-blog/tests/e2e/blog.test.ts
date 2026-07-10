@@ -230,6 +230,10 @@ test('should display a preview of each posts', async ({ blogPage }) => {
   expect(allHrefs.every((href) => href?.startsWith('/blog/'))).toBe(true)
 
   await expect(articles.first().getByText('Donec eget vestibulum leo.')).toBeVisible()
+
+  const placeholderTag = articles.getByRole('link', { exact: true, name: 'Placeholder' }).first()
+
+  await expect(placeholderTag).toHaveAttribute('href', '/blog/tags/placeholder/')
 })
 
 test('should use sorted posts', async ({ blogPage }) => {
