@@ -1,0 +1,8 @@
+---
+import Preview from 'starlight-blog/ui/Preview.astro'
+
+const post = Astro.locals.starlightBlogs.get('blog')?.posts.find((post) => post.entry.id.endsWith('/vario-nunc-polo'))
+if (!post) throw new Error("Missing post for the '<Preview>' component example.")
+---
+
+<Preview {post} />

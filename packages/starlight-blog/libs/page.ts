@@ -145,3 +145,8 @@ export function getLocaleFromPath(path: string): Locale {
   const baseSegment = path.split('/')[0]
   return context.locales && baseSegment && baseSegment in context.locales ? baseSegment : undefined
 }
+
+export function getLocaleFromRelativeUrl(url: string): Locale {
+  const path = base && (url === base || url.startsWith(`${base}/`)) ? url.slice(base.length) : url
+  return getLocaleFromPath(stripLeadingSlash(path))
+}

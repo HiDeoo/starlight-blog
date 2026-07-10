@@ -60,6 +60,8 @@ import BlogDataPostsExample from '../../../components/BlogDataPostsExample.astro
 
 </Preview>
 
+To render a post using the same preview as blog listing pages, use the [`<Preview>` component](/guides/components/#preview).
+
 Another example is to create a list of all the known authors of your blog:
 
 import BlogDataAuthorsExample from '../../../components/BlogDataAuthorsExample.astro'
@@ -91,12 +93,16 @@ const authorList = new Intl.ListFormat(Astro.currentLocale, {
 
 ## `starlightBlog`
 
+**Type:** `StarlightBlogData`
+
 When [multiple blog instances](/guides/multiple-instances/) are configured, `Astro.locals.starlightBlog` is not available and will throw an error.
 Use [`Astro.locals.starlightBlogs`](#starlightblogs) instead to access the data for a specific blog instance.
 
 The `starlightBlog` object has the following properties:
 
 ### `posts`
+
+**Type:** `StarlightBlogPostData[]`
 
 A list of all the blog posts in your project ordered by descending [publication date](/guides/frontmatter/#date).
 
@@ -242,8 +248,7 @@ An unordered list of all the known authors in your blog.
 
 ## `starlightBlogs`
 
-The `starlightBlogs` map is keyed by blog [`prefix`](/configuration/#prefix) and contains all the blog data for each [blog instance](/guides/multiple-instances/).
-Each value is a [`starlightBlog`](#starlightblog) object with the same properties as described above.
+The `starlightBlogs` map is keyed by blog [`prefix`](/configuration/#prefix) and contains all the blog data for each [blog instance](/guides/multiple-instances/) with values of type [`StarlightBlogData`](#starlightblog).
 
 ```astro title="example.astro"
 ---

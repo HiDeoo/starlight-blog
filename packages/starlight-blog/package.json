@@ -22,6 +22,7 @@
     "./routes/rss-archive": "./routes/rss-archive.xml.ts",
     "./schema": "./schema.ts",
     "./styles": "./styles.css",
+    "./ui/Preview.astro": "./components/Preview.astro",
     "./package.json": "./package.json"
   },
   "scripts": {

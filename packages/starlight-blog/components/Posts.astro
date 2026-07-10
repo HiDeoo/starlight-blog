@@ -1,21 +1,29 @@
 ---
-import type { StarlightBlogConfig } from '../libs/config'
 import type { StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
+import { getPathWithLocale, getRelativeUrl } from '../libs/page'
 
 import Preview from './Preview.astro'
 
 interface Props {
-  config: StarlightBlogConfig
   entries: StarlightBlogEntry[]
   locale: Locale
 }
 
-const { config, entries, locale } = Astro.props
+const { entries, locale } = Astro.props
 ---
 
 <div class="posts">
-  {entries.map((entry) => <Preview {config} {entry} {locale} />)}
+  {
+    entries.map((entry) => (
+      <Preview
+        post={{
+          entry,
+          href: getRelativeUrl(`/${getPathWithLocale(entry.id, locale)}`),
+        }}
+      />
+    ))
+  }
 </div>
 
 <style>
