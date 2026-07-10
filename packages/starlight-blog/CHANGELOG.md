@@ -1,5 +1,27 @@
 # starlight-blog
 
+## 0.28.0
+
+### Minor Changes
+
+- [#217](https://github.com/HiDeoo/starlight-blog/pull/217) [`8ac4113`](https://github.com/HiDeoo/starlight-blog/commit/8ac41132ce7df37d3e396b663527ac0e0376656d) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for multiple blog instances, for example to create both a regular blog and a dedicated news section.
+
+- [#213](https://github.com/HiDeoo/starlight-blog/pull/213) [`d3efb3f`](https://github.com/HiDeoo/starlight-blog/commit/d3efb3f526129890608192d12f2dd787f7e9e1c2) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds [structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) to blog pages.
+
+- [#216](https://github.com/HiDeoo/starlight-blog/pull/216) [`baa2c66`](https://github.com/HiDeoo/starlight-blog/commit/baa2c66a19a04a0d6cd25cc1497de2160a72a32a) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds support for the [RFC 5005](https://datatracker.ietf.org/doc/html/rfc5005) to the RSS feed which now exposes monthly archive links to allow compatible feed readers to discover older blog posts.
+
+- [#220](https://github.com/HiDeoo/starlight-blog/pull/220) [`6bcd740`](https://github.com/HiDeoo/starlight-blog/commit/6bcd7405928f3b6566c51b7086139178cd005050) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Makes cover images in blog post listings link to their posts.
+
+- [#222](https://github.com/HiDeoo/starlight-blog/pull/222) [`16cfab9`](https://github.com/HiDeoo/starlight-blog/commit/16cfab95b0c9427232efb10d06f33e2ee002a072) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Adds a `<Preview>` component to render posts from blog data like on blog listing pages.
+
+### Patch Changes
+
+- [#215](https://github.com/HiDeoo/starlight-blog/pull/215) [`ccbe187`](https://github.com/HiDeoo/starlight-blog/commit/ccbe187920bef939877f3eb5c247fc82a9bab389) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Uses blog post [descriptions](https://starlight.astro.build/reference/frontmatter/#description) as fallback RSS item descriptions when no excerpt is specified.
+
+- [#219](https://github.com/HiDeoo/starlight-blog/pull/219) [`b18f881`](https://github.com/HiDeoo/starlight-blog/commit/b18f88110b3b94e451ff4037309109785e81dac5) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Removes usage of a Starlight internal virtual module.
+
+- [#221](https://github.com/HiDeoo/starlight-blog/pull/221) [`f0e62a1`](https://github.com/HiDeoo/starlight-blog/commit/f0e62a150c68634b259de731331d6f2f70896b16) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Prevents unnecessary processing and warnings when previewing a project.
+
 ## 0.27.0
 
 ### Minor Changes
