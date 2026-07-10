@@ -25,10 +25,13 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
         addIntegration,
         addRouteMiddleware,
         astroConfig,
+        command,
         config: starlightConfig,
         logger,
         updateConfig: updateStarlightConfig,
       }) {
+        if (command !== 'dev' && command !== 'build') return
+
         addRouteMiddleware({ entrypoint: 'starlight-blog/middleware' })
 
         const rssLinks = astroConfig.site
