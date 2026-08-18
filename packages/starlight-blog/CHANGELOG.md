@@ -1,5 +1,13 @@
 # starlight-blog
 
+## 0.29.0
+
+### Minor Changes
+
+- [#225](https://github.com/HiDeoo/starlight-blog/pull/225) [`6449901`](https://github.com/HiDeoo/starlight-blog/commit/6449901df055dca9b690e9da38f00456a32aeaa1) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Improves the generated blog markup to provide more consistent CSS selectors for custom styling and theming.
+
+  ⚠️ **Potentially breaking change:** If you have custom CSS targeting generated blog markup, you may want to double check the visual appearance of the generated pages when updating.
+
 ## 0.28.0
 
 ### Minor Changes
