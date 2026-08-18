@@ -216,7 +216,7 @@ test('should display a preview of each posts', async ({ blogPage }) => {
 
   expect(await articles.count()).toBe(5)
 
-  const links = articles.locator('header > .preview-link')
+  const links = articles.locator('header > .sl-blog-preview-link')
 
   expect(await links.count()).toBe(5)
 
@@ -239,7 +239,7 @@ test('should display a preview of each posts', async ({ blogPage }) => {
 test('should use sorted posts', async ({ blogPage }) => {
   await blogPage.goto()
 
-  const times = await blogPage.page.getByRole('article').locator(':not(.metadata-alt) > time').all()
+  const times = await blogPage.page.getByRole('article').locator('.sl-blog-metadata-date').all()
   const datetimes = await Promise.all(times.map((time) => time.getAttribute('datetime')))
 
   const dates = datetimes.map((datetime) => {
@@ -265,7 +265,7 @@ test('should render a cover image', async ({ blogPage }) => {
   await blogPage.goto()
 
   const articles = blogPage.page.getByRole('article')
-  const link = articles.nth(1).locator('header > .preview-link')
+  const link = articles.nth(1).locator('header > .sl-blog-preview-link')
 
   await expect(link.getByRole('heading', { level: 2, name: 'Vario nunc polo' })).toBeVisible()
   await expect(link.locator('figure img')).toBeVisible()
@@ -397,7 +397,7 @@ test.describe('i18n', () => {
     await blogPage.goto(undefined, 'fr')
 
     const articles = blogPage.page.getByRole('article')
-    const previewLinks = articles.locator('header > .preview-link')
+    const previewLinks = articles.locator('header > .sl-blog-preview-link')
 
     const frPostLink = articles.getByRole('link', { name: 'Achivi amans (fr)' })
 

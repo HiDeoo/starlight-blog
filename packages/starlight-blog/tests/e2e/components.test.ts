@@ -7,7 +7,7 @@ test.describe('preview', () => {
     const preview = page.getByRole('main').getByRole('article')
 
     await expect(preview.getByRole('heading', { level: 2, name: 'Vario nunc polo' })).toBeVisible()
-    await expect(preview.locator('header > .preview-link')).toHaveAttribute('href', '/blog/vario-nunc-polo/')
+    await expect(preview.locator('header > .sl-blog-preview-link')).toHaveAttribute('href', '/blog/vario-nunc-polo/')
     await expect(preview.getByRole('link', { exact: true, name: 'Placeholder' })).toHaveAttribute(
       'href',
       '/blog/tags/placeholder/',
@@ -21,7 +21,10 @@ test.describe('preview', () => {
       const preview = page.getByRole('main').getByRole('article')
 
       await expect(preview.getByRole('heading', { level: 2, name: 'Vario nunc polo' })).toBeVisible()
-      await expect(preview.locator('header > .preview-link')).toHaveAttribute('href', '/fr/blog/vario-nunc-polo/')
+      await expect(preview.locator('header > .sl-blog-preview-link')).toHaveAttribute(
+        'href',
+        '/fr/blog/vario-nunc-polo/',
+      )
       await expect(preview.getByRole('link', { exact: true, name: 'Placeholder' })).toHaveAttribute(
         'href',
         '/fr/blog/tags/placeholder/',

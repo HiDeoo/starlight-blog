@@ -8,12 +8,13 @@ import Preview from './Preview.astro'
 interface Props {
   entries: StarlightBlogEntry[]
   locale: Locale
+  page: 'author' | 'posts' | 'tag'
 }
 
-const { entries, locale } = Astro.props
+const { entries, locale, page } = Astro.props
 ---
 
-<div class="posts">
+<div class="sl-blog-posts" data-blog-page={page}>
   {
     entries.map((entry) => (
       <Preview
@@ -27,7 +28,7 @@ const { entries, locale } = Astro.props
 </div>
 
 <style>
-  .posts {
+  .sl-blog-posts {
     display: flex;
     flex-direction: column;
     gap: 3rem;

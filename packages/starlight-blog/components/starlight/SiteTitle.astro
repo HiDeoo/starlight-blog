@@ -10,16 +10,18 @@ const headerStartConfigs = [...configs.values()].filter((blog) => blog.navigatio
 
 {
   headerStartConfigs.length > 0 && (
-    <div>
+    <div class="sl-blog-header-links">
       {headerStartConfigs.map((config) => (
-        <a href={getRelativeBlogUrl(config, '/', locale)}>{getBlogTitle(config, locale)}</a>
+        <a class="sl-blog-header-link" href={getRelativeBlogUrl(config, '/', locale)}>
+          {getBlogTitle(config, locale)}
+        </a>
       ))}
     </div>
   )
 }
 
 <style>
-  div {
+  .sl-blog-header-links {
     border-inline-start: 1px solid var(--sl-color-gray-5);
     display: none;
     gap: 1rem;
@@ -29,13 +31,13 @@ const headerStartConfigs = [...configs.values()].filter((blog) => blog.navigatio
   }
 
   @media (min-width: 50rem) {
-    div {
+    .sl-blog-header-links {
       align-items: center;
       display: flex;
     }
   }
 
-  a {
+  .sl-blog-header-link {
     color: var(--sl-color-text-accent);
     font-weight: 600;
     min-inline-size: 0;

@@ -98,7 +98,7 @@ test('should include cover images for dark and light mode', async ({ postPage })
 
   await expect(postPage.content.getByRole('img', { name: 'Different covers in dark and light mode' })).toBeVisible()
 
-  expect(await postPage.content.locator('figure img').count()).toBe(2)
+  expect(await postPage.content.locator('.sl-blog-cover .sl-blog-cover-image').count()).toBe(2)
 })
 
 test.describe('i18n', () => {
