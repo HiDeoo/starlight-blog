@@ -15,7 +15,7 @@ const { config, next, prev } = Astro.props
 
 {
   prev || next ? (
-    <div class="pagination" data-pagefind-ignore>
+    <div class="sl-blog-pagination" data-pagefind-ignore>
       <CardGrid>
         {prev && (
           <LinkCard
@@ -47,38 +47,38 @@ const { config, next, prev } = Astro.props
 }
 
 <style>
-  .pagination {
+  .sl-blog-pagination {
     container-type: inline-size;
   }
 
-  .pagination :global(.card-grid) {
+  .sl-blog-pagination :global(.card-grid) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
 
-  .pagination :global(.sl-link-card:has([rel='prev'])) {
+  .sl-blog-pagination :global(.sl-link-card:has([rel='prev'])) {
     grid-template-columns: auto 1fr;
   }
 
-  .pagination :global(.sl-link-card:has([rel='prev']) span) {
+  .sl-blog-pagination :global(.sl-link-card:has([rel='prev']) span) {
     order: 2;
   }
 
-  .pagination :global(.sl-link-card:has([rel='prev']) svg) {
+  .sl-blog-pagination :global(.sl-link-card:has([rel='prev']) svg) {
     transform: matrix(-1, 0, 0, 1, 0, 0);
   }
 
-  .pagination :global(.sl-link-card:has([rel='next']) span) {
+  .sl-blog-pagination :global(.sl-link-card:has([rel='next']) span) {
     text-align: end;
   }
 
   @container (min-width: 30rem) {
-    .pagination :global(.card-grid) {
+    .sl-blog-pagination :global(.card-grid) {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
     }
 
-    .pagination :global(.sl-link-card:has([rel='next'])) {
+    .sl-blog-pagination :global(.sl-link-card:has([rel='next'])) {
       grid-column: 2;
     }
   }

@@ -28,9 +28,9 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
 }
 ---
 
-<div class="metadata not-content">
-  <div class="dates">
-    <time datetime={entry.data.date.toISOString()}>
+<div class="sl-blog-metadata not-content">
+  <div class="sl-blog-metadata-items">
+    <time class="sl-blog-metadata-date" datetime={entry.data.date.toISOString()}>
       {Astro.locals.t('starlightBlog.post.date', { date: entry.data.date })}
     </time>
     {
@@ -38,7 +38,7 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
       typeof entry.data.lastUpdated !== 'boolean' &&
       entry.data.lastUpdated?.toISOString() !== entry.data.date.toISOString() ? (
         <span
-          class="metadata-alt"
+          class="sl-blog-metadata-secondary sl-blog-metadata-last-updated"
           set:html={Astro.locals.t('starlightBlog.post.lastUpdate', {
             date: entry.data.lastUpdated,
             isoDate: entry.data.lastUpdated.toISOString(),
@@ -48,14 +48,14 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
     }
     {
       config.metrics.readingTime !== false && metrics && metrics.readingTime.minutes > 0 && (
-        <span class="metadata-alt">
+        <span class="sl-blog-metadata-secondary sl-blog-metadata-reading-time">
           {Astro.locals.t('starlightBlog.metrics.readingTime.minutes', { count: metrics.readingTime.minutes })}
         </span>
       )
     }
     {
       config.metrics.words !== false && metrics && metrics.words.total > 0 && (
-        <span class="metadata-alt">
+        <span class="sl-blog-metadata-secondary sl-blog-metadata-word-count">
           {Astro.locals.t('starlightBlog.metrics.words', {
             count: config.metrics.words === 'total' ? metrics.words.total : metrics.words.rounded,
           })}
@@ -65,7 +65,7 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
   </div>
   {
     hasAuthors ? (
-      <div class="authors">
+      <div class="sl-blog-metadata-authors">
         {authors.map((author) => (
           <Author {author} {config} />
         ))}
@@ -74,7 +74,7 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
   }
   {
     showBadges && (entry.data?.draft || entry.data.featured) && (
-      <div class="badges">
+      <div class="sl-blog-metadata-badges">
         {entry.data.draft && (
           <Badge size="medium" text={Astro.locals.t('starlightBlog.post.draft')} variant="caution" />
         )}
@@ -87,27 +87,27 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
 </div>
 
 <style>
-  .metadata {
+  .sl-blog-metadata {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
   }
 
-  .dates {
+  .sl-blog-metadata-items {
     font-size: var(--sl-text-sm);
   }
 
-  .metadata-alt {
+  .sl-blog-metadata-secondary {
     color: var(--sl-color-gray-3);
   }
 
-  .authors {
+  .sl-blog-metadata-authors {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem 1rem;
   }
 
-  .badges {
+  .sl-blog-metadata-badges {
     display: flex;
     gap: 0.75rem;
     margin-top: 0.5rem;

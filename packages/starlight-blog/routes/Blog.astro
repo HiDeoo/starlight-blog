@@ -23,7 +23,7 @@ const pageProps = getPageProps(getBlogTitle(config, locale))
 ---
 
 <Page {...pageProps}>
-  <Posts {entries} {locale} />
+  <Posts {entries} {locale} page="posts" />
   <footer class="not-content">
     <PrevNextLinks {config} next={nextLink} prev={prevLink} />
   </footer>

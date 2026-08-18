@@ -18,12 +18,14 @@ const tags = getEntryTags(entry)
 
 {
   tags.length > 0 ? (
-    <div>
-      <b>{Astro.locals.t('starlightBlog.post.tags')}</b>
-      <ul>
+    <div class="sl-blog-tags">
+      <b class="sl-blog-tags-label">{Astro.locals.t('starlightBlog.post.tags')}</b>
+      <ul class="sl-blog-tags-list">
         {tags.map((tag) => (
           <li>
-            <a href={getRelativeBlogUrl(config, `/tags/${tag.slug}`, locale)}>{tag.label}</a>
+            <a class="sl-blog-tag" href={getRelativeBlogUrl(config, `/tags/${tag.slug}`, locale)}>
+              {tag.label}
+            </a>
           </li>
         ))}
       </ul>
@@ -32,7 +34,7 @@ const tags = getEntryTags(entry)
 }
 
 <style>
-  ul {
+  .sl-blog-tags-list {
     display: inline;
     margin-inline-start: 0.25rem;
     padding: 0;
@@ -44,7 +46,7 @@ const tags = getEntryTags(entry)
     padding: 0;
   }
 
-  a {
+  .sl-blog-tag {
     border: 1px solid var(--sl-color-gray-5);
     border-radius: 0.3rem;
     font-size: var(--sl-text-sm);
@@ -53,7 +55,7 @@ const tags = getEntryTags(entry)
     text-decoration: none;
   }
 
-  a:hover {
+  .sl-blog-tag:hover {
     border-color: var(--sl-color-gray-2);
   }
 </style>

@@ -30,16 +30,20 @@ const pictureSrc = (
 ) as ImageMetadata | undefined
 ---
 
-<Element href={isLink ? author.url : undefined} class="author">
-  {pictureSrc && <Image alt={author.name} loading="eager" src={pictureSrc} height={40} width={40} />}
-  <div class="text">
-    <div class="name">{author.name}</div>
-    {author.title && <div class="title">{author.title}</div>}
+<Element href={isLink ? author.url : undefined} class="sl-blog-author">
+  {
+    pictureSrc && (
+      <Image class="sl-blog-author-picture" alt={author.name} loading="eager" src={pictureSrc} height={40} width={40} />
+    )
+  }
+  <div class="sl-blog-author-details">
+    <div class="sl-blog-author-name">{author.name}</div>
+    {author.title && <div class="sl-blog-author-title">{author.title}</div>}
   </div>
 </Element>
 
 <style>
-  .author {
+  .sl-blog-author {
     align-items: center;
     display: flex;
     gap: 0.5rem;
@@ -47,30 +51,30 @@ const pictureSrc = (
     text-decoration: none;
   }
 
-  .text {
+  .sl-blog-author-details {
     display: flex;
     flex-direction: column;
   }
 
-  .name {
+  .sl-blog-author-name {
     font-size: var(--sl-text-base);
     font-weight: 600;
   }
 
-  .author[href] .name {
+  .sl-blog-author[href] .sl-blog-author-name {
     color: var(--sl-color-text-accent);
   }
 
-  .title {
+  .sl-blog-author-title {
     font-size: var(--sl-text-xs);
     color: var(--sl-color-text);
   }
 
-  .author[href]:hover .name {
+  .sl-blog-author[href]:hover .sl-blog-author-name {
     color: var(--sl-color-text);
   }
 
-  img {
+  .sl-blog-author-picture {
     border: 1px solid var(--sl-color-gray-2);
     border-radius: 9999px;
     height: 2.5rem;

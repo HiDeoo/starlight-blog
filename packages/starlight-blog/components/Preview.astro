@@ -20,48 +20,48 @@ const config = getBlogConfigFromPath(entry.id)
 if (!config) throw new Error(`Failed to get blog configuration for entry '${entry.id}'.`)
 ---
 
-<article class="preview">
-  <header>
-    <a class="preview-link" href={post.href}>
-      <h2>{entry.data.title}</h2>
+<article class="sl-blog-preview">
+  <header class="sl-blog-preview-header">
+    <a class="sl-blog-preview-link" href={post.href}>
+      <h2 class="sl-blog-preview-title">{entry.data.title}</h2>
       {entry.data.cover && <Cover cover={entry.data.cover} alt="" />}
     </a>
     <Metadata {config} {entry} />
   </header>
-  <div class="sl-markdown-content">
+  <div class="sl-blog-preview-excerpt sl-markdown-content">
     <Excerpt {entry} />
   </div>
-  <footer>
+  <footer class="sl-blog-preview-footer">
     <PostTags {config} {entry} {locale} />
   </footer>
 </article>
 
 <style>
-  .preview {
+  .sl-blog-preview {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
   }
 
-  .preview-link {
+  .sl-blog-preview-link {
     display: inline-block;
     margin-bottom: 1.5rem;
     text-decoration: none;
   }
 
-  .preview-link h2 {
+  .sl-blog-preview-link .sl-blog-preview-title {
     color: var(--sl-color-text-accent);
   }
 
-  .preview-link:hover h2 {
+  .sl-blog-preview-link:hover .sl-blog-preview-title {
     color: var(--sl-color-white);
   }
 
-  .preview-link:has(figure) {
+  .sl-blog-preview-link:has(.sl-blog-cover) {
     display: block;
   }
 
-  .preview-link:has(figure) h2 {
+  .sl-blog-preview-link:has(.sl-blog-cover) .sl-blog-preview-title {
     margin-bottom: 1.5rem;
   }
 </style>

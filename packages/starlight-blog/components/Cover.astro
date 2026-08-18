@@ -15,8 +15,14 @@ const darkImage = 'dark' in cover ? cover.dark : cover.image
 const lightImage = 'light' in cover ? cover.light : undefined
 
 const commonImageProps = { alt, loading: 'eager' } as const
-const commonDarkImageProps = { ...commonImageProps, 'class:list': { 'light:sl-hidden': Boolean(lightImage) } } as const
-const commonLightImageProps = { ...commonImageProps, 'class:list': 'dark:sl-hidden' } as const
+const commonDarkImageProps = {
+  ...commonImageProps,
+  'class:list': { 'sl-blog-cover-image': true, 'light:sl-hidden': Boolean(lightImage) },
+} as const
+const commonLightImageProps = {
+  ...commonImageProps,
+  'class:list': { 'sl-blog-cover-image': true, 'dark:sl-hidden': true },
+} as const
 
 const darkImageProps: ComponentProps<typeof Image> =
   typeof darkImage === 'string'
@@ -31,13 +37,13 @@ const lightImageProps: ComponentProps<typeof Image> | undefined =
       : { ...commonLightImageProps, src: lightImage }
 ---
 
-<figure>
+<figure class="sl-blog-cover">
   <Image {...darkImageProps} />
   {lightImage && lightImageProps && <Image {...lightImageProps} />}
 </figure>
 
 <style>
-  figure {
+  .sl-blog-cover {
     margin-bottom: 1.5rem;
   }
 </style>

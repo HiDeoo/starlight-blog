@@ -22,14 +22,14 @@ const { entry, nextLink, prevLink } = await getBlogEntry(config, id, locale)
   {entry.data.cover && <Cover cover={entry.data.cover} />}
   <Metadata {config} {entry} showBadges={false} />
   <slot />
-  <div class="post-footer">
+  <div class="sl-blog-post-footer">
     <PostTags {config} entry={entry} {locale} />
     <PrevNextLinks {config} next={nextLink} prev={prevLink} />
   </div>
 </Default>
 
 <style>
-  .post-footer {
+  .sl-blog-post-footer {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
