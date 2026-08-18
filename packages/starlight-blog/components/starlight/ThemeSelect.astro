@@ -12,7 +12,9 @@ const headerEndConfigs = [...configs.values()].filter((blog) => blog.navigation 
   headerEndConfigs.length > 0 && (
     <div class="sl-blog-header-links">
       {headerEndConfigs.map((config) => (
-        <a class="sl-blog-header-link" href={getRelativeBlogUrl(config, '/', locale)}>{getBlogTitle(config, locale)}</a>
+        <a class="sl-blog-header-link" href={getRelativeBlogUrl(config, '/', locale)}>
+          {getBlogTitle(config, locale)}
+        </a>
       ))}
     </div>
   )
