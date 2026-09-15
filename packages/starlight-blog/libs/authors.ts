@@ -36,7 +36,7 @@ export async function getAuthorsStaticPaths() {
     for (const locale of getLocales()) {
       const entryAuthors = await getAllAuthors(config, locale)
 
-      for (const [, { author, entries }] of entryAuthors.entries()) {
+      for (const [, { author, entries }] of entryAuthors) {
         paths.push(getAuthorsStaticPath(config, entries, author, locale))
       }
     }

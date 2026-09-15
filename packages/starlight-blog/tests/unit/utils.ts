@@ -40,7 +40,7 @@ export async function getTestBlogData(options?: {
 
   return getBlogData(
     options?.config ?? getTestConfig(),
-    { locale: options?.locale ?? 'en' } as StarlightRouteData,
+    { locale: options?.locale ?? 'en' },
     (() => '') as App.Locals['t'],
   )
 }

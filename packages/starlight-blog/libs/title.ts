@@ -8,9 +8,10 @@ export function getBlogTitle(config: StarlightBlogConfig, locale: Locale): strin
 
   let title: string
   const lang = getLangFromLocale(locale)
+  const localizedTitle = config.title[lang]
 
-  if (config.title[lang]) {
-    title = config.title[lang]
+  if (localizedTitle) {
+    title = localizedTitle
   } else {
     const defaultLang = context.defaultLocale.lang ?? context.defaultLocale.locale
     title = defaultLang ? (config.title[defaultLang] ?? '') : ''

@@ -225,7 +225,7 @@ function getStructuredDataDescription(entry: StarlightBlogEntry) {
 }
 
 function getStructuredDataAuthor(author: StarlightBlogData['authors'][number], id?: string) {
-  const person: Person = { '@type': 'Person', ...(id ? { '@id': id } : {}), name: author.name }
+  const person: Person = { '@type': 'Person', ...(id && { '@id': id }), name: author.name }
 
   if (author.url) person.url = author.url
 
@@ -354,7 +354,7 @@ function getStructuredDataAuthorId(
 }
 
 function getStructuredDataPaginationPageNumber(slug: string) {
-  return Number.parseInt(slug.split('/').at(-1) ?? '', 10)
+  return Math.trunc(Number(slug.split('/').at(-1) ?? ''))
 }
 
 function isAPIContextWithSite(context: APIContext): context is APIContextWithSite {
