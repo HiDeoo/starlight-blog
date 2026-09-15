@@ -92,7 +92,7 @@ export async function getBlogEntries(config: StarlightBlogConfig, locale: Locale
   const contentRelativePath = `${context.srcDir.replace(context.rootDir, '')}content/docs/`
 
   for (const entry of docEntries) {
-    if (import.meta.env.MODE === 'production' && entry.data.draft === true) continue
+    if (import.meta.env.MODE === 'production' && entry.data.draft) continue
 
     const fileRelativePath = entry.filePath?.replace(contentRelativePath, '')
 
@@ -114,7 +114,7 @@ export async function getBlogEntries(config: StarlightBlogConfig, locale: Locale
       try {
         const localizedEntry = await getEntry('docs', getPathWithLocale(entry.id, locale))
         if (!localizedEntry) throw new Error('Unavailable localized entry.')
-        if (localizedEntry.data.draft === true) throw new Error('Draft localized entry.')
+        if (localizedEntry.data.draft) throw new Error('Draft localized entry.')
         blogEntries.push(localizedEntry)
       } catch {
         blogEntries.push(entry)
@@ -161,7 +161,7 @@ function getBlogStaticPath(
 
   return {
     params: {
-      page: index === 0 ? undefined : `${index + 1}`,
+      page: index === 0 ? undefined : String(index + 1),
       prefix: getPathWithLocale(config.prefix, locale),
     },
     props: {

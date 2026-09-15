@@ -9,7 +9,7 @@ interface Props {
 
 const { content } = Astro.props
 
-let html = ''
+let html: string
 
 if (content) {
   const result = markdownToHtml(content, { features: { frontmatter: false, gfm: true } })

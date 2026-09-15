@@ -5,7 +5,10 @@ import { getRelativeBlogUrl } from '../../libs/page'
 import { getBlogTitle } from '../../libs/title'
 
 const { locale } = Astro.locals.starlightRoute
-const headerStartConfigs = [...configs.values()].filter((blog) => blog.navigation === 'header-start')
+const headerStartConfigs = configs
+  .values()
+  .filter((blog) => blog.navigation === 'header-start')
+  .toArray()
 ---
 
 {

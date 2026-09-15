@@ -32,7 +32,7 @@ export function vitePluginStarlightBlog(
       return moduleId ? modules[moduleId] : undefined
     },
     resolveId(id) {
-      return id in modules ? resolveVirtualModuleId(id) : undefined
+      return Object.hasOwn(modules, id) ? resolveVirtualModuleId(id) : undefined
     },
   }
 }
@@ -69,9 +69,10 @@ function getContext(
     i18nContext = {
       defaultLocale: {
         ...StarlightDefaultLocale,
-        ...(locales?.root
-          ? { ...locales.root, ...(locales.root.dir ? { dir: locales.root.dir } : { dir: StarlightDefaultLocale.dir }) }
-          : {}),
+        ...(locales?.root && {
+          ...locales.root,
+          ...(locales.root.dir ? { dir: locales.root.dir } : { dir: StarlightDefaultLocale.dir }),
+        }),
         locale: undefined,
       },
       isMultilingual: false,

@@ -70,16 +70,16 @@ export function getRelativeUrl(path: string, ignoreTrailingSlash = false) {
 export function getPathWithLocale(path: string, locale: Locale): string {
   const pathLocale = getLocaleFromPath(path)
   if (pathLocale === locale) return path
-  locale = locale ?? ''
+  locale ??= ''
   if (pathLocale === path) return locale
-  if (pathLocale) return stripTrailingSlash(path.replace(`${pathLocale}/`, locale ? `${locale}/` : ''))
+  if (pathLocale) return stripTrailingSlash(path.replace(`${pathLocale}/`, () => (locale ? `${locale}/` : '')))
   return path ? `${stripTrailingSlash(locale)}/${stripLeadingSlash(path)}` : locale
 }
 
 export function isAnyBlogPostPage(config: StarlightBlogConfig, slug: string) {
   return (
     new RegExp(
-      `^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/(?!(\\d+/?|tags/.+|authors/.+)$).+$`,
+      String.raw`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/(?!(\d+/?|tags/.+|authors/.+)$).+$`,
     ).exec(slug) !== null
   )
 }
@@ -89,7 +89,9 @@ export function isBlogRoot(config: StarlightBlogConfig, slug: string) {
 }
 
 export function isBlogPaginationPage(config: StarlightBlogConfig, slug: string) {
-  return new RegExp(`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/\\d+/?$`).exec(slug) !== null
+  return (
+    new RegExp(String.raw`^${getPathWithLocale(config.prefix, getLocaleFromPath(slug))}/\d+/?$`).exec(slug) !== null
+  )
 }
 
 export function isBlogPostPage(slug: string, postSlug: string) {
@@ -142,8 +144,8 @@ export function getSidebarProps(
 }
 
 export function getLocaleFromPath(path: string): Locale {
-  const baseSegment = path.split('/')[0]
-  return context.locales && baseSegment && baseSegment in context.locales ? baseSegment : undefined
+  const baseSegment = path.split('/', 1)[0]
+  return baseSegment && context.locales && Object.hasOwn(context.locales, baseSegment) ? baseSegment : undefined
 }
 
 export function getLocaleFromRelativeUrl(url: string): Locale {

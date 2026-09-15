@@ -299,7 +299,7 @@ function getCurrentPeriodBlogPosts(): MockBlogPost[] {
       `post-${day}.md`,
       {
         title: `Post ${day}`,
-        date: new Date(`2024-02-${`${day}`.padStart(2, '0')}`),
+        date: new Date(`2024-02-${String(day).padStart(2, '0')}`),
       },
     ])
   }

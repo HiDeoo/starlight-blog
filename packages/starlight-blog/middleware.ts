@@ -35,9 +35,9 @@ export const onRequest = defineRouteMiddleware(async (context) => {
 
   const blogsData = new Map(
     await Promise.all(
-      [...configs.values()].map(
-        async (config) => [config.prefix, await getBlogData(config, starlightRoute, context.locals.t)] as const,
-      ),
+      configs
+        .values()
+        .map(async (config) => [config.prefix, await getBlogData(config, starlightRoute, context.locals.t)] as const),
     ),
   )
 
@@ -68,7 +68,7 @@ export const onRequest = defineRouteMiddleware(async (context) => {
   const config = getBlogConfigFromPath(id)
 
   if (!config) {
-    for (const blog of [...configs.values()].toReversed()) {
+    for (const blog of configs.values().toArray().toReversed()) {
       if (isNavigationWithSidebarLink(blog)) {
         starlightRoute.sidebar.unshift(
           makeSidebarLink(getBlogTitle(blog, locale), getRelativeBlogUrl(blog, '/', locale), false, {
@@ -105,7 +105,7 @@ export async function getBlogData(
     }
   }
 
-  const blogData: StarlightBlogData = { posts, authors: [...authors.values()] }
+  const blogData: StarlightBlogData = { posts, authors: authors.values().toArray() }
 
   setBlogDataPerLocale(config, locale, blogData)
 

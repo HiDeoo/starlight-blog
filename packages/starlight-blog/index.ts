@@ -77,7 +77,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
         const social: StarlightUserConfig['social'] = [...(starlightConfig.social ?? [])]
         const rssLink = rssLinks[0]
 
-        if (rssLinks.length === 1 && rssLink && !configIncludesRSSSocial) {
+        if (rssLink && !configIncludesRSSSocial && rssLinks.length === 1) {
           social.push({
             href: rssLink.href,
             icon: 'rss',
@@ -139,7 +139,8 @@ function overrideComponent(
   logger: AstroIntegrationLogger,
   component: keyof NonNullable<StarlightUserConfig['components']>,
 ) {
-  if (components[component]) {
+  const override = components[component]
+  if (override) {
     logger.warn(`It looks like you already have a \`${component}\` component override in your Starlight configuration.`)
     logger.warn(
       `To use \`starlight-blog\`, either${isNavigationOverride(component) ? ` update the \`navigation\` plugin option,` : ''} remove your override or update it to render the content from \`starlight-blog/components/${component}.astro\`.`,

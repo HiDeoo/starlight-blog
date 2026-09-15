@@ -116,11 +116,11 @@ function hasCssClass(node: HastNode, className: string): boolean {
 }
 
 function hasAttribute(node: HastNode, attribute: string): boolean {
-  return isElementNode(node) && attribute in node.properties
+  return isElementNode(node) && Object.hasOwn(node.properties, attribute)
 }
 
 function removeAttribute(node: HastNode, attribute: string) {
-  if (isElementNode(node) && attribute in node.properties) node.properties[attribute] = undefined
+  if (isElementNode(node) && Object.hasOwn(node.properties, attribute)) node.properties[attribute] = undefined
 }
 
 function isExcerpt(node: HastNode): boolean {
