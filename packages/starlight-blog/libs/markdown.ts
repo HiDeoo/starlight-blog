@@ -78,11 +78,13 @@ function stripNode(node: MdastNode): string {
     default: {
       if ('children' in node && Array.isArray(node.children)) {
         return stripInlines(node.children)
-      } else if ('value' in node && typeof node.value === 'string') {
-        return node.value
-      } else {
-        return ''
       }
+
+      if ('value' in node && typeof node.value === 'string') {
+        return node.value
+      }
+
+      return ''
     }
   }
 }
@@ -128,7 +130,8 @@ function stripTable(table: Extract<MdastNode, { type: 'table' }>): string {
 
       if (result) result += '\n'
 
-      result += headers[index] ? `${headers[index]}: ${value}` : value
+      const headerText = headers[index]
+      result += headerText ? `${headerText}: ${value}` : value
     }
   }
 

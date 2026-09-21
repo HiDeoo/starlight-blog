@@ -22,7 +22,7 @@ const hasAuthors = authors.length > 0
 
 let metrics: Metrics | undefined
 
-if (config.metrics.readingTime !== false || config.metrics.words !== false) {
+if (config.metrics.readingTime || config.metrics.words !== false) {
   const html = await renderBlogEntryToString(entry, Astro.locals.t)
   metrics = getMetrics(html, Astro.currentLocale, entry.data.metrics)
 }
@@ -47,7 +47,7 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
       ) : null
     }
     {
-      config.metrics.readingTime !== false && metrics && metrics.readingTime.minutes > 0 && (
+      config.metrics.readingTime && metrics && metrics.readingTime.minutes > 0 && (
         <span class="sl-blog-metadata-secondary sl-blog-metadata-reading-time">
           {Astro.locals.t('starlightBlog.metrics.readingTime.minutes', { count: metrics.readingTime.minutes })}
         </span>
@@ -73,7 +73,7 @@ if (config.metrics.readingTime !== false || config.metrics.words !== false) {
     ) : null
   }
   {
-    showBadges && (entry.data?.draft || entry.data.featured) && (
+    showBadges && (entry.data?.draft || entry.data?.featured) && (
       <div class="sl-blog-metadata-badges">
         {entry.data.draft && (
           <Badge size="medium" text={Astro.locals.t('starlightBlog.post.draft')} variant="caution" />

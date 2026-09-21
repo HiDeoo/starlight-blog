@@ -19,7 +19,7 @@ const next = () => Promise.resolve()
 test('sets blog data', async () => {
   await onRequest(context, next)
 
-  expect([...context.locals.starlightBlogs.keys()]).toEqual(['blog'])
+  expect(context.locals.starlightBlogs.keys().toArray()).toEqual(['blog'])
 
   expect(context.locals.starlightBlogs.get('blog')?.posts.map((post) => post.title)).toEqual(['Post'])
 })

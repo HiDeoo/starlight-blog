@@ -19,7 +19,7 @@ test('sets blog data for all instances', async () => {
 
   await onRequest(context, next)
 
-  expect([...context.locals.starlightBlogs.keys()]).toEqual(['blog', 'news'])
+  expect(context.locals.starlightBlogs.keys().toArray()).toEqual(['blog', 'news'])
 
   expect(context.locals.starlightBlogs.get('blog')?.posts.map((post) => post.title)).toEqual(['Post'])
   expect(context.locals.starlightBlogs.get('news')?.posts.map((post) => post.title)).toEqual(['Story'])

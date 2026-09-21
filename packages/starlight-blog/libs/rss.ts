@@ -128,7 +128,7 @@ function getRSSArchives(entries: StarlightBlogEntry[]) {
 
 function getRSSArchiveKey(date: Date) {
   const year = date.getUTCFullYear()
-  const month = `${date.getUTCMonth() + 1}`.padStart(2, '0')
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0')
 
   return `${year}-${month}`
 }
@@ -209,8 +209,9 @@ function getRSSTitle(config: StarlightBlogConfig, locale: Locale): string {
     title = context.title
   } else {
     const lang = getLangFromLocale(locale)
-    if (context.title[lang]) {
-      title = context.title[lang]
+    const localizedTitle = context.title[lang]
+    if (localizedTitle) {
+      title = localizedTitle
     } else {
       const defaultLang = context.defaultLocale.lang ?? context.defaultLocale.locale
       title = defaultLang ? (context.title[defaultLang] ?? '') : ''

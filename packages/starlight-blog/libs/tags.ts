@@ -31,7 +31,7 @@ export async function getTagsStaticPaths() {
     for (const locale of getLocales()) {
       const entryTags = await getAllTags(config, locale)
 
-      for (const [slug, { entries, label }] of entryTags.entries()) {
+      for (const [slug, { entries, label }] of entryTags) {
         paths.push(getTagsStaticPath(config, entries, slug, label, locale))
       }
     }

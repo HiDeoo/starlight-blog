@@ -14,7 +14,7 @@ export const remarkStarlightBlog: RemarkPlugin = function () {
         (node.type === 'mdxFlowExpression' && node.value === MdxExcerptDelimiter) ||
         (node.type === 'html' && node.value === MarkdownExcerptDelimiter)
       ) {
-        parent.children.splice(index, 1, { type: 'html', value: HtmlExcerptDelimiter })
+        parent.children[index] = { type: 'html', value: HtmlExcerptDelimiter }
 
         return EXIT
       }
