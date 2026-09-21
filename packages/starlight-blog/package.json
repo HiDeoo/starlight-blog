@@ -40,7 +40,7 @@
     "hast-util-to-html": "^9.0.5",
     "hast-util-to-string": "^3.0.1",
     "mdast-util-mdx-expression": "^2.0.1",
-    "satteri": "^0.9.3",
+    "satteri": "^0.10.3",
     "schema-dts": "^2.0.0",
     "unist-util-is": "^6.0.1",
     "unist-util-remove": "^4.0.0",
@@ -52,7 +52,7 @@
     "vitest": "^4.1.0-beta.6"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.41.0"
+    "@astrojs/starlight": ">=0.42.0"
   },
   "publishConfig": {
     "access": "public"
