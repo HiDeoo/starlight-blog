@@ -1,5 +1,15 @@
 # starlight-blog
 
+## 0.30.0
+
+### Minor Changes
+
+- [#228](https://github.com/HiDeoo/starlight-blog/pull/228) [`e4abbc2`](https://github.com/HiDeoo/starlight-blog/commit/e4abbc203d1118861369d0c75a50e138a854d09a) Thanks [@cbliu1127](https://github.com/cbliu1127)! - Fixes a potential build error when generating RSS feeds or structured data for blog posts with an `excerpt`.
+
+  ⚠️ **BREAKING CHANGE:** The minimum supported version of Starlight is now `0.42.0`.
+
+  Please follow the [upgrade guide](https://github.com/withastro/starlight/releases/tag/%40astrojs%2Fstarlight%400.42.0) to update your project.
+
 ## 0.29.0
 
 ### Minor Changes
