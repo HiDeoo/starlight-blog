@@ -48,6 +48,8 @@ export const Translations = {
   it: {
     'starlightBlog.authors.count_one': '{{count}} articolo di {{author}}',
     'starlightBlog.authors.count_other': '{{count}} articoli di {{author}}',
+    'starlightBlog.metrics.readingTime.minutes': ' - {{count}} min di lettura',
+    'starlightBlog.metrics.words_one': ' - {{count}} parola',
     'starlightBlog.pagination.prev': 'Articoli più recenti',
     'starlightBlog.pagination.next': 'Articoli meno recenti',
     'starlightBlog.post.date': '{{date, datetime(dateStyle: medium)}}',
