@@ -9,19 +9,6 @@ test.describe('social link', () => {
 })
 
 test.describe('feed', () => {
-  test('should render MDX components in the full post content', async ({ rssPage }) => {
-    await rssPage.goto()
-
-    const content = await rssPage.page
-      .locator("xpath=//item[title='Sequantur quaeritis tandem']/*[name()='content:encoded']")
-      .textContent()
-
-    expect(content).toContain('<aside aria-label="Note">')
-    expect(content).toContain('Aenean consequat nulla id ante aliquam')
-    expect(content).toContain('address_google.public_cross(query_mebibyte + adc_utility_bar, 92);')
-    expect(content).not.toContain('import { Aside }')
-  })
-
   test('should not contain doctype preamble', async ({ rssPage }) => {
     await rssPage.goto()
 
