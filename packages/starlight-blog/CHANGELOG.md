@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.30.1
+
+### Patch Changes
+
+- [#232](https://github.com/HiDeoo/starlight-blog/pull/232) [`f5b2771`](https://github.com/HiDeoo/starlight-blog/commit/f5b2771900224f393d43ae21e8c526bc3f85f5a3) Thanks [@sanjay1909](https://github.com/sanjay1909)! - Updates dependencies to fix a peer dependency warning.
+
 ## 0.30.0
 
 ### Minor Changes
