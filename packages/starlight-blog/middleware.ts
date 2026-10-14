@@ -84,6 +84,7 @@ export const onRequest = defineRouteMiddleware(async (context) => {
   if (config.structuredData) addStructuredData(config, context)
 
   starlightRoute.sidebar = await getBlogSidebar(config, context)
+  starlightRoute.pagination = { prev: undefined, next: undefined }
 })
 
 export async function getBlogData(
