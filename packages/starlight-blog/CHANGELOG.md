@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.30.2
+
+### Patch Changes
+
+- [#235](https://github.com/HiDeoo/starlight-blog/pull/235) [`973d110`](https://github.com/HiDeoo/starlight-blog/commit/973d110e606ceb80f415297c996fefe1a46190dc) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Fixes Starlight pagination links displayed on blog posts included in the docs sidebar.
+
 ## 0.30.1
 
 ### Patch Changes
