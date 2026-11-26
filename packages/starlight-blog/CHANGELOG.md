@@ -1,5 +1,11 @@
 # starlight-blog
 
+## 0.31.0
+
+### Minor Changes
+
+- [#238](https://github.com/HiDeoo/starlight-blog/pull/238) [`c6dec89`](https://github.com/HiDeoo/starlight-blog/commit/c6dec8936faac8a2b56afa80e14cae4ed7ca9da2) Thanks [@HiDeoo](https://github.com/HiDeoo)! - Distributes package as JavaScript files with dedicated type declaration files instead of TypeScript source files.
+
 ## 0.30.2
 
 ### Patch Changes
