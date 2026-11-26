@@ -18,7 +18,7 @@ vi.mock('astro:content', async () => {
 })
 
 test('generates blog list routes for each instances', async () => {
-  const { getBlogStaticPaths } = await import('../../../libs/content')
+  const { getBlogStaticPaths } = await import('../../../src/libs/content')
 
   const paths = await getBlogStaticPaths()
 
@@ -37,7 +37,7 @@ test('generates blog list routes for each instances', async () => {
 })
 
 test('generates author routes for each instances', async () => {
-  const { getAuthorsStaticPaths } = await import('../../../libs/authors')
+  const { getAuthorsStaticPaths } = await import('../../../src/libs/authors')
 
   const paths = await getAuthorsStaticPaths()
 
@@ -56,7 +56,7 @@ test('generates author routes for each instances', async () => {
 })
 
 test('generates tag routes for each instances', async () => {
-  const { getTagsStaticPaths } = await import('../../../libs/tags')
+  const { getTagsStaticPaths } = await import('../../../src/libs/tags')
 
   const paths = await getTagsStaticPaths()
 

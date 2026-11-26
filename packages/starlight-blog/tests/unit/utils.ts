@@ -5,10 +5,10 @@ import { slug } from 'github-slugger'
 import configs from 'virtual:starlight-blog/configs'
 import { vi } from 'vitest'
 
-import type { StarlightBlogData } from '../../data'
-import type { StarlightBlogConfig } from '../../libs/config'
-import type { StarlightBlogEntry } from '../../libs/content'
-import { blogEntrySchema } from '../../schema'
+import type { StarlightBlogData } from '../../src/data'
+import type { StarlightBlogConfig } from '../../src/libs/config'
+import type { StarlightBlogEntry } from '../../src/libs/content'
+import { blogEntrySchema } from '../../src/schema'
 
 export function getTestConfig(prefix?: string): StarlightBlogConfig {
   const config = prefix ? configs.get(prefix) : configs.values().next().value
@@ -28,13 +28,13 @@ export async function mockBlogPosts(posts: MockBlogPost[]) {
 
 export async function getTestBlogData(options?: {
   config?: StarlightBlogConfig
-  getter?: typeof import('../../middleware').getBlogData
+  getter?: typeof import('../../src/middleware').getBlogData
   locale?: StarlightRouteData['locale']
 }) {
   let getBlogData = options?.getter
 
   if (!getBlogData) {
-    const mod = await import('../../middleware')
+    const mod = await import('../../src/middleware')
     getBlogData = mod.getBlogData
   }
 

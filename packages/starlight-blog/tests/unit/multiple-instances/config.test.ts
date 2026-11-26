@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 
-import { validateConfig } from '../../../libs/config'
+import { validateConfig } from '../../../src/libs/config'
 
 test('supports multiple blog configurations', () => {
   const configs = validateConfig([{ prefix: 'blog' }, { prefix: 'news' }])

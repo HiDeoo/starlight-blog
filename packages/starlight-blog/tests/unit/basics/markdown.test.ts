@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 
-import { stripMarkdown } from '../../../libs/markdown'
+import { stripMarkdown } from '../../../src/libs/markdown'
 
 test('strips basic Markdown syntax', () => {
   const markdown = `# Title

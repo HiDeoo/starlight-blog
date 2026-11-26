@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 
-import { getMetrics } from '../../../libs/metrics'
+import { getMetrics } from '../../../src/libs/metrics'
 
 const oneMinuteText = 'some text content '.repeat(71) // 3 word * 71 = 213 words
 

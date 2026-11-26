@@ -10,21 +10,9 @@ export default hideoo(
     },
   },
   {
-    files: ['**/*.d.ts'],
+    files: ['**/*.d.ts', 'src/global.ts'],
     rules: {
       '@typescript-eslint/no-empty-object-type': 'off',
-    },
-  },
-  {
-    files: ['index.ts'],
-    rules: {
-      '@typescript-eslint/triple-slash-reference': 'off',
-    },
-  },
-  {
-    files: ['components/Cover.astro'],
-    rules: {
-      'astro/jsx-a11y/alt-text': 'off',
     },
   },
 )

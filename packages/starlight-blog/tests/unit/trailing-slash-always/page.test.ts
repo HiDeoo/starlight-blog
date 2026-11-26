@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { getRelativeBlogUrl, getRelativeUrl } from '../../../libs/page'
+import { getRelativeBlogUrl, getRelativeUrl } from '../../../src/libs/page'
 import { getTestConfig } from '../utils'
 
 describe('getRelativeBlogUrl', () => {

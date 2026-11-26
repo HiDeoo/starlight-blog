@@ -282,7 +282,7 @@ async function getTestRSS(posts: MockBlogPost[] = defaultBlogPosts, now = new Da
   const { mockBlogPosts } = await import('../utils')
   astroContentMock.content = await mockBlogPosts(posts)
 
-  const rss = await import('../../../libs/rss')
+  const rss = await import('../../../src/libs/rss')
 
   vi.useFakeTimers()
   vi.setSystemTime(now)

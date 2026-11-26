@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { transformHTMLForMetrics } from '../../../libs/html'
+import { transformHTMLForMetrics } from '../../../src/libs/html'
 
 describe('transformHTMLForMetrics', () => {
   test('returns non-HTML content', () => {

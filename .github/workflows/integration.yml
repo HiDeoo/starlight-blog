@@ -30,6 +30,10 @@ jobs:
         with:
           cache: true
 
+      - name: Build package
+        run: pnpm build
+        working-directory: packages/starlight-blog
+
       - name: Generates TypeScript types
         run: pnpm astro sync
         working-directory: docs
