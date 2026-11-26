@@ -1,4 +1,4 @@
-/// <reference path="./locals.d.ts" />
+import './global'
 
 import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroIntegrationLogger } from 'astro'

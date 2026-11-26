@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 
-import { getBlogEntry, getBlogStaticPaths } from '../../../libs/content'
+import { getBlogEntry, getBlogStaticPaths } from '../../../src/libs/content'
 import { getTestConfig } from '../utils'
 
 vi.mock('astro:content', async () => {

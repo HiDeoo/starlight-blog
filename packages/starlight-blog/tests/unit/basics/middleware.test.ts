@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro'
 import { expect, test, vi } from 'vitest'
 
-import { onRequest } from '../../../middleware'
+import { onRequest } from '../../../src/middleware'
 
 vi.mock('astro:content', async () => {
   const { mockBlogPosts } = await import('../utils')

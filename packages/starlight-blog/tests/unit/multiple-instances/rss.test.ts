@@ -67,5 +67,5 @@ async function getTestRSS(posts: MockBlogPost[] = blogPosts) {
   const { mockBlogPosts } = await import('../utils')
   astroContentMock.content = await mockBlogPosts(posts)
 
-  return import('../../../libs/rss')
+  return import('../../../src/libs/rss')
 }

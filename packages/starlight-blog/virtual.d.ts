@@ -1,11 +1,11 @@
 declare module 'virtual:starlight-blog/configs' {
-  const StarlightBlogConfigs: ReadonlyMap<string, import('./libs/config').StarlightBlogConfig>
+  const StarlightBlogConfigs: ReadonlyMap<string, import('./src/libs/config').StarlightBlogConfig>
 
   export default StarlightBlogConfigs
 }
 
 declare module 'virtual:starlight-blog/context' {
-  const StarlightBlogContext: import('./libs/vite').StarlightBlogContext
+  const StarlightBlogContext: import('./src/libs/vite').StarlightBlogContext
 
   export default StarlightBlogContext
 }

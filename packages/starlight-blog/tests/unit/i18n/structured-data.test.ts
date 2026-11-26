@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 
-import { addStructuredData } from '../../../libs/structured-data'
+import { addStructuredData } from '../../../src/libs/structured-data'
 import { getStructuredDataScripts, getTestBlogData, getTestConfig, getTestContext } from '../utils'
 
 vi.mock('astro:content', async () => {

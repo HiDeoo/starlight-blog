@@ -1,7 +1,7 @@
 import { getViteConfig } from 'astro/config'
 
-import { validateConfig, type StarlightBlogUserConfig } from '../../libs/config'
-import { vitePluginStarlightBlog } from '../../libs/vite'
+import { validateConfig, type StarlightBlogUserConfig } from '../../src/libs/config'
+import { vitePluginStarlightBlog } from '../../src/libs/vite'
 
 export function defineVitestConfig(
   userConfig: StarlightBlogUserConfig,

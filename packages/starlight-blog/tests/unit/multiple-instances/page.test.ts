@@ -8,7 +8,7 @@ import {
   isAnyBlogTagPage,
   isBlogPaginationPage,
   isBlogRoot,
-} from '../../../libs/page'
+} from '../../../src/libs/page'
 import { getTestConfig } from '../utils'
 
 const blogConfig = getTestConfig('blog')

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { getLocaleFromRelativeUrl } from '../../../libs/page'
+import { getLocaleFromRelativeUrl } from '../../../src/libs/page'
 
 describe('getLocaleFromRelativeUrl', () => {
   test('returns the locale from a relative URL', () => {
@@ -19,7 +19,7 @@ describe('getLocaleFromRelativeUrl', () => {
     })
 
     test('ignores the base when returning the locale', async () => {
-      const { getLocaleFromRelativeUrl } = await import('../../../libs/page')
+      const { getLocaleFromRelativeUrl } = await import('../../../src/libs/page')
 
       expect(getLocaleFromRelativeUrl('/base/blog/post/')).toBeUndefined()
       expect(getLocaleFromRelativeUrl('/base/fr/blog/post/')).toBe('fr')

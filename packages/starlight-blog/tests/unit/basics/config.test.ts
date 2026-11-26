@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { validateConfig } from '../../../libs/config'
+import { validateConfig } from '../../../src/libs/config'
 
 describe('counts', () => {
   test('uses default count values', () => {

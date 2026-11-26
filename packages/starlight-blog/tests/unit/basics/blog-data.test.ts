@@ -54,8 +54,8 @@ describe('posts', () => {
   })
 
   test('includes post data in the expected format', async () => {
-    vi.doMock('../../../libs/metrics', async () => {
-      const mod = await vi.importActual<typeof import('../../../libs/metrics')>('../../../libs/metrics')
+    vi.doMock('../../../src/libs/metrics', async () => {
+      const mod = await vi.importActual<typeof import('../../../src/libs/metrics')>('../../../src/libs/metrics')
 
       return {
         ...mod,
@@ -67,7 +67,7 @@ describe('posts', () => {
     })
 
     vi.resetModules()
-    const middleware = await import('../../../middleware')
+    const middleware = await import('../../../src/middleware')
 
     const { posts } = await getTestBlogData({ getter: middleware.getBlogData })
 
@@ -102,7 +102,7 @@ describe('posts', () => {
     expect(post.metrics.words.rounded).toBe(1100)
     expect(post.metrics.words.total).toBe(1065)
 
-    vi.doUnmock('../../../libs/metrics')
+    vi.doUnmock('../../../src/libs/metrics')
     vi.resetModules()
   })
 

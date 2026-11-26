@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { getRelativeBlogUrl, getRelativeUrl } from '../../../libs/page'
+import { getRelativeBlogUrl, getRelativeUrl } from '../../../src/libs/page'
 import { getTestConfig } from '../utils'
 
 describe('getRelativeBlogUrl', () => {
@@ -44,7 +44,7 @@ describe('getRelativeUrl', () => {
     })
 
     test('returns the path prefixed with the base', async () => {
-      const { getRelativeUrl } = await import('../../../libs/page')
+      const { getRelativeUrl } = await import('../../../src/libs/page')
       expect(getRelativeUrl('/blog')).toBe('/base/blog/')
     })
   })

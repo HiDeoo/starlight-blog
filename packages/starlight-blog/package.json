@@ -6,26 +6,27 @@
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "type": "module",
   "exports": {
-    ".": "./index.ts",
-    "./components/MarkdownContent.astro": "./components/starlight/MarkdownContent.astro",
-    "./components/SiteTitle.astro": "./components/starlight/SiteTitle.astro",
-    "./components/ThemeSelect.astro": "./components/starlight/ThemeSelect.astro",
-    "./data": "./data.ts",
-    "./middleware": "./middleware.ts",
-    "./overrides/MarkdownContent.astro": "./overrides/MarkdownContent.astro",
-    "./overrides/SiteTitle.astro": "./overrides/SiteTitle.astro",
-    "./overrides/ThemeSelect.astro": "./overrides/ThemeSelect.astro",
-    "./routes/Authors.astro": "./routes/Authors.astro",
-    "./routes/Blog.astro": "./routes/Blog.astro",
-    "./routes/Tags.astro": "./routes/Tags.astro",
-    "./routes/rss": "./routes/rss.xml.ts",
-    "./routes/rss-archive": "./routes/rss-archive.xml.ts",
-    "./schema": "./schema.ts",
-    "./styles": "./styles.css",
-    "./ui/Preview.astro": "./components/Preview.astro",
+    ".": "./src/index.ts",
+    "./components/MarkdownContent.astro": "./src/components/starlight/MarkdownContent.astro",
+    "./components/SiteTitle.astro": "./src/components/starlight/SiteTitle.astro",
+    "./components/ThemeSelect.astro": "./src/components/starlight/ThemeSelect.astro",
+    "./data": "./src/data.ts",
+    "./middleware": "./src/middleware.ts",
+    "./overrides/MarkdownContent.astro": "./src/overrides/MarkdownContent.astro",
+    "./overrides/SiteTitle.astro": "./src/overrides/SiteTitle.astro",
+    "./overrides/ThemeSelect.astro": "./src/overrides/ThemeSelect.astro",
+    "./routes/Authors.astro": "./src/routes/Authors.astro",
+    "./routes/Blog.astro": "./src/routes/Blog.astro",
+    "./routes/Tags.astro": "./src/routes/Tags.astro",
+    "./routes/rss": "./src/routes/rss.xml.ts",
+    "./routes/rss-archive": "./src/routes/rss-archive.xml.ts",
+    "./schema": "./src/schema.ts",
+    "./styles": "./src/styles.css",
+    "./ui/Preview.astro": "./src/components/Preview.astro",
     "./package.json": "./package.json"
   },
   "scripts": {
+    "build": "tsdown",
     "test:unit": "vitest",
     "test:e2e": "playwright install --with-deps chromium && playwright test",
     "test:e2e:ci": "playwright test",
@@ -52,12 +53,48 @@
     "vitest": "^4.1.0-beta.6"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.42.0"
+    "@astrojs/starlight": ">=0.42.0",
+    "astro": "^7.2.10"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "./components/MarkdownContent.astro": "./dist/components/starlight/MarkdownContent.astro",
+      "./components/SiteTitle.astro": "./dist/components/starlight/SiteTitle.astro",
+      "./components/ThemeSelect.astro": "./dist/components/starlight/ThemeSelect.astro",
+      "./data": {
+        "types": "./dist/data.d.ts",
+        "import": "./dist/data.js"
+      },
+      "./middleware": {
+        "types": "./dist/middleware.d.ts",
+        "import": "./dist/middleware.js"
+      },
+      "./overrides/MarkdownContent.astro": "./dist/overrides/MarkdownContent.astro",
+      "./overrides/SiteTitle.astro": "./dist/overrides/SiteTitle.astro",
+      "./overrides/ThemeSelect.astro": "./dist/overrides/ThemeSelect.astro",
+      "./routes/Authors.astro": "./dist/routes/Authors.astro",
+      "./routes/Blog.astro": "./dist/routes/Blog.astro",
+      "./routes/Tags.astro": "./dist/routes/Tags.astro",
+      "./routes/rss": "./dist/routes/rss.xml.js",
+      "./routes/rss-archive": "./dist/routes/rss-archive.xml.js",
+      "./schema": {
+        "types": "./dist/schema.d.ts",
+        "import": "./dist/schema.js"
+      },
+      "./styles": "./dist/styles.css",
+      "./ui/Preview.astro": "./dist/components/Preview.astro",
+      "./package.json": "./package.json"
+    }
   },
   "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "starlight",
     "plugin",
@@ -68,7 +105,7 @@
   "homepage": "https://github.com/HiDeoo/starlight-blog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/HiDeoo/starlight-blog.git",
+    "url": "git+https://github.com/HiDeoo/starlight-blog.git",
     "directory": "packages/starlight-blog"
   },
   "bugs": "https://github.com/HiDeoo/starlight-blog/issues"
