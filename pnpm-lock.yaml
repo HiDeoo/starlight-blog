@@ -134,8 +134,8 @@ importers:
         specifier: ^10.10.0
         version: 10.10.0(supports-color@10.2.2)
       node:
-        specifier: runtime:>=22.12.0
-        version: runtime:26.11.1
+        specifier: runtime:^26.13.1
+        version: runtime:26.13.1
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -153,7 +153,7 @@ importers:
         version: 0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)
       '@hideoo/starlight-plugins-docs-components':
         specifier: ^0.5.0
-        version: 0.5.0(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))
+        version: 0.5.0(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))
       astro:
         specifier: ^7.2.10
         version: 7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0)
@@ -165,7 +165,7 @@ importers:
         version: link:../packages/starlight-blog
       starlight-links-validator:
         specifier: ^0.25.2
-        version: 0.25.2(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)
+        version: 0.25.2(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)
 
   packages/starlight-blog:
     dependencies:
@@ -3201,7 +3201,7 @@ packages:
     resolution: {integrity: sha512-mIrE/Cw9y+9Au6dS5vDKDhQza9YvG6w+ZrS6X+ZzA7yFW/soAeaups4Qzn1bL6g5FVy8WtP79+0j82oPIbqRjQ==}
     engines: {node: '>=18'}
 
-  node@runtime:26.11.1:
+  node@runtime:26.13.1:
     resolution:
       type: variations
       variants:
@@ -3209,9 +3209,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-P+JqKoPXBz/hgz1Lbu9Us0Tue7uKiNdmGae0sL7zArA=
+            integrity: sha256-ZeVfsT3W2dQ+JhNSbnKssb/8svPxhVmNe3bnjsI3rQM=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-aix-ppc64.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-aix-ppc64.tar.gz
           targets:
             - cpu: ppc64
               os: aix
@@ -3219,9 +3219,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-2RZRG1WWXpG+eojhf4jYlbZ5POq6PmybGUrv5RwsZaw=
+            integrity: sha256-rsJRTqHOsrpSRV6exlmG9nSaBt11nl2ypy5oiWaMlzU=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-darwin-arm64.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-darwin-arm64.tar.gz
           targets:
             - cpu: arm64
               os: darwin
@@ -3229,9 +3229,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-moEpvZqwgDl5PdEUOnrt7mtdYKwGWSrZONi93zYULzo=
+            integrity: sha256-gruWB4okylC5yaOPI3nmvm2HFx/NQA/BTIk0s7zpbi8=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-darwin-x64.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-darwin-x64.tar.gz
           targets:
             - cpu: x64
               os: darwin
@@ -3239,9 +3239,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-FwRU+wIvXptfbMdsJfoy71EAiVvkTrBOkvl4BZFJG78=
+            integrity: sha256-gKMws1QVOCh43xjUGvvRBuqJv7O+AIfWYI4omhTFzH0=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-linux-arm64.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-arm64.tar.gz
           targets:
             - cpu: arm64
               os: linux
@@ -3249,9 +3249,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-Xk0siyJUYbHvxVE1jD0V+2bH+nRFuE/Vkt9lr3KwJ4w=
+            integrity: sha256-+Vi7pelENE1N2HMF67q6Vc21vlghGiT09qEqaua9Fu4=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-linux-ppc64le.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-ppc64le.tar.gz
           targets:
             - cpu: ppc64le
               os: linux
@@ -3259,9 +3259,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-BitIhkOKtJF8nQdLJTpp02ft873gUrWAmwKqSaIjx7s=
+            integrity: sha256-8rrre+iCFpfnA4RGvY0GrxZMDo3LxAQ5r+hB3Gjm2N4=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-linux-s390x.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-s390x.tar.gz
           targets:
             - cpu: s390x
               os: linux
@@ -3269,9 +3269,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-EKKLeWC5lMUUy1IXmcu+U/x6HjmwKWc3PgXjH/mnjZ8=
+            integrity: sha256-uqI7bs2FVYBL96TocC8WNyA5FqENKG0+4W/Oi/Vje4M=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-linux-x64-musl.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-x64-musl.tar.gz
           targets:
             - cpu: x64
               os: linux
@@ -3280,9 +3280,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-FfwEOlGleD8vS2NFYQkWWPWn8OPbA/mX3KOoAzoz5Fs=
+            integrity: sha256-UYZ03itiFyil5EhvX7O30pALs8xKqXlp7apGPbmfl3g=
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-linux-x64.tar.gz
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-x64.tar.gz
           targets:
             - cpu: x64
               os: linux
@@ -3290,10 +3290,10 @@ packages:
             archive: zip
             bin:
               node: node.exe
-            integrity: sha256-jdA63T7UMetDYwb5q+lGQ0vOko0r+WewQRfcN1UFEgg=
-            prefix: node-v26.11.1-win-arm64
+            integrity: sha256-GB6+QxuQeHETqeT8gNOM6G03iIo1OgOG3kTShy5Iy5c=
+            prefix: node-v26.13.1-win-arm64
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-win-arm64.zip
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-win-arm64.zip
           targets:
             - cpu: arm64
               os: win32
@@ -3301,10 +3301,10 @@ packages:
             archive: zip
             bin:
               node: node.exe
-            integrity: sha256-l/NqipaE/w0+NXWLRhD+9bYopYgOlvLMwRJA5dr5k04=
-            prefix: node-v26.11.1-win-x64
+            integrity: sha256-4u3adb+wiWVHBc9loTtYkzv9X1cUjo69qRb1iiR08fc=
+            prefix: node-v26.13.1-win-x64
             type: binary
-            url: https://nodejs.org/download/release/v26.11.1/node-v26.11.1-win-x64.zip
+            url: https://nodejs.org/download/release/v26.13.1/node-v26.13.1-win-x64.zip
           targets:
             - cpu: x64
               os: win32
@@ -3312,9 +3312,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-WsQtcRdpJNNL5XDIVWfHKcySgylNP9cQARhRUQswydE=
+            integrity: sha256-QmhOfxgw756q3QQGcsukG7r/lUnYNGAGmfku4e5bH7E=
             type: binary
-            url: https://unofficial-builds.nodejs.org/download/release/v26.11.1/node-v26.11.1-linux-arm64-musl.tar.gz
+            url: https://unofficial-builds.nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-arm64-musl.tar.gz
           targets:
             - cpu: arm64
               os: linux
@@ -3323,14 +3323,14 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-3IIvQ6VYd+BgueFnAgGckd65aEMQ+kfqTpvasPIUY2Y=
+            integrity: sha256-BL+e0+MuoTnJr1L23QaHn/b4iAVVoKoRg+8tFWwOAtM=
             type: binary
-            url: https://unofficial-builds.nodejs.org/download/release/v26.11.1/node-v26.11.1-linux-x64-musl.tar.gz
+            url: https://unofficial-builds.nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-x64-musl.tar.gz
           targets:
             - cpu: x64
               os: linux
               libc: musl
-    version: 26.11.1
+    version: 26.13.1
     hasBin: true
 
   normalize-path@3.0.0:
@@ -4638,7 +4638,7 @@ snapshots:
       '@types/js-yaml': 4.0.9
       '@types/mdast': 4.0.4
       astro: 7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0)
-      astro-expressive-code: 0.44.0(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))
+      astro-expressive-code: 0.44.0(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))
       bcp-47: 2.1.0
       hast-util-format: 1.1.0
       hast-util-select: 6.0.4
@@ -5135,11 +5135,11 @@ snapshots:
 
   '@hideoo/prettier-config@2.0.2': {}
 
-  '@hideoo/starlight-plugins-docs-components@0.5.0(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))':
+  '@hideoo/starlight-plugins-docs-components@0.5.0(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))':
     dependencies:
       '@astrojs/starlight': 0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)
-      starlight-package-managers: 0.13.0(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))
-      starlight-showcases: 0.3.2(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))
+      starlight-package-managers: 0.13.0(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))
+      starlight-showcases: 0.3.2(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))
 
   '@hideoo/tsconfig@2.0.4': {}
 
@@ -6002,7 +6002,7 @@ snapshots:
       - '@emnapi/runtime'
       - supports-color
 
-  astro-expressive-code@0.44.0(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0)):
+  astro-expressive-code@0.44.0(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0)):
     dependencies:
       astro: 7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0)
       rehype-expressive-code: 0.44.0
@@ -8021,7 +8021,7 @@ snapshots:
 
   node-releases@2.0.55: {}
 
-  node@runtime:26.11.1: {}
+  node@runtime:26.13.1: {}
 
   normalize-path@3.0.0: {}
 
@@ -8703,7 +8703,7 @@ snapshots:
 
   stackback@0.0.2: {}
 
-  starlight-links-validator@0.25.2(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2):
+  starlight-links-validator@0.25.2(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2):
     dependencies:
       '@astrojs/markdown-satteri': 0.3.3
       '@astrojs/starlight': 0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)
@@ -8722,11 +8722,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  starlight-package-managers@0.13.0(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)):
+  starlight-package-managers@0.13.0(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)):
     dependencies:
       '@astrojs/starlight': 0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)
 
-  starlight-showcases@0.3.2(@astrojs/starlight@0.42.2(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)):
+  starlight-showcases@0.3.2(@astrojs/starlight@0.42.2(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(astro@7.3.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.12.0)(yaml@2.9.0))(supports-color@10.2.2)(typescript@6.0.3)):
     dependencies:
       '@astro-community/astro-embed-twitter': 0.5.11
       '@astro-community/astro-embed-youtube': 0.5.10
